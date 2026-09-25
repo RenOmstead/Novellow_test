@@ -30,6 +30,7 @@ import { NovellowError } from "../core/errors.js?v=__VERSION__";
 import { SHELF_SORTS } from "../config.js?v=__VERSION__";
 import { exportLibrary, checkImport, importLibrary } from "../data/transfer.js?v=__VERSION__";
 import { mountMixer } from "../sound/mixer.js?v=__VERSION__";
+import { CATS, GHOST_CHOICES, getPreferences, setPreference } from "../shell/preferences.js?v=__VERSION__";
 
 
 const content =
@@ -108,6 +109,9 @@ function renderPage() {
 
     const settings =
         getSettings();
+
+    const prefs =
+        getPreferences();
 
     const rain =
         settings.rain === null || settings.rain === undefined
@@ -240,6 +244,24 @@ function renderPage() {
                             <select class="field__input" name="decoration_density" data-setting="decoration_density">
                                 ${DENSITIES.map((density) => html`
                                     <option value="${density.id}" ${density.id === settings.decoration_density ? html`selected` : ""}>${density.label}</option>
+                                `)}
+                            </select>
+                        </label>
+
+                        <label class="field">
+                            <span class="field__label">The library cat</span>
+                            <select class="field__input" data-pref="cat">
+                                ${CATS.map((cat) => html`
+                                    <option value="${cat.id}" ${cat.id === prefs.cat ? html`selected` : ""}>${cat.name}</option>
+                                `)}
+                            </select>
+                        </label>
+
+                        <label class="field">
+                            <span class="field__label">Floating ghosts</span>
+                            <select class="field__input" data-pref="ghosts">
+                                ${GHOST_CHOICES.map((choice) => html`
+                                    <option value="${choice.id}" ${choice.id === prefs.ghosts ? html`selected` : ""}>${choice.name}</option>
                                 `)}
                             </select>
                         </label>
@@ -719,6 +741,19 @@ async function start() {
     renderPage();
 
     content.addEventListener("change", (event) => {
+
+        const pref =
+            event.target.closest("[data-pref]");
+
+        if (pref) {
+
+            setPreference(pref.dataset.pref, pref.value);
+
+            toast("Saved on this device.", { tone: "success", timeout: 1600 });
+
+            return;
+
+        }
 
         const control =
             event.target.closest("[data-setting]");

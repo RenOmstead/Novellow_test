@@ -14,6 +14,7 @@
 ========================================================= */
 
 import { getTheme } from "../shell/themes.js?v=__VERSION__";
+import { getPreferences } from "../shell/preferences.js?v=__VERSION__";
 import { prefersReducedMotion } from "../core/helpers.js?v=__VERSION__";
 
 
@@ -119,7 +120,15 @@ const GHOSTS = [
 
 function hauntedGhosts() {
 
-    if (root().dataset.theme !== "haunted") {
+    // Ghosts float in the haunted room, unless the reader has
+    // asked for them everywhere, or nowhere (Settings).
+    const { ghosts } =
+        getPreferences();
+
+    const show =
+        ghosts === "always" || (ghosts !== "never" && root().dataset.theme === "haunted");
+
+    if (!show) {
         return "";
     }
 
@@ -195,6 +204,14 @@ function hangFrames(theme) {
         charm: "decor-starcharm",
         ...(theme.wallArt || {})
     };
+
+    // The ceiling lamp.
+    const lamp =
+        document.querySelector(".ceiling-lamp use");
+
+    if (lamp) {
+        lamp.setAttribute("href", `#${theme.lamp || "scene-lamp"}`);
+    }
 
     Object.entries(frames).forEach(([slot, symbol]) => {
 
@@ -383,6 +400,8 @@ export function startAmbience(container) {
         }
 
     });
+
+    document.addEventListener("novellow:preferences", () => build());
 
     document.addEventListener("novellow:appearance", (event) => {
 
