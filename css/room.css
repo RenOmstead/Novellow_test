@@ -908,8 +908,10 @@ body.sidebar-collapsed .journal-stage {
 
 @media (max-width: 820px) {
 
+    /* Just enough wall above the bookcase for a piece or two
+       on its top. */
     .bookcase-zone {
-        padding: 118px 8px 24px;
+        padding: 48px 8px 24px;
     }
 
     /* Journals open on their own page here, so only the
@@ -923,7 +925,8 @@ body.sidebar-collapsed .journal-stage {
     .journal-zone > .wall-art,
     .journal-zone > .journal-stage,
     .journal-zone > .cozy-corner,
-    .journal-zone > .room-floor {
+    .journal-zone > .room-floor,
+    .journal-zone > .ceiling-lamp {
         display: none;
     }
 

@@ -1171,4 +1171,17 @@ body.sidebar-collapsed .app-stage {
         width: 100%;
     }
 
+    /* The sound menu is wider than the space left of its
+       button, so it opens across the screen instead. */
+    .popover.mixer {
+        position: fixed;
+
+        top: 66px;
+        left: 12px;
+        right: 12px;
+
+        width: auto;
+        max-height: calc(100dvh - 86px);
+    }
+
 }

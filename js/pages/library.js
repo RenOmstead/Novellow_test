@@ -44,6 +44,9 @@ const filters = {
     sort: queryParam("sort") || (isToBeRead ? "date_added" : "title")
 };
 
+// On a phone the filters fold away behind one button.
+let filtersOpen = false;
+
 const SORTS = [
     { id: "title", label: "Title" },
     { id: "author", label: "Author" },
@@ -105,6 +108,18 @@ function matching() {
     };
 
     return books.sort(sorters[filters.sort] || sorters.title);
+
+}
+
+
+function filterButtonLabel() {
+
+    const active =
+        ["shelf", "status", "genre", "author", "rating"]
+            .filter((key) => filters[key] && !(isToBeRead && key === "status"))
+            .length;
+
+    return active ? `Filters (${active})` : "Filters";
 
 }
 
@@ -185,12 +200,19 @@ function renderPage() {
 
         ${heading}
 
-        <form class="filter-bar paper" id="filters" role="search" aria-label="Filter your books">
+        <form class="filter-bar paper ${filtersOpen ? "is-open" : ""}" id="filters" role="search" aria-label="Filter your books">
 
             <label class="field">
                 <span class="field__label">Search</span>
                 <input class="field__input" type="search" name="q" value="${filters.q}" placeholder="Title, author, genre, shelf…" autocomplete="off">
             </label>
+
+            <button class="button button--ghost filter-bar__toggle" type="button" data-action="toggle-filters" aria-expanded="${String(filtersOpen)}" aria-controls="moreFilters">
+                ${art("ui-chevron-down")}
+                <span data-filter-count>${filterButtonLabel()}</span>
+            </button>
+
+            <div class="filter-bar__more" id="moreFilters">
 
             <label class="field">
                 <span class="field__label">Shelf</span>
@@ -238,6 +260,8 @@ function renderPage() {
                     ${SORTS.map((sort) => html`<option value="${sort.id}" ${sort.id === filters.sort ? html`selected` : ""}>${sort.label}</option>`)}
                 </select>
             </label>
+
+            </div>
 
         </form>
 
@@ -485,6 +509,13 @@ async function start() {
 
         filters[event.target.name] = event.target.value;
 
+        const count =
+            form.querySelector("[data-filter-count]");
+
+        if (count) {
+            count.textContent = filterButtonLabel();
+        }
+
         applyFilters();
 
     });
@@ -502,6 +533,15 @@ async function start() {
 
         const { action, id } =
             trigger.dataset;
+
+        if (action === "toggle-filters") {
+
+            filtersOpen = !filtersOpen;
+
+            trigger.closest("#filters").classList.toggle("is-open", filtersOpen);
+            trigger.setAttribute("aria-expanded", String(filtersOpen));
+
+        }
 
         if (action === "add-book") {
             editBook();

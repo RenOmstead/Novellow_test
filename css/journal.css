@@ -1062,6 +1062,36 @@
         border-radius: 10px;
     }
 
+    /* All nine sections at once, three to a row, instead of
+       a strip that has to be scrolled sideways. */
+    .journal-ribbons {
+        display: grid;
+
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+
+        overflow: visible;
+    }
+
+    .journal-ribbon,
+    .journal[data-mode="page"] .journal-ribbon {
+        min-width: 0;
+
+        justify-content: center;
+
+        gap: 5px;
+
+        padding: 0 6px;
+    }
+
+    .journal[data-mode] .journal-ribbon__label {
+        overflow: hidden;
+
+        font-size: 12.5px;
+
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
     .journal-ribbon.is-active,
     .journal[data-mode="page"] .journal-ribbon.is-active {
         transform: translateY(-3px);
@@ -1098,6 +1128,14 @@
         padding: 6px 10px 9px;
 
         font-size: 13px;
+    }
+
+}
+
+@media (max-width: 380px) {
+
+    .journal-ribbon__art {
+        display: none;
     }
 
 }
