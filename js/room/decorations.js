@@ -30,13 +30,16 @@ import { art, toast, toastError } from "../core/ui.js?v=__VERSION__";
 
 export const DECOR_GROUPS = [
     { id: "pictures", name: "Pictures" },
-    { id: "shelf", name: "Shelves & sill" },
-    { id: "nature", name: "Plants & nature" },
+    { id: "bookish", name: "Bookish" },
+    { id: "cozy", name: "Cozy" },
+    { id: "plants", name: "Plants" },
+    { id: "witchy", name: "Witchy" },
     { id: "spooky", name: "Spooky" }
 ];
 
 export const DECOR_ASSETS = [
-    // Pictures in gilt frames
+    // Pictures and frames
+    { id: "portrait-ghost-reader", box: "0 0 120 152", width: 140, name: "Ghost reader portrait", group: "pictures" },
     { id: "picture-castle", box: "0 0 150 116", width: 120, name: "Castle at dusk", group: "pictures" },
     { id: "picture-haunted-house", box: "0 0 150 116", width: 120, name: "Haunted house", group: "pictures" },
     { id: "picture-london-rain", box: "0 0 150 116", width: 120, name: "London in the rain", group: "pictures" },
@@ -49,38 +52,91 @@ export const DECOR_ASSETS = [
     { id: "portrait-toadstool", box: "0 0 100 130", width: 70, name: "Toadstool portrait", group: "pictures" },
     { id: "portrait-teapot", box: "0 0 100 130", width: 70, name: "Teapot portrait", group: "pictures" },
     { id: "portrait-rose", box: "0 0 100 130", width: 70, name: "Black rose portrait", group: "pictures" },
+    { id: "decor-polaroid", box: "0 0 44 52", width: 50, name: "Moon polaroid", group: "pictures" },
 
-    // For shelves, the sill and the top of the bookcase
-    { id: "decor-candle", box: "0 0 40 90", width: 28, name: "Candle", group: "shelf" },
-    { id: "decor-candelabra", box: "0 0 110 220", width: 60, name: "Candelabra", group: "shelf" },
-    { id: "decor-lantern", box: "0 0 50 92", width: 38, name: "Lantern", group: "shelf" },
-    { id: "decor-stack", box: "0 0 84 36", width: 64, name: "Book stack", group: "shelf" },
-    { id: "decor-teacup", box: "0 0 56 58", width: 40, name: "Teacup", group: "shelf" },
-    { id: "decor-globe", box: "0 0 56 76", width: 44, name: "Globe", group: "shelf" },
-    { id: "decor-belljar", box: "0 0 50 72", width: 40, name: "Bell jar", group: "shelf" },
-    { id: "decor-bust", box: "0 0 48 76", width: 40, name: "Bust", group: "shelf" },
-    { id: "decor-crystal", box: "0 0 48 60", width: 36, name: "Crystal", group: "shelf" },
-    { id: "decor-starcharm", box: "0 0 40 52", width: 30, name: "Star charm", group: "shelf" },
-    { id: "decor-sign", box: "0 0 84 72", width: 64, name: "Sign", group: "shelf" },
-    { id: "decor-cat-sitting", box: "0 0 80 104", width: 60, name: "Cat", group: "shelf" },
-    { id: "decor-umbrella-stand", box: "0 0 80 170", width: 50, name: "Umbrella stand", group: "shelf" },
+    // Bookish
+    { id: "decor-spellbook-stack", box: "0 0 86 84", width: 96, name: "Spellbooks and a mouse", group: "bookish" },
+    { id: "decor-reading-mouse", box: "0 0 48 50", width: 52, name: "Reading mouse", group: "bookish" },
+    { id: "decor-open-book", box: "0 0 86 44", width: 92, name: "Open book", group: "bookish" },
+    { id: "decor-stack", box: "0 0 84 36", width: 64, name: "Book stack", group: "bookish" },
+    { id: "decor-quill-mug", box: "0 0 46 82", width: 46, name: "Quills in a mug", group: "bookish" },
+    { id: "decor-ink-ghost", box: "0 0 52 62", width: 52, name: "Ghost ink bottle", group: "bookish" },
+    { id: "decor-fountain-pen", box: "0 0 98 24", width: 92, name: "Fountain pen", group: "bookish" },
+    { id: "decor-typewriter", box: "0 0 86 66", width: 92, name: "Typewriter", group: "bookish" },
+    { id: "decor-mixtape", box: "0 0 86 56", width: 84, name: "Ghostly mixtape", group: "bookish" },
+    { id: "decor-hourglass", box: "0 0 38 64", width: 40, name: "Hourglass", group: "bookish" },
+    { id: "decor-tarot", box: "0 0 72 60", width: 72, name: "Tarot cards", group: "bookish" },
+    { id: "decor-teacup", box: "0 0 56 58", width: 40, name: "Teacup", group: "bookish" },
+    { id: "decor-globe", box: "0 0 56 76", width: 44, name: "Globe", group: "bookish" },
+    { id: "decor-bust", box: "0 0 48 76", width: 40, name: "Bust", group: "bookish" },
+    { id: "decor-sign", box: "0 0 84 72", width: 64, name: "Sign", group: "bookish" },
 
-    // Plants and nature
-    { id: "decor-plant", box: "0 0 60 78", width: 46, name: "Plant", group: "nature" },
-    { id: "decor-flowers", box: "0 0 54 78", width: 42, name: "Flowers", group: "nature" },
-    { id: "decor-mushrooms", box: "0 0 64 52", width: 46, name: "Toadstools", group: "nature" },
-    { id: "decor-crow", box: "0 0 64 66", width: 50, name: "Crow", group: "nature" },
+    // Cozy lights and friends
+    { id: "decor-fairy-lights", box: "0 0 140 54", width: 162, name: "Fairy lights", group: "cozy" },
+    { id: "decor-candle-jars", box: "0 0 68 52", width: 76, name: "Candles in jars", group: "cozy" },
+    { id: "decor-moon-lamp", box: "0 0 50 60", width: 56, name: "Moon lamp", group: "cozy" },
+    { id: "decor-mushroom-lamp", box: "0 0 46 56", width: 50, name: "Mushroom lamp", group: "cozy" },
+    { id: "decor-firefly-jar", box: "0 0 40 58", width: 44, name: "Jar of fireflies", group: "cozy" },
+    { id: "decor-candle", box: "0 0 40 90", width: 28, name: "Candle", group: "cozy" },
+    { id: "decor-candelabra", box: "0 0 110 220", width: 60, name: "Candelabra", group: "cozy" },
+    { id: "decor-lantern", box: "0 0 50 92", width: 38, name: "Lantern", group: "cozy" },
+    { id: "scene-cat", box: "0 0 220 160", width: 96, name: "Sleeping cat", group: "cozy" },
+    { id: "decor-cat-sitting", box: "0 0 80 104", width: 60, name: "Cat", group: "cozy" },
+    { id: "decor-belljar", box: "0 0 50 72", width: 40, name: "Bell jar", group: "cozy" },
+    { id: "decor-umbrella-stand", box: "0 0 80 170", width: 50, name: "Umbrella stand", group: "cozy" },
+
+    // Plants
+    { id: "decor-pothos", box: "0 0 66 118", width: 76, name: "Hanging pothos", group: "plants" },
+    { id: "decor-monstera", box: "0 0 66 84", width: 76, name: "Monstera", group: "plants" },
+    { id: "decor-fern", box: "0 0 66 74", width: 76, name: "Fern", group: "plants" },
+    { id: "decor-snake-plant", box: "0 0 44 84", width: 50, name: "Snake plant", group: "plants" },
+    { id: "decor-succulents", box: "0 0 76 46", width: 84, name: "Succulents", group: "plants" },
+    { id: "decor-cactus", box: "0 0 42 62", width: 46, name: "Cactus", group: "plants" },
+    { id: "decor-lavender-jar", box: "0 0 40 74", width: 44, name: "Lavender", group: "plants" },
+    { id: "decor-roses", box: "0 0 52 76", width: 58, name: "Dark roses", group: "plants" },
+    { id: "decor-terrarium", box: "0 0 54 60", width: 60, name: "Terrarium", group: "plants" },
+    { id: "decor-ivy-drape", box: "0 0 130 50", width: 150, name: "Trailing ivy", group: "plants" },
+    { id: "decor-glow-mushrooms", box: "0 0 78 66", width: 88, name: "Glowing mushrooms", group: "plants" },
+    { id: "decor-lantern-flowers", box: "0 0 66 106", width: 72, name: "Lantern flowers", group: "plants" },
+    { id: "decor-plant", box: "0 0 60 78", width: 46, name: "Plant", group: "plants" },
+    { id: "decor-flowers", box: "0 0 54 78", width: 42, name: "Flowers", group: "plants" },
+    { id: "decor-mushrooms", box: "0 0 64 52", width: 46, name: "Toadstools", group: "plants" },
+    { id: "decor-crow", box: "0 0 64 66", width: 50, name: "Crow", group: "plants" },
+
+    // Witchy
+    { id: "decor-magic-shop", box: "0 0 124 172", width: 144, name: "Magic shop", group: "witchy" },
+    { id: "decor-crystal-ball", box: "0 0 52 64", width: 58, name: "Crystal ball", group: "witchy" },
+    { id: "decor-crystal-cloche", box: "0 0 48 68", width: 52, name: "Crystal under glass", group: "witchy" },
+    { id: "decor-potion-love", box: "0 0 44 62", width: 46, name: "Love potion", group: "witchy" },
+    { id: "decor-potion-brew", box: "0 0 48 74", width: 52, name: "Witch's brew", group: "witchy" },
+    { id: "decor-potion-poison", box: "0 0 32 74", width: 34, name: "Poison", group: "witchy" },
+    { id: "decor-eye-newt", box: "0 0 46 56", width: 50, name: "Eye of newt", group: "witchy" },
+    { id: "decor-spellbook", box: "0 0 50 62", width: 56, name: "Spellbook", group: "witchy" },
+    { id: "decor-heart-skull", box: "0 0 52 50", width: 58, name: "Heart-eyed skull", group: "witchy" },
+    { id: "decor-herbs", box: "0 0 34 76", width: 40, name: "Drying herbs", group: "witchy" },
+    { id: "decor-moon-charm", box: "0 0 38 70", width: 44, name: "Moon charm", group: "witchy" },
+    { id: "decor-potion", box: "0 0 40 64", width: 30, name: "Potion", group: "witchy" },
+    { id: "decor-crystal", box: "0 0 48 60", width: 36, name: "Crystal", group: "witchy" },
+    { id: "decor-starcharm", box: "0 0 40 52", width: 30, name: "Star charm", group: "witchy" },
+    { id: "decor-cauldron", box: "0 0 140 140", width: 90, name: "Cauldron", group: "witchy" },
+    { id: "decor-broom", box: "0 0 70 210", width: 44, name: "Broom", group: "witchy" },
 
     // Spooky
+    { id: "decor-ghost-reader", box: "0 0 70 78", width: 78, name: "Ghost reading", group: "spooky" },
+    { id: "decor-ghost-books", box: "0 0 70 80", width: 78, name: "Ghost with books", group: "spooky" },
+    { id: "decor-ghost-scholar", box: "0 0 72 96", width: 78, name: "Scholar ghost", group: "spooky" },
+    { id: "decor-ghost", box: "0 0 44 54", width: 40, name: "Ghost", group: "spooky" },
+    { id: "decor-bat-pumpkin", box: "0 0 66 62", width: 72, name: "Bat in a pumpkin", group: "spooky" },
+    { id: "decor-bat-hanging", box: "0 0 52 80", width: 56, name: "Sleepy bat", group: "spooky" },
+    { id: "decor-bat-ghost", box: "0 0 58 66", width: 60, name: "Bat in a sheet", group: "spooky" },
+    { id: "decor-bat-scarf", box: "0 0 88 60", width: 90, name: "Bat in a scarf", group: "spooky" },
+    { id: "decor-bat", box: "0 0 84 46", width: 56, name: "Bat", group: "spooky" },
+    { id: "decor-jack-lantern", box: "0 0 56 50", width: 64, name: "Jack-o'-lantern", group: "spooky" },
+    { id: "decor-pumpkin", box: "0 0 56 42", width: 44, name: "Pumpkin", group: "spooky" },
+    { id: "decor-spider", box: "0 0 34 74", width: 34, name: "Spider", group: "spooky" },
+    { id: "decor-skull", box: "0 0 52 48", width: 42, name: "Skull", group: "spooky" },
     { id: "decor-cobweb", box: "0 0 120 120", width: 100, name: "Cobweb (left corner)", group: "spooky", dark: true },
     { id: "decor-cobweb-right", box: "0 0 120 120", width: 100, name: "Cobweb (right corner)", group: "spooky", dark: true },
-    { id: "decor-skull", box: "0 0 52 48", width: 42, name: "Skull", group: "spooky" },
-    { id: "decor-potion", box: "0 0 40 64", width: 30, name: "Potion", group: "spooky" },
-    { id: "decor-ghost", box: "0 0 44 54", width: 40, name: "Ghost", group: "spooky" },
-    { id: "decor-bat", box: "0 0 84 46", width: 56, name: "Bat", group: "spooky" },
-    { id: "decor-pumpkin", box: "0 0 56 42", width: 44, name: "Pumpkin", group: "spooky" },
-    { id: "decor-broom", box: "0 0 70 210", width: 44, name: "Broom", group: "spooky" },
-    { id: "decor-cauldron", box: "0 0 140 140", width: 90, name: "Cauldron", group: "spooky" },
 
     // Older pieces, still shown if they were placed before.
     { id: "frame-moth", box: "0 0 80 100", width: 70, name: "Moth frame", group: "retired" },
@@ -88,7 +144,7 @@ export const DECOR_ASSETS = [
     { id: "frame-castle", box: "0 0 130 100", width: 100, name: "Castle painting", group: "retired" }
 ];
 
-const LIMIT = 40;
+const LIMIT = 60;
 
 // room_area in the database → the part of the room it hangs on.
 const AREAS = {
