@@ -834,6 +834,19 @@ body.sidebar-collapsed .app-stage {
     font-size: 15px;
 }
 
+.mixer__slider small {
+    display: block;
+
+    color: var(--color-ink-faint);
+
+    font-size: 12px;
+    font-style: italic;
+}
+
+.mixer__slider.is-unavailable {
+    opacity: 0.6;
+}
+
 .mixer__slider--main {
     font-weight: 700;
 }
