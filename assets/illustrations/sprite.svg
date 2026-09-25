@@ -2356,30 +2356,147 @@
         
     </symbol>
 
+
+        <!-- ===================================================
+             RUGS (chosen in Settings; coloured by the theme)
+        ==================================================== -->
+
+        <!-- A rectangular rug with tassels at each end -->
+
+        <symbol id="rug-persian" viewBox="0 0 700 180">
+            <g stroke="#e8d6a8" stroke-width="2.4" stroke-linecap="round">
+                <path d="M12.0 34.0l-14 1.5 M11.1 43.4l-14 1.5 M10.2 52.8l-14 1.5 M9.3 62.2l-14 1.5 M8.4 71.6l-14 1.5 M7.5 81.0l-14 1.5 M6.6 90.4l-14 1.5 M5.7 99.8l-14 1.5 M4.8 109.2l-14 1.5 M3.9 118.6l-14 1.5 M3.0 128.0l-14 1.5 M2.1 137.4l-14 1.5 M1.2 146.8l-14 1.5 M0.3 156.2l-14 1.5 M-0.6 165.6l-14 1.5" />
+                <path d="M688.0 34.0l14 1.5 M688.9 43.4l14 1.5 M689.8 52.8l14 1.5 M690.7 62.2l14 1.5 M691.6 71.6l14 1.5 M692.5 81.0l14 1.5 M693.4 90.4l14 1.5 M694.3 99.8l14 1.5 M695.2 109.2l14 1.5 M696.1 118.6l14 1.5 M697.0 128.0l14 1.5 M697.9 137.4l14 1.5 M698.8 146.8l14 1.5 M699.7 156.2l14 1.5 M700.6 165.6l14 1.5" />
+            </g>
+            <path d="M40 30H660L690 176H10Z" style="fill: var(--rug-edge, #2c2a4a)" />
+            <path d="M58 40H642L668 166H32Z" style="fill: var(--rug-border, #8a3444)" />
+            <path d="M58 40H642L668 166H32Z" fill="none" stroke="#e0b879" stroke-width="1.6" stroke-dasharray="3 6" />
+            <path d="M88 56H612L632 150H68Z" style="fill: var(--rug-field, #6a2a38)" />
+            <path d="M350 64L470 103L350 142L230 103Z" style="fill: var(--rug-border, #8a3444)" stroke="#e0b879" stroke-width="2" />
+            <path d="M350 82L410 103L350 124L290 103Z" style="fill: var(--rug-flower, #b9505a)" />
+            <circle cx="350" cy="103" r="6" fill="#e9b877" />
+            <g style="fill: var(--rug-flower, #b9505a)">
+                <path d="M120 70L140 76L120 82L100 76Z" /><path d="M580 70L600 76L580 82L560 76Z" />
+                <path d="M112 130L134 137L112 144L90 137Z" /><path d="M588 130L610 137L588 144L566 137Z" />
+            </g>
+        </symbol>
+
+        <!-- A round braided rug -->
+
+        <symbol id="rug-braided" viewBox="0 0 700 180">
+            <ellipse cx="350" cy="110" rx="300" ry="68" style="fill: var(--rug-edge, #2c2a4a)" />
+            <g fill="none" stroke-width="12" stroke-dasharray="10 4">
+                <ellipse cx="350" cy="110" rx="288" ry="62" style="stroke: var(--rug-border, #8a3444)" />
+                <ellipse cx="350" cy="110" rx="264" ry="54" stroke="#d9c7a0" />
+                <ellipse cx="350" cy="110" rx="240" ry="47" style="stroke: var(--rug-field, #6a2a38)" />
+                <ellipse cx="350" cy="110" rx="214" ry="40" style="stroke: var(--rug-flower, #b9505a)" />
+                <ellipse cx="350" cy="110" rx="188" ry="33" style="stroke: var(--rug-border, #8a3444)" />
+                <ellipse cx="350" cy="110" rx="160" ry="26" stroke="#d9c7a0" />
+                <ellipse cx="350" cy="110" rx="130" ry="19" style="stroke: var(--rug-field, #6a2a38)" />
+                <ellipse cx="350" cy="110" rx="96" ry="12" style="stroke: var(--rug-flower, #b9505a)" />
+            </g>
+            <ellipse cx="350" cy="110" rx="60" ry="6" style="fill: var(--rug-border, #8a3444)" />
+        </symbol>
+
+        <!-- ===================================================
+             THE WINDOW SILL AND CURTAINS
+             Curtains share the window's coordinates (viewBox
+             starts at -20,-40 so the window is 0 0 440 330).
+        ==================================================== -->
+
+        <symbol id="window-sill" viewBox="0 0 480 40">
+            <path d="M6 8H474L480 18H0Z" fill="#9a6440" stroke="#3a2416" stroke-width="1.6" stroke-linejoin="round" />
+            <path d="M0 18H480V28H0Z" fill="#6e4029" stroke="#3a2416" stroke-width="1.6" />
+            <path d="M8 10H472" stroke="#c9905e" stroke-width="1.4" opacity="0.7" />
+            <path d="M60 28L72 40H88L84 28M392 28L396 40H412L424 28" fill="#5a3322" stroke="#3a2416" stroke-width="1.2" stroke-linejoin="round" />
+        </symbol>
+
+        <!-- Velvet drapes, tied back with tasselled ropes -->
+
+        <symbol id="curtain-drapes" viewBox="-20 -40 480 380">
+            <path d="M-16 -26H456" stroke="#3a2416" stroke-width="7" stroke-linecap="round" />
+            <path d="M-16 -26H456" stroke="#b8893e" stroke-width="3.4" stroke-linecap="round" />
+            <circle cx="-18" cy="-26" r="7" fill="url(#brassBody)" stroke="#3a2416" stroke-width="1.2" />
+            <circle cx="458" cy="-26" r="7" fill="url(#brassBody)" stroke="#3a2416" stroke-width="1.2" />
+            <!-- Left drape -->
+            <path d="M-14 -22H96C92 40 86 120 70 186C86 232 92 290 84 332H-14Z" style="fill: var(--curtain, #9c4a5c)" stroke="#2a1418" stroke-width="1.6" stroke-linejoin="round" />
+            <path d="M18 -20C16 60 20 140 26 186C22 240 18 290 16 332M50 -20C50 60 46 140 44 186C50 240 52 290 50 332" fill="none" style="stroke: var(--curtain-fold, #6a2a3d)" stroke-width="5" stroke-linecap="round" opacity="0.6" />
+            <!-- Right drape -->
+            <path d="M454 -22H344C348 40 354 120 370 186C354 232 348 290 356 332H454Z" style="fill: var(--curtain, #9c4a5c)" stroke="#2a1418" stroke-width="1.6" stroke-linejoin="round" />
+            <path d="M422 -20C424 60 420 140 414 186C418 240 422 290 424 332M390 -20C390 60 394 140 396 186C390 240 388 290 390 332" fill="none" style="stroke: var(--curtain-fold, #6a2a3d)" stroke-width="5" stroke-linecap="round" opacity="0.6" />
+            <!-- Scalloped pelmet -->
+            <path d="M-16 -24H456V6C436 20 416 20 396 6C376 20 356 20 336 6C316 20 296 20 276 6C256 20 236 20 216 6C196 20 176 20 156 6C136 20 116 20 96 6C76 20 56 20 36 6C16 20 -4 20 -16 8Z" style="fill: var(--curtain, #9c4a5c)" stroke="#2a1418" stroke-width="1.6" stroke-linejoin="round" />
+            <path d="M-12 0H452" stroke="#e0b879" stroke-width="1.6" stroke-dasharray="3 5" />
+            <!-- Tie-backs with tassels -->
+            <g fill="#e0b879" stroke="#7a5520" stroke-width="1">
+                <path d="M-12 180C20 196 56 196 78 184L80 192C56 206 18 204 -12 190Z" />
+                <path d="M452 180C420 196 384 196 362 184L360 192C384 206 422 204 452 190Z" />
+                <path d="M74 190L70 222H86L82 190Z" /><path d="M366 190L362 222H378L374 190Z" />
+                <circle cx="78" cy="190" r="5" /><circle cx="370" cy="190" r="5" />
+            </g>
+        </symbol>
+
+        <!-- Sheer lace curtains -->
+
+        <symbol id="curtain-lace" viewBox="-20 -40 480 380">
+            <defs>
+                <pattern id="laceDots" width="16" height="16" patternUnits="userSpaceOnUse">
+                    <circle cx="4" cy="4" r="2.2" fill="none" stroke="#ffffff" stroke-width="0.8" />
+                    <circle cx="12" cy="12" r="1.2" fill="#ffffff" />
+                </pattern>
+            </defs>
+            <path d="M-14 -26H454" stroke="#e8e2d6" stroke-width="4" stroke-linecap="round" />
+            <g>
+                <path d="M-10 -24H196C186 60 196 200 176 318C150 326 120 316 96 324C70 316 40 326 14 318C0 322 -10 318 -10 318Z" fill="#fffaf2" fill-opacity="0.34" stroke="#ffffff" stroke-opacity="0.6" stroke-width="1.2" />
+                <path d="M-10 -24H196C186 60 196 200 176 318C150 326 120 316 96 324C70 316 40 326 14 318C0 322 -10 318 -10 318Z" fill="url(#laceDots)" opacity="0.5" />
+                <path d="M450 -24H244C254 60 244 200 264 318C290 326 320 316 344 324C370 316 400 326 426 318C440 322 450 318 450 318Z" fill="#fffaf2" fill-opacity="0.34" stroke="#ffffff" stroke-opacity="0.6" stroke-width="1.2" />
+                <path d="M450 -24H244C254 60 244 200 264 318C290 326 320 316 344 324C370 316 400 326 426 318C440 322 450 318 450 318Z" fill="url(#laceDots)" opacity="0.5" />
+                <path d="M40 -22C38 100 44 220 36 320M100 -22C104 100 96 220 100 322M150 -22C148 100 156 220 144 320M290 -22C292 100 284 220 296 320M340 -22C336 100 344 220 340 322M400 -22C402 100 396 220 404 320" fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="3" />
+            </g>
+        </symbol>
+
+        <!-- Café curtains: a short gingham pair and a little valance -->
+
+        <symbol id="curtain-cafe" viewBox="-20 -40 480 380">
+            <defs>
+                <pattern id="gingham" width="14" height="14" patternUnits="userSpaceOnUse">
+                    <rect width="14" height="14" fill="#fbf4ea" />
+                    <rect width="7" height="14" style="fill: var(--curtain, #9c4a5c)" opacity="0.45" />
+                    <rect width="14" height="7" style="fill: var(--curtain, #9c4a5c)" opacity="0.45" />
+                </pattern>
+            </defs>
+            <path d="M-6 -24H446" stroke="#b8893e" stroke-width="3.4" stroke-linecap="round" />
+            <path d="M-6 -22H446V16C426 28 406 28 386 16C366 28 346 28 326 16C306 28 286 28 266 16C246 28 226 28 206 16C186 28 166 28 146 16C126 28 106 28 86 16C66 28 46 28 26 16C12 24 0 24 -6 18Z" fill="url(#gingham)" stroke="#6a4a3a" stroke-width="1.2" />
+            <path d="M-6 188H446" stroke="#b8893e" stroke-width="3.4" stroke-linecap="round" />
+            <path d="M-4 190H214V326C194 332 174 324 154 330C134 324 114 332 94 326C74 332 54 324 34 330C18 326 6 330 -4 326Z" fill="url(#gingham)" stroke="#6a4a3a" stroke-width="1.2" />
+            <path d="M226 190H444V326C428 330 414 326 404 330C384 324 364 332 344 326C324 332 304 324 284 330C264 324 244 332 226 326Z" fill="url(#gingham)" stroke="#6a4a3a" stroke-width="1.2" />
+            <path d="M30 192C28 240 34 290 30 326M80 192C84 240 78 290 84 326M140 192C138 240 144 290 140 326M190 192C194 240 188 290 192 326M250 192C248 240 254 290 250 326M300 192C304 240 298 290 304 326M360 192C358 240 364 290 360 326M414 192C418 240 412 290 418 326" fill="none" stroke="#6a4a3a" stroke-opacity="0.25" stroke-width="3" />
+        </symbol>
+
     <symbol id="scene-rug" viewBox="0 0 700 180">
 
         <defs>
 
         <pattern id="rugFlowers" width="36" height="24" patternUnits="userSpaceOnUse">
-            <rect width="36" height="24" fill="#6a2a38" />
-            <circle cx="9" cy="6" r="4" fill="#b9505a" />
+            <rect width="36" height="24" style="fill: var(--rug-field, #6a2a38)" />
+            <circle cx="9" cy="6" r="4" style="fill: var(--rug-flower, #b9505a)" />
             <circle cx="9" cy="6" r="1.6" fill="#e9b877" />
-            <circle cx="27" cy="18" r="4" fill="#a8455a" />
+            <circle cx="27" cy="18" r="4" style="fill: var(--rug-flower, #a8455a)" />
             <circle cx="27" cy="18" r="1.6" fill="#e9b877" />
             <path d="M18 6C20 10 22 10 24 12M0 18C4 16 6 16 8 20" stroke="#3e5a46" stroke-width="1.6" fill="none" />
         </pattern>
 
         </defs>
 
-        <ellipse cx="350" cy="120" rx="345" ry="118" fill="#2c2a4a" />
+        <ellipse cx="350" cy="120" rx="345" ry="118" style="fill: var(--rug-edge, #2c2a4a)" />
 
         <ellipse cx="350" cy="120" rx="330" ry="108" fill="none" stroke="#c9954f" stroke-width="3" stroke-dasharray="2 6" />
 
-        <ellipse cx="350" cy="120" rx="316" ry="100" fill="#8a3444" />
+        <ellipse cx="350" cy="120" rx="316" ry="100" style="fill: var(--rug-border, #8a3444)" />
 
         <ellipse cx="350" cy="120" rx="296" ry="88" fill="url(#rugFlowers)" />
 
-        <ellipse cx="350" cy="120" rx="200" ry="56" fill="none" stroke="#2c2a4a" stroke-width="6" />
+        <ellipse cx="350" cy="120" rx="200" ry="56" fill="none" style="stroke: var(--rug-edge, #2c2a4a)" stroke-width="6" />
 
         <ellipse cx="350" cy="120" rx="190" ry="50" fill="none" stroke="#e0b879" stroke-width="1.4" stroke-dasharray="4 5" />
 

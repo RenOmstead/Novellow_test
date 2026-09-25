@@ -4,7 +4,7 @@
 
    Small, per-device choices about the room that don't need
    to follow the reader between devices: which cat lives in
-   the library, and where ghosts float. Kept in localStorage
+   the library, where ghosts float, the curtains and the rug. Kept in localStorage
    (sound has its own, in js/sound/soundscape.js).
 ========================================================= */
 
@@ -27,9 +27,25 @@ export const GHOST_CHOICES = [
     { id: "never", name: "Never" }
 ];
 
+export const CURTAINS = [
+    { id: "drapes", name: "Velvet drapes, tied back" },
+    { id: "lace", name: "Sheer lace" },
+    { id: "cafe", name: "Café curtains" },
+    { id: "none", name: "No curtains" }
+];
+
+export const RUGS = [
+    { id: "oval", name: "Round, with flowers" },
+    { id: "persian", name: "Rectangle, with tassels" },
+    { id: "braided", name: "Round braided" },
+    { id: "none", name: "No rug" }
+];
+
 const DEFAULTS = {
     cat: "black",
-    ghosts: "haunted"
+    ghosts: "haunted",
+    curtains: "drapes",
+    rug: "oval"
 };
 
 
@@ -70,10 +86,14 @@ export function setPreference(key, value) {
 
 export function applyPreferences() {
 
-    const { cat } =
+    const { cat, curtains, rug } =
         getPreferences();
 
-    document.documentElement.dataset.cat =
-        CATS.some((item) => item.id === cat) ? cat : "black";
+    const root =
+        document.documentElement;
+
+    root.dataset.cat = CATS.some((item) => item.id === cat) ? cat : "black";
+    root.dataset.curtains = CURTAINS.some((item) => item.id === curtains) ? curtains : "drapes";
+    root.dataset.rug = RUGS.some((item) => item.id === rug) ? rug : "oval";
 
 }
