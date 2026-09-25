@@ -137,10 +137,14 @@
 }
 
 .moon-window {
+    z-index: 1;
+
     filter: drop-shadow(0 10px 14px rgba(30, 12, 8, 0.35));
 }
 
 .ivy--window {
+    z-index: 5;
+
     height: auto;
 }
 
@@ -171,15 +175,23 @@
 
 /* The sill under the window, and curtains over it: the
    curtains share the window's box, with room for the rod. */
+/* The sill is always in front of the curtains. */
 .window-sill {
+    z-index: 3;
+
+    /* Measured in the window's own units (its width / 440):
+       the ledge's top is at the foot of the glass, and its
+       front board hides the curtains' hems. */
     left: calc(var(--window-left) - var(--window-width) * 20 / 440);
-    bottom: calc(var(--window-bottom) - var(--window-width) * 0.06);
+    bottom: calc(var(--window-bottom) - var(--window-width) * 28 / 440);
 
     width: calc(var(--window-width) * 480 / 440);
 }
 
 .window-curtains {
     display: none;
+
+    z-index: 2;
 
     left: calc(var(--window-left) - var(--window-width) * 20 / 440);
     bottom: calc(var(--window-bottom) - var(--window-width) * 10 / 440);
@@ -198,7 +210,9 @@
 /* Candles at each end of the sill. */
 .sill-candle--left,
 .sill-candle--right {
-    bottom: calc(var(--window-bottom) + var(--window-width) * 0.005);
+    z-index: 4;
+
+    bottom: calc(var(--window-bottom) + var(--window-width) * 3 / 440);
 
     width: calc(var(--window-width) * 0.06);
 }

@@ -22,30 +22,64 @@ import { art, toast, toastError } from "../core/ui.js?v=__VERSION__";
     width in pixels at scale 1, and a friendly name.
 */
 
+export const DECOR_GROUPS = [
+    { id: "pictures", name: "Pictures" },
+    { id: "shelf", name: "Shelves & sill" },
+    { id: "nature", name: "Plants & nature" },
+    { id: "spooky", name: "Spooky" }
+];
+
 export const DECOR_ASSETS = [
-    { id: "decor-candle", box: "0 0 40 90", width: 28, name: "Candle" },
-    { id: "decor-lantern", box: "0 0 50 92", width: 38, name: "Lantern" },
-    { id: "decor-potion", box: "0 0 40 64", width: 30, name: "Potion" },
-    { id: "decor-skull", box: "0 0 52 48", width: 42, name: "Skull" },
-    { id: "decor-crow", box: "0 0 64 66", width: 50, name: "Crow" },
-    { id: "decor-bust", box: "0 0 48 76", width: 40, name: "Bust" },
-    { id: "decor-belljar", box: "0 0 50 72", width: 40, name: "Bell jar" },
-    { id: "decor-teacup", box: "0 0 56 58", width: 40, name: "Teacup" },
-    { id: "decor-plant", box: "0 0 60 78", width: 46, name: "Plant" },
-    { id: "decor-flowers", box: "0 0 54 78", width: 42, name: "Flowers" },
-    { id: "decor-mushrooms", box: "0 0 64 52", width: 46, name: "Toadstools" },
-    { id: "decor-crystal", box: "0 0 48 60", width: 36, name: "Crystal" },
-    { id: "decor-globe", box: "0 0 56 76", width: 44, name: "Globe" },
-    { id: "decor-stack", box: "0 0 84 36", width: 64, name: "Book stack" },
-    { id: "decor-pumpkin", box: "0 0 56 42", width: 44, name: "Pumpkin" },
-    { id: "decor-ghost", box: "0 0 44 54", width: 40, name: "Ghost" },
-    { id: "decor-bat", box: "0 0 84 46", width: 56, name: "Bat" },
-    { id: "decor-cat-sitting", box: "0 0 80 104", width: 60, name: "Cat" },
-    { id: "decor-starcharm", box: "0 0 40 52", width: 30, name: "Star charm" },
-    { id: "decor-sign", box: "0 0 84 72", width: 64, name: "Sign" },
-    { id: "frame-moth", box: "0 0 80 100", width: 70, name: "Moth frame" },
-    { id: "frame-ghost", box: "0 0 70 90", width: 62, name: "Ghost portrait" },
-    { id: "frame-castle", box: "0 0 130 100", width: 100, name: "Castle painting" }
+    // Pictures in gilt frames
+    { id: "picture-castle", box: "0 0 150 116", width: 120, name: "Castle at dusk", group: "pictures" },
+    { id: "picture-haunted-house", box: "0 0 150 116", width: 120, name: "Haunted house", group: "pictures" },
+    { id: "picture-london-rain", box: "0 0 150 116", width: 120, name: "London in the rain", group: "pictures" },
+    { id: "picture-forest-glade", box: "0 0 150 116", width: 120, name: "Forest glade", group: "pictures" },
+    { id: "picture-paris-cafe", box: "0 0 150 116", width: 120, name: "Paris café", group: "pictures" },
+    { id: "picture-cathedral", box: "0 0 150 116", width: 120, name: "Moonlit cathedral", group: "pictures" },
+    { id: "portrait-moth", box: "0 0 100 130", width: 70, name: "Moth portrait", group: "pictures" },
+    { id: "portrait-ghost", box: "0 0 100 130", width: 70, name: "Ghost portrait", group: "pictures" },
+    { id: "portrait-umbrella", box: "0 0 100 130", width: 70, name: "Umbrella portrait", group: "pictures" },
+    { id: "portrait-toadstool", box: "0 0 100 130", width: 70, name: "Toadstool portrait", group: "pictures" },
+    { id: "portrait-teapot", box: "0 0 100 130", width: 70, name: "Teapot portrait", group: "pictures" },
+    { id: "portrait-rose", box: "0 0 100 130", width: 70, name: "Black rose portrait", group: "pictures" },
+
+    // For shelves, the sill and the top of the bookcase
+    { id: "decor-candle", box: "0 0 40 90", width: 28, name: "Candle", group: "shelf" },
+    { id: "decor-candelabra", box: "0 0 110 220", width: 60, name: "Candelabra", group: "shelf" },
+    { id: "decor-lantern", box: "0 0 50 92", width: 38, name: "Lantern", group: "shelf" },
+    { id: "decor-stack", box: "0 0 84 36", width: 64, name: "Book stack", group: "shelf" },
+    { id: "decor-teacup", box: "0 0 56 58", width: 40, name: "Teacup", group: "shelf" },
+    { id: "decor-globe", box: "0 0 56 76", width: 44, name: "Globe", group: "shelf" },
+    { id: "decor-belljar", box: "0 0 50 72", width: 40, name: "Bell jar", group: "shelf" },
+    { id: "decor-bust", box: "0 0 48 76", width: 40, name: "Bust", group: "shelf" },
+    { id: "decor-crystal", box: "0 0 48 60", width: 36, name: "Crystal", group: "shelf" },
+    { id: "decor-starcharm", box: "0 0 40 52", width: 30, name: "Star charm", group: "shelf" },
+    { id: "decor-sign", box: "0 0 84 72", width: 64, name: "Sign", group: "shelf" },
+    { id: "decor-cat-sitting", box: "0 0 80 104", width: 60, name: "Cat", group: "shelf" },
+    { id: "decor-umbrella-stand", box: "0 0 80 170", width: 50, name: "Umbrella stand", group: "shelf" },
+
+    // Plants and nature
+    { id: "decor-plant", box: "0 0 60 78", width: 46, name: "Plant", group: "nature" },
+    { id: "decor-flowers", box: "0 0 54 78", width: 42, name: "Flowers", group: "nature" },
+    { id: "decor-mushrooms", box: "0 0 64 52", width: 46, name: "Toadstools", group: "nature" },
+    { id: "decor-crow", box: "0 0 64 66", width: 50, name: "Crow", group: "nature" },
+
+    // Spooky
+    { id: "decor-cobweb", box: "0 0 120 120", width: 100, name: "Cobweb (left corner)", group: "spooky", dark: true },
+    { id: "decor-cobweb-right", box: "0 0 120 120", width: 100, name: "Cobweb (right corner)", group: "spooky", dark: true },
+    { id: "decor-skull", box: "0 0 52 48", width: 42, name: "Skull", group: "spooky" },
+    { id: "decor-potion", box: "0 0 40 64", width: 30, name: "Potion", group: "spooky" },
+    { id: "decor-ghost", box: "0 0 44 54", width: 40, name: "Ghost", group: "spooky" },
+    { id: "decor-bat", box: "0 0 84 46", width: 56, name: "Bat", group: "spooky" },
+    { id: "decor-pumpkin", box: "0 0 56 42", width: 44, name: "Pumpkin", group: "spooky" },
+    { id: "decor-broom", box: "0 0 70 210", width: 44, name: "Broom", group: "spooky" },
+    { id: "decor-cauldron", box: "0 0 140 140", width: 90, name: "Cauldron", group: "spooky" },
+
+    // Older pieces, still shown if they were placed before.
+    { id: "frame-moth", box: "0 0 80 100", width: 70, name: "Moth frame", group: "retired" },
+    { id: "frame-ghost", box: "0 0 70 90", width: 62, name: "Ghost portrait", group: "retired" },
+    { id: "frame-castle", box: "0 0 130 100", width: 100, name: "Castle painting", group: "retired" }
 ];
 
 const LIMIT = 40;
@@ -63,6 +97,7 @@ let arranging = false;
 let selectedId = null;
 let bar = null;
 let loadToken = 0;
+let paletteGroup = "pictures";
 
 
 function assetFor(id) {
@@ -171,15 +206,21 @@ function drawBar() {
         <div class="arrange-bar__head">
             <div>
                 <p class="eyebrow">Arrange the room</p>
-                <p class="arrange-bar__hint">Choose a piece to add it, then drag it anywhere on the wall or the bookcase.</p>
+                <p class="arrange-bar__hint">Choose a piece to add it, then drag it anywhere: the wall, the window sill, the shelves or the top of the bookcase.</p>
             </div>
             <button class="button button--primary button--small" type="button" data-arrange="done">Done</button>
         </div>
 
+        <div class="arrange-bar__tabs" role="tablist" aria-label="Kinds of decoration">
+            ${DECOR_GROUPS.map((group) => html`
+                <button class="arrange-bar__tab ${group.id === paletteGroup ? "is-current" : ""}" type="button" role="tab" aria-selected="${String(group.id === paletteGroup)}" data-decor-group="${group.id}">${group.name}</button>
+            `)}
+        </div>
+
         <ul class="arrange-bar__palette" aria-label="Decorations to add">
-            ${DECOR_ASSETS.map((asset) => html`
+            ${DECOR_ASSETS.filter((asset) => asset.group === paletteGroup).map((asset) => html`
                 <li>
-                    <button class="arrange-bar__asset" type="button" data-add-decor="${asset.id}" title="${asset.name}" aria-label="Add ${asset.name}">
+                    <button class="arrange-bar__asset ${asset.dark ? "arrange-bar__asset--dark" : ""}" type="button" data-add-decor="${asset.id}" title="${asset.name}" aria-label="Add ${asset.name}">
                         <svg viewBox="${asset.box}" aria-hidden="true"><use href="#${asset.id}"></use></svg>
                     </button>
                 </li>
@@ -346,6 +387,16 @@ function select(id) {
 
 
 function onBarClick(event) {
+
+    const tab =
+        event.target.closest("[data-decor-group]");
+
+    if (tab) {
+        paletteGroup = tab.dataset.decorGroup;
+        drawBar();
+        bar.querySelector(`[data-decor-group="${paletteGroup}"]`)?.focus();
+        return;
+    }
 
     const add =
         event.target.closest("[data-add-decor]");
@@ -548,7 +599,6 @@ export function setArranging(on) {
 
     if (on) {
         bar?.querySelector("[data-add-decor]")?.focus();
-        toast("Arrange the room: add pieces, then drag them into place.", { timeout: 3200 });
     }
 
 }

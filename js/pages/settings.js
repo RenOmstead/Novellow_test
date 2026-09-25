@@ -30,7 +30,7 @@ import { NovellowError } from "../core/errors.js?v=__VERSION__";
 import { SHELF_SORTS } from "../config.js?v=__VERSION__";
 import { exportLibrary, checkImport, importLibrary } from "../data/transfer.js?v=__VERSION__";
 import { mountMixer } from "../sound/mixer.js?v=__VERSION__";
-import { CATS, GHOST_CHOICES, CURTAINS, RUGS, MUGS, CHINA_COLOURS, TEASETS, getPreferences, setPreference } from "../shell/preferences.js?v=__VERSION__";
+import { CATS, GHOST_CHOICES, CURTAINS, RUGS, WINDOW_SHAPES, WOODS, MUGS, CHINA_COLOURS, TEASETS, getPreferences, setPreference } from "../shell/preferences.js?v=__VERSION__";
 
 
 const content =
@@ -253,6 +253,24 @@ function renderPage() {
                             <select class="field__input" data-pref="cat">
                                 ${CATS.map((cat) => html`
                                     <option value="${cat.id}" ${cat.id === prefs.cat ? html`selected` : ""}>${cat.name}</option>
+                                `)}
+                            </select>
+                        </label>
+
+                        <label class="field">
+                            <span class="field__label">Window</span>
+                            <select class="field__input" data-pref="window">
+                                ${WINDOW_SHAPES.map((choice) => html`
+                                    <option value="${choice.id}" ${choice.id === prefs.window ? html`selected` : ""}>${choice.name}</option>
+                                `)}
+                            </select>
+                        </label>
+
+                        <label class="field">
+                            <span class="field__label">Window wood</span>
+                            <select class="field__input" data-pref="wood">
+                                ${WOODS.map((choice) => html`
+                                    <option value="${choice.id}" ${choice.id === prefs.wood ? html`selected` : ""}>${choice.name}</option>
                                 `)}
                             </select>
                         </label>

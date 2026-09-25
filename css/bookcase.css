@@ -623,7 +623,7 @@
     }
 
     .shelf-plaque {
-        left: 22px;
+        max-width: calc(100% - 120px);
 
         font-size: 13px;
     }
