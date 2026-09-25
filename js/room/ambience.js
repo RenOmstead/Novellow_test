@@ -84,6 +84,65 @@ function build() {
 
     layer.innerHTML = markup;
 
+    ghostLayer().innerHTML = hauntedGhosts();
+
+}
+
+
+/*
+    The haunted room keeps a few ghosts drifting through it:
+    a sheet ghost, a wispy one and one carrying a lantern.
+*/
+
+// Ghosts float above the room (so they drift past the shelves
+// and the journal), on their own layer that never takes clicks.
+function ghostLayer() {
+
+    let holder =
+        document.querySelector(".ghost-layer");
+
+    if (!holder) {
+        document.body.insertAdjacentHTML("beforeend", `<div class="ghost-layer" aria-hidden="true"></div>`);
+        holder = document.body.lastElementChild;
+    }
+
+    return holder;
+
+}
+
+
+const GHOSTS = [
+    ["decor-ghost", "0 0 44 54", 46],
+    ["decor-ghost-wisp", "0 0 64 92", 50],
+    ["decor-ghost-lantern", "0 0 84 80", 72]
+];
+
+function hauntedGhosts() {
+
+    if (root().dataset.theme !== "haunted") {
+        return "";
+    }
+
+    const count =
+        { sparse: 2, cozy: 4, abundant: 6 }[root().dataset.density] || 4;
+
+    let markup =
+        "";
+
+    for (let index = 0; index < count; index += 1) {
+
+        const [symbol, box, width] =
+            GHOSTS[index % GHOSTS.length];
+
+        const scale =
+            random(0.8, 1.25);
+
+        markup += `<svg class="floating-ghost${index % 2 ? " floating-ghost--leftward" : ""}" viewBox="${box}" aria-hidden="true" style="--still-x: ${random(55, 90).toFixed(0)}; top: ${random(8, 70).toFixed(0)}%; width: ${(width * scale).toFixed(0)}px; animation-duration: ${random(45, 80).toFixed(0)}s, ${random(3.5, 5.5).toFixed(1)}s, ${random(9, 16).toFixed(0)}s; animation-delay: -${random(0, 70).toFixed(0)}s, -${random(0, 5).toFixed(1)}s, -${random(0, 12).toFixed(0)}s"><use href="#${symbol}"></use></svg>`;
+
+    }
+
+    return markup;
+
 }
 
 

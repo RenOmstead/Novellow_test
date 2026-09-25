@@ -24,11 +24,11 @@ export const THEMES = [
     {
         id: "haunted",
         name: "Haunted Library",
-        description: "Mist curls past the shelves, friendly ghosts drift about, and the candles never quite go out.",
+        description: "Cobwebs in every corner, ghosts drifting past the shelves, a bubbling cauldron and a full moon at the window.",
         swatch: ["#3f3a4d", "#1f1a26", "#8e86a8", "#d8d0ea"],
         ivy: "forest",
         weather: { rain: false, fog: true, fireflies: false },
-        crownDecor: ["skull", "ghost", "candle", "bat", "stack", "cat", "lantern"],
+        crownDecor: ["skull", "ghost", "candle", "bat", "cauldron", "cat", "lantern"],
         wallArt: { moth: "frame-ghost" }
     },
 

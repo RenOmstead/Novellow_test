@@ -823,6 +823,22 @@ body.sidebar-collapsed .app-stage {
     border-top: 1px solid rgba(120, 80, 60, 0.25);
 }
 
+.mixer__group {
+    margin: 0 0 2px;
+
+    color: var(--color-plum);
+
+    font-family: var(--font-engraved);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+}
+
+.popover.mixer {
+    max-height: min(78vh, 640px);
+
+    overflow-y: auto;
+}
+
 .mixer__slider {
     display: grid;
 
