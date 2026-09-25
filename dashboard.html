@@ -323,6 +323,21 @@
                 ></div>
 
 
+                <!-- Shown when the journal is shut, to open it again -->
+
+                <button
+                    class="journal-reopen"
+                    id="journalReopen"
+                    type="button"
+                    hidden
+                >
+                    <svg viewBox="0 0 150 110" aria-hidden="true">
+                        <use href="#decor-closed-journal" />
+                    </svg>
+                    <span>Open the journal</span>
+                </button>
+
+
                 <!-- Little paper notes under the journal -->
 
                 <div
@@ -331,21 +346,59 @@
                 ></div>
 
 
+                <!-- The corner beside the bookcase: each room has
+                     its own scene (css/room.css shows one). -->
+
                 <div
                     class="cozy-corner"
                     aria-hidden="true"
                 >
-                    <svg class="armchair" viewBox="0 0 260 280">
-                        <use href="#scene-armchair" />
-                    </svg>
 
-                    <svg class="side-table" viewBox="0 0 170 210">
-                        <use href="#scene-side-table" />
-                    </svg>
+                    <div class="corner-scene corner-scene--armchair">
+                        <svg class="corner-candelabra" viewBox="0 0 110 220">
+                            <use href="#decor-candelabra" />
+                        </svg>
+                        <svg class="armchair" viewBox="0 0 260 280">
+                            <use href="#scene-armchair" />
+                        </svg>
+                        <svg class="side-table" viewBox="0 0 170 210">
+                            <use href="#scene-side-table" />
+                        </svg>
+                        <svg class="corner-umbrellas" viewBox="0 0 80 170">
+                            <use href="#decor-umbrella-stand" />
+                        </svg>
+                    </div>
 
-                    <svg class="cozy-cauldron" viewBox="0 0 140 140">
-                        <use href="#decor-cauldron" />
-                    </svg>
+                    <div class="corner-scene corner-scene--haunted">
+                        <svg class="corner-broom" viewBox="0 0 70 210">
+                            <use href="#decor-broom" />
+                        </svg>
+                        <svg class="corner-cauldron" viewBox="0 0 140 140">
+                            <use href="#decor-cauldron" />
+                        </svg>
+                        <svg class="corner-pumpkin" viewBox="0 0 56 42">
+                            <use href="#decor-pumpkin" />
+                        </svg>
+                        <svg class="corner-pumpkin corner-pumpkin--small" viewBox="0 0 56 42">
+                            <use href="#decor-pumpkin" />
+                        </svg>
+                        <svg class="corner-candle" viewBox="0 0 40 90">
+                            <use href="#decor-candle" />
+                        </svg>
+                    </div>
+
+                    <div class="corner-scene corner-scene--forest">
+                        <svg class="corner-fairy-ring" viewBox="0 0 360 240">
+                            <use href="#scene-fairy-ring" />
+                        </svg>
+                    </div>
+
+                    <div class="corner-scene corner-scene--cafe">
+                        <svg class="corner-bistro" viewBox="0 0 300 240">
+                            <use href="#scene-bistro" />
+                        </svg>
+                    </div>
+
                 </div>
 
 
