@@ -28,14 +28,16 @@ import { growIvy } from "../room/ivy.js?v=__VERSION__";
 import { renderCrown } from "../room/crown.js?v=__VERSION__";
 import { startAmbience } from "../room/ambience.js?v=__VERSION__";
 import { startDecorations } from "../room/decorations.js?v=__VERSION__";
+import { startRoomFit, COMPACT_QUERY } from "../room/fit-room.js?v=__VERSION__";
 import { createBookcase } from "../books/bookcase.js?v=__VERSION__";
 import { playReveal, playReturn } from "../books/book-reveal.js?v=__VERSION__";
 import { coverMarkup } from "../books/cover.js?v=__VERSION__";
 import { createJournal } from "../journal/journal.js?v=__VERSION__";
 
 
+// Phones (upright or sideways): books open on their own page.
 const PHONE =
-    window.matchMedia("(max-width: 820px)");
+    window.matchMedia(COMPACT_QUERY);
 
 let bookcase;
 let journal;
@@ -366,6 +368,8 @@ async function start() {
         document.getElementById("bookcaseBody");
 
     render(body, loader("Dusting the shelves…"));
+
+    startRoomFit(document.querySelector(".library-room"));
 
     renderCrown(document.querySelector("[data-crown-decor]"), settings.theme);
 

@@ -170,7 +170,8 @@ let trayObserver = null;
 
 
 function onPhone() {
-    return window.matchMedia("(max-width: 820px)").matches;
+    // The tray is a strip along the bottom (css/decorations.css).
+    return window.matchMedia("(max-width: 820px) and (orientation: portrait)").matches;
 }
 
 
@@ -844,8 +845,20 @@ function onPointerDown(event) {
         }
 
         if (area !== piece.room_area) {
+
             piece.room_area = area;
             layer.appendChild(element);
+
+            // Moving the piece to the other layer lets go of the
+            // pointer; take it again so the page doesn't scroll.
+            try {
+                element.setPointerCapture(event.pointerId);
+            }
+
+            catch {
+                // The finger already lifted.
+            }
+
         }
 
         adjust(piece, positionIn(area, pointer.x, pointer.y));
@@ -853,6 +866,10 @@ function onPointerDown(event) {
     };
 
     const move = (moveEvent) => {
+
+        if (moveEvent.pointerId !== event.pointerId) {
+            return;
+        }
 
         pointer.x = moveEvent.clientX;
         pointer.y = moveEvent.clientY;
@@ -864,22 +881,28 @@ function onPointerDown(event) {
     const stopScrolling =
         autoScroll(pointer, place);
 
-    const stop = () => {
+    // Listened for on the whole window, so the drag carries on
+    // even when the piece moves between the wall and the shelves.
+    const stop = (upEvent) => {
+
+        if (upEvent.pointerId !== event.pointerId) {
+            return;
+        }
 
         stopScrolling();
 
         element.classList.remove("is-dragging");
         bar?.classList.remove("is-dragging");
 
-        element.removeEventListener("pointermove", move);
-        element.removeEventListener("pointerup", stop);
-        element.removeEventListener("pointercancel", stop);
+        window.removeEventListener("pointermove", move);
+        window.removeEventListener("pointerup", stop);
+        window.removeEventListener("pointercancel", stop);
 
     };
 
-    element.addEventListener("pointermove", move);
-    element.addEventListener("pointerup", stop);
-    element.addEventListener("pointercancel", stop);
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", stop);
+    window.addEventListener("pointercancel", stop);
 
 }
 
@@ -955,6 +978,10 @@ function onPalettePointerDown(event) {
 
     const move = (moveEvent) => {
 
+        if (moveEvent.pointerId !== event.pointerId) {
+            return;
+        }
+
         pointer.x = moveEvent.clientX;
         pointer.y = moveEvent.clientY;
 
@@ -987,9 +1014,13 @@ function onPalettePointerDown(event) {
 
     const finish = (upEvent) => {
 
-        button.removeEventListener("pointermove", move);
-        button.removeEventListener("pointerup", finish);
-        button.removeEventListener("pointercancel", cancel);
+        if (upEvent && upEvent.pointerId !== event.pointerId) {
+            return;
+        }
+
+        window.removeEventListener("pointermove", move);
+        window.removeEventListener("pointerup", finish);
+        window.removeEventListener("pointercancel", cancel);
 
         if (!ghost) {
             return;
@@ -1020,11 +1051,17 @@ function onPalettePointerDown(event) {
 
     };
 
-    const cancel = () => finish();
+    const cancel = (cancelEvent) => {
 
-    button.addEventListener("pointermove", move);
-    button.addEventListener("pointerup", finish);
-    button.addEventListener("pointercancel", cancel);
+        if (cancelEvent.pointerId === event.pointerId) {
+            finish();
+        }
+
+    };
+
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", finish);
+    window.addEventListener("pointercancel", cancel);
 
 }
 
