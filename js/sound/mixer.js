@@ -12,6 +12,7 @@ import { html, render } from "../core/helpers.js?v=__VERSION__";
 import {
     SOUNDS,
     getSoundState,
+    checkRecordings,
     setSoundOn,
     setVolume,
     setMatchRoom,
@@ -31,7 +32,7 @@ function markup(sound) {
         <label class="toggle">
             <span class="toggle__text">
                 <strong>Room sounds</strong>
-                <small>${sound.waiting ? "Tap anywhere on the page to begin." : "Rain, fire, teacups and a purring cat."}</small>
+                <small>${sound.waiting ? "Tap anywhere on the page to begin." : "Rain, a fire, soft murmurs and teacups."}</small>
             </span>
             <input type="checkbox" data-sound="on" ${sound.on ? html`checked` : ""}>
         </label>
@@ -49,12 +50,19 @@ function markup(sound) {
             </label>
 
             <div class="mixer__sounds" role="group" aria-label="Individual sounds">
-                ${SOUNDS.map((item) => html`
-                    <label class="mixer__slider" title="${item.note}">
-                        <span>${item.name}</span>
-                        <input type="range" min="0" max="100" step="1" value="${percent(sound.levels[item.id])}" data-sound-level="${item.id}" aria-label="${item.name}: ${item.note}">
-                    </label>
-                `)}
+                ${SOUNDS.map((item) => {
+
+                    const unavailable =
+                        sound.unavailable.includes(item.id);
+
+                    return html`
+                        <label class="mixer__slider ${unavailable ? "is-unavailable" : ""}" title="${item.note}">
+                            <span>${item.name}${unavailable ? html` <small>not added yet</small>` : ""}</span>
+                            <input type="range" min="0" max="100" step="1" value="${percent(sound.levels[item.id])}" data-sound-level="${item.id}" aria-label="${item.name}: ${item.note}" ${unavailable ? html`disabled` : ""}>
+                        </label>
+                    `;
+
+                })}
             </div>
 
         </div>
@@ -97,6 +105,8 @@ export function mountMixer(container) {
     };
 
     draw();
+
+    checkRecordings();
 
     container.addEventListener("input", (event) => {
 

@@ -2,51 +2,68 @@
    NOVELLOW
    SOUNDSCAPE
 
-   The sounds of the reading room, made live in the browser
-   with the Web Audio API (no sound files): rain, thunder, a
-   crackling fire, wind, a café with coffee being poured and a
-   spoon stirring tea, a purring cat, a ticking clock, turning
-   pages and a night garden.
+   The sounds of the reading room, played from real
+   recordings in assets/sounds/ (see the README there for the
+   file names and where each recording came from).
+
+   Two kinds of sound:
+     - beds that play continuously (rain, fire, murmurs…).
+       They are cross-faded with themselves, so even a
+       recording that wasn't made to loop never clicks.
+     - moments that happen now and then (thunder, a spoon
+       stirring tea, a page turning, an owl), picked at
+       random from their recordings, slightly varied each
+       time.
 
    Each room theme has its own mix. The reader can turn sound
-   on or off, set the volume, and adjust each sound. These are
+   on or off, set the volume and adjust each sound. These are
    saved on this device only (localStorage), because sound is
    a per-device choice: on for the laptop, off for the phone.
 
    Browsers only allow sound after the reader taps or clicks,
-   so nothing plays until they do.
+   so nothing plays until they do. A recording is only
+   downloaded when its sound is turned up.
 ========================================================= */
 
 const STORE =
     "novellow-sound";
 
+const FOLDER =
+    "assets/sounds/";
+
 export const SOUNDS = [
-    { id: "rain", name: "Rain", note: "Soft rain against the glass" },
-    { id: "thunder", name: "Distant thunder", note: "Now and then, far away" },
-    { id: "fire", name: "Crackling fire", note: "Logs settling in the grate" },
-    { id: "wind", name: "Wind", note: "Whistling round the eaves" },
-    { id: "cafe", name: "Café", note: "Coffee poured, a spoon stirring tea" },
-    { id: "purr", name: "Purring cat", note: "Curled up somewhere nearby" },
-    { id: "clock", name: "Ticking clock", note: "An old clock on the mantel" },
-    { id: "pages", name: "Turning pages", note: "Someone reading close by" },
-    { id: "night", name: "Night garden", note: "Crickets and the odd owl" }
+    { id: "rain", name: "Rain", note: "Rain on the window and the roof", bed: ["rain.mp3"] },
+    { id: "thunder", name: "Distant thunder", note: "Now and then, far away", moments: ["thunder-1.mp3", "thunder-2.mp3"], every: [45, 110], lightning: true },
+    { id: "fire", name: "Crackling fire", note: "Logs burning in the grate", bed: ["fire.mp3"] },
+    { id: "wind", name: "Wind", note: "Round the eaves on a stormy night", bed: ["wind.mp3"] },
+    { id: "murmurs", name: "Soft murmurs", note: "People talking quietly nearby", bed: ["murmurs.mp3"] },
+    { id: "spoon", name: "Spoon stirring", note: "A teaspoon clinking in a cup", moments: ["spoon-1.mp3", "spoon-2.mp3"], every: [25, 60] },
+    { id: "coffee", name: "Coffee pouring", note: "A fresh cup being poured", moments: ["coffee-pour.mp3"], every: [50, 120] },
+    { id: "purr", name: "Purring cat", note: "Curled up somewhere nearby", bed: ["purr.mp3"] },
+    { id: "clock", name: "Ticking clock", note: "An old clock on the mantel", bed: ["clock.mp3"] },
+    { id: "pages", name: "Turning pages", note: "Someone reading close by", moments: ["page-1.mp3", "page-2.mp3", "page-3.mp3"], every: [30, 75] },
+    { id: "night", name: "Night garden", note: "Crickets, and sometimes an owl", bed: ["crickets.mp3"], moments: ["owl.mp3"], every: [50, 120] }
 ];
 
 // Each room's own mix (0 = silent, 1 = full).
 export const ROOM_MIXES = {
-    original: { fire: 0.55, purr: 0.4, clock: 0.3, pages: 0.35, rain: 0.15 },
-    haunted: { wind: 0.6, clock: 0.45, fire: 0.25, pages: 0.3, thunder: 0.2 },
-    rainy: { rain: 0.8, thunder: 0.45, fire: 0.35, clock: 0.25 },
-    forest: { night: 0.7, wind: 0.25, fire: 0.3, pages: 0.2 },
-    cafe: { cafe: 0.8, rain: 0.25, pages: 0.3, purr: 0.2 },
-    gothic: { fire: 0.6, wind: 0.4, clock: 0.4, thunder: 0.25 }
+    original: { fire: 0.6, purr: 0.35, clock: 0.3, pages: 0.4, rain: 0.2 },
+    haunted: { wind: 0.6, clock: 0.45, fire: 0.3, pages: 0.3, thunder: 0.35 },
+    rainy: { rain: 0.8, thunder: 0.55, fire: 0.4, clock: 0.25, spoon: 0.3 },
+    forest: { night: 0.7, wind: 0.25, fire: 0.3, pages: 0.25 },
+    cafe: { murmurs: 0.7, spoon: 0.55, coffee: 0.5, rain: 0.25, pages: 0.25 },
+    gothic: { fire: 0.6, wind: 0.4, clock: 0.4, thunder: 0.3 }
 };
+
+const CROSSFADE = 3;
 
 let state = load();
 
 let ctx = null;
 let master = null;
-let buffers = {};
+
+const recordings = new Map();
+const missing = new Set();
 const playing = new Map();
 
 
@@ -57,7 +74,7 @@ const playing = new Map();
 function load() {
 
     const fallback =
-        { on: false, volume: 0.6, matchRoom: true, levels: {} };
+        { on: false, volume: 0.7, matchRoom: true, levels: {} };
 
     try {
         return { ...fallback, ...JSON.parse(localStorage.getItem(STORE) || "{}") };
@@ -80,8 +97,13 @@ function save() {
         // Private browsing: the choice lasts for this visit.
     }
 
-    document.dispatchEvent(new CustomEvent("novellow:sound", { detail: getSoundState() }));
+    announce();
 
+}
+
+
+function announce() {
+    document.dispatchEvent(new CustomEvent("novellow:sound", { detail: getSoundState() }));
 }
 
 
@@ -90,12 +112,20 @@ function room() {
 }
 
 
+function filesOf(sound) {
+    return [...(sound.bed || []), ...(sound.moments || [])];
+}
+
+
 export function getSoundState() {
 
     return {
         ...state,
         levels: currentLevels(),
-        waiting: state.on && (!ctx || ctx.state !== "running")
+        waiting: state.on && (!ctx || ctx.state !== "running"),
+        unavailable: SOUNDS
+            .filter((sound) => filesOf(sound).every((file) => missing.has(file)))
+            .map((sound) => sound.id)
     };
 
 }
@@ -117,42 +147,8 @@ function currentLevels() {
 
 
 /* =========================================================
-   AUDIO BUILDING BLOCKS
+   RECORDINGS
 ========================================================= */
-
-function makeNoise(kind, seconds) {
-
-    const length =
-        Math.floor(ctx.sampleRate * seconds);
-
-    const buffer =
-        ctx.createBuffer(1, length, ctx.sampleRate);
-
-    const data =
-        buffer.getChannelData(0);
-
-    let last = 0;
-
-    for (let index = 0; index < length; index += 1) {
-
-        const white =
-            Math.random() * 2 - 1;
-
-        if (kind === "brown") {
-            last = (last + 0.02 * white) / 1.02;
-            data[index] = last * 3.5;
-        }
-
-        else {
-            data[index] = white;
-        }
-
-    }
-
-    return buffer;
-
-}
-
 
 function wake() {
 
@@ -171,11 +167,6 @@ function wake() {
         master.gain.value = 0;
         master.connect(ctx.destination);
 
-        buffers = {
-            white: makeNoise("white", 3),
-            brown: makeNoise("brown", 5)
-        };
-
     }
 
     if (ctx.state !== "running") {
@@ -187,109 +178,80 @@ function wake() {
 }
 
 
-function loop(kind) {
+/*
+    Downloads and decodes a recording once. Resolves to null
+    when the file hasn't been added yet.
+*/
 
-    const source =
-        ctx.createBufferSource();
+function recording(file) {
 
-    source.buffer = buffers[kind];
-    source.loop = true;
-    source.start(0, Math.random() * source.buffer.duration);
+    if (!recordings.has(file)) {
 
-    return source;
+        recordings.set(file,
+            fetch(`${FOLDER}${file}?v=__VERSION__`)
+                .then((response) => {
 
-}
+                    if (!response.ok) {
+                        throw new Error(`${file}: ${response.status}`);
+                    }
 
+                    return response.arrayBuffer();
 
-function filter(type, frequency, q = 0.7) {
+                })
+                .then((bytes) => new Promise((resolve, reject) => ctx.decodeAudioData(bytes, resolve, reject)))
+                .catch((error) => {
 
-    const node =
-        ctx.createBiquadFilter();
+                    console.info(`Novellow sound not available yet: ${file}`, error.message);
 
-    node.type = type;
-    node.frequency.value = frequency;
-    node.Q.value = q;
+                    missing.add(file);
 
-    return node;
+                    announce();
 
-}
+                    return null;
 
+                })
+        );
 
-function gain(value) {
-
-    const node =
-        ctx.createGain();
-
-    node.gain.value = value;
-
-    return node;
-
-}
-
-
-function chain(...nodes) {
-
-    for (let index = 0; index < nodes.length - 1; index += 1) {
-        nodes[index].connect(nodes[index + 1]);
     }
 
-    return nodes[nodes.length - 1];
+    return recordings.get(file);
 
 }
 
 
 /*
-    A short burst of noise through a filter, with its own
-    envelope. The building block of drops, crackles, rustles.
+    Checks which recordings exist without downloading them,
+    so the mixer can say which sounds are still to come.
 */
 
-function burst(out, { at, kind = "white", duration, type = "bandpass", frequency = 1000, q = 1, level = 0.3, attack = 0.002 }) {
+let checked = false;
 
-    const source =
-        ctx.createBufferSource();
+export function checkRecordings() {
 
-    source.buffer = buffers[kind];
-
-    const shape =
-        gain(0);
-
-    chain(source, filter(type, frequency, q), shape, out);
-
-    shape.gain.setValueAtTime(0, at);
-    shape.gain.linearRampToValueAtTime(level, at + attack);
-    shape.gain.exponentialRampToValueAtTime(0.0001, at + attack + duration);
-
-    // Loop the noise so long bursts (thunder) never run out.
-    source.loop = true;
-    source.start(at, Math.random() * source.buffer.duration);
-    source.stop(at + attack + duration + 0.05);
-
-}
-
-
-function tone(out, { at, frequency, duration, level = 0.2, type = "sine", glideTo = null, attack = 0.004 }) {
-
-    const oscillator =
-        ctx.createOscillator();
-
-    oscillator.type = type;
-    oscillator.frequency.setValueAtTime(frequency, at);
-
-    if (glideTo) {
-        oscillator.frequency.exponentialRampToValueAtTime(glideTo, at + duration);
+    if (checked) {
+        return;
     }
 
-    const shape =
-        gain(0);
+    checked = true;
 
-    chain(oscillator, shape, out);
+    SOUNDS.forEach((sound) => {
 
-    shape.gain.setValueAtTime(0, at);
-    shape.gain.linearRampToValueAtTime(level, at + attack);
-    shape.gain.exponentialRampToValueAtTime(0.0001, at + attack + duration);
+        filesOf(sound).forEach((file) => {
 
-    oscillator.start(at);
-    oscillator.stop(at + attack + duration + 0.05);
+            fetch(`${FOLDER}${file}?v=__VERSION__`, { method: "HEAD" })
+                .then((response) => {
+
+                    if (!response.ok) {
+                        missing.add(file);
+                        announce();
+                    }
+
+                })
+                .catch(() => {});
+
+        });
+
+    });
 
 }
 
@@ -300,412 +262,213 @@ function random(min, max) {
 
 
 /*
-    Runs `happen(time)` again and again at random intervals
-    until stopped. Returns the stop function.
+    Plays a bed forever by overlapping copies of the
+    recording with long, gentle cross-fades.
 */
 
-function every(minSeconds, maxSeconds, happen, { startAfter = null } = {}) {
+function playBed(buffer, out) {
 
-    let timer = null;
     let stopped = false;
+    let timer = null;
+    const sources = new Set();
 
-    const next = (delay) => {
+    const fade =
+        Math.min(CROSSFADE, buffer.duration / 4);
+
+    const segment = (at, offset) => {
+
+        const source =
+            ctx.createBufferSource();
+
+        source.buffer = buffer;
+
+        const shape =
+            ctx.createGain();
+
+        source.connect(shape);
+        shape.connect(out);
+
+        const length =
+            buffer.duration - offset;
+
+        shape.gain.setValueAtTime(0, at);
+        shape.gain.linearRampToValueAtTime(1, at + fade);
+        shape.gain.setValueAtTime(1, at + length - fade);
+        shape.gain.linearRampToValueAtTime(0, at + length);
+
+        source.start(at, offset);
+        source.stop(at + length + 0.05);
+
+        sources.add(source);
+        source.onended = () => sources.delete(source);
+
+        // Start the next copy as this one fades out.
+        const next =
+            at + length - fade;
 
         timer = window.setTimeout(() => {
 
-            if (stopped) {
-                return;
+            if (!stopped) {
+                segment(next, 0);
             }
 
-            happen(ctx.currentTime + 0.05);
-
-            next(random(minSeconds, maxSeconds));
-
-        }, delay * 1000);
+        }, Math.max(0, (next - ctx.currentTime - 1) * 1000));
 
     };
 
-    next(startAfter ?? random(minSeconds, maxSeconds));
+    // Begin somewhere in the middle, so each visit is different.
+    segment(ctx.currentTime + 0.05, random(0, buffer.duration * 0.6));
 
     return () => {
+
         stopped = true;
+
         window.clearTimeout(timer);
+
+        sources.forEach((source) => {
+            try {
+                source.stop();
+            }
+            catch {
+                // Already finished.
+            }
+        });
+
     };
 
 }
 
 
 /*
-    Slowly wanders an AudioParam between two values, so steady
-    sounds (wind, fire) breathe instead of droning.
+    Plays one recording once, a little different each time:
+    slightly louder or softer, a touch to the left or right.
 */
 
-function wander(param, min, max, minSeconds, maxSeconds) {
+function playMoment(buffer, out) {
 
-    return every(minSeconds, maxSeconds, (at) => {
-        param.setTargetAtTime(random(min, max), at, random(minSeconds, maxSeconds) / 3);
-    }, { startAfter: 0 });
+    const at =
+        ctx.currentTime + 0.05;
+
+    const source =
+        ctx.createBufferSource();
+
+    source.buffer = buffer;
+    source.playbackRate.value = random(0.96, 1.04);
+
+    const level =
+        ctx.createGain();
+
+    level.gain.value = random(0.75, 1);
+
+    let last =
+        level;
+
+    if (ctx.createStereoPanner) {
+
+        const pan =
+            ctx.createStereoPanner();
+
+        pan.pan.value = random(-0.4, 0.4);
+
+        level.connect(pan);
+
+        last = pan;
+
+    }
+
+    source.connect(level);
+    last.connect(out);
+
+    source.start(at);
 
 }
 
 
-/* =========================================================
-   THE SOUNDS
-   Each builder connects into `out` and returns a function
-   that stops it.
-========================================================= */
+/*
+    Starts one sound: its bed (if any) and its moments
+    (if any). Returns the function that stops it.
+*/
 
-const BUILDERS = {
+function startSound(sound, out) {
 
-    rain(out) {
+    let stopped = false;
+    let stopBed = null;
+    let timer = null;
 
-        const hiss =
-            loop("white");
+    if (sound.bed) {
 
-        const body =
-            loop("brown");
+        recording(sound.bed[0]).then((buffer) => {
 
-        const hissLevel =
-            gain(0.12);
-
-        chain(hiss, filter("highpass", 900), filter("lowpass", 7000), hissLevel, out);
-        chain(body, filter("lowpass", 900), gain(0.5), out);
-
-        const stops = [
-            wander(hissLevel.gain, 0.08, 0.16, 3, 7),
-            every(0.03, 0.11, (at) => burst(out, {
-                at,
-                duration: random(0.006, 0.02),
-                frequency: random(2200, 6500),
-                q: 3,
-                level: random(0.04, 0.2)
-            }))
-        ];
-
-        return () => {
-            stops.forEach((stop) => stop());
-            hiss.stop();
-            body.stop();
-        };
-
-    },
-
-    thunder(out) {
-
-        return every(35, 90, (at) => {
-
-            // The window flashes first; the sound follows.
-            document.dispatchEvent(new CustomEvent("novellow:lightning"));
-
-            const delay =
-                random(0.8, 2.2);
-
-            burst(out, { at: at + delay, kind: "brown", type: "lowpass", frequency: 140, q: 0.5, duration: random(3.5, 6), attack: 0.4, level: 1 });
-            burst(out, { at: at + delay + 0.15, kind: "brown", type: "lowpass", frequency: 260, q: 0.7, duration: 1.4, attack: 0.08, level: 0.6 });
-
-        }, { startAfter: random(6, 14) });
-
-    },
-
-    fire(out) {
-
-        const roar =
-            loop("brown");
-
-        const roarLevel =
-            gain(0.35);
-
-        chain(roar, filter("lowpass", 240), roarLevel, out);
-
-        const crackle = (at) => {
-
-            burst(out, {
-                at,
-                duration: random(0.003, 0.012),
-                type: "highpass",
-                frequency: random(1400, 3000),
-                level: random(0.08, 0.45)
-            });
-
-        };
-
-        const stops = [
-
-            wander(roarLevel.gain, 0.22, 0.45, 1, 3),
-
-            every(0.05, 0.3, (at) => {
-
-                crackle(at);
-
-                // Sometimes a flurry of little snaps.
-                if (Math.random() < 0.12) {
-                    for (let index = 1; index < 3 + Math.random() * 4; index += 1) {
-                        crackle(at + index * random(0.02, 0.06));
-                    }
-                }
-
-                // And now and then a log pops.
-                if (Math.random() < 0.03) {
-                    burst(out, { at, kind: "brown", duration: 0.05, frequency: 420, q: 1.2, level: 0.9 });
-                }
-
-            })
-
-        ];
-
-        return () => {
-            stops.forEach((stop) => stop());
-            roar.stop();
-        };
-
-    },
-
-    wind(out) {
-
-        const air =
-            loop("white");
-
-        const band =
-            filter("bandpass", 450, 3.5);
-
-        const level =
-            gain(0.3);
-
-        chain(air, band, level, out);
-
-        const stops = [
-            wander(band.frequency, 260, 900, 2, 5),
-            wander(level.gain, 0.12, 0.55, 2.5, 6)
-        ];
-
-        return () => {
-            stops.forEach((stop) => stop());
-            air.stop();
-        };
-
-    },
-
-    cafe(out) {
-
-        // The low murmur of a room.
-        const murmur =
-            loop("brown");
-
-        const murmurLevel =
-            gain(0.1);
-
-        chain(murmur, filter("bandpass", 380, 0.8), murmurLevel, out);
-
-        const pour = (at) => {
-
-            const length =
-                random(3.2, 4.8);
-
-            const stream =
-                ctx.createBufferSource();
-
-            stream.buffer = buffers.white;
-            stream.loop = true;
-
-            const band =
-                filter("bandpass", 520, 2.2);
-
-            const shape =
-                gain(0);
-
-            // The gurgle: the stream wobbles as it fills the cup.
-            const gurgle =
-                ctx.createOscillator();
-
-            gurgle.frequency.value = random(9, 14);
-
-            const depth =
-                gain(0.35);
-
-            const wobble =
-                gain(0.6);
-
-            chain(gurgle, depth, wobble.gain);
-            chain(stream, band, shape, wobble, out);
-
-            // The note rises as the cup fills.
-            band.frequency.setValueAtTime(520, at);
-            band.frequency.exponentialRampToValueAtTime(random(1300, 1700), at + length);
-
-            shape.gain.setValueAtTime(0, at);
-            shape.gain.linearRampToValueAtTime(0.5, at + 0.25);
-            shape.gain.setValueAtTime(0.5, at + length - 0.4);
-            shape.gain.linearRampToValueAtTime(0, at + length);
-
-            stream.start(at);
-            stream.stop(at + length + 0.1);
-            gurgle.start(at);
-            gurgle.stop(at + length + 0.1);
-
-            // A little splash at the start.
-            burst(out, { at, kind: "brown", type: "lowpass", frequency: 500, duration: 0.3, level: 0.35 });
-
-        };
-
-        // A teaspoon: bright, bell-like clinks against china.
-        const clink = (at, level) => {
-
-            const base =
-                random(2500, 2900);
-
-            [[1, 0.28], [1.47, 0.2], [2.09, 0.14], [2.76, 0.09]].forEach(([ratio, ring], index) => {
-                tone(out, { at, frequency: base * ratio, duration: ring, level: level / (index + 1) });
-            });
-
-        };
-
-        const stir = (at) => {
-
-            let time = at;
-
-            const turns =
-                Math.floor(random(6, 10));
-
-            for (let index = 0; index < turns; index += 1) {
-                clink(time, index % 2 ? random(0.05, 0.08) : random(0.1, 0.14));
-                time += random(0.26, 0.4);
+            if (buffer && !stopped) {
+                stopBed = playBed(buffer, out);
             }
 
-            // Tap, tap on the rim.
-            clink(time + 0.2, 0.18);
-            clink(time + 0.38, 0.16);
-
-        };
-
-        let pourNext = true;
-
-        const stops = [
-            wander(murmurLevel.gain, 0.06, 0.13, 3, 8),
-            every(14, 30, (at) => {
-
-                if (pourNext) {
-                    pour(at);
-                }
-
-                else {
-                    stir(at);
-                }
-
-                pourNext = !pourNext;
-
-            }, { startAfter: random(2, 5) })
-        ];
-
-        return () => {
-            stops.forEach((stop) => stop());
-            murmur.stop();
-        };
-
-    },
-
-    purr(out) {
-
-        const rumble =
-            loop("brown");
-
-        const throb =
-            gain(0.5);
-
-        const breath =
-            gain(0);
-
-        chain(rumble, filter("lowpass", 420), throb, breath, out);
-
-        const flutter =
-            ctx.createOscillator();
-
-        flutter.frequency.value = 25;
-
-        chain(flutter, gain(0.5), throb.gain);
-
-        flutter.start();
-
-        // In and out, like a sleeping cat.
-        const stopBreathing =
-            every(2.8, 3.4, (at) => {
-
-                breath.gain.setTargetAtTime(0.9, at, 0.25);
-                flutter.frequency.setTargetAtTime(26, at, 0.2);
-
-                breath.gain.setTargetAtTime(0.55, at + 1.5, 0.3);
-                flutter.frequency.setTargetAtTime(22, at + 1.5, 0.3);
-
-            }, { startAfter: 0 });
-
-        return () => {
-            stopBreathing();
-            rumble.stop();
-            flutter.stop();
-        };
-
-    },
-
-    clock(out) {
-
-        let tock = false;
-
-        const timer =
-            window.setInterval(() => {
-
-                const at =
-                    ctx.currentTime + 0.05;
-
-                tone(out, { at, frequency: tock ? 2300 : 2900, duration: 0.03, level: 0.14, type: "triangle" });
-                burst(out, { at, duration: 0.006, type: "highpass", frequency: 3500, level: 0.12 });
-
-                tock = !tock;
-
-            }, 1000);
-
-        return () => window.clearInterval(timer);
-
-    },
-
-    pages(out) {
-
-        return every(25, 60, (at) => {
-
-            burst(out, { at, duration: 0.22, frequency: 2600, q: 0.8, attack: 0.08, level: 0.25 });
-            burst(out, { at: at + 0.18, duration: 0.3, frequency: 3400, q: 0.7, attack: 0.1, level: 0.2 });
-            burst(out, { at: at + 0.5, duration: 0.1, type: "lowpass", frequency: 1100, level: 0.25 });
-
-        }, { startAfter: random(4, 10) });
-
-    },
-
-    night(out) {
-
-        const cricket = (pitch, level) => (at) => {
-
-            for (let index = 0; index < 3; index += 1) {
-                tone(out, { at: at + index * 0.055, frequency: pitch, duration: 0.03, level });
-            }
-
-        };
-
-        const hoot = (at) => {
-
-            tone(out, { at, frequency: 390, glideTo: 350, duration: 0.45, level: 0.22, attack: 0.08 });
-            tone(out, { at: at + 0.75, frequency: 400, glideTo: 330, duration: 0.8, level: 0.26, attack: 0.1 });
-
-        };
-
-        const stops = [
-            every(0.8, 1.4, cricket(4400, 0.04)),
-            every(1.1, 1.9, cricket(4950, 0.03)),
-            every(30, 70, hoot, { startAfter: random(8, 20) })
-        ];
-
-        return () => stops.forEach((stop) => stop());
+        });
 
     }
 
-};
+    if (sound.moments) {
+
+        const [min, max] =
+            sound.every;
+
+        const next = (delay) => {
+
+            timer = window.setTimeout(async () => {
+
+                if (stopped) {
+                    return;
+                }
+
+                const file =
+                    sound.moments[Math.floor(Math.random() * sound.moments.length)];
+
+                const buffer =
+                    await recording(file);
+
+                if (buffer && !stopped) {
+
+                    if (sound.lightning) {
+
+                        // The window flashes first; the thunder follows.
+                        document.dispatchEvent(new CustomEvent("novellow:lightning"));
+
+                        window.setTimeout(() => {
+                            if (!stopped) {
+                                playMoment(buffer, out);
+                            }
+                        }, random(700, 2000));
+
+                    }
+
+                    else {
+                        playMoment(buffer, out);
+                    }
+
+                }
+
+                next(random(min, max));
+
+            }, delay * 1000);
+
+        };
+
+        // The first moment comes fairly soon, so it's noticed.
+        next(random(4, 12));
+
+    }
+
+    return () => {
+
+        stopped = true;
+
+        window.clearTimeout(timer);
+
+        stopBed?.();
+
+    };
+
+}
 
 
 /* =========================================================
@@ -721,29 +484,30 @@ function sync() {
     const now =
         ctx.currentTime;
 
-    master.gain.setTargetAtTime(state.on ? state.volume * 0.8 : 0, now, 0.4);
+    master.gain.setTargetAtTime(state.on ? state.volume : 0, now, 0.4);
 
     const levels =
         currentLevels();
 
-    SOUNDS.forEach(({ id }) => {
+    SOUNDS.forEach((sound) => {
 
         const level =
-            state.on ? levels[id] : 0;
+            state.on ? levels[sound.id] : 0;
 
         let layer =
-            playing.get(id);
+            playing.get(sound.id);
 
         if (level > 0 && !layer) {
 
             const out =
-                gain(0);
+                ctx.createGain();
 
+            out.gain.value = 0;
             out.connect(master);
 
-            layer = { out, stop: BUILDERS[id](out) };
+            layer = { out, stop: startSound(sound, out) };
 
-            playing.set(id, layer);
+            playing.set(sound.id, layer);
 
         }
 
@@ -751,10 +515,10 @@ function sync() {
             return;
         }
 
-        layer.out.gain.setTargetAtTime(level, now, 0.5);
+        // A gentle curve, so low slider settings stay soft.
+        layer.out.gain.setTargetAtTime(level * level, now, 0.6);
 
-        // Silent sounds are stopped after they fade out, to
-        // save the battery.
+        // Silent sounds are stopped after they fade out.
         window.clearTimeout(layer.ending);
 
         if (level === 0) {
@@ -764,9 +528,9 @@ function sync() {
 
                     layer.stop();
                     layer.out.disconnect();
-                    playing.delete(id);
+                    playing.delete(sound.id);
 
-                }, 2500);
+                }, 3000);
 
         }
 
@@ -861,7 +625,7 @@ export function startSoundscape() {
 
     document.addEventListener("novellow:appearance", () => {
         sync();
-        save();
+        announce();
     });
 
     if (!state.on) {
@@ -876,7 +640,7 @@ export function startSoundscape() {
         if (state.on && wake()) {
             ctx.resume().then(() => {
                 sync();
-                save();
+                announce();
             });
         }
 
