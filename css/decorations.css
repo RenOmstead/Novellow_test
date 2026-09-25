@@ -19,11 +19,13 @@
 .bookcase-zone > .decor-layer {
     z-index: 7;
 
-    /* Measured from the top of the bookcase, so pieces on the
-       crown and upper shelves stay put as shelves are added. */
+    /* Measured in pixels from the top of the bookcase (a piece
+       at 10% is 160px down), so pieces on the crown and upper
+       shelves stay put as shelves are added. The layer itself
+       has no height, so it never adds empty space to scroll. */
     bottom: auto;
 
-    height: 1600px;
+    height: 0;
 }
 
 /* Measured up from the floor, like the window, so a piece on
@@ -561,7 +563,7 @@
 
     /* Room under the page to scroll the whole bookcase above
        the tray. */
-    html.is-arranging-room .app-stage {
+    html.is-arranging-room:not(.room-compact) .app-stage {
         padding-bottom: calc(var(--arrange-tray, 0px) + 16px);
     }
 
