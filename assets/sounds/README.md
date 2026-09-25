@@ -65,7 +65,10 @@ Search ideas: "werewolf howl", "wolf howl distant", "door creak",
 Long recordings are cut down (on MP3 frame boundaries, so the sound
 quality is unchanged) to keep the site quick to load on phones:
 rain 60 s, fire 100 s, crickets 100 s, clock 60 s, murmurs 100 s,
-purr 41 s (its steady middle), wind 37 s, coffee pour 10 s. Which part of
+purr 41 s (its steady middle), wind 37 s, coffee pour 10 s, cauldron
+90 s, haunted clock 50 s (12 ticks are looped exactly, so the beat never
+slips), clock chime 25 s, creak-2 15 s, creak-3 11 s (its rocking-chair
+creaks). Which part of
 each recording plays, and how loud, is set in `js/sound/soundscape.js`.
 
 ## Tips

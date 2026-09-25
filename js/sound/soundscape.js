@@ -74,15 +74,31 @@ export const SOUNDS = [
         moments: [["owl.mp3", 0.8, 3.6, 0.25]]
     },
 
-    // The haunted room. A moment can be just a file name: the
-    // whole recording plays at its own loudness.
-    { id: "cauldron", group: "spooky", name: "Bubbling cauldron", note: "Something brewing by the fire", bed: ["cauldron.mp3"] },
-    { id: "howl", group: "spooky", name: "Werewolves howling", note: "Far off, under the full moon", every: [70, 160], moments: ["howl-1.mp3", "howl-2.mp3"] },
-    { id: "creaks", group: "spooky", name: "Creaks", note: "Floorboards, doors and an old rocking chair", every: [20, 55], moments: ["creak-1.mp3", "creak-2.mp3", "creak-3.mp3"] },
-    { id: "spookyclock", group: "spooky", name: "Haunted clock", note: "A slow, heavy tick, and the midnight chime", bed: ["haunted-clock.mp3"], every: [150, 300], moments: ["clock-chime.mp3"] },
-    { id: "humming", group: "spooky", name: "Creepy humming", note: "Someone humming, somewhere in the house", every: [60, 150], moments: ["humming-1.mp3", "humming-2.mp3"] },
-    { id: "whispers", group: "spooky", name: "Whispers", note: "Just at the edge of hearing", every: [45, 110], moments: ["whisper-1.mp3", "whisper-2.mp3"] },
-    { id: "raven", group: "spooky", name: "Raven", note: "Calling from the window ledge", every: [60, 150], moments: ["raven.mp3"] }
+    // The haunted room.
+    { id: "cauldron", group: "spooky", name: "Bubbling cauldron", note: "Something brewing by the fire", bed: ["cauldron.mp3"], boost: 0.9 },
+    {
+        id: "howl", group: "spooky", name: "Werewolves howling", note: "Far off, under the full moon", every: [70, 160],
+        moments: [["howl-1.mp3", 1, 7.2, 1.6], ["howl-2.mp3", 0.5, 5, 0.45]]
+    },
+    {
+        id: "creaks", group: "spooky", name: "Creaks", note: "Floorboards, doors and an old rocking chair", every: [20, 55],
+        moments: [["creak-1.mp3", 2.7, 4.5, 0.6], ["creak-2.mp3", 2.3, 6, 1.2], ["creak-2.mp3", 10.8, 14.3, 1.1], ["creak-3.mp3", 1.1, 3, 3.6], ["creak-3.mp3", 4.6, 6.6, 3.6]]
+    },
+    {
+        // A tick every 4 seconds: loop exactly 12 of them, with no
+        // cross-fade, so the rhythm never stumbles.
+        id: "spookyclock", group: "spooky", name: "Haunted clock", note: "A slow, heavy tick, and the midnight chime", bed: ["haunted-clock.mp3"], use: [0, 48], fade: 0.02, boost: 1.2,
+        every: [150, 300], moments: [["clock-chime.mp3", 0.2, 24.8, 0.7]]
+    },
+    {
+        id: "humming", group: "spooky", name: "Creepy humming", note: "Someone humming, somewhere in the house", every: [60, 150],
+        moments: [["humming-1.mp3", 0.3, 15.6, 2.6], ["humming-2.mp3", 0, 20, 1.7], ["humming-2.mp3", 20.8, 39.4, 1.5]]
+    },
+    {
+        id: "whispers", group: "spooky", name: "Whispers", note: "Just at the edge of hearing", every: [45, 110],
+        moments: [["whisper-1.mp3", 0, 1.6, 0.6], ["whisper-1.mp3", 3.3, 4.5, 0.6], ["whisper-1.mp3", 12.7, 14.7, 0.7], ["whisper-2.mp3", 0, 10.9, 1.8]]
+    },
+    { id: "raven", group: "spooky", name: "Raven", note: "Calling from the window ledge", every: [60, 150], moments: [["raven.mp3", 0, 3, 0.6]] }
 ];
 
 // Each room's own mix (0 = silent, 1 = full).
@@ -324,7 +340,7 @@ function random(min, max) {
     recording with long, gentle cross-fades.
 */
 
-function playBed(buffer, out, [from, to] = [0, buffer.duration]) {
+function playBed(buffer, out, [from, to] = [0, buffer.duration], crossfade = CROSSFADE) {
 
     let stopped = false;
     let timer = null;
@@ -337,7 +353,7 @@ function playBed(buffer, out, [from, to] = [0, buffer.duration]) {
         Math.max(0, Math.min(from, end - 1));
 
     const fade =
-        Math.min(CROSSFADE, (end - start) / 4);
+        Math.min(crossfade, (end - start) / 4);
 
     const segment = (at, offset) => {
 
@@ -480,7 +496,7 @@ function startSound(sound, out) {
         recording(sound.bed[0]).then((buffer) => {
 
             if (buffer && !stopped) {
-                stopBed = playBed(buffer, out, sound.use);
+                stopBed = playBed(buffer, out, sound.use, sound.fade);
             }
 
         });
