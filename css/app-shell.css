@@ -777,6 +777,75 @@ body.sidebar-collapsed .app-stage {
     z-index: 80;
 }
 
+/* ---------------------------------------------------------
+   SOUND MIXER (header menu and Settings)
+--------------------------------------------------------- */
+
+.sound-button.is-on {
+    box-shadow:
+        0 6px 14px rgba(40, 16, 12, 0.25),
+        0 0 0 3px rgba(240, 207, 138, 0.55);
+}
+
+.popover.mixer {
+    width: min(340px, calc(100vw - 24px));
+
+    padding: 12px 14px 14px;
+}
+
+.mixer .toggle {
+    min-height: 40px;
+}
+
+.mixer__body {
+    display: grid;
+
+    gap: 10px;
+
+    margin-top: 8px;
+}
+
+.mixer__body[hidden] {
+    display: none;
+}
+
+.mixer__match {
+    font-size: 15px;
+}
+
+.mixer__sounds {
+    display: grid;
+
+    gap: 4px;
+
+    padding-top: 8px;
+
+    border-top: 1px solid rgba(120, 80, 60, 0.25);
+}
+
+.mixer__slider {
+    display: grid;
+
+    grid-template-columns: 8.5em 1fr;
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 15px;
+}
+
+.mixer__slider--main {
+    font-weight: 700;
+}
+
+.mixer__slider input[type="range"] {
+    width: 100%;
+
+    accent-color: var(--color-plum-light);
+
+    cursor: pointer;
+}
+
 .popover-divider {
     height: 1px;
 

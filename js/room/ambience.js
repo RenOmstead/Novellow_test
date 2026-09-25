@@ -316,6 +316,15 @@ export function startAmbience(container) {
     hangFrames(getTheme(root().dataset.theme));
     scheduleOddity();
 
+    // Thunder in the soundscape lights up the window first.
+    document.addEventListener("novellow:lightning", () => {
+
+        if (!prefersReducedMotion()) {
+            HAPPENINGS.lightning();
+        }
+
+    });
+
     document.addEventListener("novellow:appearance", (event) => {
 
         build();
