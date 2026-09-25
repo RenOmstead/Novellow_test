@@ -366,6 +366,10 @@ function shelfMarkup(shelf, books, width) {
 
 function shelfDecor(shelf, spare) {
 
+    // The room is left bare: readers place their own decorations
+    // with "Arrange the room".
+    return "";
+
     const theme =
         document.documentElement.dataset.theme || "original";
 

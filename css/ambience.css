@@ -196,10 +196,19 @@ html:not(.candle-glow) {
     display: none;
 }
 
-.ambient-rain .window-weather__rain,
-.ambient-rain .window-weather__drop,
+/* The rain itself falls inside the window drawing (behind
+   its glazing bars); only lightning and shooting stars are
+   drawn over the glass here. */
+.ambient-rain {
+    --window-rain: inline;
+}
+
 .window-weather .shooting-star {
     display: block;
+}
+
+[data-window="square"] .window-weather {
+    clip-path: inset(14% 9% 0 9%);
 }
 
 .window-weather__rain {

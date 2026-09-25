@@ -1123,7 +1123,7 @@
 
         <!-- Landscapes (0 0 114 80) -->
 
-        <symbol id="pic-castle" viewBox="0 0 114 80">
+        <symbol id="pic-castle" viewBox="0 0 114 80" preserveAspectRatio="xMidYMid slice">
             <defs><linearGradient id="picDusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5c4b7e" /><stop offset="100%" stop-color="#e9a7b4" /></linearGradient></defs>
             <rect width="114" height="80" fill="url(#picDusk)" />
             <circle cx="88" cy="18" r="8" fill="#fbe7a8" />
@@ -1134,7 +1134,7 @@
             <g fill="#26382b"><path d="M8 70L12 56L16 70Z" /><path d="M96 68L101 52L106 68Z" /><path d="M104 70L108 58L112 70Z" /></g>
         </symbol>
 
-        <symbol id="pic-haunted-house" viewBox="0 0 114 80">
+        <symbol id="pic-haunted-house" viewBox="0 0 114 80" preserveAspectRatio="xMidYMid slice">
             <rect width="114" height="80" fill="#231c33" />
             <circle cx="30" cy="22" r="13" fill="#fbf1cf" />
             <circle cx="26" cy="19" r="3" fill="#e8d6a8" />
@@ -1147,7 +1147,7 @@
             <g fill="#141019"><path d="M40 14L44 12L46 15L48 12L52 14L48 16L46 18L44 16Z" /><path d="M52 24L55 22L56 24L58 22L61 24L58 25L56 27L55 25Z" /></g>
         </symbol>
 
-        <symbol id="pic-london-rain" viewBox="0 0 114 80">
+        <symbol id="pic-london-rain" viewBox="0 0 114 80" preserveAspectRatio="xMidYMid slice">
             <rect width="114" height="80" fill="#6d7a80" />
             <rect width="114" height="40" fill="#8a979c" />
             <path d="M44 66V24L48 18L52 24V66Z" fill="#3a4650" />
@@ -1160,7 +1160,7 @@
             <g stroke="#dfe8ee" stroke-width="0.8" opacity="0.7"><path d="M10 6L6 18M30 10L26 22M56 4L52 16M80 8L76 20M100 4L96 16M20 30L16 42M70 26L66 38M108 28L104 40" /></g>
         </symbol>
 
-        <symbol id="pic-forest-glade" viewBox="0 0 114 80">
+        <symbol id="pic-forest-glade" viewBox="0 0 114 80" preserveAspectRatio="xMidYMid slice">
             <defs><linearGradient id="picGlade" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1f3a3a" /><stop offset="100%" stop-color="#8aa060" /></linearGradient></defs>
             <rect width="114" height="80" fill="url(#picGlade)" />
             <g fill="#26382b"><path d="M0 70L10 20L20 70Z" /><path d="M14 72L26 12L38 72Z" /><path d="M86 72L98 14L110 72Z" /><path d="M76 70L84 30L92 70Z" /></g>
@@ -1171,7 +1171,7 @@
             <g fill="#fff3a8"><circle cx="40" cy="36" r="1.2" /><circle cx="72" cy="28" r="1.2" /><circle cx="60" cy="20" r="1" /><circle cx="30" cy="50" r="1" /></g>
         </symbol>
 
-        <symbol id="pic-paris-cafe" viewBox="0 0 114 80">
+        <symbol id="pic-paris-cafe" viewBox="0 0 114 80" preserveAspectRatio="xMidYMid slice">
             <rect width="114" height="80" fill="#e8c9a0" />
             <rect x="10" y="10" width="94" height="62" fill="#6e4029" />
             <path d="M6 16H108L102 28H12Z" fill="#b33a4e" />
@@ -1182,7 +1182,7 @@
             <ellipse cx="57" cy="68" rx="8" ry="2" fill="#1f1a1d" /><path d="M57 68V76" stroke="#1f1a1d" stroke-width="1.6" />
         </symbol>
 
-        <symbol id="pic-cathedral" viewBox="0 0 114 80">
+        <symbol id="pic-cathedral" viewBox="0 0 114 80" preserveAspectRatio="xMidYMid slice">
             <defs><linearGradient id="picCrimson" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a0d12" /><stop offset="100%" stop-color="#7a2038" /></linearGradient></defs>
             <rect width="114" height="80" fill="url(#picCrimson)" />
             <path d="M88 14A9 9 0 1 0 96 26A7 7 0 0 1 88 14Z" fill="#f6e2b0" />
@@ -1195,7 +1195,7 @@
 
         <!-- Portraits (0 0 64 92), shown in the oval frame -->
 
-        <symbol id="pic-moth" viewBox="0 0 64 92">
+        <symbol id="pic-moth" viewBox="0 0 64 92" preserveAspectRatio="xMidYMid slice">
             <rect width="64" height="92" fill="#f4ead8" />
             <path d="M32 30V70" stroke="#6a4a3a" stroke-width="1.6" />
             <path d="M32 40C20 26 8 32 12 44C14 52 24 52 32 48ZM32 40C44 26 56 32 52 44C50 52 40 52 32 48Z" fill="#9b82a0" stroke="#5c4a64" stroke-width="1" />
@@ -1204,7 +1204,7 @@
             <path d="M32 30C30 24 26 22 24 22M32 30C34 24 38 22 40 22" fill="none" stroke="#6a4a3a" stroke-width="1" />
         </symbol>
 
-        <symbol id="pic-ghost" viewBox="0 0 64 92">
+        <symbol id="pic-ghost" viewBox="0 0 64 92" preserveAspectRatio="xMidYMid slice">
             <rect width="64" height="92" fill="#2a2536" />
             <circle cx="46" cy="18" r="7" fill="#fbf1cf" opacity="0.8" />
             <path d="M16 74C16 46 22 30 32 30C42 30 48 46 48 74L44 69L40 75L36 69L32 75L28 69L24 75L20 69Z" fill="#e8eefb" />
@@ -1212,7 +1212,7 @@
             <ellipse cx="32" cy="54" rx="2" ry="2.6" fill="#2a2536" />
         </symbol>
 
-        <symbol id="pic-umbrella" viewBox="0 0 64 92">
+        <symbol id="pic-umbrella" viewBox="0 0 64 92" preserveAspectRatio="xMidYMid slice">
             <rect width="64" height="92" fill="#8a979c" />
             <g stroke="#dfe8ee" stroke-width="0.8" opacity="0.7"><path d="M8 6L4 18M24 10L20 22M44 4L40 16M58 12L54 24M12 60L8 72M52 58L48 70" /></g>
             <path d="M12 44C12 26 52 26 52 44C48 40 44 40 42 44C38 40 36 40 32 44C28 40 26 40 22 44C20 40 16 40 12 44Z" fill="#b3263a" stroke="#6a1a20" stroke-width="1" />
@@ -1220,7 +1220,7 @@
             <path d="M32 28V24" stroke="#2a2a33" stroke-width="1.6" />
         </symbol>
 
-        <symbol id="pic-toadstool" viewBox="0 0 64 92">
+        <symbol id="pic-toadstool" viewBox="0 0 64 92" preserveAspectRatio="xMidYMid slice">
             <rect width="64" height="92" fill="#dfe8c8" />
             <path d="M0 70C20 64 44 64 64 70V92H0Z" fill="#6f8b4e" />
             <path d="M28 70V48H36V70Z" fill="#f4ead8" stroke="#8a7a5a" stroke-width="1" />
@@ -1229,7 +1229,7 @@
             <path d="M46 20L47.4 24.6L52 26L47.4 27.4L46 32L44.6 27.4L40 26L44.6 24.6Z" fill="#e8c27c" />
         </symbol>
 
-        <symbol id="pic-teapot" viewBox="0 0 64 92">
+        <symbol id="pic-teapot" viewBox="0 0 64 92" preserveAspectRatio="xMidYMid slice">
             <rect width="64" height="92" fill="#f6ecdc" />
             <path d="M14 52C14 40 22 34 32 34C42 34 50 40 50 52C50 62 42 68 32 68C22 68 14 62 14 52Z" fill="#9fb4d6" stroke="#4a5a80" stroke-width="1.2" />
             <path d="M50 46C58 44 60 52 54 58" fill="none" stroke="#4a5a80" stroke-width="2.4" />
@@ -1239,11 +1239,112 @@
             <path d="M28 22C26 16 32 14 30 8M36 22C34 16 40 14 38 8" fill="none" stroke="#b8a898" stroke-width="1.2" stroke-linecap="round" />
         </symbol>
 
-        <symbol id="pic-rose" viewBox="0 0 64 92">
+        <symbol id="pic-rose" viewBox="0 0 64 92" preserveAspectRatio="xMidYMid slice">
             <rect width="64" height="92" fill="#2a1219" />
             <path d="M32 50V82M32 64C24 60 20 62 18 66C24 68 28 68 32 66M32 72C40 68 44 70 46 74C40 76 36 76 32 74" fill="none" stroke="#3e5a36" stroke-width="2" />
             <path d="M32 26C44 26 48 36 44 44C40 52 24 52 20 44C16 36 20 26 32 26Z" fill="#1a0d12" stroke="#7a2038" stroke-width="1.4" />
             <path d="M32 32C38 32 40 38 36 42C32 46 26 42 28 38C29 35 32 36 32 38" fill="none" stroke="#b33a4e" stroke-width="1.4" />
+        </symbol>
+
+
+        <!-- ===================================================
+             FRAMED PICTURES, ready to hang with "Arrange the
+             room": the painting fills the frame's opening.
+        ==================================================== -->
+
+        <symbol id="picture-castle" viewBox="0 0 150 116">
+            <use href="#pic-castle" x="16" y="16" width="118" height="84" />
+            <use href="#frame-gilt-landscape" />
+        </symbol>
+
+        <symbol id="picture-haunted-house" viewBox="0 0 150 116">
+            <use href="#pic-haunted-house" x="16" y="16" width="118" height="84" />
+            <use href="#frame-gilt-landscape" />
+        </symbol>
+
+        <symbol id="picture-london-rain" viewBox="0 0 150 116">
+            <use href="#pic-london-rain" x="16" y="16" width="118" height="84" />
+            <use href="#frame-gilt-landscape" />
+        </symbol>
+
+        <symbol id="picture-forest-glade" viewBox="0 0 150 116">
+            <use href="#pic-forest-glade" x="16" y="16" width="118" height="84" />
+            <use href="#frame-gilt-landscape" />
+        </symbol>
+
+        <symbol id="picture-paris-cafe" viewBox="0 0 150 116">
+            <use href="#pic-paris-cafe" x="16" y="16" width="118" height="84" />
+            <use href="#frame-gilt-landscape" />
+        </symbol>
+
+        <symbol id="picture-cathedral" viewBox="0 0 150 116">
+            <use href="#pic-cathedral" x="16" y="16" width="118" height="84" />
+            <use href="#frame-gilt-landscape" />
+        </symbol>
+
+        <symbol id="portrait-moth" viewBox="0 0 100 130">
+            <defs>
+                <clipPath id="portraitOval-moth">
+                    <ellipse cx="50" cy="68" rx="31" ry="47" />
+                </clipPath>
+            </defs>
+            <use href="#pic-moth" x="19" y="21" width="62" height="94" clip-path="url(#portraitOval-moth)" />
+            <use href="#frame-gilt-oval" />
+        </symbol>
+
+        <symbol id="portrait-ghost" viewBox="0 0 100 130">
+            <defs>
+                <clipPath id="portraitOval-ghost">
+                    <ellipse cx="50" cy="68" rx="31" ry="47" />
+                </clipPath>
+            </defs>
+            <use href="#pic-ghost" x="19" y="21" width="62" height="94" clip-path="url(#portraitOval-ghost)" />
+            <use href="#frame-gilt-oval" />
+        </symbol>
+
+        <symbol id="portrait-umbrella" viewBox="0 0 100 130">
+            <defs>
+                <clipPath id="portraitOval-umbrella">
+                    <ellipse cx="50" cy="68" rx="31" ry="47" />
+                </clipPath>
+            </defs>
+            <use href="#pic-umbrella" x="19" y="21" width="62" height="94" clip-path="url(#portraitOval-umbrella)" />
+            <use href="#frame-gilt-oval" />
+        </symbol>
+
+        <symbol id="portrait-toadstool" viewBox="0 0 100 130">
+            <defs>
+                <clipPath id="portraitOval-toadstool">
+                    <ellipse cx="50" cy="68" rx="31" ry="47" />
+                </clipPath>
+            </defs>
+            <use href="#pic-toadstool" x="19" y="21" width="62" height="94" clip-path="url(#portraitOval-toadstool)" />
+            <use href="#frame-gilt-oval" />
+        </symbol>
+
+        <symbol id="portrait-teapot" viewBox="0 0 100 130">
+            <defs>
+                <clipPath id="portraitOval-teapot">
+                    <ellipse cx="50" cy="68" rx="31" ry="47" />
+                </clipPath>
+            </defs>
+            <use href="#pic-teapot" x="19" y="21" width="62" height="94" clip-path="url(#portraitOval-teapot)" />
+            <use href="#frame-gilt-oval" />
+        </symbol>
+
+        <symbol id="portrait-rose" viewBox="0 0 100 130">
+            <defs>
+                <clipPath id="portraitOval-rose">
+                    <ellipse cx="50" cy="68" rx="31" ry="47" />
+                </clipPath>
+            </defs>
+            <use href="#pic-rose" x="19" y="21" width="62" height="94" clip-path="url(#portraitOval-rose)" />
+            <use href="#frame-gilt-oval" />
+        </symbol>
+
+        <!-- A cobweb for the other corner -->
+        <symbol id="decor-cobweb-right" viewBox="0 0 120 120">
+            <use href="#decor-cobweb" transform="matrix(-1 0 0 1 120 0)" />
         </symbol>
 
         <!-- ===================================================
@@ -1262,10 +1363,24 @@
         </symbol>
 
         <symbol id="cafe-table" viewBox="0 0 160 130">
-            <path d="M80 26V116M52 128H108" stroke="#1f1a1d" stroke-width="6" stroke-linecap="round" />
-            <path d="M80 96C66 104 58 114 52 128M80 96C94 104 102 114 108 128" fill="none" stroke="#1f1a1d" stroke-width="3.5" />
-            <ellipse cx="80" cy="22" rx="76" ry="15" fill="#efe8e0" stroke="#8a7f78" stroke-width="2" />
-            <path d="M24 20C52 14 102 28 134 18" fill="none" stroke="#c9bfb6" stroke-width="1.4" />
+            <!-- Wrought-iron pedestal with scrolled legs -->
+            <g fill="none" stroke="#1f1a1d" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M80 28V98" stroke-width="5" />
+                <path d="M80 96C70 101 58 104 50 114C46 120 40 126 35 122C31 118 35 113 39 116" stroke-width="3.6" />
+                <path d="M80 96C90 101 102 104 110 114C114 120 120 126 125 122C129 118 125 113 121 116" stroke-width="3.6" />
+                <path d="M80 98V122M74 124H86" stroke-width="3.6" />
+                <path d="M78 34C64 34 56 40 58 47C59.4 51 65 51 65 46.4" stroke-width="2.4" />
+                <path d="M82 34C96 34 104 40 102 47C100.6 51 95 51 95 46.4" stroke-width="2.4" />
+            </g>
+            <ellipse cx="80" cy="64" rx="5.6" ry="7" fill="#1f1a1d" />
+            <ellipse cx="80" cy="84" rx="4.4" ry="3" fill="#1f1a1d" />
+            <path d="M78 58V70" stroke="#6a5f66" stroke-width="1.2" stroke-linecap="round" />
+            <!-- Marble top with a gilt edge -->
+            <path d="M4 22V27A76 15 0 0 0 156 27V22Z" fill="#b8893f" stroke="#5a3e18" stroke-width="1.6" stroke-linejoin="round" />
+            <path d="M6 26.4A76 15 0 0 0 154 26.4" fill="none" stroke="#e8c47a" stroke-width="1" />
+            <ellipse cx="80" cy="22" rx="76" ry="15" fill="#f1ebe4" stroke="#8a7f78" stroke-width="1.8" />
+            <path d="M24 20C52 14 102 28 134 18M40 28C58 24 70 30 92 26M112 11C104 16 118 20 108 25" fill="none" stroke="#cdc2b8" stroke-width="1.2" />
+            <ellipse cx="80" cy="22" rx="71" ry="12.6" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.6" />
         </symbol>
 
         <defs>
@@ -1331,38 +1446,139 @@
             <path d="M9 26C14 28 30 28 35 26" fill="none" stroke="#f2c86a" stroke-width="1.4" />
         </symbol>
 
-        <!-- The café tea set: a teapot and two cups; its pattern
-             (dots, stripes, flowers or a gold rim) is picked in
-             Settings. -->
+        <!-- The café tea set: an antique teapot, a cup and saucer, a
+             sugar bowl and a cream jug, drawn to sit on the café
+             table (same 160-wide space). Its pattern (gilded
+             filigree, painted roses, dots or stripes) and colour are
+             picked in Settings. -->
 
-        <symbol id="teaset" viewBox="0 0 150 76">
+        <symbol id="teaset" viewBox="0 0 160 110">
             <defs>
-                <pattern id="teasetDots" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="1.6" fill="#ffffff" /></pattern>
-                <pattern id="teasetStripes" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="3" height="6" fill="#ffffff" opacity="0.7" /></pattern>
+                <pattern id="teasetDots" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="3.5" cy="3.5" r="1.3" fill="#ffffff" opacity="0.9" /></pattern>
+                <pattern id="teasetStripes" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="2.4" height="6" fill="#ffffff" opacity="0.6" /></pattern>
             </defs>
-            <!-- Teapot -->
+
+            <!-- A lace doily under the teapot and the cup -->
+            <ellipse cx="44" cy="92" rx="34" ry="8.5" fill="#fffaf1" stroke="#fffaf1" stroke-width="4" stroke-dasharray="0.1 4.6" stroke-linecap="round" />
+            <ellipse cx="44" cy="92" rx="34" ry="8.5" fill="none" stroke="#d9cdbd" stroke-width="0.8" />
+            <ellipse cx="44" cy="92" rx="26" ry="6.2" fill="none" stroke="#d9cdbd" stroke-width="1" stroke-dasharray="1 2.2" />
+
+            <!-- Sugar bowl (back right) -->
             <g>
-                <path d="M34 38C34 24 44 18 56 18C68 18 78 24 78 38C78 52 68 60 56 60C44 60 34 52 34 38Z" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1.6" />
-                <path d="M34 38C34 24 44 18 56 18C68 18 78 24 78 38C78 52 68 60 56 60C44 60 34 52 34 38Z" fill="url(#teasetDots)" style="display: var(--teaset-dots, none)" />
-                <path d="M34 38C34 24 44 18 56 18C68 18 78 24 78 38C78 52 68 60 56 60C44 60 34 52 34 38Z" fill="url(#teasetStripes)" style="display: var(--teaset-stripes, none)" />
-                <g style="display: var(--teaset-floral, none)"><circle cx="48" cy="38" r="4" fill="#ffffff" /><circle cx="64" cy="44" r="4" fill="#ffffff" /><circle cx="58" cy="30" r="3" fill="#ffffff" /><circle cx="48" cy="38" r="1.4" fill="#f2c86a" /><circle cx="64" cy="44" r="1.4" fill="#f2c86a" /></g>
-                <path d="M36 30C44 26 68 26 76 30" fill="none" stroke="#f2c86a" stroke-width="1.6" style="display: var(--teaset-gold, inline)" />
-                <path d="M78 32C90 30 92 46 80 50" fill="none" stroke="#3a2a30" stroke-width="4.6" /><path d="M78 32C90 30 92 46 80 50" fill="none" style="stroke: var(--china, #e9a7b4)" stroke-width="2.6" />
-                <path d="M34 42L22 30L20 32L30 46" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1.4" stroke-linejoin="round" />
-                <path d="M46 20C46 12 66 12 66 20Z" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1.4" /><circle cx="56" cy="11" r="3" fill="#f2c86a" stroke="#7a5520" stroke-width="0.8" />
+                <ellipse cx="113" cy="85" rx="11" ry="2" fill="#000000" opacity="0.12" />
+                <path d="M106 84H120L118 80H108Z" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1.2" stroke-linejoin="round" />
+                <path d="M106.6 83H119.4" stroke="#d9b262" stroke-width="1" />
+                <path d="M102 71C97 71 97 77 102 77" fill="none" stroke="#3a2a30" stroke-width="3.6" stroke-linecap="round" /><path d="M102 71C97 71 97 77 102 77" fill="none" style="stroke: var(--china, #e9a7b4)" stroke-width="1.6" stroke-linecap="round" />
+                <path d="M124 71C129 71 129 77 124 77" fill="none" stroke="#3a2a30" stroke-width="3.6" stroke-linecap="round" /><path d="M124 71C129 71 129 77 124 77" fill="none" style="stroke: var(--china, #e9a7b4)" stroke-width="1.6" stroke-linecap="round" />
+                <path d="M101 70C101 78 106 80 109 80H117C120 80 125 78 125 70Z" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1.4" stroke-linejoin="round" />
+                <path d="M101 70C101 78 106 80 109 80H117C120 80 125 78 125 70Z" fill="url(#teasetDots)" style="display: var(--teaset-dots, none)" />
+                <path d="M101 70C101 78 106 80 109 80H117C120 80 125 78 125 70Z" fill="url(#teasetStripes)" style="display: var(--teaset-stripes, none)" />
+                <path d="M101 70C101 78 106 80 109 80H117C120 80 125 78 125 70Z" fill="none" stroke="#3a2a30" stroke-width="1.4" stroke-linejoin="round" />
+                <path d="M102 72C106 74 120 74 124 72" fill="none" stroke="#d9b262" stroke-width="1.2" />
+                <path d="M102 70C103 63 123 63 124 70Z" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1.2" stroke-linejoin="round" />
+                <path d="M101 70.4H125" stroke="#d9b262" stroke-width="1.4" stroke-linecap="round" />
+                <path d="M111 64.4C111 62 115 62 115 64.4" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1" />
+                <circle cx="113" cy="61" r="2" fill="#d9b262" stroke="#8a6424" stroke-width="0.7" />
+                <g style="display: var(--teaset-floral, none)"><ellipse cx="110.66" cy="76.9" rx="1.62" ry="0.81" fill="#6f8f4e" transform="rotate(-20 110.66 76.9)" />
+                    <ellipse cx="115.34" cy="76.9" rx="1.62" ry="0.81" fill="#6f8f4e" transform="rotate(20 115.34 76.9)" />
+                    <circle cx="113" cy="76" r="1.8" fill="#cf5f78" />
+                    <path d="M112.1 76C112.1 74.92 113.9 74.92 113.72 76.18C113.54 76.9 112.64 76.72 112.82 76" fill="none" stroke="#9c3050" stroke-width="0.60" stroke-linecap="round" /></g>
+                <path d="M106 76C108 74 110 74 111 76M115 76C116 74 118 74 120 76" fill="none" stroke="#d9b262" stroke-width="0.9" stroke-linecap="round" style="display: var(--teaset-filigree, inline)" />
             </g>
-            <!-- Two cups -->
+
+            <!-- Teapot (left), spout turned in towards the table -->
+            <g transform="translate(52 86) scale(-0.88 0.88) translate(-52 -86)">
+                <ellipse cx="52" cy="86" rx="15" ry="2.2" fill="#000000" opacity="0.14" />
+                <!-- Swan-neck spout -->
+                <path d="M34 72C26 71 23 64 20 56C19 52 17 50 13 49L14 46.6C19 47 23 50 25 54C28 60 31 62 35 62Z" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1.3" stroke-linejoin="round" />
+                <path d="M13 49L14 46.6" stroke="#d9b262" stroke-width="1.6" stroke-linecap="round" />
+                <!-- Scrolled handle -->
+                <path d="M71 55C80 50 89 55 87 64C85 71 80 75 71 76" fill="none" stroke="#3a2a30" stroke-width="4.6" stroke-linecap="round" /><path d="M71 55C80 50 89 55 87 64C85 71 80 75 71 76" fill="none" style="stroke: var(--china, #e9a7b4)" stroke-width="2.5999999999999996" stroke-linecap="round" />
+                <path d="M79 52.4C82 49 86 50 85 53" fill="none" stroke="#3a2a30" stroke-width="3" stroke-linecap="round" /><path d="M79 52.4C82 49 86 50 85 53" fill="none" style="stroke: var(--china, #e9a7b4)" stroke-width="1.2" stroke-linecap="round" />
+                <path d="M86.4 62C86 66 84 70 80 72.4" fill="none" stroke="#d9b262" stroke-width="0.9" stroke-linecap="round" />
+                <!-- Foot -->
+                <path d="M41 86H63L60 81H44Z" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1.3" stroke-linejoin="round" />
+                <path d="M41.8 85H62.2" stroke="#d9b262" stroke-width="1.2" />
+                <path d="M44 81C31 78 27 66 32 58C35 52 40 49 44 48H60C64 49 69 52 72 58C77 66 73 78 60 81Z" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1.4" stroke-linejoin="round" />
+                <path d="M44 81C31 78 27 66 32 58C35 52 40 49 44 48H60C64 49 69 52 72 58C77 66 73 78 60 81Z" fill="url(#teasetDots)" style="display: var(--teaset-dots, none)" />
+                <path d="M44 81C31 78 27 66 32 58C35 52 40 49 44 48H60C64 49 69 52 72 58C77 66 73 78 60 81Z" fill="url(#teasetStripes)" style="display: var(--teaset-stripes, none)" />
+                <path d="M44 81C31 78 27 66 32 58C35 52 40 49 44 48H60C64 49 69 52 72 58C77 66 73 78 60 81Z" fill="none" stroke="#3a2a30" stroke-width="1.4" stroke-linejoin="round" />
+                <!-- Gold bands at the shoulder and the base -->
+                <path d="M38 53C44 55.4 60 55.4 66 53" fill="none" stroke="#d9b262" stroke-width="1.6" />
+                <path d="M36 77C44 79.4 60 79.4 68 77" fill="none" stroke="#d9b262" stroke-width="1.2" />
+                <!-- Gilded filigree -->
+                <g fill="none" stroke="#d9b262" stroke-width="1" stroke-linecap="round" style="display: var(--teaset-filigree, inline)">
+                    <path d="M52 59C45 59 43 65 47 67C49 68 50.6 66 49.2 64.8" />
+                    <path d="M52 59C59 59 61 65 57 67C55 68 53.4 66 54.8 64.8" />
+                    <path d="M44 71C48 75 56 75 60 71" />
+                    <path d="M40 64C38 67 38 70 40 72M64 64C66 67 66 70 64 72" />
+                </g>
+                <g fill="#d9b262" style="display: var(--teaset-filigree, inline)"><circle cx="52" cy="57" r="1" /><circle cx="52" cy="68.4" r="1.1" /><circle cx="37.6" cy="61.6" r="0.8" /><circle cx="66.4" cy="61.6" r="0.8" /></g>
+                <!-- A painted rose in a gilt cartouche -->
+                <g style="display: var(--teaset-floral, none)">
+                    <ellipse cx="52" cy="66" rx="9.6" ry="8.4" fill="#fffaf1" stroke="#d9b262" stroke-width="1.3" />
+                    <ellipse cx="47.58" cy="67.7" rx="3.06" ry="1.53" fill="#6f8f4e" transform="rotate(-20 47.58 67.7)" />
+                    <ellipse cx="56.42" cy="67.7" rx="3.06" ry="1.53" fill="#6f8f4e" transform="rotate(20 56.42 67.7)" />
+                    <circle cx="52" cy="66" r="3.4" fill="#cf5f78" />
+                    <path d="M50.3 66C50.3 63.96 53.7 63.96 53.36 66.34C53.02 67.7 51.32 67.36 51.66 66" fill="none" stroke="#9c3050" stroke-width="0.95" stroke-linecap="round" />
+                </g>
+                <!-- A soft shine -->
+                <path d="M36 70C34 64 36 58 41 54" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity="0.45" />
+                <!-- Lid, domed, with a gilt finial -->
+                <path d="M43 48C43 40 61 40 61 48Z" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1.3" stroke-linejoin="round" />
+                <path d="M42 48.4H62" stroke="#d9b262" stroke-width="1.8" stroke-linecap="round" />
+                <path d="M45.4 45C49 43.6 55 43.6 58.6 45" fill="none" stroke="#d9b262" stroke-width="0.9" />
+                <path d="M50 42.2C50 39.6 54 39.6 54 42.2" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1" />
+                <path d="M52 34C54.6 36 54.6 39 52 40C49.4 39 49.4 36 52 34Z" fill="#d9b262" stroke="#8a6424" stroke-width="0.8" />
+            </g>
+
+            <!-- Cream jug (front right) -->
             <g>
-                <ellipse cx="108" cy="70" rx="17" ry="3.5" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1.2" />
-                <path d="M96 54H120C120 64 115 68 108 68C101 68 96 64 96 54Z" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1.3" />
-                <path d="M96 58C100 60 116 60 120 58" fill="none" stroke="#f2c86a" stroke-width="1.2" style="display: var(--teaset-gold, inline)" />
-                <ellipse cx="108" cy="54" rx="12" ry="2.4" fill="#a8704a" stroke="#3a2a30" stroke-width="1" />
-                <ellipse cx="136" cy="70" rx="13" ry="3" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1.2" />
-                <path d="M127 58H145C145 66 141 68 136 68C131 68 127 66 127 58Z" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1.3" />
-                <ellipse cx="136" cy="58" rx="9" ry="2" fill="#a8704a" stroke="#3a2a30" stroke-width="1" />
+                <ellipse cx="135" cy="98" rx="9" ry="1.8" fill="#000000" opacity="0.12" />
+                <path d="M129 97.4H141L139.6 94H130.4Z" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1.1" stroke-linejoin="round" />
+                <path d="M128.4 85C122 84 122 92 129 92.6" fill="none" stroke="#3a2a30" stroke-width="3.4" stroke-linecap="round" /><path d="M128.4 85C122 84 122 92 129 92.6" fill="none" style="stroke: var(--china, #e9a7b4)" stroke-width="1.4" stroke-linecap="round" />
+                <path d="M128 83C127 90 129 94 131 94H139C141 94 143 90 142 83Z" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1.4" stroke-linejoin="round" />
+                <path d="M128 83C127 90 129 94 131 94H139C141 94 143 90 142 83Z" fill="url(#teasetDots)" style="display: var(--teaset-dots, none)" />
+                <path d="M128 83C127 90 129 94 131 94H139C141 94 143 90 142 83Z" fill="url(#teasetStripes)" style="display: var(--teaset-stripes, none)" />
+                <path d="M128 83C127 90 129 94 131 94H139C141 94 143 90 142 83Z" fill="none" stroke="#3a2a30" stroke-width="1.4" stroke-linejoin="round" />
+                <path d="M142 83L147 80.4L142.6 85.4" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1.1" stroke-linejoin="round" />
+                <ellipse cx="135" cy="83" rx="7" ry="1.6" fill="#fbf1e2" stroke="#3a2a30" stroke-width="1" />
+                <path d="M128 83.2C131 85 139 85 142 83.2" fill="none" stroke="#d9b262" stroke-width="1.1" />
+                <g style="display: var(--teaset-floral, none)"><ellipse cx="132.92" cy="89.8" rx="1.4400000000000002" ry="0.7200000000000001" fill="#6f8f4e" transform="rotate(-20 132.92 89.8)" />
+                    <ellipse cx="137.08" cy="89.8" rx="1.4400000000000002" ry="0.7200000000000001" fill="#6f8f4e" transform="rotate(20 137.08 89.8)" />
+                    <circle cx="135" cy="89" r="1.6" fill="#cf5f78" />
+                    <path d="M134.2 89C134.2 88.04 135.8 88.04 135.64 89.16C135.48 89.8 134.68 89.64 134.84 89" fill="none" stroke="#9c3050" stroke-width="0.60" stroke-linecap="round" /></g>
             </g>
-            <g fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity="0">
-                <path d="M104 48C100 42 108 40 104 32M22 26C18 20 26 18 22 10" />
+
+            <!-- Teacup and saucer (front left, nearest the chair) -->
+            <g>
+                <ellipse cx="36" cy="99.4" rx="18" ry="4.4" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1.2" />
+                <ellipse cx="36" cy="99.4" rx="18" ry="4.4" fill="url(#teasetDots)" style="display: var(--teaset-dots, none)" />
+                <ellipse cx="36" cy="99" rx="15.6" ry="3.4" fill="none" stroke="#d9b262" stroke-width="1" />
+                <ellipse cx="36" cy="98.4" rx="7" ry="1.6" fill="#000000" opacity="0.14" />
+                <!-- A silver teaspoon on the saucer -->
+                <path d="M44 100.4L55 96.6" stroke="#8d8f96" stroke-width="1.8" stroke-linecap="round" /><path d="M44 100.4L55 96.6" stroke="#dfe2e6" stroke-width="0.8" stroke-linecap="round" />
+                <ellipse cx="56.6" cy="96" rx="2.6" ry="1.5" fill="#dfe2e6" stroke="#8d8f96" stroke-width="0.8" transform="rotate(-18 56.6 96)" />
+                <!-- Handle towards the chair -->
+                <path d="M24 86C16 85 16 93 26 92" fill="none" stroke="#3a2a30" stroke-width="3.6" stroke-linecap="round" /><path d="M24 86C16 85 16 93 26 92" fill="none" style="stroke: var(--china, #e9a7b4)" stroke-width="1.6" stroke-linecap="round" />
+                <path d="M31.4 97.6H40.6L39.4 95H32.6Z" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1.1" stroke-linejoin="round" />
+                <path d="M23 84C23 91 28 95 32 95H38C42 95 47 91 47 84Z" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1.4" stroke-linejoin="round" />
+                <path d="M23 84C23 91 28 95 32 95H38C42 95 47 91 47 84Z" fill="url(#teasetDots)" style="display: var(--teaset-dots, none)" />
+                <path d="M23 84C23 91 28 95 32 95H38C42 95 47 91 47 84Z" fill="url(#teasetStripes)" style="display: var(--teaset-stripes, none)" />
+                <path d="M23 84C23 91 28 95 32 95H38C42 95 47 91 47 84Z" fill="none" stroke="#3a2a30" stroke-width="1.4" stroke-linejoin="round" />
+                <ellipse cx="35" cy="84" rx="12" ry="2.6" style="fill: var(--china, #e9a7b4)" stroke="#3a2a30" stroke-width="1.2" />
+                <ellipse cx="35" cy="84.3" rx="10" ry="1.8" fill="#a8704a" />
+                <path d="M23.2 84.6C26 86.6 44 86.6 46.8 84.6" fill="none" stroke="#d9b262" stroke-width="1.3" />
+                <path d="M28 89C30 91 33 91 35 89C37 91 40 91 42 89" fill="none" stroke="#d9b262" stroke-width="0.9" stroke-linecap="round" style="display: var(--teaset-filigree, inline)" />
+                <g style="display: var(--teaset-floral, none)"><ellipse cx="32.66" cy="90.9" rx="1.62" ry="0.81" fill="#6f8f4e" transform="rotate(-20 32.66 90.9)" />
+                    <ellipse cx="37.34" cy="90.9" rx="1.62" ry="0.81" fill="#6f8f4e" transform="rotate(20 37.34 90.9)" />
+                    <circle cx="35" cy="90" r="1.8" fill="#cf5f78" />
+                    <path d="M34.1 90C34.1 88.92 35.9 88.92 35.72 90.18C35.54 90.9 34.64 90.72 34.82 90" fill="none" stroke="#9c3050" stroke-width="0.60" stroke-linecap="round" /></g>
+            </g>
+
+            <!-- Steam from the cup and the spout -->
+            <g fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" opacity="0">
+                <path d="M32 78C28 72 36 70 32 62M39 78C35 72 43 70 39 64M87 49C84 44 90 42 87 36" />
                 <animate attributeName="opacity" values="0;0.75;0" dur="3.4s" repeatCount="indefinite" />
                 <animateTransform attributeName="transform" type="translate" values="0 2;0 -6" dur="3.4s" repeatCount="indefinite" />
             </g>
@@ -2231,13 +2447,10 @@
 
     <!-- ===================== SCENES ===================== -->
 
-    <symbol id="scene-window" viewBox="0 0 440 330">
-
+    <symbol id="window-view" viewBox="0 0 440 330">
+        <!-- The night outside, drawn once and framed by each
+             window shape (scene-window) -->
         <defs>
-
-        <clipPath id="windowGlass">
-            <path d="M40 330V152A180 126 0 0 1 400 152V330Z" />
-        </clipPath>
 
         <linearGradient id="nightSky" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" style="stop-color: var(--night-top, #171c42)" />
@@ -2250,13 +2463,9 @@
             <stop offset="100%" stop-color="#fff1c0" stop-opacity="0" />
         </radialGradient>
 
+        
         </defs>
 
-        <path d="M10 330V148A210 150 0 0 1 430 148V330Z" fill="#3a2116" stroke="#22120b" stroke-width="2" />
-
-        <path d="M24 330V150A196 138 0 0 1 416 150V330Z" fill="#6e4029" stroke="#2a160e" stroke-width="1.5" />
-
-        <g clip-path="url(#windowGlass)">
 
         <rect x="40" y="20" width="360" height="310" fill="url(#nightSky)" />
 
@@ -2339,17 +2548,78 @@
             <path d="M250 330L390 40" />
         </g>
 
-        <g fill="#6e4029" stroke="#2a160e" stroke-width="1.5">
+        <!-- Rain, outside the glass (behind the glazing bars) -->
+        <g style="display: var(--window-rain, none)">
+            <defs>
+                <pattern id="rainFar" width="90" height="90" patternUnits="userSpaceOnUse">
+                    <g stroke="#d8e4ff" stroke-opacity="0.4" stroke-width="1.2" stroke-linecap="round">
+                        <path d="M10 4l-3 14M38 30l-3 14M66 10l-3 14M24 58l-3 14M80 52l-3 14M52 74l-3 14" />
+                    </g>
+                </pattern>
+                <pattern id="rainNear" width="140" height="140" patternUnits="userSpaceOnUse">
+                    <g stroke="#e6eeff" stroke-opacity="0.5" stroke-width="1.8" stroke-linecap="round">
+                        <path d="M20 10l-4 22M90 40l-4 22M56 90l-4 22M120 100l-4 22" />
+                    </g>
+                </pattern>
+            </defs>
+            <g>
+                <rect x="-20" y="-90" width="480" height="420" fill="url(#rainFar)" />
+                <animateTransform attributeName="transform" type="translate" values="0 0;-12 90" dur="0.55s" repeatCount="indefinite" />
+            </g>
+            <g>
+                <rect x="-20" y="-140" width="480" height="470" fill="url(#rainNear)" />
+                <animateTransform attributeName="transform" type="translate" values="0 0;-18 140" dur="0.42s" repeatCount="indefinite" />
+            </g>
+        </g>
+
+        <g style="fill: var(--frame-wood, #6e4029); stroke: var(--frame-line, #2a160e)" stroke-width="1.5">
             <rect x="156" y="0" width="10" height="330" />
             <rect x="274" y="0" width="10" height="330" />
             <rect x="40" y="186" width="360" height="10" />
         </g>
 
+        
+    </symbol>
+
+    <symbol id="scene-window" viewBox="0 0 440 330">
+        <!-- The window: arched, square or gothic (Settings), in the
+             chosen wood. -->
+        <defs>
+            <clipPath id="windowGlass-arched">
+                <path d="M40 330V152A180 126 0 0 1 400 152V330Z" />
+            </clipPath>
+            <clipPath id="windowGlass-square">
+                <path d="M40 330V46H400V330Z" />
+            </clipPath>
+            <clipPath id="windowGlass-gothic">
+                <path d="M40 330V154C40 100 138 56 220 34C302 56 400 100 400 154V330Z" />
+            </clipPath>
+        </defs>
+
+        <!-- The arched window -->
+        <g style="display: var(--window-arched, inline)">
+            <path d="M10 330V148A210 150 0 0 1 430 148V330Z" style="fill: var(--frame-dark, #3a2116); stroke: var(--frame-line, #22120b)" stroke-width="2" />
+            <path d="M24 330V150A196 138 0 0 1 416 150V330Z" style="fill: var(--frame-wood, #6e4029); stroke: var(--frame-line, #2a160e)" stroke-width="1.5" />
+            <use href="#window-view" clip-path="url(#windowGlass-arched)" />
+            <path d="M40 152A180 126 0 0 1 400 152" fill="none" style="stroke: var(--frame-line, #2a160e)" stroke-width="2" />
         </g>
 
-        <path d="M40 152A180 126 0 0 1 400 152" fill="none" stroke="#2a160e" stroke-width="2" />
+        <!-- The square window -->
+        <g style="display: var(--window-square, none)">
+            <path d="M10 330V16H430V330Z" style="fill: var(--frame-dark, #3a2116); stroke: var(--frame-line, #22120b)" stroke-width="2" />
+            <path d="M24 330V30H416V330Z" style="fill: var(--frame-wood, #6e4029); stroke: var(--frame-line, #2a160e)" stroke-width="1.5" />
+            <use href="#window-view" clip-path="url(#windowGlass-square)" />
+            <path d="M40 46H400" fill="none" style="stroke: var(--frame-line, #2a160e)" stroke-width="2" />
+        </g>
 
-        
+        <!-- The gothic window -->
+        <g style="display: var(--window-gothic, none)">
+            <path d="M10 330V150C10 84 118 26 220 0C322 26 430 84 430 150V330Z" style="fill: var(--frame-dark, #3a2116); stroke: var(--frame-line, #22120b)" stroke-width="2" />
+            <path d="M24 330V152C24 92 128 40 220 16C312 40 416 92 416 152V330Z" style="fill: var(--frame-wood, #6e4029); stroke: var(--frame-line, #2a160e)" stroke-width="1.5" />
+            <use href="#window-view" clip-path="url(#windowGlass-gothic)" />
+            <path d="M40 154C40 100 138 56 220 34C302 56 400 100 400 154" fill="none" style="stroke: var(--frame-line, #2a160e)" stroke-width="2" />
+        </g>
+
     </symbol>
 
 
@@ -2518,12 +2788,12 @@
 
         <defs>
 
-        <pattern id="plaid" width="24" height="24" patternUnits="userSpaceOnUse" patternTransform="rotate(-12)">
-            <rect width="24" height="24" style="fill: var(--chair-light, #8b3a4f)" />
-            <rect y="0" width="24" height="7" style="fill: var(--chair-mid, #6a2a3d)" />
-            <rect x="0" y="0" width="7" height="24" style="fill: var(--chair-mid, #6a2a3d)" fill-opacity="0.8" />
-            <rect y="15" width="24" height="2" fill="#e7b6a6" fill-opacity="0.7" />
-            <rect x="15" y="0" width="2" height="24" fill="#e7b6a6" fill-opacity="0.6" />
+        <pattern id="plaid" width="26" height="26" patternUnits="userSpaceOnUse" patternTransform="rotate(-22)">
+            <rect width="26" height="26" style="fill: var(--throw-base, #d8a54a)" />
+            <rect width="26" height="8" style="fill: var(--throw-band, #9a6a24)" fill-opacity="0.75" />
+            <rect width="8" height="26" style="fill: var(--throw-band, #9a6a24)" fill-opacity="0.55" />
+            <rect y="16" width="26" height="2" style="fill: var(--throw-line, #fff3dc)" fill-opacity="0.8" />
+            <rect x="16" width="2" height="26" style="fill: var(--throw-line, #fff3dc)" fill-opacity="0.7" />
         </pattern>
 
         <linearGradient id="velvet" x1="0" y1="0" x2="1" y2="1">
@@ -2555,7 +2825,7 @@
 
         <path d="M240 84C242 60 222 50 212 70V200H238Z" style="fill: var(--chair-mid, #6f2639)" stroke="#2e0f18" stroke-width="2.2" />
 
-        <path d="M50 178H210C220 178 222 204 210 208H50C38 204 40 178 50 178Z" fill="#9c4259" stroke="#2e0f18" stroke-width="2.2" />
+        <path d="M50 178H210C220 178 222 204 210 208H50C38 204 40 178 50 178Z" style="fill: var(--chair-light, #9c4259)" stroke="#2e0f18" stroke-width="2.2" />
 
         <path d="M40 206H220V252C220 258 214 262 208 262H52C46 262 40 258 40 252Z" style="fill: var(--chair-mid, #6f2639)" stroke="#2e0f18" stroke-width="2.2" />
 
@@ -2563,7 +2833,7 @@
 
         <path d="M6 168C6 146 56 144 58 168V252H10Z" fill="url(#velvet)" stroke="#2e0f18" stroke-width="2.2" />
 
-        <ellipse cx="32" cy="168" rx="26" ry="14" fill="#9c4259" stroke="#2e0f18" stroke-width="2.2" />
+        <ellipse cx="32" cy="168" rx="26" ry="14" style="fill: var(--chair-light, #9c4259)" stroke="#2e0f18" stroke-width="2.2" />
 
         <path d="M32 160C40 160 42 172 32 172C26 172 26 164 32 164" fill="none" stroke="#5a1e30" stroke-width="1.6" />
 
@@ -2571,12 +2841,22 @@
 
         <ellipse cx="228" cy="168" rx="26" ry="14" style="fill: var(--chair-light, #8a3449)" stroke="#2e0f18" stroke-width="2.2" />
 
-        <path d="M186 30C214 34 228 60 232 96C238 140 246 180 250 214L214 222C210 186 202 150 190 118C178 86 170 56 186 30Z" fill="url(#plaid)" stroke="#2e0f18" stroke-width="2.2" stroke-linejoin="round" />
-
-        <path d="M214 222L250 214" stroke="#2e0f18" stroke-width="2" />
-
-        <g stroke="#d8aa66" stroke-width="2" stroke-linecap="round">
-        <path d="M218 222V234M224 221V233M230 220V232M236 219V231M242 217V229M248 216V228" />
+        <!-- A throw tossed over the back and the arm: loose, uneven,
+             one corner hanging lower than the other -->
+        <path d="M164 38C178 24 214 26 228 42C240 58 242 88 238 116C248 132 258 146 258 166C262 194 254 218 262 248L250 240L240 256L228 238L216 248L208 232C206 206 200 186 196 170C188 150 194 128 182 108C170 88 156 64 164 38Z" fill="url(#plaid)" stroke="#2a1a1a" stroke-width="2" stroke-linejoin="round" />
+        <!-- Soft folds and shadows -->
+        <g fill="none" stroke-linecap="round">
+            <path d="M178 44C196 60 204 92 206 122C208 146 214 170 222 196" stroke="#1a1010" stroke-opacity="0.28" stroke-width="5" />
+            <path d="M200 34C218 50 226 80 228 112C232 142 240 168 244 200" stroke="#1a1010" stroke-opacity="0.2" stroke-width="4" />
+            <path d="M230 126C238 150 240 176 238 206" stroke="#ffffff" stroke-opacity="0.18" stroke-width="4" />
+            <path d="M188 72C196 90 198 108 196 124" stroke="#ffffff" stroke-opacity="0.16" stroke-width="3" />
+        </g>
+        <!-- A folded-back corner on top -->
+        <path d="M164 38C172 50 186 52 198 44C188 36 176 32 164 38Z" style="fill: var(--throw-base, #d8a54a)" stroke="#2a1a1a" stroke-width="1.4" />
+        <path d="M168 40C176 46 186 47 194 44" fill="none" stroke="#1a1010" stroke-opacity="0.25" stroke-width="2" stroke-linecap="round" />
+        <!-- Fringe along the ragged hem -->
+        <g style="stroke: var(--throw-line, #fff3dc)" stroke-width="1.8" stroke-linecap="round">
+            <path d="M210 234L208 244M214 242L213 252M220 244L221 254M226 240L227 250M232 246L232 256M238 252L239 262M244 246L246 256M250 242L252 252M256 246L258 256M261 250L263 259" />
         </g>
 
         <use href="#scene-cat" x="58" y="96" width="150" height="109" />
@@ -2683,10 +2963,10 @@
         ==================================================== -->
 
         <symbol id="window-sill" viewBox="0 0 480 40">
-            <path d="M6 8H474L480 18H0Z" fill="#9a6440" stroke="#3a2416" stroke-width="1.6" stroke-linejoin="round" />
-            <path d="M0 18H480V28H0Z" fill="#6e4029" stroke="#3a2416" stroke-width="1.6" />
-            <path d="M8 10H472" stroke="#c9905e" stroke-width="1.4" opacity="0.7" />
-            <path d="M60 28L72 40H88L84 28M392 28L396 40H412L424 28" fill="#5a3322" stroke="#3a2416" stroke-width="1.2" stroke-linejoin="round" />
+            <path d="M6 8H474L480 18H0Z" style="fill: var(--frame-light, #9a6440)" stroke="#2a160e" stroke-width="1.6" stroke-linejoin="round" />
+            <path d="M0 18H480V28H0Z" style="fill: var(--frame-wood, #6e4029)" stroke="#2a160e" stroke-width="1.6" />
+            <path d="M8 10H472" style="stroke: var(--frame-shine, #c9905e)" stroke-width="1.4" opacity="0.7" />
+            <path d="M60 28L72 40H88L84 28M392 28L396 40H412L424 28" style="fill: var(--frame-dark, #5a3322)" stroke="#2a160e" stroke-width="1.2" stroke-linejoin="round" />
         </symbol>
 
         <!-- Velvet drapes, tied back with tasselled ropes -->
@@ -2697,14 +2977,14 @@
             <circle cx="-18" cy="-26" r="7" fill="url(#brassBody)" stroke="#3a2416" stroke-width="1.2" />
             <circle cx="458" cy="-26" r="7" fill="url(#brassBody)" stroke="#3a2416" stroke-width="1.2" />
             <!-- Left drape -->
-            <path d="M-14 -22H96C92 40 86 120 70 186C86 232 92 290 84 332H-14Z" style="fill: var(--curtain, #9c4a5c)" stroke="#2a1418" stroke-width="1.6" stroke-linejoin="round" />
-            <path d="M18 -20C16 60 20 140 26 186C22 240 18 290 16 332M50 -20C50 60 46 140 44 186C50 240 52 290 50 332" fill="none" style="stroke: var(--curtain-fold, #6a2a3d)" stroke-width="5" stroke-linecap="round" opacity="0.6" />
+            <path d="M-14 -22H96C92 40 86 120 70 186C86 232 92 290 84 334H-14Z" style="fill: var(--curtain, #9c4a5c)" stroke="#2a1418" stroke-width="1.6" stroke-linejoin="round" />
+            <path d="M18 -20C16 60 20 140 26 186C22 240 18 290 16 334M50 -20C50 60 46 140 44 186C50 240 52 290 50 334" fill="none" style="stroke: var(--curtain-fold, #6a2a3d)" stroke-width="5" stroke-linecap="round" opacity="0.6" />
             <!-- Right drape -->
-            <path d="M454 -22H344C348 40 354 120 370 186C354 232 348 290 356 332H454Z" style="fill: var(--curtain, #9c4a5c)" stroke="#2a1418" stroke-width="1.6" stroke-linejoin="round" />
-            <path d="M422 -20C424 60 420 140 414 186C418 240 422 290 424 332M390 -20C390 60 394 140 396 186C390 240 388 290 390 332" fill="none" style="stroke: var(--curtain-fold, #6a2a3d)" stroke-width="5" stroke-linecap="round" opacity="0.6" />
-            <!-- Scalloped pelmet -->
-            <path d="M-16 -24H456V6C436 20 416 20 396 6C376 20 356 20 336 6C316 20 296 20 276 6C256 20 236 20 216 6C196 20 176 20 156 6C136 20 116 20 96 6C76 20 56 20 36 6C16 20 -4 20 -16 8Z" style="fill: var(--curtain, #9c4a5c)" stroke="#2a1418" stroke-width="1.6" stroke-linejoin="round" />
-            <path d="M-12 0H452" stroke="#e0b879" stroke-width="1.6" stroke-dasharray="3 5" />
+            <path d="M454 -22H344C348 40 354 120 370 186C354 232 348 290 356 334H454Z" style="fill: var(--curtain, #9c4a5c)" stroke="#2a1418" stroke-width="1.6" stroke-linejoin="round" />
+            <path d="M422 -20C424 60 420 140 414 186C418 240 422 290 424 334M390 -20C390 60 394 140 396 186C390 240 388 290 390 334" fill="none" style="stroke: var(--curtain-fold, #6a2a3d)" stroke-width="5" stroke-linecap="round" opacity="0.6" />
+            <!-- Scalloped pelmet, deep enough to cover an arched top -->
+            <path d="M-16 -24H456V52C437 68 416 68 397 52C378 68 357 68 338 52C319 68 298 68 279 52C260 68 239 68 220 52C201 68 180 68 161 52C142 68 121 68 102 52C83 68 62 68 43 52C24 68 3 68 -16 52Z" style="fill: var(--curtain, #9c4a5c)" stroke="#2a1418" stroke-width="1.6" stroke-linejoin="round" />
+            <path d="M-12 -8H452M-12 40H452" stroke="#e0b879" stroke-width="1.6" stroke-dasharray="3 5" />
             <!-- Tie-backs with tassels -->
             <g fill="#e0b879" stroke="#7a5520" stroke-width="1">
                 <path d="M-12 180C20 196 56 196 78 184L80 192C56 206 18 204 -12 190Z" />
@@ -2725,11 +3005,13 @@
             </defs>
             <path d="M-14 -26H454" stroke="#e8e2d6" stroke-width="4" stroke-linecap="round" />
             <g>
-                <path d="M-10 -24H196C186 60 196 200 176 318C150 326 120 316 96 324C70 316 40 326 14 318C0 322 -10 318 -10 318Z" fill="#fffaf2" fill-opacity="0.34" stroke="#ffffff" stroke-opacity="0.6" stroke-width="1.2" />
-                <path d="M-10 -24H196C186 60 196 200 176 318C150 326 120 316 96 324C70 316 40 326 14 318C0 322 -10 318 -10 318Z" fill="url(#laceDots)" opacity="0.5" />
-                <path d="M450 -24H244C254 60 244 200 264 318C290 326 320 316 344 324C370 316 400 326 426 318C440 322 450 318 450 318Z" fill="#fffaf2" fill-opacity="0.34" stroke="#ffffff" stroke-opacity="0.6" stroke-width="1.2" />
-                <path d="M450 -24H244C254 60 244 200 264 318C290 326 320 316 344 324C370 316 400 326 426 318C440 322 450 318 450 318Z" fill="url(#laceDots)" opacity="0.5" />
-                <path d="M40 -22C38 100 44 220 36 320M100 -22C104 100 96 220 100 322M150 -22C148 100 156 220 144 320M290 -22C292 100 284 220 296 320M340 -22C336 100 344 220 340 322M400 -22C402 100 396 220 404 320" fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="3" />
+                <path d="M-10 -24H196C186 60 196 200 176 334C150 334 120 316 96 334C70 316 40 334 14 334C0 334 -10 334 -10 334Z" fill="#fffaf2" fill-opacity="0.34" stroke="#ffffff" stroke-opacity="0.6" stroke-width="1.2" />
+                <path d="M-10 -24H196C186 60 196 200 176 334C150 334 120 316 96 334C70 316 40 334 14 334C0 334 -10 334 -10 334Z" fill="url(#laceDots)" opacity="0.5" />
+                <path d="M450 -24H244C254 60 244 200 264 334C290 334 334 316 344 334C370 316 400 334 426 334C440 334 450 334 450 334Z" fill="#fffaf2" fill-opacity="0.34" stroke="#ffffff" stroke-opacity="0.6" stroke-width="1.2" />
+                <path d="M450 -24H244C254 60 244 200 264 334C290 334 334 316 344 334C370 316 400 334 426 334C440 334 450 334 450 334Z" fill="url(#laceDots)" opacity="0.5" />
+                <path d="M40 -22C38 100 44 220 36 334M100 -22C104 100 96 220 100 334M150 -22C148 100 156 220 144 334M290 -22C292 100 284 220 296 334M340 -22C334 100 344 220 340 334M400 -22C402 100 396 220 404 334" fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="3" />
+                <path d="M-10 -24H450V50C431 64 411 64 392 50C374 64 354 64 335 50C316 64 296 64 278 50C259 64 239 64 220 50C201 64 181 64 162 50C144 64 124 64 105 50C86 64 66 64 48 50C29 64 9 64 -10 50Z" fill="#fffaf2" fill-opacity="0.55" stroke="#ffffff" stroke-opacity="0.7" stroke-width="1.2" />
+                <path d="M-10 -24H450V50C431 64 411 64 392 50C374 64 354 64 335 50C316 64 296 64 278 50C259 64 239 64 220 50C201 64 181 64 162 50C144 64 124 64 105 50C86 64 66 64 48 50C29 64 9 64 -10 50Z" fill="url(#laceDots)" opacity="0.6" />
             </g>
         </symbol>
 
@@ -2744,11 +3026,19 @@
                 </pattern>
             </defs>
             <path d="M-6 -24H446" stroke="#b8893e" stroke-width="3.4" stroke-linecap="round" />
-            <path d="M-6 -22H446V16C426 28 406 28 386 16C366 28 346 28 326 16C306 28 286 28 266 16C246 28 226 28 206 16C186 28 166 28 146 16C126 28 106 28 86 16C66 28 46 28 26 16C12 24 0 24 -6 18Z" fill="url(#gingham)" stroke="#6a4a3a" stroke-width="1.2" />
+            <g style="display: var(--valance-straight, none)">
+                <path d="M-6 -22H446V50C427 64 408 64 390 50C371 64 352 64 333 50C314 64 295 64 276 50C258 64 239 64 220 50C201 64 182 64 164 50C145 64 126 64 107 50C88 64 69 64 50 50C32 64 13 64 -6 50Z" fill="url(#gingham)" stroke="#6a4a3a" stroke-width="1.2" />
+            </g>
+            <!-- On arched and gothic windows: a swag that curves down
+                 at the sides to cover the arch -->
+            <g style="display: var(--valance-swag, inline)">
+                <path d="M-6 -22H446V156Q432 160 418 136Q404 141 390 119Q375 126 361 105Q347 113 333 93Q319 102 305 84Q291 94 276 77Q262 89 248 73Q234 86 220 72Q206 86 192 73Q178 89 164 77Q149 94 135 84Q121 102 107 93Q93 113 79 105Q65 126 50 119Q36 141 22 136Q8 160 -6 156Z" fill="url(#gingham)" stroke="#6a4a3a" stroke-width="1.2" stroke-linejoin="round" />
+                <path d="M40 99Q220 46 400 99" fill="none" stroke="#6a4a3a" stroke-opacity="0.25" stroke-width="3" />
+            </g>
             <path d="M-6 188H446" stroke="#b8893e" stroke-width="3.4" stroke-linecap="round" />
-            <path d="M-4 190H214V326C194 332 174 324 154 330C134 324 114 332 94 326C74 332 54 324 34 330C18 326 6 330 -4 326Z" fill="url(#gingham)" stroke="#6a4a3a" stroke-width="1.2" />
-            <path d="M226 190H444V326C428 330 414 326 404 330C384 324 364 332 344 326C324 332 304 324 284 330C264 324 244 332 226 326Z" fill="url(#gingham)" stroke="#6a4a3a" stroke-width="1.2" />
-            <path d="M30 192C28 240 34 290 30 326M80 192C84 240 78 290 84 326M140 192C138 240 144 290 140 326M190 192C194 240 188 290 192 326M250 192C248 240 254 290 250 326M300 192C304 240 298 290 304 326M360 192C358 240 364 290 360 326M414 192C418 240 412 290 418 326" fill="none" stroke="#6a4a3a" stroke-opacity="0.25" stroke-width="3" />
+            <path d="M-4 190H214V334C194 334 174 334 154 334C134 334 114 334 94 334C74 334 54 334 34 334C18 334 6 334 -4 334Z" fill="url(#gingham)" stroke="#6a4a3a" stroke-width="1.2" />
+            <path d="M226 190H444V334C428 334 414 334 404 334C384 334 364 334 344 334C334 334 304 334 284 334C264 334 244 334 226 334Z" fill="url(#gingham)" stroke="#6a4a3a" stroke-width="1.2" />
+            <path d="M30 192C28 240 34 290 30 334M80 192C84 240 78 290 84 334M140 192C138 240 144 290 140 334M190 192C194 240 188 290 192 334M250 192C248 240 254 290 250 334M300 192C304 240 298 290 304 334M360 192C358 240 364 290 360 334M414 192C418 240 412 290 418 334" fill="none" stroke="#6a4a3a" stroke-opacity="0.25" stroke-width="3" />
         </symbol>
 
     <symbol id="scene-rug" viewBox="0 0 700 180">

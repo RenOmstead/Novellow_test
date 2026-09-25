@@ -42,6 +42,21 @@ export const RUGS = [
     { id: "none", name: "No rug" }
 ];
 
+export const WINDOW_SHAPES = [
+    { id: "arched", name: "Arched" },
+    { id: "square", name: "Square" },
+    { id: "gothic", name: "Gothic, pointed" }
+];
+
+export const WOODS = [
+    { id: "walnut", name: "Walnut" },
+    { id: "oak", name: "Oak" },
+    { id: "mahogany", name: "Mahogany" },
+    { id: "ebony", name: "Ebony" },
+    { id: "white", name: "Painted white" },
+    { id: "sage", name: "Painted sage" }
+];
+
 export const MUGS = [
     { id: "plain", name: "A plain mug" },
     { id: "cat", name: "A cat mug" },
@@ -61,8 +76,8 @@ export const CHINA_COLOURS = [
 ];
 
 export const TEASETS = [
-    { id: "gold", name: "Gold rim" },
-    { id: "floral", name: "Little flowers" },
+    { id: "gold", name: "Gilded filigree" },
+    { id: "floral", name: "Painted roses" },
     { id: "dots", name: "Polka dots" },
     { id: "stripes", name: "Stripes" }
 ];
@@ -72,6 +87,8 @@ const DEFAULTS = {
     ghosts: "haunted",
     curtains: "drapes",
     rug: "oval",
+    window: "arched",
+    wood: "walnut",
     mug: "plain",
     china: "rose",
     teaset: "gold"
@@ -115,7 +132,7 @@ export function setPreference(key, value) {
 
 export function applyPreferences() {
 
-    const { cat, curtains, rug, mug, china, teaset } =
+    const { cat, curtains, rug, mug, china, teaset, window: shape, wood } =
         getPreferences();
 
     const root =
@@ -124,6 +141,8 @@ export function applyPreferences() {
     root.dataset.cat = CATS.some((item) => item.id === cat) ? cat : "black";
     root.dataset.curtains = CURTAINS.some((item) => item.id === curtains) ? curtains : "drapes";
     root.dataset.rug = RUGS.some((item) => item.id === rug) ? rug : "oval";
+    root.dataset.window = WINDOW_SHAPES.some((item) => item.id === shape) ? shape : "arched";
+    root.dataset.wood = WOODS.some((item) => item.id === wood) ? wood : "walnut";
     root.dataset.china = CHINA_COLOURS.some((item) => item.id === china) ? china : "rose";
     root.dataset.teaset = TEASETS.some((item) => item.id === teaset) ? teaset : "gold";
 

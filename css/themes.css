@@ -117,60 +117,12 @@
     --field-border-focus: #8e86a8;
 }
 
-/* The haunted room's own things: cobwebs, a cauldron by the
-   armchair, and a full moon in the window. */
-
-.cobweb {
-    display: none;
-}
+/* The haunted room's own things: a full moon in the window.
+   (Cobwebs are decorations the reader places.) */
 
 [data-theme="haunted"] {
     --crescent-display: none;
     --full-moon-display: inline;
-}
-
-[data-theme="haunted"] .cobweb {
-    position: absolute;
-
-    display: block;
-
-    z-index: 5;
-
-    width: 120px;
-    height: 120px;
-
-    pointer-events: none;
-}
-
-[data-theme="haunted"] .cobweb--case-left {
-    top: 132px;
-    left: 18px;
-}
-
-[data-theme="haunted"] .cobweb--case-right {
-    top: 132px;
-    right: 18px;
-
-    transform: scaleX(-1);
-}
-
-/* Cobwebs in the window's top corners. */
-[data-theme="haunted"] .wall-art > .cobweb--window,
-[data-theme="haunted"] .wall-art > .cobweb--wall {
-    bottom: calc(var(--window-bottom) + var(--window-width) * 0.75 - var(--window-width) * 0.3);
-
-    width: calc(var(--window-width) * 0.28);
-    height: calc(var(--window-width) * 0.28);
-}
-
-[data-theme="haunted"] .wall-art > .cobweb--window {
-    left: calc(var(--window-left) + var(--window-width) * 0.04);
-}
-
-[data-theme="haunted"] .wall-art > .cobweb--wall {
-    left: calc(var(--window-left) + var(--window-width) * 0.68);
-
-    transform: scaleX(-1);
 }
 
 .crown-piece--cauldron {
@@ -192,6 +144,9 @@
 ========================================================= */
 
 [data-theme="rainy"] {
+    --throw-base: #e8d6b8;
+    --throw-band: #8a3444;
+    --throw-line: #2f4a3f;
     --curtain: #3e6b58;
     --curtain-fold: #1c382c;
     --rug-edge: #1c2a24;
@@ -275,6 +230,9 @@
 ========================================================= */
 
 [data-theme="forest"] {
+    --throw-base: #c9a94a;
+    --throw-band: #5f7d45;
+    --throw-line: #f5eab0;
     --curtain: #6a4a80;
     --curtain-fold: #48305a;
     --lamp-glow: rgba(250, 240, 140, 0.3);
@@ -348,6 +306,9 @@
 ========================================================= */
 
 [data-theme="cafe"] {
+    --throw-base: #4a7a82;
+    --throw-band: #2e4a52;
+    --throw-line: #f1dcb6;
     --curtain: #b5643f;
     --curtain-fold: #7a3e20;
     --rug-edge: #2a1c15;
@@ -426,6 +387,9 @@
 ========================================================= */
 
 [data-theme="gothic"] {
+    --throw-base: #3a3440;
+    --throw-band: #1f1b24;
+    --throw-line: #c9954f;
     --curtain: #7a2038;
     --curtain-fold: #3a0c18;
     --rug-edge: #13070b;
@@ -598,6 +562,26 @@
 [data-china="plum"] { --china: #8a5a7a; }
 [data-china="charcoal"] { --china: #4a4450; }
 
-[data-teaset="floral"] { --teaset-floral: inline; }
-[data-teaset="dots"] { --teaset-dots: inline; }
-[data-teaset="stripes"] { --teaset-stripes: inline; }
+[data-teaset="floral"] { --teaset-floral: inline; --teaset-filigree: none; }
+[data-teaset="dots"] { --teaset-dots: inline; --teaset-filigree: none; }
+[data-teaset="stripes"] { --teaset-stripes: inline; --teaset-filigree: none; }
+
+
+/* =========================================================
+   THE WINDOW: its shape and its wood (Settings;
+   <html data-window="…" data-wood="…">). The sill matches.
+========================================================= */
+
+[data-window="square"] { --window-arched: none; --window-square: inline; }
+[data-window="gothic"] { --window-arched: none; --window-gothic: inline; }
+
+[data-wood="walnut"] { --frame-dark: #3a2116; --frame-wood: #6e4029; --frame-light: #9a6440; --frame-line: #2a160e; --frame-shine: #c9905e; }
+[data-wood="oak"] { --frame-dark: #6e4a2a; --frame-wood: #a8773f; --frame-light: #c9995a; --frame-line: #3e2a14; --frame-shine: #e2bd84; }
+[data-wood="mahogany"] { --frame-dark: #3a1410; --frame-wood: #7a2e22; --frame-light: #a0463a; --frame-line: #24100c; --frame-shine: #c9705e; }
+[data-wood="ebony"] { --frame-dark: #121014; --frame-wood: #2a2628; --frame-light: #45403f; --frame-line: #050405; --frame-shine: #6a6260; }
+[data-wood="white"] { --frame-dark: #b8b2a8; --frame-wood: #efe9df; --frame-light: #fbf8f2; --frame-line: #8a8278; --frame-shine: #ffffff; }
+[data-wood="sage"] { --frame-dark: #5a6a52; --frame-wood: #8fa383; --frame-light: #aebfa2; --frame-line: #3a4634; --frame-shine: #c9d8bc; }
+
+/* Café curtains: a straight valance on a square window, a
+   swag that covers the arch on arched and gothic ones. */
+[data-window="square"] { --valance-straight: inline; --valance-swag: none; }

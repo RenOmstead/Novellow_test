@@ -23,7 +23,7 @@ export const THEMES = [
         swatch: ["#7c4d38", "#3b2231", "#c47f82", "#f0cf8a"],
         ivy: "ivy",
         weather: { rain: false, fog: false, fireflies: false },
-        crownDecor: ["plant", null, "candle", "belljar", "stack", null, "lantern"]
+        crownDecor: []
     },
 
     {
@@ -35,7 +35,7 @@ export const THEMES = [
         swatch: ["#3f3a4d", "#1f1a26", "#8e86a8", "#d8d0ea"],
         ivy: "forest",
         weather: { rain: false, fog: true, fireflies: false },
-        crownDecor: ["skull", null, "candle", "belljar", "stack", null, "lantern"]
+        crownDecor: []
     },
 
     {
@@ -47,7 +47,7 @@ export const THEMES = [
         swatch: ["#4d5660", "#262c33", "#8aa0a8", "#d9c79a"],
         ivy: "forest",
         weather: { rain: true, fog: false, fireflies: false },
-        crownDecor: ["globe", null, "candle", "belljar", "stack", null, "lantern"]
+        crownDecor: []
     },
 
     {
@@ -59,7 +59,7 @@ export const THEMES = [
         swatch: ["#4a5a3c", "#26301f", "#b98ab2", "#e8d98a"],
         ivy: "forest",
         weather: { rain: false, fog: false, fireflies: true },
-        crownDecor: ["mushrooms", null, "candle", "belljar", "flowers", null, "lantern"]
+        crownDecor: []
     },
 
     {
@@ -71,7 +71,7 @@ export const THEMES = [
         swatch: ["#5a3f30", "#2a1c15", "#c9955f", "#f1dcb6"],
         ivy: "ivy",
         weather: { rain: false, fog: false, fireflies: false },
-        crownDecor: ["plant", null, "candle", "belljar", "stack", null, "lantern"]
+        crownDecor: []
     },
 
     {
@@ -83,7 +83,7 @@ export const THEMES = [
         swatch: ["#3a1c24", "#1a0d12", "#a8354e", "#e8c27c"],
         ivy: "autumn",
         weather: { rain: false, fog: true, fireflies: false },
-        crownDecor: ["skull", null, "candle", "belljar", "flowers", null, "lantern"]
+        crownDecor: []
     }
 
 ];
