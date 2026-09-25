@@ -42,7 +42,9 @@ export const SPINE_STYLES = [
     { id: "dagger", label: "Dagger" },
     { id: "moonphases", label: "Moon phases" },
     { id: "constellation", label: "Constellation" },
-    { id: "filigree", label: "Gilded filigree" }
+    { id: "filigree", label: "Gilded filigree" },
+    { id: "garden", label: "Painted garden" },
+    { id: "strawberries", label: "Strawberry patch" }
 ];
 
 
@@ -61,7 +63,9 @@ export const SPINE_ART = {
     dagger: "dagger",
     moonphases: "moonphases",
     constellation: "constellation",
-    filigree: "filigree"
+    filigree: "filigree",
+    garden: "garden",
+    strawberries: "strawberries"
 };
 
 
@@ -155,6 +159,8 @@ export const MOTIF_VIEWBOX = {
     moonphases: "0 0 16 60",
     constellation: "0 0 16 60",
     filigree: "0 0 16 60",
+    garden: "0 0 16 60",
+    strawberries: "0 0 16 60",
     rose: "0 0 20 20",
     snake: "0 0 20 24",
     "dagger-small": "0 0 12 34",
