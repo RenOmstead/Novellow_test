@@ -685,7 +685,7 @@ button.book-spine {
    on a soft wash of the book's colour so it stays readable.
 ========================================================= */
 
-.book-spine:is(.spine--rosestem, .spine--wildflowers, .spine--fern, .spine--mycelium, .spine--serpent, .spine--dagger, .spine--moonphases, .spine--constellation, .spine--filigree) .spine-vine {
+.book-spine:is(.spine--rosestem, .spine--wildflowers, .spine--fern, .spine--mycelium, .spine--serpent, .spine--dagger, .spine--moonphases, .spine--constellation, .spine--filigree, .spine--garden, .spine--strawberries) .spine-vine {
     width: 46%;
 
     opacity: 0.7;
@@ -697,7 +697,7 @@ button.book-spine {
     opacity: 0.85;
 }
 
-.book-spine:is(.spine--rosestem, .spine--wildflowers, .spine--fern, .spine--mycelium, .spine--serpent, .spine--dagger, .spine--moonphases, .spine--constellation, .spine--filigree).spine-panel--none .spine-title {
+.book-spine:is(.spine--rosestem, .spine--wildflowers, .spine--fern, .spine--mycelium, .spine--serpent, .spine--dagger, .spine--moonphases, .spine--constellation, .spine--filigree, .spine--garden, .spine--strawberries).spine-panel--none .spine-title {
     text-shadow:
         0 0 3px var(--book-color),
         0 0 6px var(--book-color),
@@ -725,4 +725,12 @@ button.book-spine {
     max-height: 60%;
 
     margin: auto 0;
+}
+
+/* The painted spines keep their own colours, drawn boldly. */
+.spine--garden .spine-vine,
+.spine--strawberries .spine-vine {
+    width: 72%;
+
+    opacity: 1;
 }
