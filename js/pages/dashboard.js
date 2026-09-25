@@ -297,7 +297,7 @@ async function renderDeskNotes() {
 
     render(holder, html`
 
-        <article class="paper-note">
+        <article class="paper-note paper-note--reading">
 
             <h2 class="paper-note__label">
                 ${art("motif-star", "paper-note__icon")}
@@ -328,7 +328,7 @@ async function renderDeskNotes() {
         </article>
 
 
-        <article class="paper-note">
+        <article class="paper-note paper-note--snippets">
 
             <h2 class="paper-note__label">
                 ${art("motif-moon", "paper-note__icon")}

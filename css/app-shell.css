@@ -563,7 +563,11 @@ body.sidebar-collapsed .app-stage {
 .greeting {
     display: grid;
 
+    flex: none;
+
     gap: 2px;
+
+    white-space: nowrap;
 
     padding: 8px 18px 8px 16px;
 
@@ -609,6 +613,9 @@ body.sidebar-collapsed .app-stage {
     position: relative;
 
     width: clamp(220px, 28vw, 380px);
+    min-width: 180px;
+
+    flex: 0 1 auto;
 }
 
 .library-search {

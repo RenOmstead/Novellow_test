@@ -189,6 +189,7 @@ function buildShell(page, eyebrow) {
     wireSearch();
     wirePopovers();
     wireSound();
+    measureHeader();
 
     document.addEventListener("novellow:user-updated", async () => {
 
@@ -384,6 +385,28 @@ function refreshNames() {
 /* =========================================================
    SIDEBAR
 ========================================================= */
+
+/*
+    The top bar's real height (it wraps onto two lines on some
+    screens), so the reading room can fill exactly the rest of
+    the window.
+*/
+
+function measureHeader() {
+
+    const header =
+        document.querySelector(".scene-header");
+
+    if (!header || !("ResizeObserver" in window)) {
+        return;
+    }
+
+    new ResizeObserver(() => {
+        document.documentElement.style.setProperty("--header-h", `${Math.ceil(header.offsetHeight)}px`);
+    }).observe(header);
+
+}
+
 
 function wireSidebar() {
 
