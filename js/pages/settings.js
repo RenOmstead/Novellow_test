@@ -29,6 +29,7 @@ import { art, loader, toast, toastError, confirmDialog, formDialog, withBusy } f
 import { NovellowError } from "../core/errors.js?v=__VERSION__";
 import { SHELF_SORTS } from "../config.js?v=__VERSION__";
 import { exportLibrary, checkImport, importLibrary } from "../data/transfer.js?v=__VERSION__";
+import { mountMixer } from "../sound/mixer.js?v=__VERSION__";
 
 
 const content =
@@ -251,6 +252,16 @@ function renderPage() {
 
             </section>
 
+            <section class="settings-section paper mixer" aria-labelledby="soundHeading">
+
+                <h2 id="soundHeading">${art("ui-sound")} Sounds of the room</h2>
+
+                <div data-settings-mixer></div>
+
+                <p class="muted">Sounds are made right in your browser and saved on this device only, so your phone can stay quiet while your laptop plays.</p>
+
+            </section>
+
             <section class="settings-section settings-section--wide paper" aria-labelledby="dataHeading">
 
                 <h2 id="dataHeading">${art("ui-download")} Your library's data</h2>
@@ -283,6 +294,8 @@ function renderPage() {
     `);
 
     loadSignIns();
+
+    mountMixer(content.querySelector("[data-settings-mixer]"));
 
 }
 

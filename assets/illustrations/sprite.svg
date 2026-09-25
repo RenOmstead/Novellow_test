@@ -1177,6 +1177,24 @@
         <path d="M25 5L25.8 7.2L28 8L25.8 8.8L25 11L24.2 8.8L22 8L24.2 7.2Z" fill="#f6dfb4" />
     </symbol>
 
+    <!-- Sound: a little brass horn, with and without its music -->
+
+    <symbol id="ui-sound" viewBox="0 0 32 32">
+        <path d="M4 13.2H8.5L16.5 6.5V25.5L8.5 18.8H4Z" fill="url(#brassBody)" stroke="#2a1a1f" stroke-width="1.3" stroke-linejoin="round" />
+        <path d="M5.2 14.6H8.4" stroke="#f6dca4" stroke-width="1" opacity="0.8" />
+        <circle cx="15.2" cy="16" r="1.3" fill="#7a5520" />
+        <path d="M20 12.2A5.2 5.2 0 0 1 20 19.8" fill="none" stroke="#74485c" stroke-width="2.2" stroke-linecap="round" />
+        <path d="M23 9A9.6 9.6 0 0 1 23 23" fill="none" stroke="#74485c" stroke-width="2.2" stroke-linecap="round" />
+        <path d="M27.2 6.2L27.8 7.8L29.4 8.4L27.8 9L27.2 10.6L26.6 9L25 8.4L26.6 7.8Z" fill="#e0a94f" />
+    </symbol>
+
+    <symbol id="ui-sound-off" viewBox="0 0 32 32">
+        <path d="M4 13.2H8.5L16.5 6.5V25.5L8.5 18.8H4Z" fill="url(#brassBody)" stroke="#2a1a1f" stroke-width="1.3" stroke-linejoin="round" />
+        <path d="M5.2 14.6H8.4" stroke="#f6dca4" stroke-width="1" opacity="0.8" />
+        <circle cx="15.2" cy="16" r="1.3" fill="#7a5520" />
+        <path d="M20.5 12.5L27.5 19.5M27.5 12.5L20.5 19.5" stroke="#74485c" stroke-width="2.2" stroke-linecap="round" />
+    </symbol>
+
     <!-- Chevrons -->
 
     <symbol id="ui-chevron-left" viewBox="0 0 32 32">
