@@ -4,8 +4,9 @@
 
    Small, per-device choices about the room that don't need
    to follow the reader between devices: which cat lives in
-   the library, where ghosts float, the curtains, the rug, and
-   the mug or tea set on the table. Kept in localStorage
+   the library, where ghosts float, the curtains, the rug, the
+   mug or tea set on the table, and which paper notes (if any)
+   are pinned to the wall. Kept in localStorage
    (sound has its own, in js/sound/soundscape.js).
 ========================================================= */
 
@@ -91,7 +92,9 @@ const DEFAULTS = {
     wood: "walnut",
     mug: "plain",
     china: "rose",
-    teaset: "gold"
+    teaset: "gold",
+    readingNote: "off",
+    snippetNote: "off"
 };
 
 
@@ -145,6 +148,13 @@ export function applyPreferences() {
     root.dataset.wood = WOODS.some((item) => item.id === wood) ? wood : "walnut";
     root.dataset.china = CHINA_COLOURS.some((item) => item.id === china) ? china : "rose";
     root.dataset.teaset = TEASETS.some((item) => item.id === teaset) ? teaset : "gold";
+
+    // The little paper notes on the wall, if the reader wants them.
+    const { readingNote, snippetNote } =
+        getPreferences();
+
+    root.dataset.readingNote = readingNote === "on" ? "on" : "off";
+    root.dataset.snippetNote = snippetNote === "on" ? "on" : "off";
 
     // The drink on the side table.
     const mugId =

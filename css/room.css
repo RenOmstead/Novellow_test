@@ -13,7 +13,10 @@
        bookcase; the room ends at its floor, so trim them. */
     overflow: clip;
 
-    min-height: calc(100vh - var(--header-height));
+    /* Exactly the window below the top bar, so a small
+       bookcase, the ceiling lamp and the floor all fit on one
+       screen. A taller bookcase makes the room taller. */
+    min-height: calc(100dvh - var(--header-h, var(--header-height)));
 
     display: grid;
 
@@ -71,6 +74,28 @@
 }
 
 
+@media (max-height: 820px) and (min-width: 1181px) {
+
+    .bookcase-zone {
+        padding-top: 56px;
+        padding-bottom: 2px;
+    }
+
+    .shelf-interior--welcome {
+        min-height: 0;
+
+        padding: 18px 14px;
+    }
+
+    .shelf-welcome {
+        gap: 10px;
+
+        padding: 18px 20px;
+    }
+
+}
+
+
 /* =========================================================
    JOURNAL ZONE AND THE WALL
 ========================================================= */
@@ -85,7 +110,9 @@
     container-type: inline-size;
 
     --window-left: 22px;
-    --window-width: min(360px, 54cqw);
+    /* Wide enough for the wall, short enough that the curtains
+       clear the ceiling on a short screen. */
+    --window-width: min(360px, 54cqw, max(200px, calc((100dvh - var(--header-h, 72px) - 260px) * 1.19)));
     --window-bottom: 210px;
     --gap: min(30px, 4cqw);
     --picture-width: min(130px, 20cqw);
@@ -99,9 +126,16 @@
        at the bottom, however tall the bookcase grows. */
     justify-content: flex-end;
 
-    padding: 240px 40px 620px 6px;
+    padding: 0 40px 0 6px;
 
     overflow: hidden;
+}
+
+/* With paper notes pinned up, they hang between the lamp and
+   the top of the curtains, and the room grows to fit them. */
+:is([data-reading-note="on"], [data-snippet-note="on"]) .journal-zone {
+    padding-top: 230px;
+    padding-bottom: calc(var(--window-bottom) + var(--window-width) * 0.84 + 30px);
 }
 
 .wall-art {
@@ -357,7 +391,7 @@ body.sidebar-collapsed .journal-stage {
 .desk-notes {
     width: min(68%, 520px);
 
-    display: grid;
+    display: none;
 
     grid-template-columns: 1fr 1fr;
 
@@ -368,6 +402,20 @@ body.sidebar-collapsed .journal-stage {
     position: relative;
 
     z-index: 5;
+}
+
+:is([data-reading-note="on"], [data-snippet-note="on"]) .desk-notes {
+    display: grid;
+}
+
+.paper-note--reading,
+.paper-note--snippets {
+    display: none;
+}
+
+[data-reading-note="on"] .paper-note--reading,
+[data-snippet-note="on"] .paper-note--snippets {
+    display: block;
 }
 
 .paper-note {
@@ -889,9 +937,13 @@ body.sidebar-collapsed .journal-stage {
     }
 
     .journal-zone {
-        min-height: 960px;
+        min-height: calc(100dvh - var(--header-h, var(--header-height)));
 
-        padding: 230px 60px 560px 28px;
+        padding: 0 60px 0 28px;
+    }
+
+    :is([data-reading-note="on"], [data-snippet-note="on"]) .journal-zone {
+        padding-top: 220px;
     }
 
     .desk-notes {
@@ -921,10 +973,15 @@ body.sidebar-collapsed .journal-stage {
 
     /* Journals open on their own page here, so only the
        little desk notes stay below the bookcase. */
-    .journal-zone {
+    .journal-zone,
+    :is([data-reading-note="on"], [data-snippet-note="on"]) .journal-zone {
         min-height: 0;
 
         padding: 0 12px 36px;
+    }
+
+    html:not([data-reading-note="on"]):not([data-snippet-note="on"]) .journal-zone {
+        display: none;
     }
 
     .journal-zone > .wall-art,

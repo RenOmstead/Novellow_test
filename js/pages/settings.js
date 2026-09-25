@@ -70,6 +70,23 @@ function toggle(name, title, text, checked) {
 }
 
 
+/* An on/off room preference (kept on this device). */
+
+function prefToggle(name, title, text, checked) {
+
+    return html`
+        <label class="toggle">
+            <span class="toggle__text">
+                <strong>${title}</strong>
+                <small>${text}</small>
+            </span>
+            <input type="checkbox" data-pref="${name}" ${checked ? html`checked` : ""}>
+        </label>
+    `;
+
+}
+
+
 /*
     A readable name for the device behind a sign-in, from its
     user agent. Only a hint; it is never used for security.
@@ -328,6 +345,11 @@ function renderPage() {
                                 `)}
                             </select>
                         </label>
+
+                        <div class="stack" style="gap: 6px">
+                            ${prefToggle("readingNote", "“Currently reading” note", "A little card on the wall with the book you're reading.", prefs.readingNote === "on")}
+                            ${prefToggle("snippetNote", "“Journal snippets” note", "A card with your latest saved quote or note.", prefs.snippetNote === "on")}
+                        </div>
 
                         <p class="muted">To place and move decorations, choose “Arrange the room” from the moon menu at the top of the page.</p>
 
@@ -810,7 +832,7 @@ async function start() {
 
         if (pref) {
 
-            setPreference(pref.dataset.pref, pref.value);
+            setPreference(pref.dataset.pref, pref.type === "checkbox" ? (pref.checked ? "on" : "off") : pref.value);
 
             toast("Saved on this device.", { tone: "success", timeout: 1600 });
 
