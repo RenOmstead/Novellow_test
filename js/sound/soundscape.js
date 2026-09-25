@@ -32,7 +32,9 @@ const FOLDER =
     "assets/sounds/";
 
 export const SOUNDS = [
-    { id: "rain", name: "Rain", note: "Rain on the window and the roof", bed: ["rain.mp3"] },
+    // use: the steady part of the recording to loop (seconds).
+    // boost: evens out recordings made louder or softer.
+    { id: "rain", name: "Rain", note: "Rain on the window and the roof", bed: ["rain.mp3"], use: [1, 58], boost: 2.4 },
     { id: "thunder", name: "Distant thunder", note: "Now and then, far away", moments: ["thunder-1.mp3", "thunder-2.mp3"], every: [45, 110], lightning: true },
     { id: "fire", name: "Crackling fire", note: "Logs burning in the grate", bed: ["fire.mp3"] },
     { id: "wind", name: "Wind", note: "Round the eaves on a stormy night", bed: ["wind.mp3"] },
@@ -266,14 +268,20 @@ function random(min, max) {
     recording with long, gentle cross-fades.
 */
 
-function playBed(buffer, out) {
+function playBed(buffer, out, [from, to] = [0, buffer.duration]) {
 
     let stopped = false;
     let timer = null;
     const sources = new Set();
 
+    const end =
+        Math.min(to, buffer.duration);
+
+    const start =
+        Math.max(0, Math.min(from, end - 1));
+
     const fade =
-        Math.min(CROSSFADE, buffer.duration / 4);
+        Math.min(CROSSFADE, (end - start) / 4);
 
     const segment = (at, offset) => {
 
@@ -289,7 +297,7 @@ function playBed(buffer, out) {
         shape.connect(out);
 
         const length =
-            buffer.duration - offset;
+            end - offset;
 
         shape.gain.setValueAtTime(0, at);
         shape.gain.linearRampToValueAtTime(1, at + fade);
@@ -309,7 +317,7 @@ function playBed(buffer, out) {
         timer = window.setTimeout(() => {
 
             if (!stopped) {
-                segment(next, 0);
+                segment(next, start);
             }
 
         }, Math.max(0, (next - ctx.currentTime - 1) * 1000));
@@ -317,7 +325,7 @@ function playBed(buffer, out) {
     };
 
     // Begin somewhere in the middle, so each visit is different.
-    segment(ctx.currentTime + 0.05, random(0, buffer.duration * 0.6));
+    segment(ctx.currentTime + 0.05, start + random(0, (end - start) * 0.6));
 
     return () => {
 
@@ -400,7 +408,7 @@ function startSound(sound, out) {
         recording(sound.bed[0]).then((buffer) => {
 
             if (buffer && !stopped) {
-                stopBed = playBed(buffer, out);
+                stopBed = playBed(buffer, out, sound.use);
             }
 
         });
@@ -516,7 +524,7 @@ function sync() {
         }
 
         // A gentle curve, so low slider settings stay soft.
-        layer.out.gain.setTargetAtTime(level * level, now, 0.6);
+        layer.out.gain.setTargetAtTime(level * level * (sound.boost || 1), now, 0.6);
 
         // Silent sounds are stopped after they fade out.
         window.clearTimeout(layer.ending);

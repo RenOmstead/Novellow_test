@@ -23,7 +23,6 @@ Novellow cross-fades them into themselves.
 
 Short clips, a few seconds each. Having 2 or 3 versions keeps them from
 sounding repetitive, but 1 works.
-[rain.mp3](https://github.com/user-attachments/files/32653451/rain.mp3)
 
 | File(s) | What to look for |
 | --- | --- |
