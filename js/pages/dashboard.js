@@ -29,7 +29,7 @@ import { renderCrown } from "../room/crown.js?v=__VERSION__";
 import { startAmbience } from "../room/ambience.js?v=__VERSION__";
 import { startDecorations } from "../room/decorations.js?v=__VERSION__";
 import { createBookcase } from "../books/bookcase.js?v=__VERSION__";
-import { playReveal } from "../books/book-reveal.js?v=__VERSION__";
+import { playReveal, playReturn } from "../books/book-reveal.js?v=__VERSION__";
 import { coverMarkup } from "../books/cover.js?v=__VERSION__";
 import { createJournal } from "../journal/journal.js?v=__VERSION__";
 
@@ -91,12 +91,38 @@ async function openShelf(shelfId = null) {
    OPENING A BOOK
 ========================================================= */
 
-async function openBook(bookId, spine = null) {
+/*
+    The journal is a book taken off the shelf: it flies out,
+    opens in front of the room, and flies back when closed.
+    While it's out, its place on the shelf stays empty.
+*/
+
+let busy = false;
+
+function journalIsOpen() {
+    return document.body.classList.contains("journal-open");
+}
+
+
+function markLent(bookId) {
+
+    document
+        .querySelectorAll(".book-spine.is-lent")
+        .forEach((spine) => spine.classList.remove("is-lent"));
+
+    if (bookId) {
+        bookcase.spineFor(bookId)?.classList.add("is-lent");
+    }
+
+}
+
+
+async function openBook(bookId, spine = null, { swap = false } = {}) {
 
     const book =
         getBook(bookId);
 
-    if (!book) {
+    if (!book || busy) {
         return;
     }
 
@@ -117,135 +143,98 @@ async function openBook(bookId, spine = null) {
 
     }
 
-    if (book.cover_path) {
-        await coverUrls([book.cover_path]);
-    }
-
-    shutJournal(false);
-
-    bookcase.select(bookId);
-
-    const journalElement =
-        document.getElementById("journal");
-
-    // In the stacked tablet layout, bring the journal into view first.
-    if (journalElement.getBoundingClientRect().top > window.innerHeight * 0.6) {
-
-        journalElement.scrollIntoView({
-            behavior: prefersReducedMotion() ? "auto" : "smooth",
-            block: "center"
-        });
-
-        await new Promise((resolve) => window.setTimeout(resolve, 450));
-
-    }
-
-    if (spine) {
-
-        await playReveal({
-            spine,
-            book,
-            target: journal.coverTarget()
-        });
-
-    }
-
-    await journal.open(bookId);
-
-    setQueryParam("book", bookId);
-
-}
-
-
-function closeBook() {
-
-    lastBookId = journal.bookId || lastBookId;
-
-    journal.close();
-
-    bookcase.select(null);
-
-    setQueryParam("book", null);
-
-    // With books on the shelves, closing shuts the journal away
-    // completely so the whole room shows.
-    if (getBooks().length) {
-
-        shutJournal(true);
-
-        document.getElementById("journalReopen")?.focus();
-
-    }
-
-}
-
-
-/*
-    The shut journal: hidden, with a closed book left in its
-    place to open it again. Remembered on this device.
-*/
-
-const SHUT_KEY =
-    "novellow-journal-shut";
-
-let lastBookId = null;
-
-function shutJournal(shut) {
-
-    document.querySelector(".library-room")?.classList.toggle("journal-shut", shut);
-
-    const reopen =
-        document.getElementById("journalReopen");
-
-    if (reopen) {
-        reopen.hidden = !shut;
-    }
+    busy = true;
 
     try {
 
-        if (shut) {
-            localStorage.setItem(SHUT_KEY, "1");
+        if (book.cover_path) {
+            await coverUrls([book.cover_path]);
         }
 
-        else {
-            localStorage.removeItem(SHUT_KEY);
+        const wasOpen =
+            journalIsOpen();
+
+        bookcase.select(bookId);
+
+        // Draw the journal first (still invisible) so the cover
+        // knows where to land.
+        await journal.open(bookId);
+
+        document.getElementById("journalStage").scrollTop = 0;
+
+        if (!wasOpen && !swap && spine) {
+
+            await playReveal({
+                spine,
+                book,
+                target: journal.coverTarget()
+            });
+
+        }
+
+        document.body.classList.add("journal-open");
+
+        markLent(bookId);
+
+        setQueryParam("book", bookId);
+
+        if (!wasOpen) {
+            document.querySelector("#journal [data-action=close]")?.focus({ preventScroll: true });
         }
 
     }
 
-    catch {
-        // Private browsing: it simply isn't remembered.
+    finally {
+        busy = false;
     }
 
 }
 
 
-function wasShut() {
+async function closeBook() {
 
-    try {
-        return localStorage.getItem(SHUT_KEY) === "1";
+    if (busy) {
+        return;
     }
 
-    catch {
-        return false;
-    }
+    busy = true;
 
-}
-
-
-function reopenJournal() {
+    const bookId =
+        journal.bookId;
 
     const book =
-        (lastBookId && getBook(lastBookId))
-        || getBooks()
-            .filter((item) => item.status === "reading")
-            .sort((a, b) => b.updated_at.localeCompare(a.updated_at))[0]
-        || getBooks()[0];
+        bookId && getBook(bookId);
 
-    shutJournal(false);
+    const spine =
+        bookId && bookcase.spineFor(bookId);
 
-    if (book) {
-        openBook(book.id);
+    const from =
+        journal.coverTarget()?.getBoundingClientRect();
+
+    document.body.classList.remove("journal-open");
+
+    try {
+
+        if (book && spine) {
+            await playReturn({ spine, book, from });
+        }
+
+    }
+
+    finally {
+
+        markLent(null);
+
+        journal.close();
+
+        bookcase.select(null);
+
+        setQueryParam("book", null);
+
+        busy = false;
+
+        spine?.focus({ preventScroll: true });
+
     }
 
 }
@@ -442,6 +431,8 @@ async function start() {
             bookcase.select(journal.bookId);
         }
 
+        markLent(journalIsOpen() ? journal.bookId : null);
+
         renderDeskNotes();
 
     });
@@ -474,7 +465,7 @@ async function start() {
             order[(index + event.detail.step + order.length) % order.length];
 
         if (next) {
-            openBook(next.id, bookcase.spineFor(next.id));
+            openBook(next.id, bookcase.spineFor(next.id), { swap: true });
         }
 
     });
@@ -496,32 +487,27 @@ async function start() {
     const requested =
         queryParam("book");
 
-    const firstBook =
-        (requested && getBook(requested))
-        || getBooks()
-            .filter((book) => book.status === "reading")
-            .sort((a, b) => b.updated_at.localeCompare(a.updated_at))[0];
+    // Clicking the dimmed room around the journal, or Escape,
+    // puts the book back.
+    document.getElementById("journalStage").addEventListener("click", (event) => {
 
-    document.getElementById("journalReopen").addEventListener("click", reopenJournal);
-
-    if (!requested && wasShut() && getBooks().length) {
-
-        lastBookId = firstBook?.id || null;
-
-        shutJournal(true);
-
-    }
-
-    else if (firstBook && !PHONE.matches) {
-
-        if (firstBook.cover_path) {
-            await coverUrls([firstBook.cover_path]);
+        if (event.target.id === "journalStage") {
+            closeBook();
         }
 
-        bookcase.select(firstBook.id);
+    });
 
-        await journal.open(firstBook.id);
+    document.addEventListener("keydown", (event) => {
 
+        if (event.key === "Escape" && journalIsOpen() && !document.querySelector("dialog[open]")) {
+            closeBook();
+        }
+
+    });
+
+    // A link to one book (?book=…) opens it straight away.
+    if (requested && getBook(requested)) {
+        await openBook(requested);
     }
 
     if (queryParam("add") === "1") {

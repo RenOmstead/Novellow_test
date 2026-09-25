@@ -131,6 +131,114 @@ export async function playReveal({ spine, book, target }) {
 
     flight.remove();
 
-    spine.classList.remove("is-pulling", "is-lent");
+    // The book is off the shelf now: its place stays empty
+    // until it goes back (playReturn).
+    spine.classList.remove("is-pulling");
+
+}
+
+
+/*
+    playReturn({ spine, book, from })
+      The journal going back on the shelf: the cover swings
+      shut, the book turns back to its spine and slides home
+      into its gap on the shelf.
+      from   element (or DOMRect) where the open cover is now
+    Resolves when the book is back on the shelf.
+*/
+
+export async function playReturn({ spine, book, from }) {
+
+    if (!spine || prefersReducedMotion()) {
+        return;
+    }
+
+    const start =
+        from instanceof Element
+            ? from.getBoundingClientRect()
+            : from;
+
+    const home =
+        spine.getBoundingClientRect();
+
+    if (!start || !start.width || !home.width) {
+        return;
+    }
+
+    const flight =
+        document.createElement("div");
+
+    flight.className = "book-flight";
+    flight.setAttribute("aria-hidden", "true");
+
+    flight.style.left = `${start.left}px`;
+    flight.style.top = `${start.top}px`;
+    flight.style.width = `${start.width}px`;
+    flight.style.height = `${start.height}px`;
+
+    flight.innerHTML = `
+        <div class="book-flight__book">
+            <div class="book-flight__cover">${coverMarkup(book, { size: "large" })}</div>
+            <div class="book-flight__pages"></div>
+        </div>
+    `;
+
+    document.body.appendChild(flight);
+
+    // The spine waits, empty, for its book.
+    spine.classList.add("is-lent");
+
+    // 1. The cover swings shut.
+    await flight.querySelector(".book-flight__cover").animate(
+        [
+            { transform: "rotateY(-165deg)" },
+            { transform: "rotateY(0deg)" }
+        ],
+        {
+            duration: 420,
+            easing: "cubic-bezier(.4, 0, .2, 1)",
+            fill: "forwards"
+        }
+    ).finished;
+
+    // 2. It turns back to its spine and flies home.
+    const a =
+        centreOf(start);
+
+    const b =
+        centreOf(home);
+
+    await flight.querySelector(".book-flight__book").animate(
+        [
+            {
+                transform: "translate(0, 0) scale(1) rotateY(0deg)",
+                opacity: 1
+            },
+            {
+                transform: `translate(${(b.x - a.x) * 0.55}px, ${(b.y - a.y) * 0.55 - 40}px) scale(0.9) rotateY(-24deg)`,
+                opacity: 1,
+                offset: 0.45
+            },
+            {
+                transform: `translate(${b.x - a.x}px, ${b.y - a.y}px) scale(${home.width / start.width}, ${home.height / start.height}) rotateY(-78deg)`,
+                opacity: 0.5
+            }
+        ],
+        {
+            duration: 700,
+            easing: "cubic-bezier(.4, 0, .2, 1)",
+            fill: "forwards"
+        }
+    ).finished;
+
+    flight.remove();
+
+    // 3. It settles back into its place.
+    spine.classList.remove("is-lent", "is-pulling");
+    spine.classList.add("is-returning");
+
+    await wait(420);
+
+    spine.classList.remove("is-returning");
 
 }

@@ -314,28 +314,22 @@
                 </div>
 
 
-                <!-- The open book, drawn by js/journal/journal.js -->
+                <!-- The open book, drawn by js/journal/journal.js.
+                     It opens in front of the room when a book is
+                     taken off the shelf, and goes back when closed. -->
 
                 <div
-                    class="journal"
-                    id="journal"
-                    data-mode="desk"
-                ></div>
-
-
-                <!-- Shown when the journal is shut, to open it again -->
-
-                <button
-                    class="journal-reopen"
-                    id="journalReopen"
-                    type="button"
-                    hidden
+                    class="journal-stage"
+                    id="journalStage"
                 >
-                    <svg viewBox="0 0 150 110" aria-hidden="true">
-                        <use href="#decor-closed-journal" />
-                    </svg>
-                    <span>Open the journal</span>
-                </button>
+                    <div
+                        class="journal"
+                        id="journal"
+                        data-mode="desk"
+                        role="dialog"
+                        aria-label="Book journal"
+                    ></div>
+                </div>
 
 
                 <!-- Little paper notes under the journal -->
