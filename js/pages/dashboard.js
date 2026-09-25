@@ -121,6 +121,8 @@ async function openBook(bookId, spine = null) {
         await coverUrls([book.cover_path]);
     }
 
+    shutJournal(false);
+
     bookcase.select(bookId);
 
     const journalElement =
@@ -157,11 +159,94 @@ async function openBook(bookId, spine = null) {
 
 function closeBook() {
 
+    lastBookId = journal.bookId || lastBookId;
+
     journal.close();
 
     bookcase.select(null);
 
     setQueryParam("book", null);
+
+    // With books on the shelves, closing shuts the journal away
+    // completely so the whole room shows.
+    if (getBooks().length) {
+
+        shutJournal(true);
+
+        document.getElementById("journalReopen")?.focus();
+
+    }
+
+}
+
+
+/*
+    The shut journal: hidden, with a closed book left in its
+    place to open it again. Remembered on this device.
+*/
+
+const SHUT_KEY =
+    "novellow-journal-shut";
+
+let lastBookId = null;
+
+function shutJournal(shut) {
+
+    document.querySelector(".library-room")?.classList.toggle("journal-shut", shut);
+
+    const reopen =
+        document.getElementById("journalReopen");
+
+    if (reopen) {
+        reopen.hidden = !shut;
+    }
+
+    try {
+
+        if (shut) {
+            localStorage.setItem(SHUT_KEY, "1");
+        }
+
+        else {
+            localStorage.removeItem(SHUT_KEY);
+        }
+
+    }
+
+    catch {
+        // Private browsing: it simply isn't remembered.
+    }
+
+}
+
+
+function wasShut() {
+
+    try {
+        return localStorage.getItem(SHUT_KEY) === "1";
+    }
+
+    catch {
+        return false;
+    }
+
+}
+
+
+function reopenJournal() {
+
+    const book =
+        (lastBookId && getBook(lastBookId))
+        || getBooks()
+            .filter((item) => item.status === "reading")
+            .sort((a, b) => b.updated_at.localeCompare(a.updated_at))[0]
+        || getBooks()[0];
+
+    shutJournal(false);
+
+    if (book) {
+        openBook(book.id);
+    }
 
 }
 
@@ -417,7 +502,17 @@ async function start() {
             .filter((book) => book.status === "reading")
             .sort((a, b) => b.updated_at.localeCompare(a.updated_at))[0];
 
-    if (firstBook && !PHONE.matches) {
+    document.getElementById("journalReopen").addEventListener("click", reopenJournal);
+
+    if (!requested && wasShut() && getBooks().length) {
+
+        lastBookId = firstBook?.id || null;
+
+        shutJournal(true);
+
+    }
+
+    else if (firstBook && !PHONE.matches) {
 
         if (firstBook.cover_path) {
             await coverUrls([firstBook.cover_path]);

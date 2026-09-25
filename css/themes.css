@@ -109,8 +109,7 @@
 /* The haunted room's own things: cobwebs, a cauldron by the
    armchair, and a full moon in the window. */
 
-.cobweb,
-.cozy-cauldron {
+.cobweb {
     display: none;
 }
 
@@ -160,23 +159,6 @@
     height: 150px;
 
     transform: scaleX(-1);
-}
-
-[data-theme="haunted"] .side-table {
-    display: none;
-}
-
-[data-theme="haunted"] .cozy-cauldron {
-    display: block;
-
-    width: 130px;
-    height: auto;
-
-    margin-left: -26px;
-
-    overflow: visible;
-
-    filter: drop-shadow(0 10px 10px rgba(10, 6, 14, 0.5));
 }
 
 .crown-piece--cauldron {

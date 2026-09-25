@@ -826,6 +826,182 @@
             <path d="M24 60A46 12 0 0 1 116 60" fill="none" stroke="#2a2532" stroke-width="5" />
         </symbol>
 
+
+        <!-- ===================================================
+             CORNER SCENES: what stands beside the bookcase in
+             each room (css/room.css picks one per theme)
+        ==================================================== -->
+
+        <!-- A witch's broom -->
+
+        <symbol id="decor-broom" viewBox="0 0 70 210">
+            <path d="M52 4L22 150" stroke="#3a2416" stroke-width="7" stroke-linecap="round" />
+            <path d="M52 4L22 150" stroke="#7a5236" stroke-width="3.4" stroke-linecap="round" />
+            <path d="M24 142L6 204C18 208 32 208 44 206L34 146Z" fill="#c9a15a" stroke="#6e5024" stroke-width="1.4" stroke-linejoin="round" />
+            <path d="M28 150L14 202M31 152L24 204M34 152L34 204M26 148L8 196" stroke="#8a6a32" stroke-width="1" />
+            <path d="M22 146L36 150" stroke="#5a2a3a" stroke-width="5" stroke-linecap="round" />
+        </symbol>
+
+        <!-- A floor candelabra (the gothic room) -->
+
+        <symbol id="decor-candelabra" viewBox="0 0 110 220">
+            <g fill="url(#warmGlow)">
+                <circle cx="22" cy="44" r="18"><animate attributeName="opacity" values="0.6;1;0.75;1;0.6" dur="2.6s" repeatCount="indefinite" /></circle>
+                <circle cx="55" cy="28" r="20"><animate attributeName="opacity" values="0.7;1;0.8;1;0.7" dur="3s" repeatCount="indefinite" /></circle>
+                <circle cx="88" cy="44" r="18"><animate attributeName="opacity" values="0.65;1;0.7;1;0.65" dur="2.2s" repeatCount="indefinite" /></circle>
+            </g>
+            <path d="M22 72C22 96 40 104 55 104C70 104 88 96 88 72" fill="none" stroke="#b8893e" stroke-width="5" />
+            <path d="M55 60V200M40 214H70L62 196H48Z" stroke="#b8893e" stroke-width="5" fill="#9a6e2e" stroke-linejoin="round" />
+            <g fill="#efe4d0" stroke="#6d5a44" stroke-width="1">
+                <rect x="16" y="50" width="12" height="24" rx="2" />
+                <rect x="49" y="34" width="12" height="28" rx="2" />
+                <rect x="82" y="50" width="12" height="24" rx="2" />
+            </g>
+            <g fill="#f5b04a">
+                <path d="M22 38C26 44 25 49 22 50C19 49 18 44 22 38Z"><animateTransform attributeName="transform" type="rotate" values="-4 22 50;4 22 50;-4 22 50" dur="1.4s" repeatCount="indefinite" /></path>
+                <path d="M55 21C59 27 58 32 55 33C52 32 51 27 55 21Z"><animateTransform attributeName="transform" type="rotate" values="3 55 33;-3 55 33;3 55 33" dur="1.7s" repeatCount="indefinite" /></path>
+                <path d="M88 38C92 44 91 49 88 50C85 49 84 44 88 38Z"><animateTransform attributeName="transform" type="rotate" values="-3 88 50;3 88 50;-3 88 50" dur="1.2s" repeatCount="indefinite" /></path>
+            </g>
+            <path d="M16 74H28M49 62H61M82 74H94" stroke="#b8893e" stroke-width="4" stroke-linecap="round" />
+        </symbol>
+
+        <!-- An umbrella stand (the rainy room) -->
+
+        <symbol id="decor-umbrella-stand" viewBox="0 0 80 170">
+            <ellipse cx="40" cy="164" rx="34" ry="5" fill="#9fb4c4" opacity="0.4" />
+            <path d="M30 20C30 10 42 8 44 16" fill="none" stroke="#3a2416" stroke-width="4" stroke-linecap="round" />
+            <path d="M44 16L40 120" stroke="#2a2a33" stroke-width="3" />
+            <path d="M40 40C28 70 30 100 36 124H46C52 100 52 70 40 40Z" fill="#2f4a3f" stroke="#1a2a24" stroke-width="1.4" />
+            <path d="M40 44C36 70 37 100 40 122" stroke="#4d6d5d" stroke-width="1.2" fill="none" />
+            <path d="M58 30C58 22 66 22 66 30L62 124" fill="none" stroke="#6a2a3d" stroke-width="3.5" stroke-linecap="round" />
+            <path d="M16 110H64L60 164H20Z" fill="url(#brassBody)" stroke="#2a1a1f" stroke-width="1.4" stroke-linejoin="round" />
+            <path d="M18 124H62M19 142H61" stroke="#7a5520" stroke-width="1.4" opacity="0.7" />
+        </symbol>
+
+        <!-- The café: a bistro table with coffee and cake, and a chair -->
+
+        <symbol id="scene-bistro" viewBox="0 0 300 240">
+            <!-- Bentwood chair -->
+            <path d="M206 236L214 150M262 236L252 150" stroke="#3a2416" stroke-width="6" stroke-linecap="round" />
+            <path d="M212 70C212 40 258 40 258 70V150" fill="none" stroke="#3a2416" stroke-width="7" stroke-linecap="round" />
+            <path d="M218 76C224 96 246 96 252 76" fill="none" stroke="#3a2416" stroke-width="4" />
+            <ellipse cx="234" cy="150" rx="34" ry="9" fill="#6e4029" stroke="#3a2416" stroke-width="2" />
+            <!-- Table -->
+            <path d="M110 128V226M84 236H136" stroke="#1f1a1d" stroke-width="7" stroke-linecap="round" />
+            <path d="M110 200C96 210 88 222 84 236M110 200C124 210 132 222 136 236" fill="none" stroke="#1f1a1d" stroke-width="4" />
+            <ellipse cx="110" cy="126" rx="80" ry="16" fill="#efe8e0" stroke="#8a7f78" stroke-width="2" />
+            <path d="M52 124C80 118 132 132 164 122" fill="none" stroke="#c9bfb6" stroke-width="1.5" />
+            <!-- Cake stand -->
+            <path d="M110 70V116" stroke="#b8893e" stroke-width="3" />
+            <ellipse cx="110" cy="96" rx="34" ry="6" fill="#faf5ee" stroke="#b8893e" stroke-width="1.5" />
+            <path d="M88 92L100 78L112 92Z" fill="#f1c9cf" stroke="#b77a84" stroke-width="1.2" />
+            <path d="M100 78C104 74 108 76 106 80" fill="#d24a5a" />
+            <path d="M114 93L124 82L132 93Z" fill="#e8d6a8" stroke="#a88a4a" stroke-width="1.2" />
+            <ellipse cx="110" cy="70" rx="6" ry="3" fill="#b8893e" />
+            <!-- Two cups with steam -->
+            <g>
+                <path d="M52 110H74V122C74 128 52 128 52 122Z" fill="#ffffff" stroke="#8a7f78" stroke-width="1.4" />
+                <path d="M74 112C80 112 80 120 74 120" fill="none" stroke="#8a7f78" stroke-width="1.4" />
+                <ellipse cx="63" cy="126" rx="15" ry="3" fill="#f3ede6" stroke="#8a7f78" stroke-width="1" />
+                <ellipse cx="63" cy="111" rx="10" ry="2" fill="#6a3f24" />
+            </g>
+            <g>
+                <path d="M146 110H168V122C168 128 146 128 146 122Z" fill="#fbe6ea" stroke="#b77a84" stroke-width="1.4" />
+                <path d="M146 112C140 112 140 120 146 120" fill="none" stroke="#b77a84" stroke-width="1.4" />
+                <ellipse cx="157" cy="126" rx="15" ry="3" fill="#f7eef0" stroke="#b77a84" stroke-width="1" />
+                <ellipse cx="157" cy="111" rx="10" ry="2" fill="#a8704a" />
+            </g>
+            <g fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" opacity="0">
+                <path d="M60 104C56 96 64 92 60 84M156 104C152 96 160 92 156 84" />
+                <animate attributeName="opacity" values="0;0.8;0" dur="3.2s" repeatCount="indefinite" />
+                <animateTransform attributeName="transform" type="translate" values="0 3;0 -8" dur="3.2s" repeatCount="indefinite" />
+            </g>
+        </symbol>
+
+        <!-- The enchanted forest: a fairy ring on a grassy mound -->
+
+        <symbol id="scene-fairy-ring" viewBox="0 0 360 240">
+            <!-- The mound -->
+            <path d="M0 236C20 170 110 146 180 146C250 146 340 170 360 236Z" fill="#4f6b3c" />
+            <path d="M14 236C36 186 110 164 180 164C250 164 326 186 346 236Z" fill="#5f7d45" />
+            <g stroke="#7f9c56" stroke-width="2" stroke-linecap="round">
+                <path d="M30 222L26 208M40 214L42 200M62 196L58 182M300 196L304 182M322 212L318 198M336 224L340 210M90 180L88 168M270 180L274 168M130 168L128 156M230 168L232 156" />
+            </g>
+
+            <!-- The toadstool house -->
+            <path d="M186 96H222V186H186Z" fill="#f4ead8" stroke="#8a7a5a" stroke-width="1.6" />
+            <path d="M196 186V160C196 150 212 150 212 160V186Z" fill="#7a4a2e" stroke="#3a2416" stroke-width="1.4" />
+            <circle cx="209" cy="172" r="1.6" fill="#e8c27c" />
+            <circle cx="204" cy="124" r="8" fill="#ffe7a0" stroke="#8a7a5a" stroke-width="1.4">
+                <animate attributeName="fill" values="#ffe7a0;#fff3c8;#ffe7a0" dur="3s" repeatCount="indefinite" />
+            </circle>
+            <path d="M204 116V132M196 124H212" stroke="#8a7a5a" stroke-width="1.2" />
+            <path d="M150 104C150 56 258 56 258 104C240 110 168 110 150 104Z" fill="#c8323a" stroke="#6a1a20" stroke-width="2" />
+            <g fill="#fff4e8">
+                <ellipse cx="178" cy="84" rx="8" ry="5" />
+                <ellipse cx="206" cy="72" rx="7" ry="4.5" />
+                <ellipse cx="232" cy="86" rx="8" ry="5" />
+                <ellipse cx="196" cy="96" rx="5" ry="3" />
+                <ellipse cx="226" cy="99" rx="5" ry="3" />
+            </g>
+
+            <!-- The ring of little mushrooms -->
+            <g stroke="#6a1a20" stroke-width="1.2">
+                <g transform="translate(70 196)"><path d="M-3 0V-12H3V0Z" fill="#f4ead8" stroke="#8a7a5a" /><path d="M-11 -11C-11 -24 11 -24 11 -11Z" fill="#c8323a" /><circle cx="-3" cy="-17" r="2" fill="#fff4e8" stroke="none" /></g>
+                <g transform="translate(110 206)"><path d="M-3 0V-10H3V0Z" fill="#f4ead8" stroke="#8a7a5a" /><path d="M-9 -9C-9 -20 9 -20 9 -9Z" fill="#d9a441" stroke="#8a6020" /><circle cx="2" cy="-14" r="1.8" fill="#fff4e8" stroke="none" /></g>
+                <g transform="translate(262 206)"><path d="M-3 0V-12H3V0Z" fill="#f4ead8" stroke="#8a7a5a" /><path d="M-11 -11C-11 -24 11 -24 11 -11Z" fill="#c8323a" /><circle cx="3" cy="-17" r="2" fill="#fff4e8" stroke="none" /></g>
+                <g transform="translate(300 196)"><path d="M-3 0V-10H3V0Z" fill="#f4ead8" stroke="#8a7a5a" /><path d="M-9 -9C-9 -20 9 -20 9 -9Z" fill="#b98ab2" stroke="#6a4a70" /><circle cx="-2" cy="-14" r="1.8" fill="#fff4e8" stroke="none" /></g>
+            </g>
+
+            <!-- Bluebells -->
+            <g>
+                <path d="M130 196C128 180 134 170 140 164M146 196C148 184 152 176 158 172" fill="none" stroke="#3e5a36" stroke-width="2" />
+                <g fill="#7a8fd6" stroke="#4a5aa0" stroke-width="0.8">
+                    <path d="M136 168C132 170 132 176 136 177C138 176 140 176 140 172Z" />
+                    <path d="M140 164C144 162 148 166 146 170C144 170 142 168 140 164Z" />
+                    <path d="M156 176C152 178 152 184 156 185C158 184 160 184 160 180Z" />
+                </g>
+            </g>
+
+            <!-- A little fairy, wings fluttering -->
+            <g transform="translate(96 118)">
+                <animateTransform attributeName="transform" type="translate" values="96 118;102 108;110 116;100 124;96 118" dur="7s" repeatCount="indefinite" />
+                <g fill="#dff3ff" fill-opacity="0.75" stroke="#9fc4dc" stroke-width="0.8">
+                    <ellipse cx="-8" cy="-8" rx="9" ry="5" transform="rotate(-30 -8 -8)">
+                        <animate attributeName="ry" values="5;1.5;5" dur="0.25s" repeatCount="indefinite" />
+                    </ellipse>
+                    <ellipse cx="8" cy="-8" rx="9" ry="5" transform="rotate(30 8 -8)">
+                        <animate attributeName="ry" values="5;1.5;5" dur="0.25s" repeatCount="indefinite" />
+                    </ellipse>
+                </g>
+                <circle r="10" fill="url(#warmGlow)" opacity="0.8" />
+                <path d="M-3 0L0 12L3 0Z" fill="#b98ab2" />
+                <circle cy="-4" r="3.4" fill="#f6dccb" />
+                <path d="M-3.5 -6C-2 -10 2 -10 3.5 -6" fill="#e8c27c" />
+            </g>
+
+            <!-- Fireflies -->
+            <g fill="#fff3a8">
+                <circle cx="60" cy="140" r="2.4"><animate attributeName="opacity" values="0;1;0" dur="2.8s" repeatCount="indefinite" /></circle>
+                <circle cx="300" cy="120" r="2.2"><animate attributeName="opacity" values="0;1;0" dur="3.4s" begin="1s" repeatCount="indefinite" /></circle>
+                <circle cx="250" cy="150" r="2"><animate attributeName="opacity" values="0;1;0" dur="2.4s" begin="0.5s" repeatCount="indefinite" /></circle>
+                <circle cx="150" cy="130" r="2"><animate attributeName="opacity" values="0;1;0" dur="3s" begin="1.6s" repeatCount="indefinite" /></circle>
+            </g>
+        </symbol>
+
+        <!-- A closed journal (shown when the journal is shut) -->
+
+        <symbol id="decor-closed-journal" viewBox="0 0 150 110">
+            <path d="M12 84L82 104L140 72L70 54Z" fill="#efe2c8" stroke="#8a7458" stroke-width="1.4" />
+            <path d="M12 78L82 98L140 66L70 48Z" fill="#6a2a3d" stroke="#2c1824" stroke-width="2" stroke-linejoin="round" />
+            <path d="M12 78V84L82 104V98Z" fill="#4a1c2b" stroke="#2c1824" stroke-width="1.4" />
+            <path d="M82 98L140 66V72L82 104Z" fill="#e6d6b6" stroke="#8a7458" stroke-width="1.2" />
+            <path d="M40 72L98 88M52 64L110 80" stroke="#d8aa66" stroke-width="1.4" opacity="0.8" />
+            <circle cx="76" cy="74" r="8" fill="none" stroke="#d8aa66" stroke-width="1.6" />
+            <path d="M76 68L77.4 72.6L82 74L77.4 75.4L76 80L74.6 75.4L70 74L74.6 72.6Z" fill="#f0cf8a" />
+            <path d="M120 78L124 104L128 96L132 102L128 76" fill="#c47f82" stroke="#7a2c42" stroke-width="1" />
+        </symbol>
+
         <!-- Books lying flat -->
 
         <symbol id="decor-stack" viewBox="0 0 84 36">
@@ -1885,9 +2061,9 @@
         <defs>
 
         <pattern id="plaid" width="24" height="24" patternUnits="userSpaceOnUse" patternTransform="rotate(-12)">
-            <rect width="24" height="24" fill="#8b3a4f" />
-            <rect y="0" width="24" height="7" fill="#6a2a3d" />
-            <rect x="0" y="0" width="7" height="24" fill="#6a2a3d" fill-opacity="0.8" />
+            <rect width="24" height="24" style="fill: var(--chair-light, #8b3a4f)" />
+            <rect y="0" width="24" height="7" style="fill: var(--chair-mid, #6a2a3d)" />
+            <rect x="0" y="0" width="7" height="24" style="fill: var(--chair-mid, #6a2a3d)" fill-opacity="0.8" />
             <rect y="15" width="24" height="2" fill="#e7b6a6" fill-opacity="0.7" />
             <rect x="15" y="0" width="2" height="24" fill="#e7b6a6" fill-opacity="0.6" />
         </pattern>
@@ -1904,7 +2080,7 @@
 
         <path d="M40 60C40 18 220 18 220 60V190H40Z" fill="url(#velvet)" stroke="#2e0f18" stroke-width="2.5" />
 
-        <g fill="#3f1422">
+        <g style="fill: var(--chair-dark, #3f1422)">
         <circle cx="80" cy="62" r="3" />
         <circle cx="130" cy="52" r="3" />
         <circle cx="180" cy="62" r="3" />
@@ -1917,13 +2093,13 @@
 
         <path d="M80 62L105 95L130 52M130 52L155 95L180 62M80 128L105 95L130 128L155 95L180 128" fill="none" stroke="#5a1e30" stroke-width="1.4" />
 
-        <path d="M20 84C18 60 38 50 48 70V200H22Z" fill="#8a3449" stroke="#2e0f18" stroke-width="2.2" />
+        <path d="M20 84C18 60 38 50 48 70V200H22Z" style="fill: var(--chair-light, #8a3449)" stroke="#2e0f18" stroke-width="2.2" />
 
-        <path d="M240 84C242 60 222 50 212 70V200H238Z" fill="#6f2639" stroke="#2e0f18" stroke-width="2.2" />
+        <path d="M240 84C242 60 222 50 212 70V200H238Z" style="fill: var(--chair-mid, #6f2639)" stroke="#2e0f18" stroke-width="2.2" />
 
         <path d="M50 178H210C220 178 222 204 210 208H50C38 204 40 178 50 178Z" fill="#9c4259" stroke="#2e0f18" stroke-width="2.2" />
 
-        <path d="M40 206H220V252C220 258 214 262 208 262H52C46 262 40 258 40 252Z" fill="#6f2639" stroke="#2e0f18" stroke-width="2.2" />
+        <path d="M40 206H220V252C220 258 214 262 208 262H52C46 262 40 258 40 252Z" style="fill: var(--chair-mid, #6f2639)" stroke="#2e0f18" stroke-width="2.2" />
 
         <path d="M46 250H214" stroke="#d8aa66" stroke-width="2" stroke-dasharray="1.5 3" />
 
@@ -1933,9 +2109,9 @@
 
         <path d="M32 160C40 160 42 172 32 172C26 172 26 164 32 164" fill="none" stroke="#5a1e30" stroke-width="1.6" />
 
-        <path d="M254 168C254 146 204 144 202 168V252H250Z" fill="#6f2639" stroke="#2e0f18" stroke-width="2.2" />
+        <path d="M254 168C254 146 204 144 202 168V252H250Z" style="fill: var(--chair-mid, #6f2639)" stroke="#2e0f18" stroke-width="2.2" />
 
-        <ellipse cx="228" cy="168" rx="26" ry="14" fill="#8a3449" stroke="#2e0f18" stroke-width="2.2" />
+        <ellipse cx="228" cy="168" rx="26" ry="14" style="fill: var(--chair-light, #8a3449)" stroke="#2e0f18" stroke-width="2.2" />
 
         <path d="M186 30C214 34 228 60 232 96C238 140 246 180 250 214L214 222C210 186 202 150 190 118C178 86 170 56 186 30Z" fill="url(#plaid)" stroke="#2e0f18" stroke-width="2.2" stroke-linejoin="round" />
 

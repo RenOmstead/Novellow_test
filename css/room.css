@@ -179,6 +179,82 @@
 
 
 /* =========================================================
+   THE SHUT JOURNAL
+   Closing the journal clears it away so the whole room
+   shows; a closed book stays behind to open it again.
+========================================================= */
+
+.journal-shut .journal-zone > .journal {
+    display: none;
+}
+
+.journal-reopen {
+    position: relative;
+
+    z-index: 5;
+
+    display: grid;
+    justify-items: center;
+
+    gap: 4px;
+
+    align-self: center;
+
+    margin: 250px 0 30px;
+    padding: 6px 10px 10px;
+
+    border: 0;
+    border-radius: var(--radius);
+
+    background: none;
+
+    cursor: pointer;
+
+    transition: transform 0.25s ease;
+}
+
+.journal-reopen[hidden] {
+    display: none;
+}
+
+.journal-reopen svg {
+    width: 170px;
+    height: auto;
+
+    filter: drop-shadow(0 10px 10px rgba(20, 8, 4, 0.45));
+}
+
+.journal-reopen span {
+    padding: 4px 14px;
+
+    border: 1px solid var(--color-paper-edge);
+    border-radius: 999px;
+
+    background: linear-gradient(180deg, var(--color-paper-light), var(--color-paper-deep));
+
+    color: var(--color-plum-deep);
+
+    font-family: var(--font-engraved);
+    font-size: 15px;
+
+    box-shadow: var(--shadow-soft);
+}
+
+.journal-reopen:hover,
+.journal-reopen:focus-visible {
+    transform: translateY(-4px) rotate(-1deg);
+}
+
+.journal-reopen:focus-visible {
+    outline: none;
+}
+
+.journal-reopen:focus-visible span {
+    box-shadow: var(--focus-ring);
+}
+
+
+/* =========================================================
    DESK NOTES
 ========================================================= */
 
@@ -386,37 +462,128 @@
 .cozy-corner {
     position: absolute;
 
-    right: -26px;
-    bottom: 26px;
+    /* Stands on the floor, right beside the bookcase. */
+    left: 8px;
+    bottom: 22px;
 
-    width: 316px;
-
-    display: flex;
-    align-items: flex-end;
+    width: 400px;
 
     z-index: 4;
 
     pointer-events: none;
 }
 
-.armchair {
-    width: 210px;
+.corner-scene {
+    display: none;
+
+    align-items: flex-end;
+}
+
+.corner-scene svg {
     height: auto;
 
     overflow: visible;
 
-    filter: drop-shadow(0 14px 12px rgba(20, 8, 4, 0.45));
+    filter: drop-shadow(0 12px 10px rgba(20, 8, 4, 0.42));
+}
+
+/* Which scene each room shows. */
+.corner-scene--armchair,
+[data-theme="haunted"] .corner-scene--haunted,
+[data-theme="forest"] .corner-scene--forest,
+[data-theme="cafe"] .corner-scene--cafe {
+    display: flex;
+}
+
+[data-theme="haunted"] .corner-scene--armchair,
+[data-theme="forest"] .corner-scene--armchair,
+[data-theme="cafe"] .corner-scene--armchair {
+    display: none;
+}
+
+.armchair {
+    width: 210px;
 }
 
 .side-table {
     width: 128px;
-    height: auto;
 
     margin-left: -30px;
+}
 
-    overflow: visible;
+/* Rainy London swaps the side table for an umbrella stand;
+   the gothic room puts a candelabra beside the chair. */
+.corner-umbrellas,
+.corner-candelabra {
+    display: none;
+}
 
-    filter: drop-shadow(0 10px 10px rgba(20, 8, 4, 0.4));
+[data-theme="rainy"] .side-table,
+[data-theme="gothic"] .side-table {
+    display: none;
+}
+
+[data-theme="rainy"] .corner-umbrellas {
+    display: block;
+
+    width: 70px;
+
+    margin-left: -8px;
+}
+
+[data-theme="gothic"] .corner-candelabra {
+    display: block;
+
+    width: 92px;
+
+    margin-right: -14px;
+}
+
+.corner-broom {
+    width: 64px;
+
+    margin-right: -34px;
+
+    transform: rotate(-8deg);
+    transform-origin: bottom center;
+}
+
+.corner-cauldron {
+    width: 230px;
+}
+
+.corner-pumpkin {
+    width: 62px;
+
+    margin-left: -40px;
+}
+
+.corner-pumpkin--small {
+    width: 42px;
+
+    margin-left: -8px;
+}
+
+.corner-candle {
+    width: 26px;
+
+    margin-left: 4px;
+    margin-bottom: 26px;
+}
+
+/* Grass, not a rug, in the enchanted forest. */
+[data-theme="forest"] .room-rug {
+    display: none;
+}
+
+.corner-fairy-ring {
+    width: 380px;
+
+    margin-bottom: -10px;
+}
+
+.corner-bistro {
+    width: 300px;
 }
 
 .room-floor {
@@ -679,6 +846,7 @@
     }
 
     .cozy-corner {
+        left: auto;
         right: 4%;
     }
 
@@ -706,6 +874,7 @@
 
     .journal-zone > .wall-art,
     .journal-zone > .journal,
+    .journal-zone > .journal-reopen,
     .journal-zone > .cozy-corner,
     .journal-zone > .room-floor {
         display: none;
