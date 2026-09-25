@@ -1288,7 +1288,9 @@
                     <ellipse cx="50" cy="68" rx="31" ry="47" />
                 </clipPath>
             </defs>
-            <use href="#pic-moth" x="19" y="21" width="62" height="94" clip-path="url(#portraitOval-moth)" />
+            <g clip-path="url(#portraitOval-moth)">
+                <use href="#pic-moth" x="19" y="21" width="62" height="94" />
+            </g>
             <use href="#frame-gilt-oval" />
         </symbol>
 
@@ -1298,7 +1300,9 @@
                     <ellipse cx="50" cy="68" rx="31" ry="47" />
                 </clipPath>
             </defs>
-            <use href="#pic-ghost" x="19" y="21" width="62" height="94" clip-path="url(#portraitOval-ghost)" />
+            <g clip-path="url(#portraitOval-ghost)">
+                <use href="#pic-ghost" x="19" y="21" width="62" height="94" />
+            </g>
             <use href="#frame-gilt-oval" />
         </symbol>
 
@@ -1308,7 +1312,9 @@
                     <ellipse cx="50" cy="68" rx="31" ry="47" />
                 </clipPath>
             </defs>
-            <use href="#pic-umbrella" x="19" y="21" width="62" height="94" clip-path="url(#portraitOval-umbrella)" />
+            <g clip-path="url(#portraitOval-umbrella)">
+                <use href="#pic-umbrella" x="19" y="21" width="62" height="94" />
+            </g>
             <use href="#frame-gilt-oval" />
         </symbol>
 
@@ -1318,7 +1324,9 @@
                     <ellipse cx="50" cy="68" rx="31" ry="47" />
                 </clipPath>
             </defs>
-            <use href="#pic-toadstool" x="19" y="21" width="62" height="94" clip-path="url(#portraitOval-toadstool)" />
+            <g clip-path="url(#portraitOval-toadstool)">
+                <use href="#pic-toadstool" x="19" y="21" width="62" height="94" />
+            </g>
             <use href="#frame-gilt-oval" />
         </symbol>
 
@@ -1328,7 +1336,9 @@
                     <ellipse cx="50" cy="68" rx="31" ry="47" />
                 </clipPath>
             </defs>
-            <use href="#pic-teapot" x="19" y="21" width="62" height="94" clip-path="url(#portraitOval-teapot)" />
+            <g clip-path="url(#portraitOval-teapot)">
+                <use href="#pic-teapot" x="19" y="21" width="62" height="94" />
+            </g>
             <use href="#frame-gilt-oval" />
         </symbol>
 
@@ -1338,7 +1348,9 @@
                     <ellipse cx="50" cy="68" rx="31" ry="47" />
                 </clipPath>
             </defs>
-            <use href="#pic-rose" x="19" y="21" width="62" height="94" clip-path="url(#portraitOval-rose)" />
+            <g clip-path="url(#portraitOval-rose)">
+                <use href="#pic-rose" x="19" y="21" width="62" height="94" />
+            </g>
             <use href="#frame-gilt-oval" />
         </symbol>
 
