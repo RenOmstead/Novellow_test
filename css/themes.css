@@ -157,18 +157,18 @@
 /* Cobwebs in the window's top corners. */
 [data-theme="haunted"] .wall-art > .cobweb--window,
 [data-theme="haunted"] .wall-art > .cobweb--wall {
-    bottom: calc(var(--window-bottom) + 190px);
+    bottom: calc(var(--window-bottom) + var(--window-width) * 0.75 - var(--window-width) * 0.3);
 
-    width: 96px;
-    height: 96px;
+    width: calc(var(--window-width) * 0.28);
+    height: calc(var(--window-width) * 0.28);
 }
 
 [data-theme="haunted"] .wall-art > .cobweb--window {
-    left: calc(var(--scene-centre) - var(--window-width) / 2 + 8px);
+    left: calc(var(--window-left) + var(--window-width) * 0.04);
 }
 
 [data-theme="haunted"] .wall-art > .cobweb--wall {
-    left: calc(var(--scene-centre) + var(--window-width) / 2 - 104px);
+    left: calc(var(--window-left) + var(--window-width) * 0.68);
 
     transform: scaleX(-1);
 }
@@ -584,3 +584,20 @@
     --cat-white: #f6f3ee;
     --cat-white-show: inline;
 }
+
+
+/* =========================================================
+   THE CHINA: the mug on the side table and the café's tea
+   set (Settings; <html data-china="…" data-teaset="…">).
+========================================================= */
+
+[data-china="rose"] { --china: #e9a7b4; }
+[data-china="sage"] { --china: #a9bf8a; }
+[data-china="blue"] { --china: #9fb4d6; }
+[data-china="cream"] { --china: #f3e6cc; }
+[data-china="plum"] { --china: #8a5a7a; }
+[data-china="charcoal"] { --china: #4a4450; }
+
+[data-teaset="floral"] { --teaset-floral: inline; }
+[data-teaset="dots"] { --teaset-dots: inline; }
+[data-teaset="stripes"] { --teaset-stripes: inline; }

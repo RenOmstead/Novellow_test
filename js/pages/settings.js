@@ -30,7 +30,7 @@ import { NovellowError } from "../core/errors.js?v=__VERSION__";
 import { SHELF_SORTS } from "../config.js?v=__VERSION__";
 import { exportLibrary, checkImport, importLibrary } from "../data/transfer.js?v=__VERSION__";
 import { mountMixer } from "../sound/mixer.js?v=__VERSION__";
-import { CATS, GHOST_CHOICES, CURTAINS, RUGS, getPreferences, setPreference } from "../shell/preferences.js?v=__VERSION__";
+import { CATS, GHOST_CHOICES, CURTAINS, RUGS, MUGS, CHINA_COLOURS, TEASETS, getPreferences, setPreference } from "../shell/preferences.js?v=__VERSION__";
 
 
 const content =
@@ -271,6 +271,33 @@ function renderPage() {
                             <select class="field__input" data-pref="rug">
                                 ${RUGS.map((choice) => html`
                                     <option value="${choice.id}" ${choice.id === prefs.rug ? html`selected` : ""}>${choice.name}</option>
+                                `)}
+                            </select>
+                        </label>
+
+                        <label class="field">
+                            <span class="field__label">On the side table</span>
+                            <select class="field__input" data-pref="mug">
+                                ${MUGS.map((choice) => html`
+                                    <option value="${choice.id}" ${choice.id === prefs.mug ? html`selected` : ""}>${choice.name}</option>
+                                `)}
+                            </select>
+                        </label>
+
+                        <label class="field">
+                            <span class="field__label">The café's tea set</span>
+                            <select class="field__input" data-pref="teaset">
+                                ${TEASETS.map((choice) => html`
+                                    <option value="${choice.id}" ${choice.id === prefs.teaset ? html`selected` : ""}>${choice.name}</option>
+                                `)}
+                            </select>
+                        </label>
+
+                        <label class="field">
+                            <span class="field__label">China colour (mug and tea set)</span>
+                            <select class="field__input" data-pref="china">
+                                ${CHINA_COLOURS.map((choice) => html`
+                                    <option value="${choice.id}" ${choice.id === prefs.china ? html`selected` : ""}>${choice.name}</option>
                                 `)}
                             </select>
                         </label>

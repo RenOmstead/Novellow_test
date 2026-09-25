@@ -333,12 +333,12 @@ function shelfMarkup(shelf, books, width) {
 
                     <div class="shelf-board">
 
-                        ${index === 0 ? html`
+                        ${index === rows.length - 1 ? html`
+                            <button class="shelf-edit" type="button" data-action="edit-shelf" data-shelf-id="${shelf.id}" aria-label="Edit the ${shelf.name} shelf" title="Edit this shelf">
+                                ${art("art-settings")}
+                            </button>
                             <span class="shelf-plaque">
                                 <span class="shelf-plaque__name">${shelf.name}</span>
-                                <button class="shelf-plaque__edit" type="button" data-action="edit-shelf" data-shelf-id="${shelf.id}" aria-label="Edit the ${shelf.name} shelf">
-                                    ${art("ui-pencil")}
-                                </button>
                             </span>
                         ` : ""}
 

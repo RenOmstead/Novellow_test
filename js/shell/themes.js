@@ -16,69 +16,74 @@ export const THEMES = [
 
     {
         id: "original",
+        pictures: { landscape: "pic-castle", portrait: "pic-moth" },
         lamp: "scene-lamp",
         name: "Novellow Original",
         description: "A candle-lit reading room with ivy, a sleeping cat and a moonlit village outside.",
         swatch: ["#7c4d38", "#3b2231", "#c47f82", "#f0cf8a"],
         ivy: "ivy",
         weather: { rain: false, fog: false, fireflies: false },
-        crownDecor: ["skull", "castle", "candle", "ghost", "stack", "cat", "lantern"]
+        crownDecor: ["plant", null, "candle", "belljar", "stack", null, "lantern"]
     },
 
     {
         id: "haunted",
+        pictures: { landscape: "pic-haunted-house", portrait: "pic-ghost" },
         lamp: "lamp-chandelier",
         name: "Haunted Library",
         description: "Cobwebs in every corner, ghosts drifting past the shelves, a bubbling cauldron and a full moon at the window.",
         swatch: ["#3f3a4d", "#1f1a26", "#8e86a8", "#d8d0ea"],
         ivy: "forest",
         weather: { rain: false, fog: true, fireflies: false },
-        crownDecor: ["skull", "ghost", "candle", "bat", "cauldron", "cat", "lantern"],
-        wallArt: { moth: "frame-ghost" }
+        crownDecor: ["skull", null, "candle", "belljar", "stack", null, "lantern"]
     },
 
     {
         id: "rainy",
+        pictures: { landscape: "pic-london-rain", portrait: "pic-umbrella" },
         lamp: "lamp-pendant",
         name: "Rainy London Library",
         description: "Grey rain on the glass, green reading lamps and a pot of tea gone cold beside the fire.",
         swatch: ["#4d5660", "#262c33", "#8aa0a8", "#d9c79a"],
         ivy: "forest",
         weather: { rain: true, fog: false, fireflies: false },
-        crownDecor: ["globe", "castle", "candle", "ghost", "stack", "cat", "lantern"]
+        crownDecor: ["globe", null, "candle", "belljar", "stack", null, "lantern"]
     },
 
     {
         id: "forest",
+        pictures: { landscape: "pic-forest-glade", portrait: "pic-toadstool" },
         lamp: "lamp-jar",
         name: "Enchanted Forest",
         description: "A reading nook grown out of an old oak: moss, toadstools and fireflies at dusk.",
         swatch: ["#4a5a3c", "#26301f", "#b98ab2", "#e8d98a"],
         ivy: "forest",
         weather: { rain: false, fog: false, fireflies: true },
-        crownDecor: ["mushrooms", "castle", "candle", "ghost", "flowers", "cat", "lantern"]
+        crownDecor: ["mushrooms", null, "candle", "belljar", "flowers", null, "lantern"]
     },
 
     {
         id: "cafe",
+        pictures: { landscape: "pic-paris-cafe", portrait: "pic-teapot" },
         lamp: "lamp-pendant",
         name: "Cozy Study Café",
         description: "Dark wood, warm amber lamps, and the steam from a fresh cup of coffee.",
         swatch: ["#5a3f30", "#2a1c15", "#c9955f", "#f1dcb6"],
         ivy: "ivy",
         weather: { rain: false, fog: false, fireflies: false },
-        crownDecor: ["plant", "castle", "candle", "ghost", "stack", "cat", "lantern"]
+        crownDecor: ["plant", null, "candle", "belljar", "stack", null, "lantern"]
     },
 
     {
         id: "gothic",
+        pictures: { landscape: "pic-cathedral", portrait: "pic-rose" },
         lamp: "lamp-chandelier",
         name: "Romantic Gothic",
         description: "Deep burgundy velvet, black roses, tall candelabras and a crescent moon over the spires.",
         swatch: ["#3a1c24", "#1a0d12", "#a8354e", "#e8c27c"],
         ivy: "autumn",
         weather: { rain: false, fog: true, fireflies: false },
-        crownDecor: ["skull", "castle", "candle", "ghost", "flowers", "cat", "bat"]
+        crownDecor: ["skull", null, "candle", "belljar", "flowers", null, "lantern"]
     }
 
 ];

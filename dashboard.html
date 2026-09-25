@@ -293,17 +293,27 @@
                         <use href="#scene-lamp" />
                     </svg>
 
-                    <svg class="wall-frame wall-frame--moth" viewBox="0 0 80 100">
-                        <use href="#frame-moth" />
+                    <!-- Two pictures in gilt frames; each room hangs its own
+                         paintings (THEMES.pictures) -->
+
+                    <svg class="wall-picture wall-picture--landscape" viewBox="0 0 150 116">
+                        <use class="wall-picture__art" data-picture="landscape" href="#pic-castle" x="17" y="17" width="116" height="82" />
+                        <use href="#frame-gilt-landscape" />
                     </svg>
 
-                    <svg class="wall-frame wall-frame--charm" viewBox="0 0 40 52">
-                        <use href="#decor-starcharm" />
+                    <svg class="wall-picture wall-picture--portrait" viewBox="0 0 100 130">
+                        <defs>
+                            <clipPath id="wallPortraitOval">
+                                <ellipse cx="50" cy="68" rx="31" ry="47" />
+                            </clipPath>
+                        </defs>
+                        <use class="wall-picture__art" data-picture="portrait" href="#pic-moth" x="18" y="20" width="64" height="96" clip-path="url(#wallPortraitOval)" />
+                        <use href="#frame-gilt-oval" />
                     </svg>
 
-                    <svg class="wall-frame wall-frame--castle" viewBox="0 0 130 100">
-                        <use href="#frame-castle" />
-                    </svg>
+                    
+
+                    
 
                     <svg class="sill-candle sill-candle--left" viewBox="0 0 40 90">
                         <use href="#decor-candle" />
@@ -381,22 +391,33 @@
                     aria-hidden="true"
                 >
 
+                    <!-- A chair, and a side table with something to drink -->
                     <div class="corner-scene corner-scene--armchair">
-                        <svg class="corner-candelabra" viewBox="0 0 110 220">
-                            <use href="#decor-candelabra" />
-                        </svg>
                         <svg class="armchair" viewBox="0 0 260 280">
                             <use href="#scene-armchair" />
                         </svg>
-                        <svg class="side-table" viewBox="0 0 170 210">
-                            <use href="#scene-side-table" />
-                        </svg>
-                        <svg class="corner-umbrellas" viewBox="0 0 80 170">
-                            <use href="#decor-umbrella-stand" />
+                        <svg class="side-table" viewBox="0 0 120 180">
+                            <use href="#side-table-round" x="0" y="50" width="120" height="130" />
+                            <use class="drink" href="#mug-plain" x="37" y="10" width="46" height="54" />
                         </svg>
                     </div>
 
+                    <!-- The café: a chair, and a marble table with the tea set -->
+                    <div class="corner-scene corner-scene--cafe">
+                        <svg class="armchair" viewBox="0 0 260 280">
+                            <use href="#scene-armchair" />
+                        </svg>
+                        <svg class="cafe-table" viewBox="0 0 160 200">
+                            <use href="#cafe-table" x="0" y="70" width="160" height="130" />
+                            <use href="#teaset" x="5" y="18" width="150" height="76" />
+                        </svg>
+                    </div>
+
+                    <!-- The haunted room: the cauldron, and the cat on the floor -->
                     <div class="corner-scene corner-scene--haunted">
+                        <svg class="corner-floor-cat" viewBox="0 0 220 160">
+                            <use href="#scene-cat" />
+                        </svg>
                         <svg class="corner-broom" viewBox="0 0 70 210">
                             <use href="#decor-broom" />
                         </svg>
@@ -406,27 +427,7 @@
                         <svg class="corner-pumpkin" viewBox="0 0 56 42">
                             <use href="#decor-pumpkin" />
                         </svg>
-                        <svg class="corner-pumpkin corner-pumpkin--small" viewBox="0 0 56 42">
-                            <use href="#decor-pumpkin" />
-                        </svg>
-                        <svg class="corner-candle" viewBox="0 0 40 90">
-                            <use href="#decor-candle" />
-                        </svg>
-                    </div>
 
-                    <div class="corner-scene corner-scene--forest">
-                        <svg class="corner-stump" viewBox="0 0 320 250">
-                            <use href="#scene-stump" />
-                        </svg>
-                    </div>
-
-                    <div class="corner-scene corner-scene--cafe">
-                        <svg class="armchair" viewBox="0 0 260 280">
-                            <use href="#scene-armchair" />
-                        </svg>
-                        <svg class="corner-bistro" viewBox="20 0 180 240">
-                            <use href="#scene-bistro" />
-                        </svg>
                     </div>
 
                 </div>

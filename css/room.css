@@ -80,6 +80,17 @@
 
     position: relative;
 
+    /* One set of measurements for the window, the chair and
+       the pictures, scaled to the width of this side. */
+    container-type: inline-size;
+
+    --window-left: 22px;
+    --window-width: min(360px, 54cqw);
+    --window-bottom: 210px;
+    --gap: min(30px, 4cqw);
+    --picture-width: min(130px, 20cqw);
+    --chair-width: min(240px, 36cqw);
+
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -88,7 +99,7 @@
        at the bottom, however tall the bookcase grows. */
     justify-content: flex-end;
 
-    padding: 240px 40px 560px 6px;
+    padding: 240px 40px 620px 6px;
 
     overflow: hidden;
 }
@@ -101,20 +112,11 @@
     bottom: 0;
 
     /* Everything on the wall is measured up from the floor,
-       so it stays with the corner scene however tall the
-       bookcase grows. */
-    height: 760px;
+       so it stays with the chair however tall the bookcase
+       grows. */
+    height: 820px;
 
     pointer-events: none;
-
-    --window-width: 360px;
-    --window-bottom: 124px;
-
-    /* The window, the lamp and the corner scene share one
-       centre line, just beside the bookcase. */
-    --scene-left: 14px;
-    --scene-width: 390px;
-    --scene-centre: calc(var(--scene-left) + var(--scene-width) / 2);
 }
 
 .wall-art > svg {
@@ -125,15 +127,13 @@
     overflow: visible;
 }
 
-/* The window stands behind the corner scene. */
+/* The window, beside the bookcase and up off the floor. */
 .moon-window,
 .ivy--window {
-    left: var(--scene-centre);
+    left: var(--window-left);
     bottom: var(--window-bottom);
 
     width: var(--window-width);
-
-    transform: translateX(-50%);
 }
 
 .moon-window {
@@ -146,54 +146,45 @@
 
 /* The old wall lamp gave way to the ceiling lamp. */
 .tiffany-lamp,
-.wall-frame--charm,
 .sill-plant {
     display: none;
 }
 
-.wall-frame {
-    filter: drop-shadow(0 6px 8px rgba(30, 12, 8, 0.4));
+/* Two pictures above the chair, their tops level. */
+.wall-picture {
+    filter: drop-shadow(0 8px 10px rgba(30, 12, 8, 0.4));
 }
 
-/* A little gallery beside the window. */
-.wall-frame--castle {
-    left: calc(var(--scene-centre) + var(--window-width) / 2 + 30px);
-    bottom: calc(var(--window-bottom) + 170px);
+.wall-picture--landscape {
+    left: calc(var(--window-left) + var(--window-width) + var(--gap));
+    bottom: calc(var(--window-bottom) + var(--window-width) * 0.75 - var(--picture-width) * 0.77);
 
-    width: 108px;
-
-    transform: rotate(-1.5deg);
+    width: var(--picture-width);
 }
 
-.wall-frame--moth {
-    left: calc(var(--scene-centre) + var(--window-width) / 2 + 52px);
-    bottom: calc(var(--window-bottom) + 30px);
+.wall-picture--portrait {
+    left: calc(var(--window-left) + var(--window-width) + var(--gap) * 2 + var(--picture-width));
+    bottom: calc(var(--window-bottom) + var(--window-width) * 0.75 - var(--picture-width) * 0.62 * 1.3);
 
-    width: 70px;
-
-    transform: rotate(1.5deg);
+    width: calc(var(--picture-width) * 0.62);
 }
 
 /* The sill under the window, and curtains over it: the
    curtains share the window's box, with room for the rod. */
 .window-sill {
-    left: var(--scene-centre);
-    bottom: calc(var(--window-bottom) - 22px);
+    left: calc(var(--window-left) - var(--window-width) * 20 / 440);
+    bottom: calc(var(--window-bottom) - var(--window-width) * 0.06);
 
     width: calc(var(--window-width) * 480 / 440);
-
-    transform: translateX(-50%);
 }
 
 .window-curtains {
     display: none;
 
-    left: var(--scene-centre);
+    left: calc(var(--window-left) - var(--window-width) * 20 / 440);
     bottom: calc(var(--window-bottom) - var(--window-width) * 10 / 440);
 
     width: calc(var(--window-width) * 480 / 440);
-
-    transform: translateX(-50%);
 
     filter: drop-shadow(0 8px 10px rgba(20, 8, 4, 0.35));
 }
@@ -204,20 +195,20 @@
     display: block;
 }
 
-/* Candles on the window sill. */
+/* Candles at each end of the sill. */
 .sill-candle--left,
 .sill-candle--right {
-    bottom: calc(var(--window-bottom) + 4px);
+    bottom: calc(var(--window-bottom) + var(--window-width) * 0.005);
 
-    width: 22px;
+    width: calc(var(--window-width) * 0.06);
 }
 
 .sill-candle--left {
-    left: calc(var(--scene-centre) - var(--window-width) / 2 + 24px);
+    left: calc(var(--window-left) + var(--window-width) * 0.06);
 }
 
 .sill-candle--right {
-    left: calc(var(--scene-centre) + var(--window-width) / 2 - 46px);
+    left: calc(var(--window-left) + var(--window-width) * 0.88);
 }
 
 
@@ -231,7 +222,7 @@
     position: absolute;
 
     top: 0;
-    left: calc(14px + 390px / 2);
+    left: calc(var(--window-left) + var(--window-width) + var(--gap) + var(--picture-width) * 0.6);
 
     z-index: 3;
 
@@ -553,15 +544,10 @@ body.sidebar-collapsed .journal-stage {
 .cozy-corner {
     position: absolute;
 
-    /* Stands on the floor, right beside the bookcase, in front
-       of the window. */
-    left: 14px;
+    /* On the floor, to the side of the window, so the sill is
+       free to decorate. */
+    left: calc(var(--window-left) + var(--window-width) - var(--chair-width) * 0.3);
     bottom: 12px;
-
-    display: flex;
-    justify-content: center;
-
-    width: 390px;
 
     z-index: 4;
 
@@ -585,113 +571,60 @@ body.sidebar-collapsed .journal-stage {
 /* Which scene each room shows. */
 .corner-scene--armchair,
 [data-theme="haunted"] .corner-scene--haunted,
-[data-theme="forest"] .corner-scene--forest,
 [data-theme="cafe"] .corner-scene--cafe {
     display: flex;
 }
 
 [data-theme="haunted"] .corner-scene--armchair,
-[data-theme="forest"] .corner-scene--armchair,
 [data-theme="cafe"] .corner-scene--armchair {
     display: none;
 }
 
 .armchair {
-    width: 210px;
+    width: var(--chair-width);
 }
 
 .side-table {
-    width: 128px;
+    width: calc(var(--chair-width) * 0.52);
 
-    margin-left: -30px;
+    margin-left: calc(var(--chair-width) * -0.12);
 }
 
-/* Rainy London swaps the side table for an umbrella stand;
-   the gothic room puts a candelabra beside the chair. */
-.corner-umbrellas,
-.corner-candelabra {
-    display: none;
-}
+.cafe-table {
+    width: calc(var(--chair-width) * 0.72);
 
-[data-theme="rainy"] .side-table,
-[data-theme="gothic"] .side-table {
-    display: none;
-}
-
-[data-theme="rainy"] .corner-umbrellas {
-    display: block;
-
-    width: 70px;
-
-    margin-left: -8px;
-}
-
-[data-theme="gothic"] .corner-candelabra {
-    display: block;
-
-    width: 92px;
-
-    margin-right: -14px;
+    margin-left: calc(var(--chair-width) * -0.14);
 }
 
 .corner-broom {
-    width: 64px;
+    width: calc(var(--chair-width) * 0.3);
 
-    margin-right: -34px;
+    margin-right: calc(var(--chair-width) * -0.16);
 
     transform: rotate(-8deg);
     transform-origin: bottom center;
 }
 
 .corner-cauldron {
-    width: 230px;
+    width: calc(var(--chair-width) * 0.9);
+}
+
+/* The haunted corner sits a little further under the window. */
+[data-theme="haunted"] .cozy-corner {
+    left: calc(var(--window-left) + var(--window-width) * 0.35);
 }
 
 .corner-pumpkin {
-    width: 62px;
+    width: calc(var(--chair-width) * 0.26);
 
-    margin-left: -40px;
+    margin-left: calc(var(--chair-width) * -0.16);
 }
 
-.corner-pumpkin--small {
-    width: 42px;
+.corner-floor-cat {
+    width: calc(var(--chair-width) * 0.52);
 
-    margin-left: -8px;
-}
-
-.corner-candle {
-    width: 26px;
-
-    margin-left: 4px;
-    margin-bottom: 26px;
-}
-
-/* Grass, not a rug, in the enchanted forest. */
-[data-theme="forest"] /* Which rug (Settings); none at all in the forest. */
-.room-rug {
-    display: none;
-}
-
-[data-rug="oval"] .room-rug--oval,
-[data-rug="persian"] .room-rug--persian,
-[data-rug="braided"] .room-rug--braided {
-    display: block;
-}
-
-.room-rug {
-    display: none;
-}
-
-.corner-stump {
-    width: 340px;
-
-    margin-bottom: -6px;
-}
-
-.corner-bistro {
-    width: 160px;
-
-    margin-left: -26px;
+    margin-right: calc(var(--chair-width) * -0.04);
+    margin-bottom: -4px;
 }
 
 .room-floor {
@@ -706,14 +639,25 @@ body.sidebar-collapsed .journal-stage {
     z-index: 0;
 }
 
+/* Which rug (Settings). */
+.room-rug {
+    display: none;
+}
+
+[data-rug="oval"] .room-rug--oval,
+[data-rug="persian"] .room-rug--persian,
+[data-rug="braided"] .room-rug--braided {
+    display: block;
+}
+
 .room-rug {
     position: absolute;
 
-    /* Centred under the corner scene. */
-    left: calc(14px + 195px - 290px);
+    /* Under the window and the chair. */
+    left: calc(var(--window-left) - 30px);
     bottom: -44px;
 
-    width: 580px;
+    width: calc(var(--window-width) + var(--chair-width) * 1.3 + 60px);
     height: 170px;
 }
 
@@ -755,8 +699,12 @@ body.sidebar-collapsed .journal-stage {
     left: 15%;
 }
 
+/* A tidy, balanced top: plant, candle, portrait, books,
+   lantern. */
 .crown-slot--candle {
     left: 36%;
+
+    transform: translateX(-50%);
 }
 
 .crown-slot--portrait {
@@ -768,7 +716,9 @@ body.sidebar-collapsed .journal-stage {
 }
 
 .crown-slot--stack {
-    left: 58%;
+    left: 64%;
+
+    transform: translateX(-50%);
 }
 
 .crown-slot--cat {
@@ -780,7 +730,7 @@ body.sidebar-collapsed .journal-stage {
 }
 
 .crown-slot--right {
-    right: 0.5%;
+    right: 3%;
 }
 
 .crown-piece--skull {
@@ -848,6 +798,10 @@ body.sidebar-collapsed .journal-stage {
     width: 58px;
 }
 
+.crown-piece--belljar {
+    width: 46px;
+}
+
 .crown-piece--bat {
     width: 70px;
 
@@ -896,8 +850,7 @@ body.sidebar-collapsed .journal-stage {
 [data-density="sparse"] .crown-slot--frame,
 [data-density="sparse"] .crown-slot--stack,
 [data-density="sparse"] .sill-plant,
-[data-density="sparse"] .wall-frame--castle,
-[data-density="sparse"] .wall-frame--charm {
+[data-density="sparse"] .wall-picture--portrait {
     display: none;
 }
 
