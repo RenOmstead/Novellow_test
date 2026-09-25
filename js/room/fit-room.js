@@ -2,20 +2,24 @@
    NOVELLOW
    THE ROOM ON SMALL SCREENS
 
-   A phone held upright shows the whole reading room in
-   miniature under the bookcase; held sideways, the room sits
-   beside the shelves and stays in view while they scroll.
-   Either way it is the same room as on a computer, drawn at
-   a fixed size (css/room.css) and scaled to fit, so the
+   On a phone (held either way) the whole reading room fits
+   on one screen and the page never scrolls: the shelves sit
+   on the left and scroll by themselves, and the room stands
+   on the right. It is the same room as on a computer, drawn
+   at a fixed width (css/room.css) and scaled to fit, so the
    window, the chair and every decoration keep their places.
 ========================================================= */
 
-// The size the room is drawn at before it is scaled. Upright
-// there is room for the whole wall (as tall as on a computer);
-// sideways the room is shorter, like a short laptop screen.
+// The room is drawn 600 wide and at least 620 tall, then
+// scaled down to fit its side of the screen. Upright, the
+// chair tucks in front of the window so the room can be
+// narrower, and so drawn bigger.
 const ROOM_WIDTH = 600;
-const WALL_HEIGHT = 820;
-const SIDEWAYS_HEIGHT = 620;
+const NARROW_ROOM_WIDTH = 480;
+const ROOM_MIN_HEIGHT = 620;
+
+// How much of the width the room takes.
+const ROOM_SHARE = 0.46;
 
 export const SIDEWAYS_QUERY =
     "(orientation: landscape) and (max-height: 540px) and (max-width: 1180px)";
@@ -52,20 +56,21 @@ export function startRoomFit(room) {
         const sideways =
             SIDEWAYS.matches;
 
-        const upright =
-            !sideways && UPRIGHT.matches;
+        const compact =
+            sideways || UPRIGHT.matches;
 
-        root.classList.toggle("room-upright", upright);
+        root.classList.toggle("room-compact", compact);
         root.classList.toggle("room-sideways", sideways);
+        root.classList.toggle("room-narrow", compact && !sideways);
 
-        // The paper notes sit under the bookcase on a small
-        // screen, at full size, rather than shrinking with the room.
+        // The paper notes sit with the shelves on a small screen,
+        // at full size, rather than shrinking with the room.
         const notes =
             document.getElementById("deskNotes");
 
         if (notes) {
 
-            if (upright || sideways) {
+            if (compact) {
 
                 if (notes.parentElement !== bookcaseZone) {
                     bookcaseZone.appendChild(notes);
@@ -79,31 +84,25 @@ export function startRoomFit(room) {
 
         }
 
-        let zoom = 1;
-        let width = ROOM_WIDTH;
-
-        // Upright, the room fills the width: shrunk on a phone,
-        // at its real size (with more wall) on a wider screen.
-        if (upright) {
-            zoom = Math.min(1, room.clientWidth / ROOM_WIDTH);
-            width = room.clientWidth / zoom;
+        if (!compact) {
+            return;
         }
 
-        if (sideways) {
+        // The room's side of the screen, and the scale that fits
+        // the room into it. The room grows taller (more wall) or
+        // wider to fill the space exactly.
+        const width =
+            room.clientWidth * ROOM_SHARE;
 
-            const header =
-                document.querySelector(".scene-header")?.offsetHeight || 0;
+        const height =
+            room.clientHeight;
 
-            zoom = Math.min(
-                (room.clientWidth * 0.5) / ROOM_WIDTH,
-                (window.innerHeight - header - 8) / SIDEWAYS_HEIGHT
-            );
-
-        }
+        const zoom =
+            Math.min(width / (sideways ? ROOM_WIDTH : NARROW_ROOM_WIDTH), height / ROOM_MIN_HEIGHT);
 
         root.style.setProperty("--room-zoom", zoom.toFixed(4));
-        root.style.setProperty("--room-width", `${Math.floor(width)}px`);
-        root.style.setProperty("--room-height", `${sideways ? SIDEWAYS_HEIGHT : WALL_HEIGHT}px`);
+        root.style.setProperty("--room-width", `${Math.floor(width / zoom)}px`);
+        root.style.setProperty("--room-height", `${Math.floor(height / zoom)}px`);
 
     };
 

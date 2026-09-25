@@ -637,3 +637,58 @@
     }
 
 }
+
+
+/* =========================================================
+   A NARROW BOOKCASE (a phone held upright, beside the room)
+   The edit and add buttons move to the ends of the board so
+   the shelf's name has room on its plaque.
+========================================================= */
+
+html.room-narrow .shelf-edit,
+html.room-narrow .shelf-add {
+    width: 26px;
+    height: 26px;
+}
+
+html.room-narrow .shelf-edit {
+    left: 4px;
+}
+
+html.room-narrow .shelf-add {
+    right: 4px;
+}
+
+html.room-narrow .shelf-add svg {
+    width: 15px;
+    height: 15px;
+}
+
+html.room-narrow .shelf-plaque {
+    max-width: calc(100% - 66px);
+
+    gap: 6px;
+
+    padding: 2px 8px 3px;
+
+    font-size: 11.5px;
+    letter-spacing: 0;
+}
+
+html.room-narrow .add-shelf-button {
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+/* Longer names wrap onto a second line rather than being cut. */
+html.room-narrow .shelf-plaque__name {
+    display: -webkit-box;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    line-height: 1.02;
+    text-align: center;
+    white-space: normal;
+}

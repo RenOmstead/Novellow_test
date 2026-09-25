@@ -158,6 +158,19 @@ export const DECOR_ASSETS = [
 
 const LIMIT = 60;
 
+// Bookcase pieces are placed in pixels down from the top of
+// the bookcase: position_y is a percentage of this height.
+const SHELF_SPAN = 1600;
+
+
+function topFor(piece) {
+
+    return piece.room_area === "shelf"
+        ? `${(piece.position_y * SHELF_SPAN) / 100}px`
+        : `${piece.position_y}%`;
+
+}
+
 // room_area in the database → the part of the room it hangs on.
 const AREAS = {
     wall: ".journal-zone",
@@ -267,7 +280,7 @@ function pieceMarkup(piece) {
         <div
             class="placed-decor ${piece.id === selectedId ? "is-selected" : ""}"
             data-decor-id="${piece.id}"
-            style="left: ${piece.position_x}%; top: ${piece.position_y}%; width: ${asset.width}px; z-index: ${piece.z_index}; --scale: ${piece.scale}; --rotation: ${piece.rotation}deg"
+            style="left: ${piece.position_x}%; top: ${topFor(piece)}; width: ${asset.width}px; z-index: ${piece.z_index}; --scale: ${piece.scale}; --rotation: ${piece.rotation}deg"
             ${arranging ? html`tabindex="0" role="button" aria-label="${asset.name}. Drag to move, or use the arrow keys."` : html`aria-hidden="true"`}
         >
             <svg viewBox="${asset.box}" aria-hidden="true"><use href="#${asset.id}"></use></svg>
@@ -542,9 +555,12 @@ function positionIn(area, pointX, pointY) {
     const box =
         layerFor(area).getBoundingClientRect();
 
+    const height =
+        area === "shelf" ? SHELF_SPAN : box.height;
+
     return {
         position_x: Number(clamp(((x - box.left) / box.width) * 100, 0, 100).toFixed(2)),
-        position_y: Number(clamp(((y - box.top) / box.height) * 100, 0, 100).toFixed(2))
+        position_y: Number(clamp(((y - box.top) / height) * 100, 0, 100).toFixed(2))
     };
 
 }
@@ -638,7 +654,7 @@ function adjust(piece, change) {
 
     if (element) {
         element.style.left = `${piece.position_x}%`;
-        element.style.top = `${piece.position_y}%`;
+        element.style.top = topFor(piece);
         element.style.zIndex = piece.z_index;
         element.style.setProperty("--scale", piece.scale);
         element.style.setProperty("--rotation", `${piece.rotation}deg`);
@@ -764,6 +780,28 @@ function autoScroll(pointer, follow, ready = () => true) {
             return;
         }
 
+        // On a phone the page stays still and the shelves scroll
+        // by themselves; near their top or bottom, scroll them.
+        const shelves =
+            document.documentElement.classList.contains("room-compact")
+                ? room.querySelector(".bookcase-zone")
+                : null;
+
+        let scroller = null;
+
+        if (shelves) {
+
+            const box =
+                shelves.getBoundingClientRect();
+
+            if (pointer.x >= box.left && pointer.x <= box.right) {
+                scroller = shelves;
+                view.top = Math.max(view.top, box.top);
+                view.bottom = Math.min(view.bottom, box.bottom);
+            }
+
+        }
+
         if (pointer.y < view.top + EDGE) {
             distance = -(view.top + EDGE - pointer.y);
         }
@@ -772,14 +810,17 @@ function autoScroll(pointer, follow, ready = () => true) {
             distance = pointer.y - (view.bottom - EDGE);
         }
 
-        if (distance) {
+        if (distance && (scroller || !shelves)) {
+
+            const target =
+                scroller || document.scrollingElement;
 
             const before =
-                window.scrollY;
+                target.scrollTop;
 
-            window.scrollBy(0, clamp(distance / 3, -18, 18));
+            target.scrollBy(0, clamp(distance / 3, -18, 18));
 
-            if (window.scrollY !== before) {
+            if (target.scrollTop !== before) {
                 follow();
             }
 
