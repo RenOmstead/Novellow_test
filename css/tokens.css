@@ -1,0 +1,145 @@
+/* =========================================================
+   NOVELLOW
+   DESIGN TOKENS
+
+   Fonts, colours, shadows and sizes for the Novellow
+   Original theme. Other themes override these in themes.css.
+========================================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Almendra:ital,wght@0,400;0,700;1,400&family=Averia+Serif+Libre:ital,wght@0,400;0,700;1,400&family=Berkshire+Swash&family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;1,9..144,600&family=Grenze+Gotisch:wght@500;700&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Patrick+Hand&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Uncial+Antiqua&display=swap");
+
+
+:root {
+
+    /* -----------------------------------------------------
+       TYPOGRAPHY
+    ----------------------------------------------------- */
+
+    --font-logo: "Berkshire Swash", "Fraunces", Georgia, serif;
+    --font-heading: "Fraunces", "Playfair Display", Georgia, serif;
+    --font-engraved: "IM Fell English SC", "Averia Serif Libre", Georgia, serif;
+    --font-body: "Cormorant Garamond", Georgia, serif;
+    --font-ui: "Averia Serif Libre", Georgia, serif;
+    --font-hand: "Patrick Hand", "Segoe Print", cursive;
+
+
+    /* -----------------------------------------------------
+       STORYBOOK PALETTE
+    ----------------------------------------------------- */
+
+    --color-ink: #2b1d24;
+    --color-ink-soft: #5e4a44;
+    --color-ink-faint: #8e7672;
+
+    --color-paper: #f6ead4;
+    --color-paper-light: #faf2e3;
+    --color-paper-deep: #efdfc3;
+    --color-paper-edge: #cdb392;
+
+    --color-plum-deep: #2c1824;
+    --color-plum: #5c3749;
+    --color-plum-light: #74485c;
+    --color-mauve: #9c6b82;
+    --color-berry: #7a2c42;
+    --color-burgundy: #6a2a3d;
+    --color-rose: #c47f82;
+    --color-blush: #e9a7b4;
+    --color-peach: #e7b18f;
+
+    --color-sage: #879078;
+    --color-moss: #5f7d45;
+    --color-forest: #34503f;
+
+    --color-pumpkin: #c9692f;
+    --color-terracotta: #b5643f;
+    --color-tan: #c8a57a;
+
+    --color-lavender: #9b82a0;
+    --color-purple: #6a5486;
+
+    --color-gold: #d8aa66;
+    --color-gold-light: #f0cf8a;
+    --color-brass: #c9954f;
+
+    --color-wood-dark: #2e1a10;
+    --color-wood: #5a3322;
+    --color-wood-mid: #6e4029;
+    --color-wood-light: #8a5636;
+
+    --color-danger: #a1493f;
+    --color-success: #5f7d45;
+
+
+    /* -----------------------------------------------------
+       ROOM
+    ----------------------------------------------------- */
+
+    --wall-left: #5a3425;
+    --wall-middle: #7c4d38;
+    --wall-right: #946148;
+    --wall-panel-line: rgba(30, 14, 8, 0.12);
+    --wall-glow: rgba(255, 196, 120, 0.3);
+
+    --floor-top: #4a2a1c;
+    --floor-bottom: #3a2016;
+
+    --panel-top: #3b2231;
+    --panel-middle: #2d1925;
+    --panel-bottom: #231419;
+    --panel-border: #5e3b27;
+
+    --shelf-back-top: #28150e;
+    --shelf-back-bottom: #3b2117;
+    --shelf-board-top: #9a6440;
+    --shelf-board-middle: #6e4029;
+    --shelf-board-bottom: #4a2a1c;
+    --case-side-dark: #2b170e;
+    --case-side-light: #7a4a30;
+    --case-side-mid: #5a3322;
+
+    --night-top: #171c42;
+    --night-middle: #2c3066;
+    --night-bottom: #5c4b7e;
+
+
+    /* -----------------------------------------------------
+       CONTROLS
+    ----------------------------------------------------- */
+
+    --button-primary-top: #74485c;
+    --button-primary-bottom: #5a3448;
+    --button-primary-ink: #fff3e2;
+
+    --field-bg: #fffaf0;
+    --field-bg-focus: #fffdf7;
+    --field-border: #cdb392;
+    --field-border-focus: #9c6b82;
+
+    --focus-ring: 0 0 0 3px rgba(216, 170, 102, 0.6);
+
+
+    /* -----------------------------------------------------
+       SHAPE AND DEPTH
+    ----------------------------------------------------- */
+
+    --radius-small: 8px;
+    --radius: 12px;
+    --radius-large: 18px;
+
+    --shadow-soft: 0 6px 16px rgba(40, 16, 12, 0.22);
+    --shadow-paper: 0 12px 22px rgba(30, 12, 8, 0.38);
+    --shadow-heavy: 0 28px 65px rgba(24, 10, 14, 0.45);
+
+
+    /* -----------------------------------------------------
+       LAYOUT
+    ----------------------------------------------------- */
+
+    --sidebar-width: 244px;
+    --sidebar-collapsed: 104px;
+
+    --sidebar-space: 256px;
+    --sidebar-collapsed-space: 112px;
+
+    --header-height: 72px;
+}

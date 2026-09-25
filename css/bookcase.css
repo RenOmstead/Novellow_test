@@ -1,0 +1,625 @@
+/* =========================================================
+   NOVELLOW
+   BOOKCASE
+
+   The carved bookcase: crown, rows, boards, brass plaques,
+   the five shelf styles, and the welcome state for an empty
+   library.
+========================================================= */
+
+
+.bookcase {
+    position: relative;
+
+    width: 100%;
+    max-width: 760px;
+
+    margin: 0 auto;
+
+    filter: drop-shadow(0 18px 22px rgba(20, 8, 4, 0.45));
+}
+
+.ivy--case-left {
+    top: -40px;
+    left: -40px;
+
+    width: 110px;
+    height: 700px;
+
+    z-index: 6;
+}
+
+.ivy--case-right {
+    top: -10px;
+    right: -52px;
+
+    width: 110px;
+    height: 820px;
+
+    z-index: 6;
+}
+
+
+/* =========================================================
+   CROWN
+========================================================= */
+
+.bookcase-top {
+    position: relative;
+
+    margin: 0 -12px;
+}
+
+.bookcase-crown {
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+    height: auto;
+}
+
+.crown-plaque-text {
+    fill: #3b2418;
+
+    font-family: var(--font-engraved);
+    font-size: 21px;
+
+    letter-spacing: 0.04em;
+}
+
+
+/* =========================================================
+   BODY AND ROWS
+========================================================= */
+
+.bookcase-body {
+    position: relative;
+
+    min-height: 180px;
+
+    padding: 0 18px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--case-side-dark) 0,
+            var(--case-side-light) 5px,
+            var(--case-side-mid) 13px,
+            #3a2016 18px,
+            transparent 18px,
+            transparent calc(100% - 18px),
+            #3a2016 calc(100% - 18px),
+            var(--case-side-mid) calc(100% - 13px),
+            var(--case-side-light) calc(100% - 5px),
+            var(--case-side-dark) 100%
+        );
+}
+
+.bookcase-body > .book-loader {
+    background: var(--shelf-back-bottom);
+}
+
+.shelf-unit {
+    position: relative;
+}
+
+.shelf-row {
+    position: relative;
+}
+
+.shelf-interior {
+    height: 158px;
+
+    position: relative;
+
+    display: flex;
+    align-items: flex-end;
+
+    padding: 0 12px;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(255, 176, 96, 0.16),
+            transparent 65%
+        ),
+        repeating-linear-gradient(
+            90deg,
+            transparent 0 62px,
+            rgba(0, 0, 0, 0.2) 62px 64px
+        ),
+        linear-gradient(
+            180deg,
+            var(--shelf-back-top),
+            var(--shelf-back-bottom)
+        );
+
+    box-shadow:
+        inset 0 20px 18px -8px rgba(0, 0, 0, 0.6),
+        inset 10px 0 14px -8px rgba(0, 0, 0, 0.5),
+        inset -10px 0 14px -8px rgba(0, 0, 0, 0.5);
+}
+
+.shelf-books {
+    width: 100%;
+    min-width: 0;
+    min-height: 100px;
+
+    display: flex;
+    align-items: flex-end;
+
+    gap: 3px;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+.shelf-board {
+    height: 24px;
+
+    position: relative;
+
+    z-index: 3;
+
+    margin: 0 -18px;
+
+    border-top: 1px solid #b07a52;
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--shelf-board-top) 0%,
+            var(--shelf-board-middle) 45%,
+            var(--shelf-board-bottom) 100%
+        );
+
+    box-shadow: 0 7px 9px rgba(0, 0, 0, 0.45);
+}
+
+
+/* Plaque */
+
+.shelf-plaque {
+    position: absolute;
+
+    left: 36px;
+    top: 50%;
+
+    max-width: calc(100% - 110px);
+
+    transform: translateY(-50%);
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 2px 6px 3px 16px;
+
+    border: 1.5px solid #4a2a1a;
+    border-radius: 5px;
+
+    color: #3b2418;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f4e2bd,
+            #d8b27a
+        );
+
+    font-family: var(--font-engraved);
+    font-size: 15px;
+
+    letter-spacing: 0.06em;
+
+    white-space: nowrap;
+
+    box-shadow:
+        inset 0 0 0 2px rgba(255, 244, 220, 0.4),
+        0 3px 6px rgba(0, 0, 0, 0.35);
+}
+
+.shelf-plaque::before {
+    content: "";
+
+    width: 5px;
+    height: 5px;
+
+    flex: 0 0 auto;
+
+    transform: rotate(45deg);
+
+    background: #8a5a36;
+}
+
+.shelf-plaque__name {
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.shelf-plaque__edit {
+    width: 26px;
+    height: 26px;
+
+    display: grid;
+    place-items: center;
+
+    flex: 0 0 auto;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: transparent;
+
+    opacity: 0.55;
+
+    transition:
+        opacity 0.2s ease,
+        background 0.2s ease;
+}
+
+.shelf-plaque__edit svg {
+    width: 16px;
+    height: 16px;
+}
+
+.shelf-plaque__edit:hover,
+.shelf-plaque__edit:focus-visible,
+.shelf-row:hover .shelf-plaque__edit {
+    opacity: 1;
+
+    background: rgba(255, 244, 220, 0.6);
+}
+
+.shelf-add {
+    position: absolute;
+
+    right: 30px;
+    top: 50%;
+
+    width: 30px;
+    height: 30px;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0;
+
+    border: 1.5px solid #4a2a1a;
+    border-radius: 50%;
+
+    background: linear-gradient(180deg, #f4e2bd, #d8b27a);
+
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.35);
+
+    transform: translateY(-50%);
+
+    opacity: 0.8;
+
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.shelf-add svg {
+    width: 18px;
+    height: 18px;
+}
+
+.shelf-add:hover,
+.shelf-add:focus-visible {
+    opacity: 1;
+
+    transform: translateY(-50%) scale(1.08);
+}
+
+
+/* Empty shelf */
+
+.shelf-waiting {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    padding: 0 0 22px 8px;
+
+    color: rgba(246, 230, 207, 0.75);
+
+    font-family: var(--font-hand);
+    font-size: 19px;
+    font-weight: 400;
+}
+
+
+/* Decoration in the space left on a shelf */
+
+.shelf-decor {
+    flex: 0 0 auto;
+
+    height: var(--h);
+    width: auto;
+
+    margin: 0 4px 0 auto;
+
+    overflow: visible;
+
+    pointer-events: none;
+}
+
+.shelf-decor + .shelf-decor {
+    margin-left: 10px;
+}
+
+
+/* Drag and drop */
+
+.drop-marker {
+    width: 4px;
+    height: 110px;
+
+    flex: 0 0 4px;
+
+    border-radius: 2px;
+
+    background: var(--color-gold-light);
+
+    box-shadow: 0 0 10px rgba(255, 214, 140, 0.8);
+}
+
+
+/* =========================================================
+   WELCOME (no shelves yet)
+========================================================= */
+
+.shelf-interior--welcome {
+    height: auto;
+    min-height: 300px;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px 20px;
+}
+
+.shelf-welcome {
+    display: grid;
+    justify-items: center;
+
+    gap: 12px;
+
+    max-width: 440px;
+
+    padding: 24px 26px;
+
+    border: 1.5px solid #4a2a1a;
+    border-radius: 14px;
+
+    color: #3b2418;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f7e8c8,
+            #e2c08c
+        );
+
+    box-shadow:
+        inset 0 0 0 3px rgba(255, 244, 220, 0.45),
+        0 10px 18px rgba(0, 0, 0, 0.45);
+
+    text-align: center;
+}
+
+.shelf-welcome__cat {
+    width: 150px;
+    height: 110px;
+
+    margin-top: -60px;
+}
+
+.shelf-welcome h2 {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.shelf-welcome p {
+    color: #5e4636;
+
+    font-size: 18px;
+}
+
+.shelf-welcome__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-top: 6px;
+}
+
+
+/* =========================================================
+   BASE AND ADD SHELF
+========================================================= */
+
+.bookcase-base {
+    height: 34px;
+
+    margin: 0 -8px;
+
+    border-top: 3px solid var(--case-side-dark);
+    border-radius: 0 0 4px 4px;
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--case-side-light) 0%,
+            var(--case-side-mid) 40%,
+            #3a2016 100%
+        );
+
+    box-shadow: inset 0 6px 0 -3px rgba(216, 170, 102, 0.25);
+}
+
+.bookcase-actions {
+    padding: 14px 0 16px;
+
+    background: var(--shelf-back-bottom);
+}
+
+.add-shelf-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    width: 100%;
+    min-height: 46px;
+
+    padding: 10px 18px;
+
+    border: 1.5px dashed rgba(240, 207, 138, 0.45);
+    border-radius: 12px;
+
+    color: #f0d3a8;
+
+    background: rgba(30, 14, 10, 0.35);
+
+    font-family: var(--font-engraved);
+    font-size: 16px;
+
+    letter-spacing: 0.06em;
+
+    transition: background 0.2s ease;
+}
+
+.add-shelf-button:hover {
+    background: rgba(30, 14, 10, 0.55);
+}
+
+.add-shelf-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+/* =========================================================
+   SHELF STYLES
+========================================================= */
+
+.shelf-style--dark_oak {
+    --shelf-back-top: #150b07;
+    --shelf-back-bottom: #22130c;
+    --shelf-board-top: #5a3a26;
+    --shelf-board-middle: #3a2418;
+    --shelf-board-bottom: #22140c;
+}
+
+.shelf-style--walnut {
+    --shelf-back-top: #2a1812;
+    --shelf-back-bottom: #3d231a;
+    --shelf-board-top: #a8714a;
+    --shelf-board-middle: #7a4a2e;
+    --shelf-board-bottom: #52301e;
+}
+
+.shelf-style--painted .shelf-interior {
+    background:
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(255, 240, 220, 0.18),
+            transparent 65%
+        ),
+        linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--shelf-paint, #7b5d8c) 55%, #1a0d0a),
+            color-mix(in srgb, var(--shelf-paint, #7b5d8c) 75%, #1a0d0a)
+        );
+}
+
+.shelf-style--painted .shelf-board {
+    border-top-color: color-mix(in srgb, var(--shelf-paint, #7b5d8c) 60%, #fff);
+
+    background:
+        linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--shelf-paint, #7b5d8c) 85%, #fff),
+            var(--shelf-paint, #7b5d8c) 45%,
+            color-mix(in srgb, var(--shelf-paint, #7b5d8c) 70%, #000)
+        );
+}
+
+.shelf-style--floating .shelf-interior {
+    background:
+        radial-gradient(
+            ellipse at 50% 20%,
+            rgba(255, 196, 120, 0.1),
+            transparent 70%
+        ),
+        linear-gradient(
+            180deg,
+            #3b2a22,
+            #4a3328
+        );
+
+    box-shadow: inset 0 14px 14px -10px rgba(0, 0, 0, 0.45);
+}
+
+.shelf-style--floating .shelf-board {
+    height: 14px;
+
+    margin: 0 10px;
+
+    border-radius: 3px;
+
+    box-shadow:
+        0 12px 14px rgba(0, 0, 0, 0.5),
+        0 2px 0 rgba(0, 0, 0, 0.3);
+}
+
+.shelf-style--floating .shelf-plaque {
+    top: 170%;
+}
+
+
+/* =========================================================
+   PHONE
+========================================================= */
+
+@media (max-width: 640px) {
+
+    .ivy--case-left,
+    .ivy--case-right {
+        display: none;
+    }
+
+    .shelf-interior {
+        height: 150px;
+
+        padding: 0 8px;
+    }
+
+    .shelf-plaque {
+        left: 22px;
+
+        font-size: 13px;
+    }
+
+    .bookcase-body {
+        padding: 0 12px;
+    }
+
+    .shelf-board {
+        margin: 0 -12px;
+    }
+
+}

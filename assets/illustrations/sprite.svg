@@ -1,0 +1,1877 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+
+    <!-- =====================================================
+         NOVELLOW ILLUSTRATIONS
+         Every shared drawing as a <symbol>. The app injects
+         this file once per page (js/core/art.js) and pages
+         reference drawings with <use href="#symbol-id">.
+    ====================================================== -->
+
+
+        <defs>
+
+            <radialGradient
+                id="artCrystal"
+                cx="38%"
+                cy="32%"
+                r="70%"
+            >
+                <stop offset="0%" stop-color="#c9b3cf" />
+                <stop offset="45%" stop-color="#8a7197" />
+                <stop offset="100%" stop-color="#3f3852" />
+            </radialGradient>
+
+            <radialGradient
+                id="artGlow"
+                cx="50%"
+                cy="50%"
+                r="50%"
+            >
+                <stop offset="0%" stop-color="#ffd98a" stop-opacity="0.75" />
+                <stop offset="100%" stop-color="#ffd98a" stop-opacity="0" />
+            </radialGradient>
+
+            <linearGradient
+                id="artBrass"
+                x1="0"
+                y1="0"
+                x2="1"
+                y2="1"
+            >
+                <stop offset="0%" stop-color="#f0cf92" />
+                <stop offset="55%" stop-color="#d4a466" />
+                <stop offset="100%" stop-color="#a97a47" />
+            </linearGradient>
+
+            <linearGradient
+                id="artPage"
+                x1="0"
+                y1="0"
+                x2="1"
+                y2="0"
+            >
+                <stop offset="0%" stop-color="#f7ead7" />
+                <stop offset="100%" stop-color="#e6cfae" />
+            </linearGradient>
+
+        </defs>
+
+
+        <!-- Home: a little cottage with a lit window -->
+
+        <symbol id="art-home" viewBox="0 0 48 48">
+
+            <ellipse fill="#0a0407" fill-opacity="0.3" stroke="none" cx="24" cy="43.5" rx="17" ry="2.4" />
+
+            <path d="M32.5 9.5C30 7.5 34.5 5.5 32 2.5" fill="none" stroke="#f1dfc6" stroke-width="1.4" />
+
+            <rect x="29.5" y="9.5" width="5.5" height="10" rx="1" fill="#8a5140" />
+
+            <path d="M11 23H37V42H11Z" fill="#f1ddbf" />
+
+            <path stroke="none" d="M31 24H36.2V41.2H31Z" fill="#dcc19d" />
+
+            <path d="M6.5 24.5L24 9L41.5 24.5Q42 26.5 39.5 26.5H8.5Q6 26.5 6.5 24.5Z" fill="#b8674f" />
+
+            <path d="M11 23.5Q13 25.5 15 23.5Q17 25.5 19 23.5Q21 25.5 23 23.5Q25 25.5 27 23.5Q29 25.5 31 23.5Q33 25.5 35 23.5Q37 25.5 39 23.5" fill="none" stroke="#8c4a3a" stroke-width="1" />
+
+            <path d="M15.5 19.5Q17.5 21.5 19.5 19.5Q21.5 21.5 23.5 19.5Q25.5 21.5 27.5 19.5Q29.5 21.5 31.5 19.5Q33.5 21.5 35 19.8" fill="none" stroke="#8c4a3a" stroke-width="1" />
+
+            <path d="M10.5 23L23.5 11.4" fill="none" stroke="#e19a79" stroke-width="1.3" />
+
+            <circle cx="24" cy="16.5" r="2.3" fill="#ffd27a" />
+
+            <circle stroke="none" cx="16.3" cy="32.3" r="6.5" fill="url(#artGlow)" />
+
+            <rect x="13.5" y="29.5" width="5.8" height="5.8" rx="1" fill="#ffd27a" />
+
+            <path d="M16.4 29.8V35M13.8 32.4H19" fill="none" stroke="#b98955" stroke-width="0.9" />
+
+            <path d="M21 42V34.5A4 4 0 0 1 29 34.5V42Z" fill="#4f6a53" />
+
+            <circle stroke="none" cx="27" cy="38.3" r="0.9" fill="#ddb77c" />
+
+            <path d="M33 42Q31.5 37.5 35 36.5Q35.8 33.5 39 34.5Q42.5 34.5 42 38Q43.8 39.5 42.5 42Z" fill="#7f8c6a" />
+
+            <circle stroke="none" cx="37.5" cy="37.5" r="0.9" fill="#dea1a0" />
+
+            <circle stroke="none" cx="40.2" cy="39.8" r="0.8" fill="#dea1a0" />
+
+        </symbol>
+
+
+        <!-- My Books: a tidy stack with a sprig on top -->
+
+        <symbol id="art-books" viewBox="0 0 48 48">
+
+            <ellipse fill="#0a0407" fill-opacity="0.3" stroke="none" cx="24" cy="43.5" rx="18" ry="2.3" />
+
+            <rect x="6" y="33" width="36" height="9" rx="1.8" fill="#6e4258" />
+
+            <path d="M11 33.5V41.5M37 33.5V41.5" fill="none" stroke="#ddb77c" stroke-width="1.2" />
+
+            <path d="M16 37.5H32" fill="none" stroke="#ddb77c" stroke-width="1" stroke-dasharray="2 1.6" />
+
+            <rect x="9" y="24.5" width="31" height="8.5" rx="1.8" fill="#5c6b51" />
+
+            <path d="M13.5 25V32.5M35.5 25V32.5" fill="none" stroke="#e7c9a0" stroke-width="1.2" />
+
+            <circle stroke="none" cx="24.5" cy="28.75" r="1.6" fill="#e7c9a0" />
+
+            <g transform="rotate(-5 21 20)">
+
+                <rect x="7.5" y="16.5" width="28" height="8.5" rx="1.8" fill="#c47f82" />
+
+                <path d="M12 17V24.5M31 17V24.5" fill="none" stroke="#4c3b45" stroke-width="1.2" />
+
+                <path d="M16 20.75H27" fill="none" stroke="#4c3b45" stroke-width="1" />
+
+                <path d="M9.5 18H33.5" fill="none" stroke="#e8b0ad" stroke-width="0.9" />
+
+            </g>
+
+            <path d="M29 16.5C29 12 31 8.5 35 6.5" fill="none" stroke="#879078" stroke-width="1.4" />
+
+            <path d="M31 11.5C27.5 11.8 26 9 26.3 6.5C29.5 6.8 31.5 8.8 31 11.5Z" fill="#879078" />
+
+            <path d="M33 8.2C33.5 5 36 3.5 39 3.8C38.5 6.8 36 8.6 33 8.2Z" fill="#a6aa8e" />
+
+            <path fill="#f3cb79" stroke-width="0.9" d="M41 14L41.7 16.3L44 17L41.7 17.7L41 20L40.3 17.7L38 17L40.3 16.3Z" />
+
+        </symbol>
+
+
+        <!-- Reading Now: an open book with moonlight rising -->
+
+        <symbol id="art-reading" viewBox="0 0 48 48">
+
+            <ellipse fill="#0a0407" fill-opacity="0.3" stroke="none" cx="24" cy="43.5" rx="18" ry="2.2" />
+
+            <path d="M4.5 38.5Q24 34 43.5 38.5V41.5Q24 37.5 4.5 41.5Z" fill="#6e4258" />
+
+            <path d="M24 38C18 34 11.5 34 6 36.5V20C11.5 17.5 18 17.5 24 21.5Z" fill="url(#artPage)" />
+
+            <path d="M24 38C30 34 36.5 34 42 36.5V20C36.5 17.5 30 17.5 24 21.5Z" fill="#f4e4cc" />
+
+            <path d="M9 23.5C12.5 22 16.5 22 20.5 24M9 27C12.5 25.5 16.5 25.5 20.5 27.5M9 30.5C12.5 29 16.5 29 20.5 31" fill="none" stroke="#c9a784" stroke-width="1" />
+
+            <path d="M27.5 24C31.5 22 35.5 22 39 23.5M27.5 27.5C31.5 25.5 35.5 25.5 39 27M27.5 31C31.5 29 35.5 29 39 30.5" fill="none" stroke="#c9a784" stroke-width="1" />
+
+            <path d="M24 21.5V38" fill="none" stroke="#b58f6c" stroke-width="1.1" />
+
+            <circle stroke="none" cx="24.5" cy="10" r="8" fill="url(#artGlow)" />
+
+            <path d="M26.2 4.7A5.6 5.6 0 1 0 29.6 13.2A4.3 4.3 0 0 1 26.2 4.7Z" fill="#ffd27a" />
+
+            <path fill="#f3cb79" stroke-width="0.9" d="M13 9L13.8 11.4L16.2 12.2L13.8 13L13 15.4L12.2 13L9.8 12.2L12.2 11.4Z" />
+
+            <path fill="#f3cb79" stroke-width="0.9" d="M36.5 12L37.1 13.9L39 14.5L37.1 15.1L36.5 17L35.9 15.1L34 14.5L35.9 13.9Z" />
+
+            <circle stroke="none" cx="18" cy="17" r="0.9" fill="#f3cb79" />
+
+            <circle stroke="none" cx="31.5" cy="17.5" r="0.8" fill="#f3cb79" />
+
+        </symbol>
+
+
+        <!-- To Be Read: a waiting book with a ribbon bookmark -->
+
+        <symbol id="art-tbr" viewBox="0 0 48 48">
+
+            <ellipse fill="#0a0407" fill-opacity="0.3" stroke="none" cx="24" cy="43.5" rx="14" ry="2.2" />
+
+            <path d="M34 8.5H37.5V40.5H34Z" fill="#f1ddbf" />
+
+            <path d="M35 11V38.5M36.4 11V38.5" fill="none" stroke="#cdb08c" stroke-width="0.7" />
+
+            <rect x="11" y="6.5" width="24" height="35" rx="2.2" fill="#3c5446" />
+
+            <path stroke="none" d="M11.7 7.2H16.5V40.8H11.7Z" fill="#2f4438" />
+
+            <path d="M16.5 7V41" fill="none" stroke="#ddb77c" stroke-width="0.9" />
+
+            <path d="M19.5 25V17A6 6 0 0 1 31.5 17V25Z" fill="#324a3d" stroke="#ddb77c" stroke-width="1" />
+
+            <path d="M25.5 23.5C21.5 21 21.8 17.2 23.8 17C24.8 16.9 25.5 17.8 25.5 18.4C25.5 17.8 26.2 16.9 27.2 17C29.2 17.2 29.5 21 25.5 23.5Z" fill="#dea1a0" stroke-width="1" />
+
+            <path d="M20 30H31M22 33H29" fill="none" stroke="#ddb77c" stroke-width="1" />
+
+            <path d="M26.5 41V46.5L28.5 44.8L30.5 46.5V41Z" fill="#b8674f" />
+
+            <path fill="#f3cb79" stroke-width="0.9" d="M40.5 5L41.2 7.3L43.5 8L41.2 8.7L40.5 11L39.8 8.7L37.5 8L39.8 7.3Z" />
+
+        </symbol>
+
+
+        <!-- Community: two teacups and a shared little heart -->
+
+        <symbol id="art-community" viewBox="0 0 48 48">
+
+            <ellipse fill="#0a0407" fill-opacity="0.3" stroke="none" cx="24" cy="43.5" rx="19" ry="2.2" />
+
+            <path d="M12 18C10 15.5 14 13.5 12 10.5M34 19.5C32 17 36 15 34 12" fill="none" stroke="#f1dfc6" stroke-width="1.3" />
+
+            <path d="M24 16.5C17.5 12.3 18.2 6.3 21.5 6C23 5.9 24 7.3 24 8.3C24 7.3 25 5.9 26.5 6C29.8 6.3 30.5 12.3 24 16.5Z" fill="#dea1a0" />
+
+            <path d="M20.5 8.8Q21.3 7.9 22.3 8.3" fill="none" stroke="#f6d3cf" stroke-width="1" />
+
+            <path d="M7 26C1.8 26 1.8 34.5 7 34.5" fill="none" stroke-width="2.6" />
+
+            <path d="M7 26C1.8 26 1.8 34.5 7 34.5" fill="none" stroke="#c47f82" stroke-width="1" />
+
+            <path d="M6 21.5H22V35.5Q22 41.5 16.5 41.5H11.5Q6 41.5 6 35.5Z" fill="#c47f82" />
+
+            <ellipse cx="14" cy="21.5" rx="8" ry="1.9" fill="#8a5140" />
+
+            <path d="M8.5 25V35" fill="none" stroke="#e5a9a8" stroke-width="1.4" />
+
+            <path stroke="none" d="M14 34C11.4 32.3 11.7 29.8 13 29.7C13.6 29.7 14 30.2 14 30.6C14 30.2 14.4 29.7 15 29.7C16.3 29.8 16.6 32.3 14 34Z" fill="#f3e2c7" />
+
+            <path d="M41 28C46.2 28 46.2 36.5 41 36.5" fill="none" stroke-width="2.6" />
+
+            <path d="M41 28C46.2 28 46.2 36.5 41 36.5" fill="none" stroke="#7f8c6a" stroke-width="1" />
+
+            <path d="M25 23.5H41V36.5Q41 42 35.5 42H30.5Q25 42 25 36.5Z" fill="#7f8c6a" />
+
+            <ellipse cx="33" cy="23.5" rx="8" ry="1.9" fill="#8a5140" />
+
+            <path d="M27.5 27V36.5" fill="none" stroke="#a3ad8c" stroke-width="1.4" />
+
+            <path stroke="none" d="M34.3 29.2A3.2 3.2 0 1 0 35.8 34.6A2.5 2.5 0 0 1 34.3 29.2Z" fill="#f3e2c7" />
+
+        </symbol>
+
+
+        <!-- Challenges: a ribbon rosette with a star -->
+
+        <symbol id="art-challenge" viewBox="0 0 48 48">
+
+            <path d="M17 27L12 44L16.6 41.6L19.2 45.8L24 30Z" fill="#6e4258" />
+
+            <path d="M31 27L36 44L31.4 41.6L28.8 45.8L24 30Z" fill="#8d5a70" />
+
+            <path d="M24.0 7.5A2.9 2.9 0 0 1 29.4 8.7A2.9 2.9 0 0 1 33.8 12.2A2.9 2.9 0 0 1 36.2 17.2A2.9 2.9 0 0 1 36.2 22.8A2.9 2.9 0 0 1 33.8 27.8A2.9 2.9 0 0 1 29.4 31.3A2.9 2.9 0 0 1 24.0 32.5A2.9 2.9 0 0 1 18.6 31.3A2.9 2.9 0 0 1 14.2 27.8A2.9 2.9 0 0 1 11.8 22.8A2.9 2.9 0 0 1 11.8 17.2A2.9 2.9 0 0 1 14.2 12.2A2.9 2.9 0 0 1 18.6 8.7A2.9 2.9 0 0 1 24.0 7.5Z" fill="#c47f82" />
+
+            <circle cx="24" cy="20" r="8.3" fill="#f3e2c7" />
+
+            <circle cx="24" cy="20" r="6.6" fill="none" stroke="#c9a784" stroke-width="0.8" stroke-dasharray="1.4 1.2" />
+
+            <path d="M24 14.2L25.7 18.1L29.8 18.4L26.7 21.1L27.6 25.2L24 23L20.4 25.2L21.3 21.1L18.2 18.4L22.3 18.1Z" fill="#e0ad5f" stroke-width="1.1" />
+
+            <path d="M15.5 13.5Q18 10.5 21.5 9.8" fill="none" stroke="#e8adab" stroke-width="1.2" />
+
+            <path fill="#f3cb79" stroke-width="0.9" d="M40.5 5L41.2 7.3L43.5 8L41.2 8.7L40.5 11L39.8 8.7L37.5 8L39.8 7.3Z" />
+
+            <circle stroke="none" cx="8" cy="9" r="0.9" fill="#f3cb79" />
+
+        </symbol>
+
+
+        <!-- Journal: a leather journal with a quill -->
+
+        <symbol id="art-journal" viewBox="0 0 48 48">
+
+            <ellipse fill="#0a0407" fill-opacity="0.3" stroke="none" cx="23" cy="43.5" rx="15" ry="2.2" />
+
+            <path d="M32.5 11H35V40.5H32.5Z" fill="#f1ddbf" />
+
+            <rect x="8" y="9" width="26" height="33" rx="2.6" fill="#8a5140" />
+
+            <path stroke="none" d="M8.7 9.7H13.5V41.3H8.7Z" fill="#6d3d31" />
+
+            <path stroke="none" d="M34 9L28.5 9L34 14.5Z M34 42L28.5 42L34 36.5Z" fill="#ddb77c" />
+
+            <rect x="17" y="16" width="12" height="8" rx="1.2" fill="#f3e2c7" />
+
+            <path d="M19.5 19H26.5M20.5 21.3H25.5" fill="none" stroke="#a88464" stroke-width="0.9" />
+
+            <path stroke="none" d="M20 33.5C18 32 18.3 30 19.4 29.9C20 29.9 20.3 30.4 20.3 30.7C20.3 30.4 20.6 29.9 21.2 29.9C22.3 30 22.6 32 20.6 33.5Z" fill="#dea1a0" />
+
+            <rect x="30" y="23" width="8" height="6.5" rx="1.6" fill="#5a3328" />
+
+            <circle cx="35.5" cy="26.25" r="1.5" fill="#ddb77c" stroke-width="0.9" />
+
+            <path d="M43.5 3.5C35 5.5 29 13.5 27 24.5C31.5 20.5 39 14 43.5 3.5Z" fill="#f4e6d2" />
+
+            <path d="M42 7.5L37.3 9.7M40.2 11.2L34.4 13.6M37.8 15L31.8 17.6" fill="none" stroke="#d6bda0" stroke-width="0.9" />
+
+            <path d="M43.5 3.5L24 30" fill="none" stroke-width="1.2" />
+
+        </symbol>
+
+
+        <!-- Discover: a crystal ball full of stars -->
+
+        <symbol id="art-discover" viewBox="0 0 48 48">
+
+            <ellipse fill="#0a0407" fill-opacity="0.3" stroke="none" cx="24" cy="43.5" rx="13" ry="2.2" />
+
+            <path d="M13 42.5H35L32 35.5H16Z" fill="url(#artBrass)" />
+
+            <path d="M15.5 39.3H32.5" fill="none" stroke="#8f6337" stroke-width="0.9" />
+
+            <circle cx="24" cy="21.5" r="13.5" fill="url(#artCrystal)" />
+
+            <path d="M15 27C19 21 26 30 32 23.5" fill="none" stroke="#e8d2e4" stroke-width="1.2" stroke-opacity="0.8" />
+
+            <path stroke="none" d="M29.2 14.5A3.2 3.2 0 1 0 30.7 20.3A2.5 2.5 0 0 1 29.2 14.5Z" fill="#ffd27a" />
+
+            <path stroke="none" d="M20 14.5L20.6 16.3L22.4 16.9L20.6 17.5L20 19.3L19.4 17.5L17.6 16.9L19.4 16.3Z" fill="#fff0d0" />
+
+            <circle stroke="none" cx="26" cy="27" r="0.9" fill="#fff0d0" />
+
+            <circle stroke="none" cx="18.5" cy="23" r="0.7" fill="#fff0d0" />
+
+            <path d="M15.5 15.5A10 10 0 0 1 21 10.3" fill="none" stroke="#ffffff" stroke-width="2" stroke-opacity="0.55" />
+
+            <path fill="#f3cb79" stroke-width="0.9" d="M41 7L41.7 9.3L44 10L41.7 10.7L41 13L40.3 10.7L38 10L40.3 9.3Z" />
+
+            <circle stroke="none" cx="7" cy="12" r="0.9" fill="#f3cb79" />
+
+        </symbol>
+
+
+        <!-- Settings: a brass gear with a little moon -->
+
+        <symbol id="art-settings" viewBox="0 0 48 48">
+
+            <ellipse fill="#0a0407" fill-opacity="0.3" stroke="none" cx="24" cy="43.5" rx="14" ry="2.2" />
+
+            <path d="M36.0 19.9L39.8 20.6A16 16 0 0 1 39.8 25.4L36.0 26.1A12.4 12.4 0 0 1 34.7 29.3L36.9 32.5A16 16 0 0 1 33.5 35.9L30.3 33.7A12.4 12.4 0 0 1 27.1 35.0L26.4 38.8A16 16 0 0 1 21.6 38.8L20.9 35.0A12.4 12.4 0 0 1 17.7 33.7L14.5 35.9A16 16 0 0 1 11.1 32.5L13.3 29.3A12.4 12.4 0 0 1 12.0 26.1L8.2 25.4A16 16 0 0 1 8.2 20.6L12.0 19.9A12.4 12.4 0 0 1 13.3 16.7L11.1 13.5A16 16 0 0 1 14.5 10.1L17.7 12.3A12.4 12.4 0 0 1 20.9 11.0L21.6 7.2A16 16 0 0 1 26.4 7.2L27.1 11.0A12.4 12.4 0 0 1 30.3 12.3L33.5 10.1A16 16 0 0 1 36.9 13.5L34.7 16.7A12.4 12.4 0 0 1 36.0 19.9Z" fill="url(#artBrass)" />
+
+            <circle cx="24" cy="23" r="9.5" fill="none" stroke="#a97a47" stroke-width="1" stroke-dasharray="1.5 1.8" />
+
+            <circle cx="24" cy="23" r="6.5" fill="#6e4258" />
+
+            <path stroke="none" d="M24.9 18.9A4.1 4.1 0 1 0 27.5 25.2A3.2 3.2 0 0 1 24.9 18.9Z" fill="#f3cb79" />
+
+            <path d="M13.5 17A12 12 0 0 1 19 12" fill="none" stroke="#fbe6bd" stroke-width="1.3" />
+
+        </symbol>
+
+    
+
+
+        <defs>
+
+            <radialGradient id="warmGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#ffd98a" stop-opacity="0.85" />
+                <stop offset="45%" stop-color="#f6b25c" stop-opacity="0.32" />
+                <stop offset="100%" stop-color="#f6b25c" stop-opacity="0" />
+            </radialGradient>
+
+            <radialGradient id="lanternGlass" cx="50%" cy="58%" r="60%">
+                <stop offset="0%" stop-color="#fff2bf" />
+                <stop offset="45%" stop-color="#ffc964" />
+                <stop offset="100%" stop-color="#d9823a" />
+            </radialGradient>
+
+            <linearGradient id="waxBody" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#d9c29f" />
+                <stop offset="45%" stop-color="#fbeed5" />
+                <stop offset="100%" stop-color="#cdb28c" />
+            </linearGradient>
+
+            <linearGradient id="brassBody" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#f0cf92" />
+                <stop offset="55%" stop-color="#c9954f" />
+                <stop offset="100%" stop-color="#8e6232" />
+            </linearGradient>
+
+            <linearGradient id="giltFrame" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#e2b76c" />
+                <stop offset="50%" stop-color="#a8733a" />
+                <stop offset="100%" stop-color="#6e4526" />
+            </linearGradient>
+
+            <linearGradient id="marble" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#f4eee3" />
+                <stop offset="70%" stop-color="#e4dbcc" />
+                <stop offset="100%" stop-color="#c7baa5" />
+            </linearGradient>
+
+            <linearGradient id="duskSky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#6f5c8f" />
+                <stop offset="55%" stop-color="#c98b95" />
+                <stop offset="100%" stop-color="#f0c39a" />
+            </linearGradient>
+
+        </defs>
+
+
+        <!-- Sleeping black cat, loafed, tail hanging over an edge -->
+
+        <symbol id="scene-cat" viewBox="0 0 220 160">
+
+        <g>
+            <animateTransform attributeName="transform" type="rotate" values="0 184 92;7 184 92;0 184 92;-3 184 92;0 184 92" dur="6s" repeatCount="indefinite" />
+
+            <path d="M182 90C203 96 208 118 199 134C193 145 197 154 208 152" fill="none" stroke="#0d0a0c" stroke-width="16" stroke-linecap="round" />
+
+            <path d="M182 90C203 96 208 118 199 134C193 145 197 154 208 152" fill="none" stroke="#1f181e" stroke-width="12.5" stroke-linecap="round" />
+
+            <path d="M186 96C198 104 201 118 196 130" fill="none" stroke="#4d3d57" stroke-width="2.4" stroke-linecap="round" opacity="0.65" />
+        </g>
+
+        <path d="M72 100C58 100 51 88 57 71C65 50 100 40 136 42C170 44 191 58 193 79C194 93 185 101 170 101Z" fill="#1f181e" stroke="#0d0a0c" stroke-width="2.5" />
+
+            <path d="M62 56C77 47 106 41 136 44C160 46 180 56 188 72" fill="none" stroke="#5a4865" stroke-width="3.4" stroke-linecap="round" opacity="0.75" />
+
+            <path d="M120 70C135 66 152 68 164 76" fill="none" stroke="#0d0a0c" stroke-width="2" stroke-linecap="round" opacity="0.6" />
+
+            <path d="M30 60L27 25C27 22 30 21 32 23L55 43Z" fill="#1f181e" stroke="#0d0a0c" stroke-width="2.5" stroke-linejoin="round" />
+
+            <path d="M64 43L87 23C89 21 92 22 92 25L90 60Z" fill="#1f181e" stroke="#0d0a0c" stroke-width="2.5" stroke-linejoin="round" />
+
+            <path d="M33 51L31 31L47 44Z" fill="#6b4556" />
+
+            <path d="M72 44L88 31L87 51Z" fill="#6b4556" />
+
+            <path d="M24 72C22 53 37 40 59 40C81 40 96 53 94 72C93 88 79 99 59 99C39 99 25 88 24 72Z" fill="#1f181e" stroke="#0d0a0c" stroke-width="2.5" />
+
+            <path d="M25 76L18 79L25 82M93 76L100 79L93 82" fill="#1f181e" stroke="#0d0a0c" stroke-width="2" stroke-linejoin="round" />
+
+            <path d="M36 50C43 44 51 42 59 42C68 42 76 44 82 49" fill="none" stroke="#5a4865" stroke-width="2.6" stroke-linecap="round" opacity="0.75" />
+
+            <ellipse cx="40" cy="80" rx="6" ry="3" fill="#b8798b" opacity="0.4" />
+
+            <ellipse cx="78" cy="80" rx="6" ry="3" fill="#b8798b" opacity="0.4" />
+
+            <path d="M37 71Q43 76.5 50 71M68 71Q75 76.5 81 71" fill="none" stroke="#d8b9c4" stroke-width="2.3" stroke-linecap="round" />
+
+            <path d="M55.5 80H62.5L59 84Z" fill="#c28595" />
+
+            <path d="M59 84Q56 88 52.5 86.5M59 84Q62 88 65.5 86.5" fill="none" stroke="#7c6070" stroke-width="1.3" stroke-linecap="round" />
+
+            <path d="M42 85L17 81M42 88.5L19 92M76 85L101 81M76 88.5L99 92" fill="none" stroke="#b9a7b3" stroke-width="1.1" stroke-linecap="round" opacity="0.7" />
+
+            <ellipse cx="44" cy="100" rx="13" ry="6.5" fill="#1f181e" stroke="#0d0a0c" stroke-width="2.2" />
+
+            <ellipse cx="74" cy="101" rx="13" ry="6.5" fill="#1f181e" stroke="#0d0a0c" stroke-width="2.2" />
+
+            <path d="M40 97.5V102M45 97.5V102M70 98.5V103M75 98.5V103" fill="none" stroke="#0d0a0c" stroke-width="1.3" stroke-linecap="round" />
+
+        </symbol>
+
+
+        <!-- Candle with a soft glow -->
+
+        <symbol id="decor-candle" viewBox="0 0 40 90">
+
+            <circle cx="20" cy="18" r="19" fill="url(#warmGlow)" style="display: var(--glow-display, inline)">
+            <animate attributeName="opacity" values="0.7;1;0.82;1;0.75" dur="2.8s" repeatCount="indefinite" />
+        </circle>
+
+            <g>
+            <animateTransform attributeName="transform" type="rotate" values="-3 20 23;3 20 23;-2 20 23;2 20 23;-3 20 23" dur="1.6s" repeatCount="indefinite" />
+            <path d="M20 5C25 12 25 19 20 23C15 19 15 12 20 5Z" fill="#ffcf6a" stroke="#c9782f" stroke-width="0.8" />
+
+            <path d="M20 12C22.5 15.5 22.5 19 20 20.8C17.5 19 17.5 15.5 20 12Z" fill="#fff4c9" />
+        </g>
+
+        <path d="M20 22V27" stroke="#3b2a22" stroke-width="1.4" />
+
+            <path d="M11 27H29V88H11Z" fill="url(#waxBody)" stroke="#6b4a33" stroke-width="1.2" />
+
+            <path d="M11 27H29V33Q27 37 25 33Q23 41 20.5 33Q18 36 16 33Q13.5 38 11 33Z" fill="#fff6e4" stroke="#6b4a33" stroke-width="1" stroke-linejoin="round" />
+
+        </symbol>
+
+
+        <!-- Brass lantern -->
+
+        <symbol id="decor-lantern" viewBox="0 0 50 92">
+
+            <circle cx="25" cy="50" r="25" fill="url(#warmGlow)" style="display: var(--glow-display, inline)">
+            <animate attributeName="opacity" values="0.75;1;0.85;1;0.78" dur="3.2s" repeatCount="indefinite" />
+        </circle>
+
+            <circle cx="25" cy="7" r="4.5" fill="none" stroke="#8e6232" stroke-width="2.4" />
+
+            <path d="M11 23L25 11L39 23Z" fill="#6e4a2a" stroke="#3a2518" stroke-width="1.2" stroke-linejoin="round" />
+
+            <rect x="8" y="22" width="34" height="5" rx="1.5" fill="url(#brassBody)" stroke="#3a2518" stroke-width="1.2" />
+
+            <rect x="12" y="27" width="26" height="42" fill="url(#lanternGlass)" stroke="#3a2518" stroke-width="1.2" />
+
+            <rect x="21" y="50" width="8" height="17" fill="#fbeed5" />
+
+            <ellipse cx="25" cy="45" rx="3" ry="5" fill="#fff6cf" />
+
+            <path d="M18.5 27V69M31.5 27V69M12 48H38" stroke="#5d3e22" stroke-width="1.8" />
+
+            <path d="M8 69H42L38 78H12Z" fill="url(#brassBody)" stroke="#3a2518" stroke-width="1.2" stroke-linejoin="round" />
+
+            <path d="M13 78V84M37 78V84" stroke="#3a2518" stroke-width="2.4" stroke-linecap="round" />
+
+        </symbol>
+
+
+        <!-- Pink potion bottle -->
+
+        <symbol id="decor-potion" viewBox="0 0 40 64">
+
+            <rect x="15" y="2" width="10" height="8" rx="2" fill="#b98a5c" stroke="#4a3022" stroke-width="1.1" />
+
+            <path d="M15 10H25V20C33 23 37 29 37 37A17 17 0 0 1 3 37C3 29 7 23 15 20Z" fill="#e7eef0" fill-opacity="0.35" stroke="#4a3022" stroke-width="1.3" />
+
+            <path d="M4 40Q20 34 36 40A16.5 16.5 0 0 1 4 40Z" fill="#d45d74" />
+
+            <path d="M6 39.5Q20 35 34 39.5" fill="none" stroke="#f08ea0" stroke-width="1.2" />
+
+            <path d="M9 30C10 26 12 24 15 23" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity="0.75" />
+
+            <circle cx="14" cy="45" r="1.6" fill="#ffd0da" opacity="0.8" />
+
+            <circle cx="24" cy="48" r="1.1" fill="#ffd0da" opacity="0.8" />
+
+            <path d="M24 12L31 17" stroke="#c9954f" stroke-width="1" />
+
+            <path d="M31 17L35 15L37 19L33 21Z" fill="#f1e1c4" stroke="#4a3022" stroke-width="0.8" />
+
+        </symbol>
+
+
+        <!-- Skull -->
+
+        <symbol id="decor-skull" viewBox="0 0 52 48">
+
+            <path d="M8 25C6 11 16 3 26 3C36 3 46 11 44 25C43 31 39 33 38 37V44H14V37C13 33 9 31 8 25Z" fill="#efe3cf" stroke="#4a3528" stroke-width="1.6" stroke-linejoin="round" />
+
+            <path d="M36 8C42 12 45 19 43 26C42 30 39 32 38 36V43H34C35 32 39 22 36 8Z" fill="#d8c6aa" />
+
+            <ellipse cx="18" cy="23" rx="5.5" ry="6" fill="#3a2a26" />
+
+            <ellipse cx="34" cy="23" rx="5.5" ry="6" fill="#3a2a26" />
+
+            <path d="M26 29L23.2 34.5H28.8Z" fill="#3a2a26" />
+
+            <path d="M19 39V44M23 39V44M27 39V44M31 39V44" stroke="#4a3528" stroke-width="1.2" />
+
+        </symbol>
+
+
+        <!-- Crow -->
+
+        <symbol id="decor-crow" viewBox="0 0 64 66">
+
+            <path d="M28 52L25 62M34 52L35 62M21 62H29M31 62H39" fill="none" stroke="#c9954f" stroke-width="1.6" stroke-linecap="round" />
+
+            <path d="M14 40C12 28 22 17 35 17C39 10 47 8 52 12L61 15L52 18C54 26 52 36 46 42C41 47 31 50 23 49L6 60L11 48Z" fill="#1c1b24" stroke="#0b0a10" stroke-width="1.6" stroke-linejoin="round" />
+
+            <path d="M20 36C27 27 38 28 44 34C38 42 29 45 20 44Z" fill="#2c2a3a" />
+
+            <path d="M24 38C29 36 34 36 38 38M23 41C28 39.5 32 39.5 36 41" fill="none" stroke="#474463" stroke-width="1" />
+
+            <circle cx="50" cy="14.5" r="1.8" fill="#e8c27c" />
+
+            <path d="M38 19C42 16 46 15 49 16" fill="none" stroke="#4b4868" stroke-width="1.6" stroke-linecap="round" opacity="0.8" />
+
+        </symbol>
+
+
+        <!-- Marble bust -->
+
+        <symbol id="decor-bust" viewBox="0 0 48 76">
+
+            <path d="M6 54C6 43 14 38 24 38C34 38 42 43 42 54Z" fill="url(#marble)" stroke="#6d6252" stroke-width="1.3" />
+
+            <path d="M14 42C19 48 29 48 36 43" fill="none" stroke="#b7aa94" stroke-width="1.1" />
+
+            <path d="M20 31H28V39H20Z" fill="#e0d6c5" stroke="#6d6252" stroke-width="1.2" />
+
+            <path d="M24 7C31 7 35 13 35 20C35 28 30 33 24 33C18 33 13 28 13 20C13 13 17 7 24 7Z" fill="url(#marble)" stroke="#6d6252" stroke-width="1.3" />
+
+            <path d="M12.5 19C12 10 17 5 24 5C31 5 36 10 35.5 19C33 14 29 12 24 13C19 12 15 14 12.5 19Z" fill="#d7ccb9" stroke="#6d6252" stroke-width="1.2" stroke-linejoin="round" />
+
+            <path d="M17 21Q19 22.5 21 21M27 21Q29 22.5 31 21" fill="none" stroke="#8a7e6a" stroke-width="1" stroke-linecap="round" />
+
+            <path d="M24 21V26H25.5" fill="none" stroke="#a79a84" stroke-width="1" stroke-linecap="round" />
+
+            <path d="M12 54H36V61H12Z" fill="#dcd2c1" stroke="#6d6252" stroke-width="1.2" />
+
+            <path d="M9 61H39V68H9Z" fill="#cfc4b1" stroke="#6d6252" stroke-width="1.2" />
+
+        </symbol>
+
+
+        <!-- Bell jar with a toadstool -->
+
+        <symbol id="decor-belljar" viewBox="0 0 50 72">
+
+            <path d="M4 62H46V70H4Z" fill="#6e4029" stroke="#35200f" stroke-width="1.2" />
+
+            <path d="M9 62C9 55 16 52 25 52C34 52 41 55 41 62Z" fill="#5f7d45" stroke="#2f3f22" stroke-width="1" />
+
+            <path d="M22 62V48H28V62Z" fill="#efe3cf" stroke="#4a3528" stroke-width="1" />
+
+            <path d="M13 49C13 38 37 38 37 49Z" fill="#c0453f" stroke="#5a1f1b" stroke-width="1.2" />
+
+            <circle cx="20" cy="45" r="1.8" fill="#fff4e4" />
+
+            <circle cx="27" cy="43" r="1.4" fill="#fff4e4" />
+
+            <circle cx="32" cy="47" r="1.3" fill="#fff4e4" />
+
+            <path d="M8 62V30C8 15 15 6 25 6C35 6 42 15 42 30V62" fill="#dfeef2" fill-opacity="0.18" stroke="#cfe3ea" stroke-opacity="0.8" stroke-width="1.4" />
+
+            <circle cx="25" cy="4.5" r="3" fill="#dfeef2" fill-opacity="0.4" stroke="#cfe3ea" stroke-width="1.2" />
+
+            <path d="M13 36C13 24 17 15 23 11" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" opacity="0.55" />
+
+        </symbol>
+
+
+        <!-- Teacup with little flowers -->
+
+        <symbol id="decor-teacup" viewBox="0 0 56 58">
+
+            <path d="M16 30C12 22 14 14 20 12C22 18 21 25 16 30Z" fill="#6d8c4a" stroke="#2f3f22" stroke-width="0.9" />
+
+            <path d="M36 28C38 20 44 16 49 18C46 24 42 27 36 28Z" fill="#55733f" stroke="#2f3f22" stroke-width="0.9" />
+
+            <path d="M26 30C24 22 26 14 31 10C33 17 31 25 26 30Z" fill="#8aa35a" stroke="#2f3f22" stroke-width="0.9" />
+
+            <circle cx="20" cy="15" r="4.2" fill="#e9a3ac" stroke="#7a3e48" stroke-width="0.9" />
+
+            <circle cx="20" cy="15" r="1.4" fill="#f6d27a" />
+
+            <circle cx="33" cy="13" r="3.6" fill="#f2c4c8" stroke="#7a3e48" stroke-width="0.9" />
+
+            <circle cx="33" cy="13" r="1.2" fill="#f6d27a" />
+
+            <circle cx="42" cy="21" r="3.2" fill="#e9a3ac" stroke="#7a3e48" stroke-width="0.9" />
+
+            <ellipse cx="28" cy="52" rx="22" ry="4.5" fill="#efe3cf" stroke="#4a3528" stroke-width="1.2" />
+
+            <path d="M44 34C51 34 51 44 43 45" fill="none" stroke="#4a3528" stroke-width="4" />
+
+            <path d="M44 34C51 34 51 44 43 45" fill="none" stroke="#f3e8d6" stroke-width="2" />
+
+            <path d="M10 30H46C46 42 39 50 28 50C17 50 10 42 10 30Z" fill="#f3e8d6" stroke="#4a3528" stroke-width="1.3" />
+
+            <path d="M11 35H45" stroke="#c47f82" stroke-width="2.4" />
+
+            <ellipse cx="28" cy="30" rx="18" ry="3" fill="#6e4029" stroke="#4a3528" stroke-width="1" />
+
+        </symbol>
+
+
+        <!-- Potted plant -->
+
+        <symbol id="decor-plant" viewBox="0 0 60 78">
+
+            <path d="M30 50C22 40 10 38 4 42C8 50 18 54 30 50Z" fill="#55733f" stroke="#2f3f22" stroke-width="1" />
+
+            <path d="M30 50C38 38 50 36 57 40C53 49 42 54 30 50Z" fill="#6d8c4a" stroke="#2f3f22" stroke-width="1" />
+
+            <path d="M30 50C24 36 22 22 28 10C35 22 36 36 30 50Z" fill="#8aa35a" stroke="#2f3f22" stroke-width="1" />
+
+            <path d="M30 50C19 34 12 26 6 24C8 36 17 46 30 50Z" fill="#6d8c4a" stroke="#2f3f22" stroke-width="1" />
+
+            <path d="M30 50C40 32 48 24 55 22C54 34 44 46 30 50Z" fill="#55733f" stroke="#2f3f22" stroke-width="1" />
+
+            <path d="M28 14V48M10 27L28 48M52 25L32 48" fill="none" stroke="#2f3f22" stroke-width="0.7" opacity="0.5" />
+
+            <path d="M15 56H45L41 77H19Z" fill="#b5643f" stroke="#4d2616" stroke-width="1.2" stroke-linejoin="round" />
+
+            <rect x="12" y="50" width="36" height="8" rx="2" fill="#c7764e" stroke="#4d2616" stroke-width="1.2" />
+
+            <path d="M20 60L22 74" stroke="#d98d63" stroke-width="2" stroke-linecap="round" opacity="0.6" />
+
+        </symbol>
+
+
+        <!-- Friendly ghost -->
+
+        <symbol id="decor-ghost" viewBox="0 0 44 54">
+
+            <path d="M6 47C6 22 11 6 22 6C33 6 38 22 38 47L34 42L30 48L26 42L22 48L18 42L14 48L10 42Z" fill="#f4eee4" stroke="#6d6252" stroke-width="1.3" stroke-linejoin="round" />
+
+            <path d="M30 12C35 18 36 30 36 42L34 40C34 28 33 18 30 12Z" fill="#ddd3c3" />
+
+            <ellipse cx="17" cy="23" rx="2.2" ry="3" fill="#2f2528" />
+
+            <ellipse cx="27" cy="23" rx="2.2" ry="3" fill="#2f2528" />
+
+            <ellipse cx="13.5" cy="28.5" rx="2.6" ry="1.5" fill="#e7a3a8" opacity="0.8" />
+
+            <ellipse cx="30.5" cy="28.5" rx="2.6" ry="1.5" fill="#e7a3a8" opacity="0.8" />
+
+            <path d="M20 29Q22 31 24 29" fill="none" stroke="#2f2528" stroke-width="1.1" stroke-linecap="round" />
+
+        </symbol>
+
+
+        <!-- Books lying flat -->
+
+        <symbol id="decor-stack" viewBox="0 0 84 36">
+
+            <rect x="4" y="24" width="74" height="11" rx="2" fill="#5b3a52" stroke="#2a1a1f" stroke-width="1.2" />
+
+            <path d="M12 24V35M70 24V35" stroke="#ddb77c" stroke-width="1.4" />
+
+            <rect x="9" y="13" width="66" height="11" rx="2" fill="#34503f" stroke="#2a1a1f" stroke-width="1.2" />
+
+            <path d="M17 13V24M67 13V24" stroke="#ddb77c" stroke-width="1.4" />
+
+            <rect x="6" y="2" width="62" height="11" rx="2" fill="#a1493f" stroke="#2a1a1f" stroke-width="1.2" />
+
+            <path d="M14 2V13M60 2V13" stroke="#e8c27c" stroke-width="1.4" />
+
+            <path d="M68 3.5H72V11.5H68" fill="#f1ddbf" stroke="#2a1a1f" stroke-width="1" />
+
+        </symbol>
+
+
+        <!-- Small pumpkin -->
+
+        <symbol id="decor-pumpkin" viewBox="0 0 56 42">
+
+            <path d="M28 10C29 6 31 3 35 2" fill="none" stroke="#5a4a24" stroke-width="3" stroke-linecap="round" />
+
+            <ellipse cx="17" cy="26" rx="13" ry="14" fill="#c9692f" stroke="#5a2a12" stroke-width="1.3" />
+
+            <ellipse cx="39" cy="26" rx="13" ry="14" fill="#c9692f" stroke="#5a2a12" stroke-width="1.3" />
+
+            <ellipse cx="28" cy="26" rx="11" ry="15" fill="#dd7d3b" stroke="#5a2a12" stroke-width="1.3" />
+
+            <path d="M24 16C23 22 23 30 24 37" fill="none" stroke="#f0a064" stroke-width="1.6" stroke-linecap="round" opacity="0.7" />
+
+        </symbol>
+
+
+        <!-- Crescent moon charm (wall) -->
+
+        <symbol id="decor-starcharm" viewBox="0 0 40 52">
+
+            <ellipse cx="20" cy="26" rx="18" ry="24" fill="url(#giltFrame)" stroke="#3a2518" stroke-width="1.3" />
+
+            <ellipse cx="20" cy="26" rx="13" ry="19" fill="#2d2a44" stroke="#3a2518" stroke-width="1" />
+
+            <path d="M20 14L22 23L30 26L22 29L20 38L18 29L10 26L18 23Z" fill="#ffd98a" />
+
+            <circle cx="20" cy="26" r="9" fill="url(#warmGlow)" />
+
+        </symbol>
+
+
+        <!-- Framed painting: castle at dusk -->
+
+        <symbol id="frame-castle" viewBox="0 0 130 100">
+
+            <rect x="2" y="2" width="126" height="96" rx="3" fill="url(#giltFrame)" stroke="#3a2518" stroke-width="1.5" />
+
+            <rect x="10" y="10" width="110" height="80" fill="url(#duskSky)" stroke="#3a2518" stroke-width="1.2" />
+
+            <circle cx="96" cy="30" r="7" fill="#fbe2b0" opacity="0.9" />
+
+            <path d="M10 74C30 64 52 70 66 66C84 61 104 66 120 62V90H10Z" fill="#5e6c4b" />
+
+            <path d="M50 70V42L55 32L60 42V50H68V36L74 24L80 36V50H86V70Z" fill="#4c3f6e" stroke="#2c2340" stroke-width="1" stroke-linejoin="round" />
+
+            <path d="M58 56H61V61H58ZM71 44H74V49H71ZM76 58H79V63H76Z" fill="#ffd27a" />
+
+            <path d="M18 80L24 60L30 80ZM28 82L34 64L40 82ZM96 82L102 62L108 82ZM106 84L111 68L116 84Z" fill="#34503f" />
+
+            <path d="M10 84C40 78 90 80 120 84V90H10Z" fill="#3f5a3f" />
+
+        </symbol>
+
+
+        <!-- Oval portrait of a ghost -->
+
+        <symbol id="frame-ghost" viewBox="0 0 70 90">
+
+            <ellipse cx="35" cy="45" rx="32" ry="42" fill="url(#giltFrame)" stroke="#3a2518" stroke-width="1.5" />
+
+            <ellipse cx="35" cy="45" rx="24" ry="33" fill="#6c5a86" stroke="#3a2518" stroke-width="1.2" />
+
+            <path d="M21 72C21 46 25 28 35 28C45 28 49 46 49 72L45 68L41 73L37 68L33 73L29 68L25 73Z" fill="#f4eee4" stroke="#6d6252" stroke-width="1" stroke-linejoin="round" />
+
+            <ellipse cx="31" cy="42" rx="1.8" ry="2.5" fill="#2f2528" />
+
+            <ellipse cx="39" cy="42" rx="1.8" ry="2.5" fill="#2f2528" />
+
+            <path d="M31 51L35 49L39 51L35 53Z" fill="#d9824a" />
+
+        </symbol>
+
+
+        <!-- Botanical print with a moth -->
+
+        <symbol id="frame-moth" viewBox="0 0 80 100">
+
+            <rect x="2" y="2" width="76" height="96" rx="2" fill="#6e4029" stroke="#2c180f" stroke-width="1.5" />
+
+            <rect x="9" y="9" width="62" height="82" fill="#efe2c8" stroke="#2c180f" stroke-width="1" />
+
+            <path d="M40 22V78" stroke="#6d5a3e" stroke-width="1.2" />
+
+            <path d="M40 30C44 24 50 24 52 28M40 30C36 24 30 24 28 28" fill="none" stroke="#6d5a3e" stroke-width="1" />
+
+            <path d="M40 50C30 36 18 38 18 48C18 56 30 58 40 52Z" fill="#7d5a86" stroke="#3c2a40" stroke-width="1" />
+
+            <path d="M40 50C50 36 62 38 62 48C62 56 50 58 40 52Z" fill="#7d5a86" stroke="#3c2a40" stroke-width="1" />
+
+            <path d="M40 54C32 58 26 66 30 70C34 72 38 64 40 56Z" fill="#b67c8f" stroke="#3c2a40" stroke-width="1" />
+
+            <path d="M40 54C48 58 54 66 50 70C46 72 42 64 40 56Z" fill="#b67c8f" stroke="#3c2a40" stroke-width="1" />
+
+            <circle cx="27" cy="47" r="2.6" fill="#e8c27c" />
+
+            <circle cx="53" cy="47" r="2.6" fill="#e8c27c" />
+
+            <path d="M30 80C34 76 38 78 40 82C42 78 46 76 50 80" fill="none" stroke="#6d8c4a" stroke-width="1.4" />
+
+        </symbol>
+
+
+
+        <!-- Illustrated book cover: moonlit mountains and pines -->
+
+        <symbol id="cover-art" viewBox="0 0 200 300">
+
+            <defs>
+                <!-- The sky is the book's own colour (a fill, which
+                     each <use> can set) with a dusk glow laid over it. -->
+                <linearGradient id="coverDusk" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#1c1024" stop-opacity="0.25" />
+                    <stop offset="45%" stop-color="#8a5d8f" stop-opacity="0.12" />
+                    <stop offset="100%" stop-color="#e9a7b4" stop-opacity="0.6" />
+                </linearGradient>
+            </defs>
+
+            <rect width="200" height="300" rx="6" fill="#2a1e33" />
+
+            <rect x="8" y="8" width="184" height="284" rx="4" style="fill: var(--cover-sky, #3b2d5c)" />
+
+            <rect x="8" y="8" width="184" height="284" rx="4" fill="url(#coverDusk)" />
+
+            <circle cx="100" cy="58" r="30" fill="url(#warmGlow)" opacity="0.6" />
+
+            <path d="M98 38A18 18 0 1 0 113 70A14 14 0 0 1 98 38Z" fill="#f6d98f" />
+
+            <g fill="#f6d98f">
+                <path d="M42 50L44 57L51 59L44 61L42 68L40 61L33 59L40 57Z" />
+                <path d="M156 44L157.5 49L162.5 50.5L157.5 52L156 57L154.5 52L149.5 50.5L154.5 49Z" />
+                <path d="M150 132L151.5 137L156.5 138.5L151.5 140L150 145L148.5 140L143.5 138.5L148.5 137Z" />
+                <circle cx="66" cy="34" r="1.6" />
+                <circle cx="136" cy="92" r="1.4" />
+                <circle cx="56" cy="130" r="1.4" />
+            </g>
+
+            <g fill="#e9a7b4" opacity="0.9">
+                <path d="M14 168C14 160 24 156 30 162C34 154 46 156 46 166C52 166 54 174 46 176H14Z" />
+                <path d="M150 158C150 150 160 146 166 152C170 144 182 146 182 156C188 156 190 164 182 166H150Z" />
+            </g>
+
+            <path d="M8 222L58 166L84 190L118 150L158 196L192 172V300H8Z" fill="#8f79ad" />
+
+            <path d="M118 150L106 164L114 162L118 170L124 162L132 166Z" fill="#f3e6ee" />
+
+            <path d="M58 166L50 176L57 174L60 180L65 174Z" fill="#f3e6ee" />
+
+            <path d="M8 238L46 206L80 228L112 196L150 232L192 208V300H8Z" fill="#5d4a7c" />
+
+            <ellipse cx="100" cy="252" rx="70" ry="12" fill="#a9c1c4" opacity="0.75" />
+
+            <g fill="#2f4a3c">
+                <path d="M14 290L28 226L42 290Z" />
+                <path d="M32 292L46 238L60 292Z" />
+                <path d="M146 292L160 232L174 292Z" />
+                <path d="M164 290L178 222L192 290Z" />
+                <path d="M60 296L70 262L80 296Z" />
+                <path d="M122 296L132 258L142 296Z" />
+            </g>
+
+            <rect x="8" y="284" width="184" height="8" fill="#243a2f" />
+
+            <path d="M22 290V56C22 26 58 14 100 14C142 14 178 26 178 56V290" fill="none" stroke="#e2b76c" stroke-width="2" />
+
+            <g fill="#e9a7b4" stroke="#a45f6c" stroke-width="0.8">
+                <circle cx="22" cy="96" r="4" />
+                <circle cx="178" cy="120" r="4" />
+                <circle cx="22" cy="200" r="3.6" />
+                <circle cx="178" cy="226" r="3.6" />
+                <circle cx="48" cy="22" r="3.4" />
+                <circle cx="152" cy="22" r="3.4" />
+            </g>
+
+            <g fill="#8aa35a">
+                <ellipse cx="17" cy="80" rx="3" ry="6" transform="rotate(-25 17 80)" />
+                <ellipse cx="27" cy="112" rx="3" ry="6" transform="rotate(25 27 112)" />
+                <ellipse cx="183" cy="104" rx="3" ry="6" transform="rotate(25 183 104)" />
+                <ellipse cx="173" cy="140" rx="3" ry="6" transform="rotate(-25 173 140)" />
+                <ellipse cx="17" cy="182" rx="3" ry="6" transform="rotate(-25 17 182)" />
+                <ellipse cx="183" cy="244" rx="3" ry="6" transform="rotate(25 183 244)" />
+                <ellipse cx="68" cy="18" rx="3" ry="6" transform="rotate(70 68 18)" />
+                <ellipse cx="132" cy="18" rx="3" ry="6" transform="rotate(-70 132 18)" />
+            </g>
+
+        </symbol>
+
+
+        <!-- ===================== SPINE MOTIFS ===================== -->
+
+        <symbol id="motif-moon" viewBox="0 0 20 20">
+            <path d="M12.5 2.5A7.5 7.5 0 1 0 17.5 15A6 6 0 0 1 12.5 2.5Z" fill="currentColor" />
+        </symbol>
+
+        <symbol id="motif-star" viewBox="0 0 20 20">
+            <path d="M10 0.5L12.1 7.9L19.5 10L12.1 12.1L10 19.5L7.9 12.1L0.5 10L7.9 7.9Z" fill="currentColor" />
+        </symbol>
+
+        <symbol id="motif-cat" viewBox="0 0 20 28">
+            <path d="M5 27C3.5 20 4.5 14 7.5 12.5L6.5 5L9.3 8.2H11.7L14.5 5L13.5 12.5C16.5 14 17.5 20 16 27Z" fill="currentColor" />
+            <path d="M15.5 25C19.5 25 20 20 17.5 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        </symbol>
+
+        <symbol id="motif-potion" viewBox="0 0 20 26">
+            <path d="M8 1H12V7C16.5 8.8 18.5 12.5 18.5 16.5A8.5 8.5 0 0 1 1.5 16.5C1.5 12.5 3.5 8.8 8 7Z" fill="currentColor" />
+            <path d="M3.2 17.5Q10 14.5 16.8 17.5A7 7 0 0 1 3.2 17.5Z" fill="#d9657a" />
+        </symbol>
+
+        <symbol id="motif-sprig" viewBox="0 0 20 40">
+            <path d="M10 39V3" fill="none" stroke="currentColor" stroke-width="1.3" />
+            <path d="M10 33C5 32 3 28 4 25C8 26 10 29 10 33ZM10 33C15 32 17 28 16 25C12 26 10 29 10 33ZM10 23C5.5 22 3.5 18.5 4.5 15.5C8 16.5 10 19 10 23ZM10 23C14.5 22 16.5 18.5 15.5 15.5C12 16.5 10 19 10 23ZM10 13C6.5 12 5 9 6 6.5C9 7.5 10 10 10 13ZM10 13C13.5 12 15 9 14 6.5C11 7.5 10 10 10 13Z" fill="currentColor" />
+            <circle cx="10" cy="3" r="1.8" fill="currentColor" />
+        </symbol>
+
+        <symbol id="motif-flower" viewBox="0 0 20 20">
+            <path d="M10 2.5C12 2.5 12.5 5 10 8C7.5 5 8 2.5 10 2.5ZM17.3 7.6C17.9 9.5 15.7 10.8 12 10.1C13.6 6.7 16.7 5.7 17.3 7.6ZM14.5 16.1C12.9 17.3 11 15.6 10.6 11.9C14.3 12.4 16.1 14.9 14.5 16.1ZM5.5 16.1C3.9 14.9 5.7 12.4 9.4 11.9C9 15.6 7.1 17.3 5.5 16.1ZM2.7 7.6C3.3 5.7 6.4 6.7 8 10.1C4.3 10.8 2.1 9.5 2.7 7.6Z" fill="currentColor" />
+            <circle cx="10" cy="10" r="1.8" fill="currentColor" />
+        </symbol>
+
+        <symbol id="motif-key" viewBox="0 0 16 40">
+            <path fill-rule="evenodd" d="M8 1A5 5 0 1 1 8 11A5 5 0 1 1 8 1ZM8 4A2 2 0 1 0 8 8A2 2 0 1 0 8 4Z" fill="currentColor" />
+            <path d="M7 11H9V38H7ZM9 30H13V32.5H9ZM9 34.5H12V37H9Z" fill="currentColor" />
+        </symbol>
+
+        <symbol id="motif-skull" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M3 9C3 4.5 6.3 1.5 10 1.5C13.7 1.5 17 4.5 17 9C17 11.5 15.5 12.5 15 14V17H5V14C4.5 12.5 3 11.5 3 9ZM7 7.5A2 2.2 0 1 0 7 11.9A2 2.2 0 1 0 7 7.5ZM13 7.5A2 2.2 0 1 0 13 11.9A2 2.2 0 1 0 13 7.5ZM10 11.5L9 13.5H11Z" fill="currentColor" />
+        </symbol>
+
+        <symbol id="motif-crow" viewBox="0 0 24 22">
+            <path d="M3 15C2 10 6 6 11 6C12.5 3 16 2 18 3.5L22.5 4.8L18.5 6.2C19 10 18 13.5 15 15.5C12.5 17.2 8.5 17.5 6 17L1 20.5L3 16Z" fill="currentColor" />
+            <path d="M10 17L9.5 21M12.5 17L13 21" fill="none" stroke="currentColor" stroke-width="1.1" />
+        </symbol>
+
+        <symbol id="motif-mushroom" viewBox="0 0 20 20">
+            <path d="M2 10C2 5 5.5 2 10 2C14.5 2 18 5 18 10Z M7.5 10H12.5V17C12.5 18 11.5 18.5 10 18.5C8.5 18.5 7.5 18 7.5 17Z" fill="currentColor" />
+        </symbol>
+
+        <symbol id="motif-heart" viewBox="0 0 20 20">
+            <path d="M10 18C2 12.5 1.5 6.5 4.6 4C6.8 2.3 9.2 3.6 10 5.5C10.8 3.6 13.2 2.3 15.4 4C18.5 6.5 18 12.5 10 18Z" fill="currentColor" />
+        </symbol>
+
+        <symbol id="motif-butterfly" viewBox="0 0 24 20">
+            <path d="M12 9C8 2 1.5 1.5 1.5 6.5C1.5 10 6 11 12 10ZM12 9C16 2 22.5 1.5 22.5 6.5C22.5 10 18 11 12 10ZM12 11C8 11 3.5 14 5.5 17.5C7.5 19.5 10.5 15 12 12ZM12 11C16 11 20.5 14 18.5 17.5C16.5 19.5 13.5 15 12 12Z" fill="currentColor" />
+            <path d="M12 6V16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+        </symbol>
+
+        <symbol id="motif-castle" viewBox="0 0 24 26">
+            <path d="M2 25V13L4.5 7L7 13V16H9V9L12 1.5L15 9V16H17V13L19.5 7L22 13V25Z" fill="currentColor" />
+        </symbol>
+
+        <symbol id="motif-candle" viewBox="0 0 14 28">
+            <path d="M7 1C9.5 4.5 9.5 8 7 10C4.5 8 4.5 4.5 7 1Z" fill="currentColor" />
+            <path d="M3.5 11.5H10.5V27H3.5Z" fill="currentColor" />
+        </symbol>
+
+        <symbol id="motif-feather" viewBox="0 0 16 34">
+            <path d="M13.5 1C5 4 2 13 3 24C8 20 13 12 13.5 1Z" fill="currentColor" />
+            <path d="M12 3L2 33" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+        </symbol>
+
+        <symbol id="motif-eye" viewBox="0 0 24 16">
+            <path fill-rule="evenodd" d="M1 8C5 2.5 19 2.5 23 8C19 13.5 5 13.5 1 8ZM12 4.5A3.5 3.5 0 1 0 12 11.5A3.5 3.5 0 1 0 12 4.5Z" fill="currentColor" />
+            <circle cx="12" cy="8" r="1.6" fill="currentColor" />
+        </symbol>
+
+        <symbol id="motif-fleur" viewBox="0 0 20 26">
+            <path d="M10 1C13 5 13 10 10 14C7 10 7 5 10 1ZM10 14C8 8 2 7 1.5 11C1 14 4 15.5 6 13.5C5 15.5 7 16.5 10 15ZM10 14C12 8 18 7 18.5 11C19 14 16 15.5 14 13.5C15 15.5 13 16.5 10 15ZM5 16.5H15V18.5H5ZM9 18.5H11V25L10 25.5L9 25Z" fill="currentColor" />
+        </symbol>
+
+        <symbol id="motif-diamond" viewBox="0 0 20 28">
+            <path fill-rule="evenodd" d="M10 1L19 14L10 27L1 14ZM10 7L15 14L10 21L5 14Z" fill="currentColor" />
+            <circle cx="10" cy="14" r="2" fill="currentColor" />
+        </symbol>
+
+    <symbol id="motif-moth" viewBox="0 0 24 22">
+        <path d="M12 8C9 2 2 1 1.5 6C1 10 6 12 11.5 10.5ZM12 8C15 2 22 1 22.5 6C23 10 18 12 12.5 10.5ZM11.5 12C7 12 3 15 4.5 19C6 21 9.5 17.5 11.5 13.5ZM12.5 12C17 12 21 15 19.5 19C18 21 14.5 17.5 12.5 13.5Z" fill="currentColor" />
+        <path d="M12 5.5V17M10 5L8.5 2.5M14 5L15.5 2.5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+    </symbol>
+
+    <symbol id="motif-teacup" viewBox="0 0 24 22">
+        <path d="M3 8H18C18 14 15 18 10.5 18C6 18 3 14 3 8Z" fill="currentColor" />
+        <path d="M17.5 9.5C21.5 9 22 14.5 16.5 15" fill="none" stroke="currentColor" stroke-width="1.6" />
+        <path d="M1 20H21" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        <path d="M8 6C6.5 4.5 9 3.5 7.8 1.5M12 6C10.5 4.5 13 3.5 11.8 1.5" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" />
+    </symbol>
+
+    <symbol id="motif-house" viewBox="0 0 22 24">
+        <path fill-rule="evenodd" d="M2 12L11 3L20 12V23H2ZM8.5 23V16.5A2.5 2.5 0 0 1 13.5 16.5V23ZM5 13H8V10H5Z" fill="currentColor" />
+        <path d="M15 6V2.5H17.5V8.5" fill="currentColor" />
+    </symbol>
+
+    <symbol id="motif-bird" viewBox="0 0 26 20">
+        <path d="M4 12C4 7 8 4 13 5C15 2 19 2 21 4L25 5L21 6.5C21.5 11 18 15.5 12 16L6 19L7.5 15C5 14.5 4 13.5 4 12Z" fill="currentColor" />
+        <path d="M8 10C11 8.5 14 9 16 11.5" fill="none" stroke="currentColor" stroke-width="0" />
+    </symbol>
+
+    <symbol id="motif-lantern" viewBox="0 0 16 28">
+        <path d="M8 0.5A2 2 0 1 1 8 4.5A2 2 0 1 1 8 0.5Z" fill="none" stroke="currentColor" stroke-width="1.2" />
+        <path fill-rule="evenodd" d="M3 7L8 4.5L13 7V8.5H14V10H2V8.5H3ZM3 10H13V21H3ZM5.5 12V19H10.5V12Z" fill="currentColor" />
+        <path d="M2 21H14L12.5 25H3.5Z" fill="currentColor" />
+        <ellipse cx="8" cy="15.5" rx="1.4" ry="2.4" fill="currentColor" />
+    </symbol>
+
+        <symbol id="motif-leafvine" viewBox="0 0 16 60">
+            <path d="M8 59C4 50 12 42 8 33C4 24 12 16 8 1" fill="none" stroke="currentColor" stroke-width="1.2" />
+            <path d="M9 52C13 52 15 49 14.5 46C11 46.5 9.5 49 9 52ZM7 42C3 42 1 39 1.5 36C5 36.5 6.5 39 7 42ZM9 30C13 30 15 27 14.5 24C11 24.5 9.5 27 9 30ZM7 19C3 19 1 16 1.5 13C5 13.5 6.5 16 7 19ZM9 9C12.5 9 14 6.5 13.5 4C10.5 4.5 9.5 6.5 9 9Z" fill="currentColor" />
+        </symbol>
+
+    
+
+    <defs>
+
+        <clipPath id="starHalfClip">
+            <rect x="0" y="0" width="16" height="32" />
+        </clipPath>
+
+        <linearGradient id="seaGlobe" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#8fb0b4" />
+            <stop offset="100%" stop-color="#3f6570" />
+        </linearGradient>
+
+        <linearGradient id="crystalFace" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#d9c2ea" />
+            <stop offset="100%" stop-color="#7d5aa0" />
+        </linearGradient>
+
+    </defs>
+
+
+    <!-- ===================== INTERFACE ART ===================== -->
+
+    <!-- Search: brass magnifying glass -->
+
+    <symbol id="ui-search" viewBox="0 0 32 32">
+        <path d="M19.5 21.5L26 28A2.1 2.1 0 0 0 29 25L22.5 18.5Z" fill="#8a5636" stroke="#2a1a1f" stroke-width="1.3" stroke-linejoin="round" />
+        <circle cx="13" cy="13" r="10" fill="url(#brassBody)" stroke="#2a1a1f" stroke-width="1.3" />
+        <circle cx="13" cy="13" r="7" fill="#d6e8ec" stroke="#2a1a1f" stroke-width="1" />
+        <path d="M8.6 11.4A4.9 4.9 0 0 1 12 8.2" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" opacity="0.9" />
+        <path d="M17 16.5L17.5 18L19 18.5L17.5 19L17 20.5L16.5 19L15 18.5L16.5 18Z" fill="#f3cb79" />
+    </symbol>
+
+    <!-- Envelope with a wax seal -->
+
+    <symbol id="ui-mail" viewBox="0 0 32 32">
+        <rect x="3" y="7" width="26" height="19" rx="2.2" fill="#f3e2c7" stroke="#2a1a1f" stroke-width="1.3" />
+        <path d="M4 25L12.8 16.8M28 25L19.2 16.8" fill="none" stroke="#c9a784" stroke-width="1.1" />
+        <path d="M3.6 8.2L16 18L28.4 8.2" fill="none" stroke="#9c7a5a" stroke-width="1.3" stroke-linejoin="round" />
+        <circle cx="16" cy="18" r="3.4" fill="#a1493f" stroke="#2a1a1f" stroke-width="1" />
+        <path d="M14.8 17.2A1.6 1.6 0 0 1 16.6 16.3" fill="none" stroke="#e08a80" stroke-width="0.9" stroke-linecap="round" />
+    </symbol>
+
+    <!-- Brass padlock -->
+
+    <symbol id="ui-lock" viewBox="0 0 32 32">
+        <path d="M10 15V10.5A6 6 0 0 1 22 10.5V15" fill="none" stroke="#2a1a1f" stroke-width="4.6" />
+        <path d="M10 15V10.5A6 6 0 0 1 22 10.5V15" fill="none" stroke="#c9954f" stroke-width="2.4" />
+        <rect x="6.5" y="14" width="19" height="14" rx="3" fill="url(#brassBody)" stroke="#2a1a1f" stroke-width="1.3" />
+        <path d="M16 18.2A2 2 0 0 1 17.1 21.9L17.6 25H14.4L14.9 21.9A2 2 0 0 1 16 18.2Z" fill="#3a2518" />
+        <path d="M9 16.5H23" stroke="#f6dca4" stroke-width="1" opacity="0.8" />
+    </symbol>
+
+    <!-- Cameo silhouette -->
+
+    <symbol id="ui-user" viewBox="0 0 32 32">
+        <ellipse cx="16" cy="16" rx="12" ry="14" fill="url(#giltFrame)" stroke="#2a1a1f" stroke-width="1.3" />
+        <ellipse cx="16" cy="16" rx="9" ry="11" fill="#efdccf" stroke="#2a1a1f" stroke-width="0.9" />
+        <path d="M16 8.5A3.8 3.8 0 1 1 16 16.1A3.8 3.8 0 1 1 16 8.5ZM9 24.5C9.5 20 12.5 17.8 16 17.8C19.5 17.8 22.5 20 23 24.5C21 26.3 18.6 27 16 27C13.4 27 11 26.3 9 24.5Z" fill="#6e4258" />
+    </symbol>
+
+    <!-- Quill -->
+
+    <symbol id="ui-quill" viewBox="0 0 32 32">
+        <path d="M28 3C19 5 12.5 12 10.5 22.5C15.5 18.5 23 12.5 28 3Z" fill="#f4e6d2" stroke="#2a1a1f" stroke-width="1.2" stroke-linejoin="round" />
+        <path d="M26 6.5L21.8 8.6M24 10.4L18.6 12.7M21.4 14.2L15.8 16.6" fill="none" stroke="#c9ab8a" stroke-width="0.9" />
+        <path d="M28 3L7.5 27" fill="none" stroke="#2a1a1f" stroke-width="1.3" stroke-linecap="round" />
+        <path d="M7.5 27L5.5 29.5" stroke="#3a2518" stroke-width="2" stroke-linecap="round" />
+        <circle cx="5" cy="29.8" r="1.4" fill="#6e4258" />
+    </symbol>
+
+    <!-- Little brass bin -->
+
+    <symbol id="ui-trash" viewBox="0 0 32 32">
+        <path d="M8 11H24L22.4 28.5H9.6Z" fill="url(#brassBody)" stroke="#2a1a1f" stroke-width="1.3" stroke-linejoin="round" />
+        <path d="M12.2 13.5L12.8 26M16 13.5V26M19.8 13.5L19.2 26" stroke="#7a5228" stroke-width="1.1" stroke-linecap="round" />
+        <rect x="6" y="7.5" width="20" height="3.6" rx="1.6" fill="#a36b3a" stroke="#2a1a1f" stroke-width="1.2" />
+        <rect x="13" y="4.5" width="6" height="3" rx="1.2" fill="#a36b3a" stroke="#2a1a1f" stroke-width="1.1" />
+    </symbol>
+
+    <!-- Add: golden plus -->
+
+    <symbol id="ui-add" viewBox="0 0 32 32">
+        <path d="M13.5 8.5A2.5 2.5 0 0 1 18.5 8.5V13.5H23.5A2.5 2.5 0 0 1 23.5 18.5H18.5V23.5A2.5 2.5 0 0 1 13.5 23.5V18.5H8.5A2.5 2.5 0 0 1 8.5 13.5H13.5Z" fill="#f3cb79" stroke="#2a1a1f" stroke-width="1.2" stroke-linejoin="round" />
+        <path d="M15 9.5V14" stroke="#fff3c9" stroke-width="1.1" stroke-linecap="round" />
+    </symbol>
+
+    <!-- Close -->
+
+    <symbol id="ui-close" viewBox="0 0 32 32">
+        <path transform="rotate(45 16 16)" d="M14.2 6.5A1.8 1.8 0 0 1 17.8 6.5V14.2H25.5A1.8 1.8 0 0 1 25.5 17.8H17.8V25.5A1.8 1.8 0 0 1 14.2 25.5V17.8H6.5A1.8 1.8 0 0 1 6.5 14.2H14.2Z" fill="currentColor" />
+    </symbol>
+
+    <!-- Alert: red wax seal -->
+
+    <symbol id="ui-alert" viewBox="0 0 32 32">
+        <path d="M16 3L19 5.2L22.6 4.6L24.2 7.8L27.4 9.4L26.8 13L29 16L26.8 19L27.4 22.6L24.2 24.2L22.6 27.4L19 26.8L16 29L13 26.8L9.4 27.4L7.8 24.2L4.6 22.6L5.2 19L3 16L5.2 13L4.6 9.4L7.8 7.8L9.4 4.6L13 5.2Z" fill="#a1493f" stroke="#2a1a1f" stroke-width="1.2" stroke-linejoin="round" />
+        <circle cx="16" cy="16" r="8.5" fill="none" stroke="#6e2b24" stroke-width="1" />
+        <rect x="14.6" y="9.5" width="2.8" height="8.5" rx="1.4" fill="#f6e0c4" />
+        <circle cx="16" cy="21.6" r="1.7" fill="#f6e0c4" />
+    </symbol>
+
+    <!-- Sparkle -->
+
+    <symbol id="ui-sparkle" viewBox="0 0 32 32">
+        <path d="M14 3L16.6 11.4L25 14L16.6 16.6L14 25L11.4 16.6L3 14L11.4 11.4Z" fill="#f3cb79" stroke="#7a5520" stroke-width="1.1" stroke-linejoin="round" />
+        <path d="M25 20L26 23L29 24L26 25L25 28L24 25L21 24L24 23Z" fill="#f6dfb4" stroke="#7a5520" stroke-width="0.9" stroke-linejoin="round" />
+    </symbol>
+
+    <!-- Hearts for favourites -->
+
+    <symbol id="ui-heart" viewBox="0 0 32 32">
+        <path d="M16 28C5 20.5 3.5 12.5 7.4 8.4C10.4 5.3 14.3 6.5 16 9.6C17.7 6.5 21.6 5.3 24.6 8.4C28.5 12.5 27 20.5 16 28Z" fill="#d86a82" stroke="#2a1a1f" stroke-width="1.3" stroke-linejoin="round" />
+        <path d="M9.4 10.8A3.4 3.4 0 0 1 12.6 9.6" fill="none" stroke="#f6c6cf" stroke-width="1.6" stroke-linecap="round" />
+    </symbol>
+
+    <symbol id="ui-heart-empty" viewBox="0 0 32 32">
+        <path d="M16 28C5 20.5 3.5 12.5 7.4 8.4C10.4 5.3 14.3 6.5 16 9.6C17.7 6.5 21.6 5.3 24.6 8.4C28.5 12.5 27 20.5 16 28Z" fill="#f3e6d6" stroke="#9c7a6a" stroke-width="1.4" stroke-linejoin="round" />
+    </symbol>
+
+    <!-- Rating stars -->
+
+    <symbol id="ui-star" viewBox="0 0 32 32">
+        <path d="M16 3.5L19.6 11.4L28.2 12.3L21.8 18.1L23.6 26.6L16 22.3L8.4 26.6L10.2 18.1L3.8 12.3L12.4 11.4Z" fill="#e9b949" stroke="#7a5520" stroke-width="1.3" stroke-linejoin="round" />
+        <path d="M13 12.6L15.4 7.6" stroke="#fff0bf" stroke-width="1.4" stroke-linecap="round" />
+    </symbol>
+
+    <symbol id="ui-star-empty" viewBox="0 0 32 32">
+        <path d="M16 3.5L19.6 11.4L28.2 12.3L21.8 18.1L23.6 26.6L16 22.3L8.4 26.6L10.2 18.1L3.8 12.3L12.4 11.4Z" fill="#efe2c8" stroke="#b09878" stroke-width="1.3" stroke-linejoin="round" />
+    </symbol>
+
+    <symbol id="ui-star-half" viewBox="0 0 32 32">
+        <path d="M16 3.5L19.6 11.4L28.2 12.3L21.8 18.1L23.6 26.6L16 22.3L8.4 26.6L10.2 18.1L3.8 12.3L12.4 11.4Z" fill="#efe2c8" stroke="#b09878" stroke-width="1.3" stroke-linejoin="round" />
+        <path clip-path="url(#starHalfClip)" d="M16 3.5L19.6 11.4L28.2 12.3L21.8 18.1L23.6 26.6L16 22.3L8.4 26.6L10.2 18.1L3.8 12.3L12.4 11.4Z" fill="#e9b949" stroke="#7a5520" stroke-width="1.3" stroke-linejoin="round" />
+    </symbol>
+
+    <!-- Moon for the theme button -->
+
+    <symbol id="ui-moon" viewBox="0 0 32 32">
+        <path d="M19 4A12 12 0 1 0 28 22A9.5 9.5 0 0 1 19 4Z" fill="#f3cb79" stroke="#7a5520" stroke-width="1.2" stroke-linejoin="round" />
+        <circle cx="12.5" cy="15" r="1.6" fill="#e0a94f" />
+        <circle cx="15" cy="22" r="1.1" fill="#e0a94f" />
+        <path d="M25 5L25.8 7.2L28 8L25.8 8.8L25 11L24.2 8.8L22 8L24.2 7.2Z" fill="#f6dfb4" />
+    </symbol>
+
+    <!-- Chevrons -->
+
+    <symbol id="ui-chevron-left" viewBox="0 0 32 32">
+        <path d="M19.3 5.8A2 2 0 0 1 22.1 8.6L14.7 16L22.1 23.4A2 2 0 0 1 19.3 26.2L10.5 17.4A2 2 0 0 1 10.5 14.6Z" fill="currentColor" />
+    </symbol>
+
+    <symbol id="ui-chevron-right" viewBox="0 0 32 32">
+        <path d="M12.7 5.8A2 2 0 0 0 9.9 8.6L17.3 16L9.9 23.4A2 2 0 0 0 12.7 26.2L21.5 17.4A2 2 0 0 0 21.5 14.6Z" fill="currentColor" />
+    </symbol>
+
+    <symbol id="ui-chevron-down" viewBox="0 0 32 32">
+        <path d="M5.8 12.7A2 2 0 0 1 8.6 9.9L16 17.3L23.4 9.9A2 2 0 0 1 26.2 12.7L17.4 21.5A2 2 0 0 1 14.6 21.5Z" fill="currentColor" />
+    </symbol>
+
+    <!-- Upload a cover: gilt frame with an arrow badge -->
+
+    <symbol id="ui-upload" viewBox="0 0 32 32">
+        <rect x="4" y="3.5" width="17" height="23" rx="1.6" fill="url(#giltFrame)" stroke="#2a1a1f" stroke-width="1.2" />
+        <rect x="7" y="6.5" width="11" height="17" fill="#5d4a7c" stroke="#2a1a1f" stroke-width="0.9" />
+        <path d="M13 9A3 3 0 1 0 15 13.8A2.4 2.4 0 0 1 13 9Z" fill="#f3cb79" />
+        <path d="M7 23.5L10.5 18L13 21L15.5 17L18 23.5Z" fill="#8f79ad" />
+        <circle cx="24" cy="23" r="6.2" fill="#7f8c6a" stroke="#2a1a1f" stroke-width="1.2" />
+        <path d="M24 19.4L27 22.6H25.2V26.2H22.8V22.6H21Z" fill="#f6e6cf" />
+    </symbol>
+
+    <!-- Export: scroll with a down arrow -->
+
+    <symbol id="ui-download" viewBox="0 0 32 32">
+        <path d="M7 5H22C24 5 25 6.2 25 8V24H10C8 24 7 25 7 27Z" fill="#f3e2c7" stroke="#2a1a1f" stroke-width="1.2" stroke-linejoin="round" />
+        <path d="M7 5C5 5 4 6.2 4 8V9H7M7 27C7 28.8 8.2 29.5 10 29.5H25C26.8 29.5 28 28.5 28 27V24H10" fill="#e3cca6" stroke="#2a1a1f" stroke-width="1.2" stroke-linejoin="round" />
+        <path d="M11 10H21M11 13.5H19" stroke="#b69572" stroke-width="1.1" stroke-linecap="round" />
+        <circle cx="17" cy="19.5" r="4.4" fill="#6e4258" stroke="#2a1a1f" stroke-width="1" />
+        <path d="M17 22.2L19.2 19.8H17.9V17H16.1V19.8H14.8Z" fill="#f6e6cf" />
+    </symbol>
+
+    <!-- Import: scroll with an up arrow -->
+
+    <symbol id="ui-import" viewBox="0 0 32 32">
+        <path d="M7 5H22C24 5 25 6.2 25 8V24H10C8 24 7 25 7 27Z" fill="#f3e2c7" stroke="#2a1a1f" stroke-width="1.2" stroke-linejoin="round" />
+        <path d="M7 5C5 5 4 6.2 4 8V9H7M7 27C7 28.8 8.2 29.5 10 29.5H25C26.8 29.5 28 28.5 28 27V24H10" fill="#e3cca6" stroke="#2a1a1f" stroke-width="1.2" stroke-linejoin="round" />
+        <path d="M11 10H21M11 13.5H19" stroke="#b69572" stroke-width="1.1" stroke-linecap="round" />
+        <circle cx="17" cy="19.5" r="4.4" fill="#34503f" stroke="#2a1a1f" stroke-width="1" />
+        <path d="M17 16.8L19.2 19.2H17.9V22H16.1V19.2H14.8Z" fill="#f6e6cf" />
+    </symbol>
+
+    <!-- Move between shelves -->
+
+    <symbol id="ui-move" viewBox="0 0 32 32">
+        <rect x="4" y="8" width="7" height="19" rx="1.2" fill="#6e4258" stroke="#2a1a1f" stroke-width="1.2" />
+        <path d="M4.5 11H10.5M4.5 24H10.5" stroke="#e8c27c" stroke-width="1.1" />
+        <rect x="11.5" y="5.5" width="7" height="21.5" rx="1.2" fill="#3c5446" stroke="#2a1a1f" stroke-width="1.2" />
+        <path d="M12 8.5H18M12 24H18" stroke="#e8c27c" stroke-width="1.1" />
+        <circle cx="24" cy="22.5" r="6.2" fill="#d8aa66" stroke="#2a1a1f" stroke-width="1.2" />
+        <path d="M27.4 22.5L24.2 25.6V23.7H20.6V21.3H24.2V19.4Z" fill="#3b2418" />
+    </symbol>
+
+    <!-- Drag handle -->
+
+    <symbol id="ui-grip" viewBox="0 0 32 32">
+        <g fill="currentColor">
+            <circle cx="12" cy="8" r="2.2" />
+            <circle cx="20" cy="8" r="2.2" />
+            <circle cx="12" cy="16" r="2.2" />
+            <circle cx="20" cy="16" r="2.2" />
+            <circle cx="12" cy="24" r="2.2" />
+            <circle cx="20" cy="24" r="2.2" />
+        </g>
+    </symbol>
+
+    <!-- Decorate: paintbrush -->
+
+    <symbol id="ui-brush" viewBox="0 0 32 32">
+        <path d="M27.5 3.5C29 5 21 14.5 17.5 18L14 14.5C17.5 11 26 2 27.5 3.5Z" fill="#8a5636" stroke="#2a1a1f" stroke-width="1.2" stroke-linejoin="round" />
+        <path d="M13.2 13.8L18.2 18.8L16.4 20.6L11.4 15.6Z" fill="url(#brassBody)" stroke="#2a1a1f" stroke-width="1.1" stroke-linejoin="round" />
+        <path d="M11.2 15.8L16.2 20.8C14 25 9.5 28.5 3.5 28.5C4 23 7 18 11.2 15.8Z" fill="#d98a9a" stroke="#2a1a1f" stroke-width="1.2" stroke-linejoin="round" />
+        <path d="M6.5 25.5C8.5 24.5 10 23 11.2 21" fill="none" stroke="#f6c6cf" stroke-width="1.2" stroke-linecap="round" />
+    </symbol>
+
+    <!-- Sign out: arched door -->
+
+    <symbol id="ui-door" viewBox="0 0 32 32">
+        <path d="M6 29V11A8 8 0 0 1 22 11V29Z" fill="#6e4029" stroke="#2a1a1f" stroke-width="1.2" />
+        <path d="M8.5 29V11.5A5.5 5.5 0 0 1 19.5 11.5V29Z" fill="#a1603f" stroke="#2a1a1f" stroke-width="1" />
+        <path d="M14 7V29" stroke="#7a4430" stroke-width="1" />
+        <circle cx="17.2" cy="19" r="1.2" fill="#e8c27c" />
+        <path d="M22 18H29M26 15L29 18L26 21" fill="none" stroke="#d8aa66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </symbol>
+
+    <!-- Open book (open the journal) -->
+
+    <symbol id="ui-open-book" viewBox="0 0 32 32">
+        <path d="M3 25.5Q16 22.5 29 25.5V27.5Q16 24.8 3 27.5Z" fill="#6e4258" stroke="#2a1a1f" stroke-width="1" />
+        <path d="M16 25C12 22.5 7.5 22.5 4 24V9C7.5 7.5 12 7.5 16 10Z" fill="#f7ead7" stroke="#2a1a1f" stroke-width="1.2" stroke-linejoin="round" />
+        <path d="M16 25C20 22.5 24.5 22.5 28 24V9C24.5 7.5 20 7.5 16 10Z" fill="#efdfc3" stroke="#2a1a1f" stroke-width="1.2" stroke-linejoin="round" />
+        <path d="M6.5 12.5C9 11.6 11.5 11.6 13.5 12.6M6.5 16C9 15.1 11.5 15.1 13.5 16.1M18.5 12.6C20.5 11.6 23 11.6 25.5 12.5M18.5 16.1C20.5 15.1 23 15.1 25.5 16" fill="none" stroke="#c9a784" stroke-width="0.9" />
+    </symbol>
+
+    <!-- Edit: small pencil -->
+
+    <symbol id="ui-pencil" viewBox="0 0 32 32">
+        <path d="M22.5 4.5L27.5 9.5L12 25L6 26L7 20Z" fill="#e8b24e" stroke="#2a1a1f" stroke-width="1.2" stroke-linejoin="round" />
+        <path d="M20 7L25 12" stroke="#2a1a1f" stroke-width="1.1" />
+        <path d="M22.5 4.5L25 2A1.8 1.8 0 0 1 27.6 2L30 4.4A1.8 1.8 0 0 1 30 7L27.5 9.5Z" fill="#d98a9a" stroke="#2a1a1f" stroke-width="1.2" stroke-linejoin="round" />
+        <path d="M7 20L12 25L6 26Z" fill="#f3e2c7" stroke="#2a1a1f" stroke-width="1" stroke-linejoin="round" />
+        <path d="M6 26L7.8 25.6L6.4 24.2Z" fill="#2a1a1f" />
+    </symbol>
+
+
+    <!-- ===================== JOURNAL TABS ===================== -->
+
+    <symbol id="tab-overview" viewBox="0 0 32 32">
+        <rect x="7" y="3.5" width="18" height="25" rx="2" fill="#6e4258" stroke="#2a1a1f" stroke-width="1.2" />
+        <rect x="7.6" y="4.1" width="3.4" height="23.8" fill="#553146" />
+        <rect x="13" y="8" width="9" height="7" rx="1" fill="#f3e2c7" stroke="#2a1a1f" stroke-width="0.9" />
+        <path d="M14.8 10.5H20.2M15.5 12.6H19.5" stroke="#9c7a5a" stroke-width="0.9" />
+        <path d="M17.5 19L18.4 21.1L20.5 22L18.4 22.9L17.5 25L16.6 22.9L14.5 22L16.6 21.1Z" fill="#f3cb79" />
+    </symbol>
+
+    <symbol id="tab-notes" viewBox="0 0 32 32">
+        <path d="M6 4H21L26 9V28H6Z" fill="#f7ead7" stroke="#2a1a1f" stroke-width="1.2" stroke-linejoin="round" />
+        <path d="M21 4V9H26" fill="#e3cca6" stroke="#2a1a1f" stroke-width="1.1" stroke-linejoin="round" />
+        <path d="M9.5 13H22.5M9.5 17H22.5M9.5 21H18" stroke="#b69572" stroke-width="1.1" stroke-linecap="round" />
+        <path d="M9 7.5H16" stroke="#c47f82" stroke-width="1.4" stroke-linecap="round" />
+    </symbol>
+
+    <symbol id="tab-quotes" viewBox="0 0 32 32">
+        <path d="M5 23C5 15 8 10 13.5 8.5L14.5 11C11.5 12 10 14 10 16.5H13.5V23Z" fill="#8d5a70" stroke="#2a1a1f" stroke-width="1.2" stroke-linejoin="round" />
+        <path d="M17 23C17 15 20 10 25.5 8.5L26.5 11C23.5 12 22 14 22 16.5H25.5V23Z" fill="#8d5a70" stroke="#2a1a1f" stroke-width="1.2" stroke-linejoin="round" />
+        <path d="M7 20.5C7 16 8.5 13 11 11.5M19 20.5C19 16 20.5 13 23 11.5" fill="none" stroke="#c796ac" stroke-width="1.1" stroke-linecap="round" />
+    </symbol>
+
+    <symbol id="tab-words" viewBox="0 0 32 32">
+        <rect x="3" y="9" width="14" height="15" rx="2" fill="#e3b77c" stroke="#2a1a1f" stroke-width="1.2" />
+        <rect x="15" y="12" width="14" height="15" rx="2" fill="#f1ddbf" stroke="#2a1a1f" stroke-width="1.2" />
+        <text x="10" y="21.5" text-anchor="middle" font-family="IM Fell English SC, Georgia, serif" font-size="12" fill="#3b2418">A</text>
+        <text x="22" y="24.5" text-anchor="middle" font-family="IM Fell English, Georgia, serif" font-size="12" font-style="italic" fill="#6e4258">a</text>
+    </symbol>
+
+    <symbol id="tab-thoughts" viewBox="0 0 32 32">
+        <path d="M9 21C4.5 21 3 17.5 5 15C3.5 11.5 7 8.5 10 10C11 6.5 16 5.5 18 8.5C20.5 6 25.5 7.5 25 11.5C29 12 29.5 17.5 26 19C26.5 22 22.5 23.5 20.5 21.5C18.5 23.5 14 23.5 13 21Z" fill="#f3e6ef" stroke="#2a1a1f" stroke-width="1.2" stroke-linejoin="round" />
+        <circle cx="8.5" cy="25" r="2" fill="#f3e6ef" stroke="#2a1a1f" stroke-width="1" />
+        <circle cx="5" cy="28.5" r="1.2" fill="#f3e6ef" stroke="#2a1a1f" stroke-width="0.9" />
+        <path d="M11 14.5L11.8 16.2L13.5 17L11.8 17.8L11 19.5L10.2 17.8L8.5 17L10.2 16.2Z" fill="#b893c4" />
+        <circle cx="19" cy="15" r="1.2" fill="#b893c4" />
+    </symbol>
+
+    <symbol id="tab-characters" viewBox="0 0 32 32">
+        <ellipse cx="16" cy="16" rx="11" ry="13" fill="url(#giltFrame)" stroke="#2a1a1f" stroke-width="1.2" />
+        <ellipse cx="16" cy="16" rx="8.2" ry="10.2" fill="#e9d6c8" stroke="#2a1a1f" stroke-width="0.9" />
+        <path d="M14.5 9C18.5 8.2 21 11 20.5 14C20.3 15.5 19.4 16.4 18.8 17L19.5 19.2L17.6 19.4C17.4 20.5 16.6 21.2 15.2 21V22.5C17.8 23 20.4 24.2 21.6 25.6C19.9 25.8 12 25.8 10 25C10.8 23.4 12.2 22.6 13.2 22.3V19.4C11.6 18 11 16.4 11.2 14C11.4 11.4 12.6 9.4 14.5 9Z" fill="#6e4258" />
+    </symbol>
+
+    <symbol id="tab-themes" viewBox="0 0 32 32">
+        <circle cx="16" cy="17" r="11" fill="url(#warmGlow)" />
+        <path d="M11 9L16 4L21 9Z" fill="#6e4a2a" stroke="#2a1a1f" stroke-width="1.1" stroke-linejoin="round" />
+        <rect x="9" y="9" width="14" height="2.6" rx="1" fill="url(#brassBody)" stroke="#2a1a1f" stroke-width="1" />
+        <rect x="11" y="11.6" width="10" height="13" fill="url(#lanternGlass)" stroke="#2a1a1f" stroke-width="1.1" />
+        <path d="M16 11.6V24.6M11 18H21" stroke="#5d3e22" stroke-width="1.1" />
+        <path d="M9 24.6H23L21.5 28H10.5Z" fill="url(#brassBody)" stroke="#2a1a1f" stroke-width="1.1" stroke-linejoin="round" />
+    </symbol>
+
+    <symbol id="tab-questions" viewBox="0 0 32 32">
+        <path d="M7 6H23C25 6 26 7.2 26 9V26H10C8 26 7 26.8 7 28.5Z" fill="#f3e2c7" stroke="#2a1a1f" stroke-width="1.2" stroke-linejoin="round" />
+        <path d="M7 6C5.2 6 4.5 7 4.5 8.5V10H7M7 28.5C7 29.8 8 30 9.5 30H25.5C27 30 28 29.2 28 28V26H10" fill="#e3cca6" stroke="#2a1a1f" stroke-width="1.1" stroke-linejoin="round" />
+        <path d="M13 12.5C13 10.3 14.6 9.2 16.5 9.2C18.6 9.2 20 10.5 20 12.3C20 14.5 17.3 14.9 17.3 17.4" fill="none" stroke="#6e4258" stroke-width="2.2" stroke-linecap="round" />
+        <circle cx="17.3" cy="21.4" r="1.5" fill="#6e4258" />
+    </symbol>
+
+    <symbol id="tab-review" viewBox="0 0 32 32">
+        <path d="M11 20L8 30L11 28.4L12.6 31L15.5 21.5ZM21 20L24 30L21 28.4L19.4 31L16.5 21.5Z" fill="#8d5a70" stroke="#2a1a1f" stroke-width="1" stroke-linejoin="round" />
+        <circle cx="16" cy="13.5" r="10.5" fill="#c47f82" stroke="#2a1a1f" stroke-width="1.2" />
+        <circle cx="16" cy="13.5" r="7" fill="#f3e2c7" stroke="#2a1a1f" stroke-width="0.9" />
+        <path d="M16 8.6L17.5 11.8L21 12.2L18.4 14.5L19.1 18L16 16.2L12.9 18L13.6 14.5L11 12.2L14.5 11.8Z" fill="#e9b949" stroke="#7a5520" stroke-width="0.8" stroke-linejoin="round" />
+    </symbol>
+
+
+    <!-- ===================== MORE DECOR ===================== -->
+
+    <!-- Sitting black cat, awake, tail curled around its paws -->
+
+    <symbol id="decor-cat-sitting" viewBox="0 0 80 104">
+        <path d="M56 94C72 92 76 74 68 64" fill="none" stroke="#0d0a0c" stroke-width="11" stroke-linecap="round" />
+        <path d="M56 94C72 92 76 74 68 64" fill="none" stroke="#1f181e" stroke-width="7.6" stroke-linecap="round" />
+        <path d="M21 96C14 80 16 60 29 51C34 48 46 48 51 51C64 60 66 80 59 96Z" fill="#1f181e" stroke="#0d0a0c" stroke-width="2.4" />
+        <path d="M33 60C30 70 30 82 33 92" fill="none" stroke="#3a2d3a" stroke-width="5" stroke-linecap="round" opacity="0.7" />
+        <path d="M52 55C58 62 60 72 59 82" fill="none" stroke="#5a4865" stroke-width="2.4" stroke-linecap="round" opacity="0.7" />
+        <path d="M24 36L21 11C21 9 23 8.5 24.5 9.8L38 22Z" fill="#1f181e" stroke="#0d0a0c" stroke-width="2.2" stroke-linejoin="round" />
+        <path d="M42 22L55.5 9.8C57 8.5 59 9 59 11L56 36Z" fill="#1f181e" stroke="#0d0a0c" stroke-width="2.2" stroke-linejoin="round" />
+        <path d="M26 29L24.5 15L34 23Z" fill="#6b4556" />
+        <path d="M46 23L55.5 15L54 29Z" fill="#6b4556" />
+        <path d="M20 40C19 27 28 19 40 19C52 19 61 27 60 40C59 51 51 58 40 58C29 58 21 51 20 40Z" fill="#1f181e" stroke="#0d0a0c" stroke-width="2.4" />
+        <path d="M27 26C31 22.5 35.5 21 40 21C45 21 49.5 22.5 53 26" fill="none" stroke="#5a4865" stroke-width="2.2" stroke-linecap="round" opacity="0.8" />
+        <ellipse cx="31.5" cy="39" rx="4.6" ry="5" fill="#e8c27c" />
+        <ellipse cx="48.5" cy="39" rx="4.6" ry="5" fill="#e8c27c" />
+        <ellipse cx="31.5" cy="39.5" rx="1.5" ry="4" fill="#1a1216" />
+        <ellipse cx="48.5" cy="39.5" rx="1.5" ry="4" fill="#1a1216" />
+        <circle cx="33" cy="37" r="1.1" fill="#fff8e6" />
+        <circle cx="50" cy="37" r="1.1" fill="#fff8e6" />
+        <path d="M37.5 46H42.5L40 49Z" fill="#c28595" />
+        <path d="M40 49Q37.5 52 35 50.8M40 49Q42.5 52 45 50.8" fill="none" stroke="#7c6070" stroke-width="1.2" stroke-linecap="round" />
+        <path d="M30 47L14 45M30 49.5L15 52M50 47L66 45M50 49.5L65 52" fill="none" stroke="#b9a7b3" stroke-width="1" stroke-linecap="round" opacity="0.7" />
+        <ellipse cx="26.5" cy="46" rx="4" ry="2" fill="#b8798b" opacity="0.35" />
+        <ellipse cx="53.5" cy="46" rx="4" ry="2" fill="#b8798b" opacity="0.35" />
+        <ellipse cx="32" cy="96" rx="8" ry="5" fill="#1f181e" stroke="#0d0a0c" stroke-width="2" />
+        <ellipse cx="48" cy="96" rx="8" ry="5" fill="#1f181e" stroke="#0d0a0c" stroke-width="2" />
+        <path d="M59 96C66 97 64 102 52 101" fill="none" stroke="#0d0a0c" stroke-width="9" stroke-linecap="round" />
+        <path d="M59 96C66 97 64 102 52 101" fill="none" stroke="#1f181e" stroke-width="5.6" stroke-linecap="round" />
+    </symbol>
+
+    <!-- Little bat -->
+
+    <symbol id="decor-bat" viewBox="0 0 84 46">
+        <path d="M42 18C32 8 18 5 3 9C9 13 9 19 7 24C13 21 17 23 20 28C24 23 30 23 35 28Z" fill="#241c28" stroke="#0e0a10" stroke-width="1.6" stroke-linejoin="round" />
+        <path d="M42 18C52 8 66 5 81 9C75 13 75 19 77 24C71 21 67 23 64 28C60 23 54 23 49 28Z" fill="#241c28" stroke="#0e0a10" stroke-width="1.6" stroke-linejoin="round" />
+        <path d="M12 12C18 12 26 14 32 20M72 12C66 12 58 14 52 20" fill="none" stroke="#4a3b52" stroke-width="1.2" />
+        <ellipse cx="42" cy="26" rx="8" ry="10" fill="#241c28" stroke="#0e0a10" stroke-width="1.6" />
+        <path d="M36 16L35 8L40 13ZM48 16L49 8L44 13Z" fill="#241c28" stroke="#0e0a10" stroke-width="1.4" stroke-linejoin="round" />
+        <circle cx="42" cy="17.5" r="6.5" fill="#241c28" stroke="#0e0a10" stroke-width="1.6" />
+        <circle cx="39.5" cy="17" r="1.5" fill="#f3cb79" />
+        <circle cx="44.5" cy="17" r="1.5" fill="#f3cb79" />
+        <path d="M40.5 21.2L41.2 23L41.8 21.2M42.2 21.2L42.8 23L43.5 21.2" fill="#fff4e4" />
+    </symbol>
+
+    <!-- Toadstool cluster -->
+
+    <symbol id="decor-mushrooms" viewBox="0 0 64 52">
+        <path d="M4 50C4 42 14 38 32 38C50 38 60 42 60 50Z" fill="#5f7d45" stroke="#2f3f22" stroke-width="1.2" />
+        <path d="M24 46V26H32V46Z" fill="#f1e3cc" stroke="#4a3528" stroke-width="1.2" />
+        <path d="M12 28C12 12 44 12 44 28Z" fill="#c0453f" stroke="#5a1f1b" stroke-width="1.4" />
+        <circle cx="21" cy="21" r="2.4" fill="#fff4e4" />
+        <circle cx="30" cy="17.5" r="2" fill="#fff4e4" />
+        <circle cx="37" cy="23" r="1.8" fill="#fff4e4" />
+        <path d="M44 48V36H49V48Z" fill="#f1e3cc" stroke="#4a3528" stroke-width="1.1" />
+        <path d="M38 37C38 28 55 28 55 37Z" fill="#d9894a" stroke="#5a2f14" stroke-width="1.2" />
+        <circle cx="45" cy="33" r="1.3" fill="#fff4e4" />
+        <path d="M11 48V40H14.5V48Z" fill="#f1e3cc" stroke="#4a3528" stroke-width="1" />
+        <path d="M6.5 41C6.5 35 19 35 19 41Z" fill="#b98ab2" stroke="#4a2a44" stroke-width="1.1" />
+    </symbol>
+
+    <!-- Amethyst crystal cluster -->
+
+    <symbol id="decor-crystal" viewBox="0 0 48 60">
+        <path d="M4 56C4 50 12 47 24 47C36 47 44 50 44 56Z" fill="#7a6a5a" stroke="#3a2d22" stroke-width="1.2" />
+        <path d="M20 50L16 22L22 8L28 22L26 50Z" fill="url(#crystalFace)" stroke="#3c2a50" stroke-width="1.3" stroke-linejoin="round" />
+        <path d="M22 8L22 50" stroke="#f1e3ff" stroke-width="1" opacity="0.6" />
+        <path d="M10 51L7 33L12 25L17 34L16 51Z" fill="#b596d0" stroke="#3c2a50" stroke-width="1.2" stroke-linejoin="round" />
+        <path d="M29 51L31 30L37 22L41 33L36 51Z" fill="#9b78bb" stroke="#3c2a50" stroke-width="1.2" stroke-linejoin="round" />
+        <path d="M18.5 22L21 12" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" opacity="0.8" />
+        <path d="M40 10L41 13L44 14L41 15L40 18L39 15L36 14L39 13Z" fill="#f3cb79" />
+    </symbol>
+
+    <!-- Globe on a brass stand -->
+
+    <symbol id="decor-globe" viewBox="0 0 56 76">
+        <path d="M14 72H42L38 66H18Z" fill="url(#brassBody)" stroke="#3a2518" stroke-width="1.2" stroke-linejoin="round" />
+        <path d="M28 66V58" stroke="#8e6232" stroke-width="3" />
+        <path d="M8 30A20 20 0 0 0 48 30" fill="none" stroke="#8e6232" stroke-width="3.4" transform="rotate(-20 28 30)" />
+        <circle cx="28" cy="30" r="17" fill="url(#seaGlobe)" stroke="#2a3a40" stroke-width="1.3" />
+        <path d="M17 22C21 19 25 21 24 25C23 29 18 28 17 32C16 35 13 33 13 29C13 26 14 24 17 22ZM31 17C35 16 40 19 40 23C38 26 34 24 32 27C30 30 33 34 30 36C27 37 27 32 28 29C29 25 26 20 31 17ZM35 38C38 37 41 39 39 42C37 44 34 42 35 38Z" fill="#9fb07a" stroke="#4a5a3a" stroke-width="0.8" />
+        <path d="M17 20A14 14 0 0 1 24 15" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" opacity="0.6" />
+        <circle cx="28" cy="10" r="2" fill="url(#brassBody)" stroke="#3a2518" stroke-width="0.9" />
+    </symbol>
+
+    <!-- Little wooden sign -->
+
+    <symbol id="decor-sign" viewBox="0 0 84 72">
+        <rect x="38" y="36" width="8" height="34" rx="1.5" fill="#6e4029" stroke="#2c180f" stroke-width="1.2" />
+        <rect x="4" y="6" width="76" height="34" rx="5" fill="#b07a4f" stroke="#2c180f" stroke-width="1.4" />
+        <rect x="8" y="10" width="68" height="26" rx="3" fill="#e8cfa2" stroke="#8a5a36" stroke-width="1" />
+        <circle cx="11" cy="13" r="1.3" fill="#5a3522" />
+        <circle cx="73" cy="13" r="1.3" fill="#5a3522" />
+        <text x="42" y="22" text-anchor="middle" font-family="IM Fell English SC, Georgia, serif" font-size="10.5" fill="#3b2418">Quiet, please</text>
+        <text x="42" y="32" text-anchor="middle" font-family="IM Fell English, Georgia, serif" font-style="italic" font-size="8.5" fill="#6e4258">reading in progress</text>
+        <path d="M6 8C14 2 22 6 28 4" fill="none" stroke="#4a5a2c" stroke-width="1.4" />
+        <path d="M14 4.5C11 1.5 14 0 16 2.5ZM22 5.5C24 2 27 3 26 5.5Z" fill="#6d8c4a" stroke="#2f3f22" stroke-width="0.7" />
+    </symbol>
+
+    <!-- Vase of flowers -->
+
+    <symbol id="decor-flowers" viewBox="0 0 54 78">
+        <path d="M27 44C24 32 16 24 10 22M27 44C28 30 30 20 28 10M27 44C32 32 40 26 46 24" fill="none" stroke="#4f6a3c" stroke-width="1.6" />
+        <path d="M18 30C13 28 11 24 12.5 21C17 23 18 26 18 30ZM35 30C40 28 42 24 40.5 21C36 23 35 26 35 30Z" fill="#6d8c4a" stroke="#2f3f22" stroke-width="0.8" />
+        <g stroke="#7a3e48" stroke-width="0.9">
+            <circle cx="10" cy="21" r="5.5" fill="#e9a3ac" />
+            <circle cx="28" cy="10" r="6" fill="#f2c4c8" />
+            <circle cx="46" cy="23" r="5.5" fill="#f6e0c4" />
+            <circle cx="20" cy="13" r="4" fill="#c9a0d6" />
+            <circle cx="38" cy="14" r="3.6" fill="#e9a3ac" />
+        </g>
+        <g fill="#f6d27a">
+            <circle cx="10" cy="21" r="1.8" />
+            <circle cx="28" cy="10" r="2" />
+            <circle cx="46" cy="23" r="1.8" />
+            <circle cx="20" cy="13" r="1.3" />
+            <circle cx="38" cy="14" r="1.2" />
+        </g>
+        <path d="M17 44H37C37 46 36 48 38 52C42 58 40 70 34 74H20C14 70 12 58 16 52C18 48 17 46 17 44Z" fill="#5d7f86" stroke="#233a40" stroke-width="1.3" stroke-linejoin="round" />
+        <path d="M16.5 58H37.5" stroke="#e8c27c" stroke-width="2" />
+        <path d="M20 54C19 60 20 66 22 70" fill="none" stroke="#a9c6cc" stroke-width="1.6" stroke-linecap="round" opacity="0.7" />
+    </symbol>
+
+
+    <!-- ===================== BRAND ===================== -->
+
+    <!-- Crest: an open book beneath a crescent moon -->
+
+    <symbol id="brand-crest" viewBox="0 0 140 80">
+        <path d="M70 6A12 12 0 1 0 82 24A9.5 9.5 0 0 1 70 6Z" fill="#f3cb79" stroke="#7a5520" stroke-width="1" />
+        <path d="M52 12L53.5 16.5L58 18L53.5 19.5L52 24L50.5 19.5L46 18L50.5 16.5ZM92 10L93 13L96 14L93 15L92 18L91 15L88 14L91 13Z" fill="#f6dfb4" />
+        <path d="M30 70Q70 60 110 70V74Q70 64 30 74Z" fill="#6e4258" stroke="#2a1a1f" stroke-width="1.2" />
+        <path d="M70 68C58 60 45 60 34 64V40C45 36 58 36 70 44Z" fill="#f7ead7" stroke="#2a1a1f" stroke-width="1.4" stroke-linejoin="round" />
+        <path d="M70 68C82 60 95 60 106 64V40C95 36 82 36 70 44Z" fill="#efdfc3" stroke="#2a1a1f" stroke-width="1.4" stroke-linejoin="round" />
+        <path d="M40 46C48 43.5 56 43.5 64 47M40 52C48 49.5 56 49.5 64 53M76 47C84 43.5 92 43.5 100 46M76 53C84 49.5 92 49.5 100 52" fill="none" stroke="#c9a784" stroke-width="1.1" />
+        <path d="M24 60C16 56 12 48 14 40M116 60C124 56 128 48 126 40" fill="none" stroke="#86a058" stroke-width="1.4" />
+        <path d="M16 50C11 48 10 44 11.5 42C15 43.5 16 46.5 16 50ZM124 50C129 48 130 44 128.5 42C125 43.5 124 46.5 124 50ZM18 58C13 58 11 55 12 52.5C16 53 17.5 55.5 18 58ZM122 58C127 58 129 55 128 52.5C124 53 122.5 55.5 122 58Z" fill="#6d8c4a" stroke="#2f3f22" stroke-width="0.7" />
+    </symbol>
+
+    <!-- The full logo: cat and tea on the Novellow sign, books beneath -->
+
+    <symbol id="brand-logo" viewBox="0 0 240 210">
+        <path d="M205 6A12 12 0 1 0 219 24A9.5 9.5 0 0 1 205 6Z" fill="#f3cb79" />
+        <path d="M178 12L179.5 16.5L184 18L179.5 19.5L178 24L176.5 19.5L172 18L176.5 16.5Z" fill="#f3cb79" />
+        <path d="M26 20L27 23L30 24L27 25L26 28L25 25L22 24L25 23Z" fill="#f6dfb4" />
+        <circle cx="150" cy="10" r="1.6" fill="#f6dfb4" />
+        <circle cx="44" cy="8" r="1.3" fill="#f6dfb4" />
+        <g transform="translate(0 9)">
+            <path d="M188 44C184 38 192 35 188 28M198 44C194 38 202 35 198 29" fill="none" stroke="#f6e6cf" stroke-width="2" stroke-linecap="round" />
+            <path d="M206 54C216 54 216 66 205 67" fill="none" stroke="#2a1620" stroke-width="5.5" />
+            <path d="M206 54C216 54 216 66 205 67" fill="none" stroke="#f3e2c7" stroke-width="2.6" />
+            <path d="M176 48H208C208 62 201 71 192 71C183 71 176 62 176 48Z" fill="#f3e2c7" stroke="#2a1620" stroke-width="2.2" />
+            <ellipse cx="192" cy="48" rx="16" ry="3.4" fill="#6e4029" stroke="#2a1620" stroke-width="1.8" />
+            <path d="M190.5 55.5A5 5 0 1 0 195 63A4 4 0 0 1 190.5 55.5Z" fill="#8d4a5d" />
+        </g>
+        <use href="#scene-cat" x="22" y="19" width="120" height="87" />
+        <path d="M10 82Q120 64 230 82L226 142Q120 156 14 142Z" fill="#3b2130" stroke="#1a0e14" stroke-width="3" stroke-linejoin="round" />
+        <path d="M18 88Q120 72 222 88L219 136Q120 149 21 136Z" fill="none" stroke="#c99a70" stroke-opacity="0.55" stroke-width="1.2" />
+        <text x="120" y="131" text-anchor="middle" font-family="Berkshire Swash, Georgia, serif" font-size="50" fill="#f7e7cf" stroke="#24121b" stroke-width="7" stroke-linejoin="round" paint-order="stroke">Novellow</text>
+        <path d="M44 142C84 134 156 134 196 142" fill="none" stroke="#f6e6cf" stroke-width="2.4" stroke-linecap="round" />
+        <path d="M196 142C204 144 206 138 201 136M44 142C36 144 34 138 39 136" fill="none" stroke="#f6e6cf" stroke-width="2" stroke-linecap="round" />
+        <use href="#decor-stack" x="44" y="150" width="92" height="40" />
+        <path d="M166 160C162 154 170 151 166 144" fill="none" stroke="#f6e6cf" stroke-width="1.8" stroke-linecap="round" />
+        <ellipse cx="170" cy="188" rx="26" ry="5" fill="#f3e2c7" stroke="#2a1620" stroke-width="2" />
+        <path d="M184 170C192 170 192 181 183 182" fill="none" stroke="#2a1620" stroke-width="5" />
+        <path d="M184 170C192 170 192 181 183 182" fill="none" stroke="#f3e2c7" stroke-width="2.4" />
+        <path d="M154 165H186C186 178 179 186 170 186C161 186 154 178 154 165Z" fill="#f3e2c7" stroke="#2a1620" stroke-width="2" />
+        <path d="M170 170L173 175L170 180L167 175Z" fill="#c9804f" />
+        <ellipse cx="170" cy="165" rx="16" ry="3" fill="#6e4029" stroke="#2a1620" stroke-width="1.6" />
+    </symbol>
+
+    <!-- Collapsed-sidebar emblem: the cat asleep on books -->
+
+    <symbol id="brand-emblem" viewBox="0 0 120 90">
+        <use href="#decor-stack" x="12" y="54" width="96" height="34" />
+        <use href="#scene-cat" x="4" y="0" width="100" height="72" />
+    </symbol>
+
+    <!-- ===================== SCENES ===================== -->
+
+    <symbol id="scene-window" viewBox="0 0 440 330">
+
+        <defs>
+
+        <clipPath id="windowGlass">
+            <path d="M40 330V152A180 126 0 0 1 400 152V330Z" />
+        </clipPath>
+
+        <linearGradient id="nightSky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" style="stop-color: var(--night-top, #171c42)" />
+            <stop offset="50%" style="stop-color: var(--night-middle, #2c3066)" />
+            <stop offset="100%" style="stop-color: var(--night-bottom, #5c4b7e)" />
+        </linearGradient>
+
+        <radialGradient id="moonHalo" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fff1c0" stop-opacity="0.55" />
+            <stop offset="100%" stop-color="#fff1c0" stop-opacity="0" />
+        </radialGradient>
+
+        </defs>
+
+        <path d="M10 330V148A210 150 0 0 1 430 148V330Z" fill="#3a2116" stroke="#22120b" stroke-width="2" />
+
+        <path d="M24 330V150A196 138 0 0 1 416 150V330Z" fill="#6e4029" stroke="#2a160e" stroke-width="1.5" />
+
+        <g clip-path="url(#windowGlass)">
+
+        <rect x="40" y="20" width="360" height="310" fill="url(#nightSky)" />
+
+        <circle cx="292" cy="92" r="80" fill="url(#moonHalo)" />
+
+        <path d="M300 56A36 36 0 1 0 326 118A28.5 28.5 0 0 1 300 56Z" fill="#fbe7a8" />
+
+        <g fill="#fbe7c0">
+            <circle cx="96" cy="120" r="1.6" />
+            <circle cx="132" cy="84" r="1.2" />
+            <circle cx="170" cy="112" r="1.8" />
+            <circle cx="214" cy="70" r="1.3" />
+            <circle cx="236" cy="136" r="1.4" />
+            <circle cx="352" cy="150" r="1.6" />
+            <circle cx="374" cy="112" r="1.2" />
+            <circle cx="120" cy="158" r="1.1" />
+            <circle cx="330" cy="176" r="1.2" />
+        </g>
+
+        <use href="#motif-star" x="140" y="120" width="12" height="12" color="#f8dc9a" />
+        <use href="#motif-star" x="250" y="150" width="10" height="10" color="#f8dc9a" />
+        <use href="#motif-star" x="360" y="80" width="9" height="9" color="#f8dc9a" />
+        <use href="#motif-star" x="84" y="180" width="8" height="8" color="#f8dc9a" />
+
+        <path d="M40 116C80 118 112 96 150 74M88 112C100 94 118 84 132 70M40 160C66 150 90 156 112 172" fill="none" stroke="#1d2046" stroke-width="5" stroke-linecap="round" />
+
+        <g fill="#6a3f47" opacity="0.85">
+            <ellipse cx="128" cy="78" rx="4" ry="2.4" transform="rotate(-30 128 78)" />
+            <ellipse cx="146" cy="70" rx="3.6" ry="2.2" transform="rotate(20 146 70)" />
+            <ellipse cx="104" cy="100" rx="3.6" ry="2.2" transform="rotate(-40 104 100)" />
+            <ellipse cx="72" cy="112" rx="3.6" ry="2.2" transform="rotate(10 72 112)" />
+            <ellipse cx="100" cy="164" rx="3.6" ry="2.2" transform="rotate(30 100 164)" />
+        </g>
+
+        <path d="M40 256C110 228 190 244 250 230C320 214 370 234 400 224V330H40Z" fill="#282a55" />
+
+        <g fill="#191b3a">
+            <path d="M186 262V182L193 166V152L201 130L209 152V166L216 182V262Z" />
+            <path d="M220 262V198L229 182L238 198V262Z" />
+            <path d="M104 262V222L119 204L134 222V262Z" />
+            <path d="M136 262V230L149 216L162 230V262Z" />
+            <path d="M246 262V216L259 198L272 216V262Z" />
+            <path d="M276 262V226L292 208L308 226V262Z" />
+            <path d="M312 262V232L325 218L338 232V262Z" />
+            <path d="M52 262L64 214L76 262ZM66 262L80 204L94 262ZM344 262L358 210L372 262ZM362 262L378 200L394 262Z" />
+        </g>
+
+        <g fill="#ffcf6e">
+            <rect x="115" y="228" width="4" height="6" />
+            <rect x="125" y="240" width="4" height="6" />
+            <rect x="147" y="236" width="4" height="5" />
+            <rect x="197" y="176" width="4" height="7" />
+            <rect x="198" y="204" width="4" height="7" />
+            <rect x="227" y="210" width="4" height="6" />
+            <rect x="256" y="226" width="4" height="6" />
+            <rect x="288" y="234" width="4" height="6" />
+            <rect x="298" y="244" width="4" height="5" />
+            <rect x="322" y="242" width="4" height="5" />
+        </g>
+
+        <rect x="40" y="260" width="360" height="70" fill="#15172e" />
+
+        <g fill="none" stroke="#fff" stroke-opacity="0.07" stroke-width="16">
+            <path d="M60 330L200 40" />
+            <path d="M250 330L390 40" />
+        </g>
+
+        <g fill="#6e4029" stroke="#2a160e" stroke-width="1.5">
+            <rect x="156" y="0" width="10" height="330" />
+            <rect x="274" y="0" width="10" height="330" />
+            <rect x="40" y="186" width="360" height="10" />
+        </g>
+
+        </g>
+
+        <path d="M40 152A180 126 0 0 1 400 152" fill="none" stroke="#2a160e" stroke-width="2" />
+
+        
+    </symbol>
+
+    <symbol id="scene-lamp" viewBox="0 0 210 250">
+
+        <defs>
+
+        <clipPath id="lampDome">
+            <path d="M18 190C18 132 58 90 105 90C152 90 192 132 192 190Z" />
+        </clipPath>
+
+        <radialGradient id="lampAmber" cx="50%" cy="95%" r="85%">
+            <stop offset="0%" stop-color="#fff4c6" />
+            <stop offset="45%" stop-color="#f8d98a" />
+            <stop offset="100%" stop-color="#dd9e4d" />
+        </radialGradient>
+
+        </defs>
+
+        <ellipse cx="105" cy="196" rx="104" ry="54" fill="url(#warmGlow)" style="display: var(--glow-display, inline)">
+            <animate attributeName="opacity" values="0.82;1;0.82" dur="6s" repeatCount="indefinite" />
+        </ellipse>
+
+        <path d="M105 0V74" stroke="#8e6232" stroke-width="3.4" stroke-dasharray="5 3" />
+
+        <path d="M105 2V74" stroke="#c9954f" stroke-width="1.4" stroke-dasharray="3 5" />
+
+        <path d="M94 74H116L111 86H99Z" fill="url(#brassBody)" stroke="#3a2518" stroke-width="1.2" />
+
+        <circle cx="105" cy="89" r="5" fill="url(#brassBody)" stroke="#3a2518" stroke-width="1.2" />
+
+        <g clip-path="url(#lampDome)">
+
+        <rect x="0" y="80" width="210" height="120" fill="url(#lampAmber)" />
+
+        <path d="M0 80H210V122C160 112 50 112 0 122Z" fill="#e9a0a6" />
+
+        <path d="M0 176C60 170 150 170 210 176V200H0Z" fill="#9cb163" />
+
+        <g stroke="#4a3524" stroke-width="1.6" fill="#8aa35a">
+            <path d="M40 150C30 138 36 126 48 128C50 140 46 146 40 150Z" />
+            <path d="M84 144C76 132 84 122 94 126C94 136 90 142 84 144Z" />
+            <path d="M128 144C136 132 128 122 118 126C118 136 122 142 128 144Z" />
+            <path d="M170 150C180 138 174 126 162 128C160 140 164 146 170 150Z" />
+        </g>
+
+        <g stroke="#4a3524" stroke-width="1.5" fill="#efa6b3">
+            <ellipse cx="58" cy="148" rx="7" ry="11" />
+            <ellipse cx="58" cy="148" rx="7" ry="11" transform="rotate(72 58 160)" />
+            <ellipse cx="58" cy="148" rx="7" ry="11" transform="rotate(144 58 160)" />
+            <ellipse cx="58" cy="148" rx="7" ry="11" transform="rotate(216 58 160)" />
+            <ellipse cx="58" cy="148" rx="7" ry="11" transform="rotate(288 58 160)" />
+            <ellipse cx="105" cy="136" rx="8" ry="12" />
+            <ellipse cx="105" cy="136" rx="8" ry="12" transform="rotate(72 105 150)" />
+            <ellipse cx="105" cy="136" rx="8" ry="12" transform="rotate(144 105 150)" />
+            <ellipse cx="105" cy="136" rx="8" ry="12" transform="rotate(216 105 150)" />
+            <ellipse cx="105" cy="136" rx="8" ry="12" transform="rotate(288 105 150)" />
+            <ellipse cx="152" cy="148" rx="7" ry="11" />
+            <ellipse cx="152" cy="148" rx="7" ry="11" transform="rotate(72 152 160)" />
+            <ellipse cx="152" cy="148" rx="7" ry="11" transform="rotate(144 152 160)" />
+            <ellipse cx="152" cy="148" rx="7" ry="11" transform="rotate(216 152 160)" />
+            <ellipse cx="152" cy="148" rx="7" ry="11" transform="rotate(288 152 160)" />
+        </g>
+
+        <g fill="#f6d27a" stroke="#4a3524" stroke-width="1.2">
+            <circle cx="58" cy="160" r="4" />
+            <circle cx="105" cy="150" r="4.5" />
+            <circle cx="152" cy="160" r="4" />
+        </g>
+
+        <g fill="none" stroke="#4a3524" stroke-width="1.6">
+            <path d="M105 90L18 190M105 90L60 190M105 90L150 190M105 90L192 190M105 90V124" />
+            <path d="M10 122C60 112 150 112 200 122M6 176C60 170 150 170 204 176" />
+        </g>
+
+        </g>
+
+        <path d="M18 190C18 132 58 90 105 90C152 90 192 132 192 190" fill="none" stroke="#3a2518" stroke-width="2.4" />
+
+        <path d="M18 190Q29 204 40 190Q51 204 62 190Q73 204 84 190Q95 204 106 190Q117 204 128 190Q139 204 150 190Q161 204 172 190Q183 204 192 190" fill="#f3c46e" stroke="#3a2518" stroke-width="2" />
+
+        <ellipse cx="105" cy="192" rx="38" ry="7" fill="#fff4c6" opacity="0.9" />
+
+        
+    </symbol>
+
+    <symbol id="scene-armchair" viewBox="0 0 260 280">
+
+        <defs>
+
+        <pattern id="plaid" width="24" height="24" patternUnits="userSpaceOnUse" patternTransform="rotate(-12)">
+            <rect width="24" height="24" fill="#8b3a4f" />
+            <rect y="0" width="24" height="7" fill="#6a2a3d" />
+            <rect x="0" y="0" width="7" height="24" fill="#6a2a3d" fill-opacity="0.8" />
+            <rect y="15" width="24" height="2" fill="#e7b6a6" fill-opacity="0.7" />
+            <rect x="15" y="0" width="2" height="24" fill="#e7b6a6" fill-opacity="0.6" />
+        </pattern>
+
+        <linearGradient id="velvet" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" style="stop-color: var(--chair-light, #a0455c)" />
+            <stop offset="60%" style="stop-color: var(--chair-mid, #7a2c42)" />
+            <stop offset="100%" style="stop-color: var(--chair-dark, #561c2d)" />
+        </linearGradient>
+
+        </defs>
+
+        <path d="M58 262L52 280M202 262L208 280" stroke="#2c180f" stroke-width="7" stroke-linecap="round" />
+
+        <path d="M40 60C40 18 220 18 220 60V190H40Z" fill="url(#velvet)" stroke="#2e0f18" stroke-width="2.5" />
+
+        <g fill="#3f1422">
+        <circle cx="80" cy="62" r="3" />
+        <circle cx="130" cy="52" r="3" />
+        <circle cx="180" cy="62" r="3" />
+        <circle cx="105" cy="95" r="3" />
+        <circle cx="155" cy="95" r="3" />
+        <circle cx="80" cy="128" r="3" />
+        <circle cx="130" cy="128" r="3" />
+        <circle cx="180" cy="128" r="3" />
+        </g>
+
+        <path d="M80 62L105 95L130 52M130 52L155 95L180 62M80 128L105 95L130 128L155 95L180 128" fill="none" stroke="#5a1e30" stroke-width="1.4" />
+
+        <path d="M20 84C18 60 38 50 48 70V200H22Z" fill="#8a3449" stroke="#2e0f18" stroke-width="2.2" />
+
+        <path d="M240 84C242 60 222 50 212 70V200H238Z" fill="#6f2639" stroke="#2e0f18" stroke-width="2.2" />
+
+        <path d="M50 178H210C220 178 222 204 210 208H50C38 204 40 178 50 178Z" fill="#9c4259" stroke="#2e0f18" stroke-width="2.2" />
+
+        <path d="M40 206H220V252C220 258 214 262 208 262H52C46 262 40 258 40 252Z" fill="#6f2639" stroke="#2e0f18" stroke-width="2.2" />
+
+        <path d="M46 250H214" stroke="#d8aa66" stroke-width="2" stroke-dasharray="1.5 3" />
+
+        <path d="M6 168C6 146 56 144 58 168V252H10Z" fill="url(#velvet)" stroke="#2e0f18" stroke-width="2.2" />
+
+        <ellipse cx="32" cy="168" rx="26" ry="14" fill="#9c4259" stroke="#2e0f18" stroke-width="2.2" />
+
+        <path d="M32 160C40 160 42 172 32 172C26 172 26 164 32 164" fill="none" stroke="#5a1e30" stroke-width="1.6" />
+
+        <path d="M254 168C254 146 204 144 202 168V252H250Z" fill="#6f2639" stroke="#2e0f18" stroke-width="2.2" />
+
+        <ellipse cx="228" cy="168" rx="26" ry="14" fill="#8a3449" stroke="#2e0f18" stroke-width="2.2" />
+
+        <path d="M186 30C214 34 228 60 232 96C238 140 246 180 250 214L214 222C210 186 202 150 190 118C178 86 170 56 186 30Z" fill="url(#plaid)" stroke="#2e0f18" stroke-width="2.2" stroke-linejoin="round" />
+
+        <path d="M214 222L250 214" stroke="#2e0f18" stroke-width="2" />
+
+        <g stroke="#d8aa66" stroke-width="2" stroke-linecap="round">
+        <path d="M218 222V234M224 221V233M230 220V232M236 219V231M242 217V229M248 216V228" />
+        </g>
+
+        <use href="#scene-cat" x="58" y="96" width="150" height="109" />
+
+        
+    </symbol>
+
+    <symbol id="scene-side-table" viewBox="0 0 170 210">
+
+        <path d="M30 150H140" stroke="#2c180f" stroke-width="0" />
+
+        <path d="M78 146V196M70 204C70 196 100 196 100 204" fill="none" stroke="#3a2016" stroke-width="10" stroke-linecap="round" />
+
+        <ellipse cx="85" cy="146" rx="78" ry="14" fill="#5a3322" stroke="#2a160e" stroke-width="2" />
+
+        <path d="M7 146V152C7 160 163 160 163 152V146" fill="#3f2317" stroke="#2a160e" stroke-width="2" />
+
+        <g stroke="#1f120c" stroke-width="1.6">
+        <rect x="22" y="116" width="124" height="26" rx="3" fill="#2f3552" />
+        <rect x="16" y="90" width="128" height="26" rx="3" fill="#2f5552" />
+        <rect x="26" y="64" width="116" height="26" rx="3" fill="#6a2a3d" />
+        </g>
+
+        <g fill="#f1ddbf" stroke="#1f120c" stroke-width="1">
+        <rect x="140" y="118" width="6" height="22" />
+        <rect x="138" y="92" width="6" height="22" />
+        <rect x="136" y="66" width="6" height="22" />
+        </g>
+
+        <g fill="#e8c27c" font-family="IM Fell English SC, Georgia, serif" font-size="13" letter-spacing="0.5">
+        <text x="84" y="82" text-anchor="middle">Good Books</text>
+        <text x="80" y="108" text-anchor="middle">Kinder People</text>
+        <text x="84" y="134" text-anchor="middle">Brighter Days</text>
+        </g>
+
+        <g>
+            <animate attributeName="opacity" values="0;0.9;0" dur="3.4s" repeatCount="indefinite" />
+            <animateTransform attributeName="transform" type="translate" values="0 3;0 -6" dur="3.4s" repeatCount="indefinite" />
+        <path d="M78 26C72 18 84 14 78 4" fill="none" stroke="#f6e6cf" stroke-width="2.2" stroke-linecap="round" />
+        <path d="M92 28C86 20 98 16 92 7" fill="none" stroke="#f6e6cf" stroke-width="2.2" stroke-linecap="round" />
+        </g>
+
+        <path d="M106 40C118 40 118 56 104 57" fill="none" stroke="#3a2518" stroke-width="6" />
+
+        <path d="M106 40C118 40 118 56 104 57" fill="none" stroke="#f6ecdd" stroke-width="3" />
+
+        <path d="M62 32H108C108 50 98 62 85 62C72 62 62 50 62 32Z" fill="#f6ecdd" stroke="#3a2518" stroke-width="2" />
+
+        <ellipse cx="85" cy="32" rx="23" ry="4.5" fill="#6e4029" stroke="#3a2518" stroke-width="1.6" />
+
+        <path d="M84 38A7.5 7.5 0 1 0 91 51A6 6 0 0 1 84 38Z" fill="#c98a4f" />
+
+        <use href="#motif-star" x="68" y="40" width="6" height="6" color="#c98a4f" />
+
+        
+    </symbol>
+
+    <symbol id="scene-rug" viewBox="0 0 700 180">
+
+        <defs>
+
+        <pattern id="rugFlowers" width="36" height="24" patternUnits="userSpaceOnUse">
+            <rect width="36" height="24" fill="#6a2a38" />
+            <circle cx="9" cy="6" r="4" fill="#b9505a" />
+            <circle cx="9" cy="6" r="1.6" fill="#e9b877" />
+            <circle cx="27" cy="18" r="4" fill="#a8455a" />
+            <circle cx="27" cy="18" r="1.6" fill="#e9b877" />
+            <path d="M18 6C20 10 22 10 24 12M0 18C4 16 6 16 8 20" stroke="#3e5a46" stroke-width="1.6" fill="none" />
+        </pattern>
+
+        </defs>
+
+        <ellipse cx="350" cy="120" rx="345" ry="118" fill="#2c2a4a" />
+
+        <ellipse cx="350" cy="120" rx="330" ry="108" fill="none" stroke="#c9954f" stroke-width="3" stroke-dasharray="2 6" />
+
+        <ellipse cx="350" cy="120" rx="316" ry="100" fill="#8a3444" />
+
+        <ellipse cx="350" cy="120" rx="296" ry="88" fill="url(#rugFlowers)" />
+
+        <ellipse cx="350" cy="120" rx="200" ry="56" fill="none" stroke="#2c2a4a" stroke-width="6" />
+
+        <ellipse cx="350" cy="120" rx="190" ry="50" fill="none" stroke="#e0b879" stroke-width="1.4" stroke-dasharray="4 5" />
+
+        
+    </symbol>
+
+</svg>
