@@ -22,9 +22,9 @@ if (SITE_LABEL) {
 
 
 /*
-    Each Supabase project keeps its sign-in under its own name,
-    so the real site and a test copy on the same address never
-    overwrite each other's session.
+    A test copy keeps its sign-in under its own project's name,
+    so it never overwrites the real site's session on the same
+    address. The real site keeps its original name.
 */
 
 const projectRef =
@@ -50,7 +50,7 @@ export const supabase =
                 // when it is opened on a different device.
                 flowType: "implicit",
 
-                storageKey: `novellow-auth-${projectRef}`
+                storageKey: SITE_LABEL ? `novellow-auth-${projectRef}` : "novellow-auth"
             }
         }
     );
