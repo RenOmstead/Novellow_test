@@ -72,13 +72,23 @@ export const SOUNDS = [
     {
         id: "night", name: "Night garden", note: "Crickets, and sometimes an owl", bed: ["crickets.mp3"], boost: 9, every: [50, 120],
         moments: [["owl.mp3", 0.8, 3.6, 0.25]]
-    }
+    },
+
+    // The haunted room. A moment can be just a file name: the
+    // whole recording plays at its own loudness.
+    { id: "cauldron", group: "spooky", name: "Bubbling cauldron", note: "Something brewing by the fire", bed: ["cauldron.mp3"] },
+    { id: "howl", group: "spooky", name: "Werewolves howling", note: "Far off, under the full moon", every: [70, 160], moments: ["howl-1.mp3", "howl-2.mp3"] },
+    { id: "creaks", group: "spooky", name: "Creaks", note: "Floorboards, doors and an old rocking chair", every: [20, 55], moments: ["creak-1.mp3", "creak-2.mp3", "creak-3.mp3"] },
+    { id: "spookyclock", group: "spooky", name: "Haunted clock", note: "A slow, heavy tick, and the midnight chime", bed: ["haunted-clock.mp3"], every: [150, 300], moments: ["clock-chime.mp3"] },
+    { id: "humming", group: "spooky", name: "Creepy humming", note: "Someone humming, somewhere in the house", every: [60, 150], moments: ["humming-1.mp3", "humming-2.mp3"] },
+    { id: "whispers", group: "spooky", name: "Whispers", note: "Just at the edge of hearing", every: [45, 110], moments: ["whisper-1.mp3", "whisper-2.mp3"] },
+    { id: "raven", group: "spooky", name: "Raven", note: "Calling from the window ledge", every: [60, 150], moments: ["raven.mp3"] }
 ];
 
 // Each room's own mix (0 = silent, 1 = full).
 export const ROOM_MIXES = {
     original: { fire: 0.6, purr: 0.35, clock: 0.3, pages: 0.4, rain: 0.2 },
-    haunted: { wind: 0.6, clock: 0.45, fire: 0.3, pages: 0.3, thunder: 0.35 },
+    haunted: { wind: 0.45, thunder: 0.3, cauldron: 0.5, howl: 0.5, creaks: 0.55, spookyclock: 0.55, humming: 0.4, whispers: 0.35, raven: 0.4 },
     rainy: { rain: 0.8, thunder: 0.55, fire: 0.4, clock: 0.25, spoon: 0.3 },
     forest: { night: 0.7, wind: 0.25, fire: 0.3, pages: 0.25 },
     cafe: { murmurs: 0.7, spoon: 0.55, coffee: 0.5, rain: 0.25, pages: 0.25 },
@@ -142,8 +152,13 @@ function room() {
 }
 
 
+function momentFile(moment) {
+    return Array.isArray(moment) ? moment[0] : moment;
+}
+
+
 function filesOf(sound) {
-    return [...new Set([...(sound.bed || []), ...(sound.moments || []).map(([file]) => file)])];
+    return [...new Set([...(sound.bed || []), ...(sound.moments || []).map(momentFile)])];
 }
 
 
@@ -393,7 +408,7 @@ function playBed(buffer, out, [from, to] = [0, buffer.duration]) {
     slightly louder or softer, a touch to the left or right.
 */
 
-function playMoment(buffer, out, [from, to, loudness]) {
+function playMoment(buffer, out, [from = 0, to = Infinity, loudness = 1] = []) {
 
     const at =
         ctx.currentTime + 0.05;
@@ -485,8 +500,11 @@ function startSound(sound, out) {
                     return;
                 }
 
-                const [file, ...cut] =
+                const pick =
                     sound.moments[Math.floor(Math.random() * sound.moments.length)];
+
+                const [file, ...cut] =
+                    Array.isArray(pick) ? pick : [pick];
 
                 const buffer =
                     await recording(file);
