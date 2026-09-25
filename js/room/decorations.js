@@ -40,6 +40,7 @@ export const DECOR_GROUPS = [
 export const DECOR_ASSETS = [
     // Pictures and frames
     { id: "portrait-ghost-reader", box: "0 0 120 152", width: 140, name: "Ghost reader portrait", group: "pictures" },
+    { id: "portrait-moth-ornate", box: "0 0 120 152", width: 140, name: "Moth in a gilt frame", group: "pictures" },
     { id: "picture-castle", box: "0 0 150 116", width: 120, name: "Castle at dusk", group: "pictures" },
     { id: "picture-haunted-house", box: "0 0 150 116", width: 120, name: "Haunted house", group: "pictures" },
     { id: "picture-london-rain", box: "0 0 150 116", width: 120, name: "London in the rain", group: "pictures" },
@@ -55,6 +56,9 @@ export const DECOR_ASSETS = [
     { id: "decor-polaroid", box: "0 0 44 52", width: 50, name: "Moon polaroid", group: "pictures" },
 
     // Bookish
+    { id: "decor-books-chapter", box: "0 0 118 108", width: 110, name: "One More Chapter books", group: "bookish" },
+    { id: "decor-books-fungi", box: "0 0 146 100", width: 140, name: "Forager's books", group: "bookish" },
+    { id: "decor-book-embossed", box: "0 0 92 92", width: 70, name: "Pink storybook", group: "bookish" },
     { id: "decor-spellbook-stack", box: "0 0 86 84", width: 96, name: "Spellbooks and a mouse", group: "bookish" },
     { id: "decor-reading-mouse", box: "0 0 48 50", width: 52, name: "Reading mouse", group: "bookish" },
     { id: "decor-open-book", box: "0 0 86 44", width: 92, name: "Open book", group: "bookish" },
@@ -104,6 +108,14 @@ export const DECOR_ASSETS = [
     { id: "decor-crow", box: "0 0 64 66", width: 50, name: "Crow", group: "plants" },
 
     // Witchy
+    { id: "decor-spell-tome", box: "0 0 76 88", width: 60, name: "Book of spells", group: "witchy" },
+    { id: "decor-evil-eye", box: "0 0 60 44", width: 64, name: "All-seeing eye", group: "witchy" },
+    { id: "decor-planchette", box: "0 0 50 60", width: 46, name: "Planchette", group: "witchy" },
+    { id: "decor-witch-hat", box: "0 0 74 56", width: 76, name: "Witch's hat", group: "witchy" },
+    { id: "decor-mortar", box: "0 0 56 54", width: 54, name: "Mortar and pestle", group: "witchy" },
+    { id: "decor-crystal-hand", box: "0 0 56 84", width: 52, name: "Skeleton hand and crystal", group: "witchy" },
+    { id: "decor-moth", box: "0 0 60 48", width: 64, name: "Moth", group: "witchy" },
+    { id: "decor-snake", box: "0 0 56 60", width: 54, name: "Snake", group: "witchy" },
     { id: "decor-magic-shop", box: "0 0 124 172", width: 144, name: "Magic shop", group: "witchy" },
     { id: "decor-crystal-ball", box: "0 0 52 64", width: 58, name: "Crystal ball", group: "witchy" },
     { id: "decor-crystal-cloche", box: "0 0 48 68", width: 52, name: "Crystal under glass", group: "witchy" },

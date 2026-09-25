@@ -33,8 +33,36 @@ export const SPINE_STYLES = [
     { id: "banded", label: "Raised leather bands" },
     { id: "cloth", label: "Linen cloth" },
     { id: "starry", label: "Starry night" },
-    { id: "plain", label: "Plain" }
+    { id: "plain", label: "Plain" },
+    { id: "rosestem", label: "Rose stem" },
+    { id: "wildflowers", label: "Wildflowers" },
+    { id: "fern", label: "Fern frond" },
+    { id: "mycelium", label: "Mushrooms and roots" },
+    { id: "serpent", label: "Serpent" },
+    { id: "dagger", label: "Dagger" },
+    { id: "moonphases", label: "Moon phases" },
+    { id: "constellation", label: "Constellation" },
+    { id: "filigree", label: "Gilded filigree" }
 ];
+
+
+/*
+    Styles drawn as one picture the whole length of the spine
+    (behind the title), and the drawing each one uses.
+*/
+
+export const SPINE_ART = {
+    vine: "leafvine",
+    rosestem: "rosestem",
+    wildflowers: "wildflowers",
+    fern: "fern",
+    mycelium: "mycelium",
+    serpent: "serpent",
+    dagger: "dagger",
+    moonphases: "moonphases",
+    constellation: "constellation",
+    filigree: "filigree"
+};
 
 
 export const TITLE_PANELS = [
@@ -42,7 +70,8 @@ export const TITLE_PANELS = [
     { id: "label", label: "Paper label" },
     { id: "arch", label: "Arched window" },
     { id: "oval", label: "Oval cartouche" },
-    { id: "ribbon", label: "Ribbon band" }
+    { id: "ribbon", label: "Ribbon band" },
+    { id: "hidden", label: "No title (just the picture)" }
 ];
 
 
@@ -70,7 +99,25 @@ export const ORNAMENTS = [
     { id: "feather", label: "Feather" },
     { id: "eye", label: "Mystic eye" },
     { id: "fleur", label: "Fleur-de-lis" },
-    { id: "diamond", label: "Diamond" }
+    { id: "diamond", label: "Diamond" },
+    { id: "rose", label: "Rose" },
+    { id: "snake", label: "Snake" },
+    { id: "dagger-small", label: "Dagger" },
+    { id: "fern-small", label: "Fern" },
+    { id: "toadstools", label: "Toadstools" },
+    { id: "moons", label: "Three moons" },
+    { id: "sun", label: "Sun" },
+    { id: "crown", label: "Crown" },
+    { id: "quill", label: "Quill" },
+    { id: "witchhat", label: "Witch's hat" },
+    { id: "crystalball", label: "Crystal ball" },
+    { id: "pentacle", label: "Pentacle" },
+    { id: "planchette", label: "Planchette" },
+    { id: "hand", label: "Skeleton hand" },
+    { id: "ghost", label: "Ghost" },
+    { id: "bat", label: "Bat" },
+    { id: "pumpkin", label: "Pumpkin" },
+    { id: "spider", label: "Spider" }
 ];
 
 
@@ -98,7 +145,34 @@ export const MOTIF_VIEWBOX = {
     eye: "0 0 24 16",
     fleur: "0 0 20 26",
     diamond: "0 0 20 28",
-    leafvine: "0 0 16 60"
+    leafvine: "0 0 16 60",
+    rosestem: "0 0 16 60",
+    wildflowers: "0 0 16 60",
+    fern: "0 0 16 60",
+    mycelium: "0 0 16 60",
+    serpent: "0 0 16 60",
+    dagger: "0 0 16 60",
+    moonphases: "0 0 16 60",
+    constellation: "0 0 16 60",
+    filigree: "0 0 16 60",
+    rose: "0 0 20 20",
+    snake: "0 0 20 24",
+    "dagger-small": "0 0 12 34",
+    "fern-small": "0 0 16 34",
+    toadstools: "0 0 22 20",
+    moons: "0 0 12 30",
+    sun: "0 0 22 22",
+    crown: "0 0 22 16",
+    quill: "0 0 14 34",
+    witchhat: "0 0 24 22",
+    crystalball: "0 0 20 22",
+    pentacle: "0 0 20 20",
+    planchette: "0 0 20 24",
+    hand: "0 0 20 26",
+    ghost: "0 0 18 22",
+    bat: "0 0 26 14",
+    pumpkin: "0 0 22 20",
+    spider: "0 0 20 22"
 };
 
 
@@ -206,7 +280,7 @@ export function suggestedSpine(seedText = "") {
         pick(PALETTE, random);
 
     return {
-        style: pick(["classic", "panel", "lattice", "vine", "banded", "cloth", "starry"], random),
+        style: pick(["classic", "panel", "lattice", "vine", "banded", "cloth", "starry", "rosestem", "fern", "moonphases", "filigree"], random),
         color: colors.color,
         accent: colors.accent,
         text: colors.text,
@@ -218,7 +292,7 @@ export function suggestedSpine(seedText = "") {
         fontStyle: random() > 0.85 ? "italic" : "normal",
         align: "center",
         panel: pick(["none", "label", "arch", "oval", "ribbon"], random),
-        ornament: pick(["moon", "star", "moth", "mushroom", "teacup", "cat", "house", "key", "bird", "lantern", "flower", "sprig", "fleur"], random),
+        ornament: pick(["moon", "star", "moth", "mushroom", "teacup", "cat", "house", "key", "bird", "lantern", "flower", "sprig", "fleur", "rose", "crown", "sun", "toadstools", "quill"], random),
         height: pick(["medium", "tall", "tall", "grand"], random),
         thickness: pick(["slim", "medium", "medium", "chunky"], random)
     };

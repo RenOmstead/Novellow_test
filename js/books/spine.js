@@ -17,7 +17,8 @@ import {
     FONT_SIZES,
     FONT_WEIGHTS,
     LETTER_SPACING,
-    MOTIF_VIEWBOX
+    MOTIF_VIEWBOX,
+    SPINE_ART
 } from "./spine-options.js?v=__VERSION__";
 
 
@@ -84,7 +85,7 @@ function fitTitle(title, spine, baseSize, height, width) {
         spine.panel === "none" || spine.panel === "ribbon" ? 0 : 14;
 
     const withOrnament =
-        spine.style !== "vine" && spine.ornament !== "none";
+        !SPINE_ART[spine.style] && spine.ornament !== "none";
 
     const attempts = [];
 
@@ -187,15 +188,17 @@ export function spineMarkup(book, { tag = "button", extra = "" } = {}) {
     const inner = html`
         <span class="spine-band spine-band--top" aria-hidden="true"></span>
 
-        ${spine.style === "vine"
-            ? motif("leafvine", "spine-vine")
+        ${SPINE_ART[spine.style]
+            ? motif(SPINE_ART[spine.style], `spine-vine spine-art--${spine.style}`)
             : fit.ornament ? motif(spine.ornament, "spine-ornament spine-ornament--top") : ""}
 
-        <span class="spine-title-wrap">
-            <span class="spine-title">${title}</span>
-        </span>
+        ${spine.panel === "hidden" ? "" : html`
+            <span class="spine-title-wrap">
+                <span class="spine-title">${title}</span>
+            </span>
+        `}
 
-        ${fit.ornament && spine.thickness !== "slim" && fit.lines === 1 && height >= 118
+        ${spine.panel !== "hidden" && fit.ornament && spine.thickness !== "slim" && fit.lines === 1 && height >= 118
             ? motif(spine.ornament === "none" ? "" : "star", "spine-ornament spine-ornament--bottom")
             : ""}
 

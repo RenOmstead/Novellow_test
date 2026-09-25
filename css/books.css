@@ -676,3 +676,53 @@ button.book-spine {
             #e6d2b0 2px 3px
         );
 }
+
+
+/* =========================================================
+   PICTURE SPINES
+   One drawing the whole length of the spine, behind the
+   title (js/books/spine-options.js SPINE_ART). The title sits
+   on a soft wash of the book's colour so it stays readable.
+========================================================= */
+
+.book-spine:is(.spine--rosestem, .spine--wildflowers, .spine--fern, .spine--mycelium, .spine--serpent, .spine--dagger, .spine--moonphases, .spine--constellation, .spine--filigree) .spine-vine {
+    width: 46%;
+
+    opacity: 0.7;
+}
+
+.spine--filigree .spine-vine,
+.spine--constellation .spine-vine,
+.spine--moonphases .spine-vine {
+    opacity: 0.85;
+}
+
+.book-spine:is(.spine--rosestem, .spine--wildflowers, .spine--fern, .spine--mycelium, .spine--serpent, .spine--dagger, .spine--moonphases, .spine--constellation, .spine--filigree).spine-panel--none .spine-title {
+    text-shadow:
+        0 0 3px var(--book-color),
+        0 0 6px var(--book-color),
+        0 0 10px var(--book-color);
+}
+
+/* No title: the picture (or the ornament) is the whole spine. */
+.spine-panel--hidden {
+    justify-content: space-between;
+}
+
+.spine-panel--hidden .spine-vine {
+    top: 12px;
+    bottom: 12px;
+
+    width: 62%;
+    height: calc(100% - 24px);
+
+    opacity: 1;
+}
+
+.spine-panel--hidden .spine-ornament--top {
+    width: 70%;
+    max-width: 32px;
+    max-height: 60%;
+
+    margin: auto 0;
+}
