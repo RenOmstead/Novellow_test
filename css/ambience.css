@@ -180,12 +180,10 @@ html:not(.candle-glow) {
     position: absolute;
 
     /* Exactly over the window (css/room.css). */
-    left: var(--scene-centre);
+    left: var(--window-left);
     bottom: var(--window-bottom);
 
     width: var(--window-width);
-
-    transform: translateX(-50%);
 
     aspect-ratio: 440 / 330;
 

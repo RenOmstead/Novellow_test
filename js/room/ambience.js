@@ -198,13 +198,6 @@ function buildWindow() {
 
 function hangFrames(theme) {
 
-    const frames = {
-        moth: "frame-moth",
-        castle: "frame-castle",
-        charm: "decor-starcharm",
-        ...(theme.wallArt || {})
-    };
-
     // The ceiling lamp.
     const lamp =
         document.querySelector(".ceiling-lamp use");
@@ -213,16 +206,19 @@ function hangFrames(theme) {
         lamp.setAttribute("href", `#${theme.lamp || "scene-lamp"}`);
     }
 
-    Object.entries(frames).forEach(([slot, symbol]) => {
+    // Each room's own paintings.
+    document.querySelectorAll("[data-picture]").forEach((art) => {
 
-        const use =
-            document.querySelector(`.wall-frame--${slot} use`);
+        const symbol =
+            theme.pictures?.[art.dataset.picture];
 
-        if (use && use.getAttribute("href") !== `#${symbol}`) {
-            use.setAttribute("href", `#${symbol}`);
+        if (symbol) {
+            art.setAttribute("href", `#${symbol}`);
         }
 
     });
+
+
 
 }
 
