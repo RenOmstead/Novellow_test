@@ -32,6 +32,14 @@ sounding repetitive, but 1 works.
 | `page-1.mp3`, `page-2.mp3`, `page-3.mp3` | A single book page turning |
 | `owl.mp3` | An owl hooting once or twice |
 
+## Trimmed to size
+
+Long recordings are cut down (on MP3 frame boundaries, so the sound
+quality is unchanged) to keep the site quick to load on phones:
+rain 60 s, fire 100 s, crickets 100 s, clock 60 s, murmurs 100 s,
+purr 41 s (its steady middle), wind 37 s, coffee pour 10 s. Which part of
+each recording plays, and how loud, is set in `js/sound/soundscape.js`.
+
 ## Tips
 
 - MP3 is best (works in every browser). Keep each file under about 2 MB.
