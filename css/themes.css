@@ -43,6 +43,12 @@
 ========================================================= */
 
 [data-theme="haunted"] {
+    --curtain: #4a4466;
+    --curtain-fold: #2e2a44;
+    --rug-edge: #1f1b29;
+    --rug-border: #4a4466;
+    --rug-field: #2e2a3a;
+    --rug-flower: #8e86a8;
     /* Ghostly green candle flames and cobwebs on the chandelier. */
     --flame: #9df27a;
     --chandelier-cobweb: inline;
@@ -186,6 +192,12 @@
 ========================================================= */
 
 [data-theme="rainy"] {
+    --curtain: #3e6b58;
+    --curtain-fold: #1c382c;
+    --rug-edge: #1c2a24;
+    --rug-border: #3e6b58;
+    --rug-field: #2f3a36;
+    --rug-flower: #a8b8a0;
     --shade: #2f4a3f;
     --font-heading: "Playfair Display", "Fraunces", Georgia, serif;
 
@@ -263,6 +275,8 @@
 ========================================================= */
 
 [data-theme="forest"] {
+    --curtain: #6a4a80;
+    --curtain-fold: #48305a;
     --lamp-glow: rgba(250, 240, 140, 0.3);
     --font-heading: "Almendra", "Fraunces", Georgia, serif;
 
@@ -334,6 +348,12 @@
 ========================================================= */
 
 [data-theme="cafe"] {
+    --curtain: #b5643f;
+    --curtain-fold: #7a3e20;
+    --rug-edge: #2a1c15;
+    --rug-border: #a8704a;
+    --rug-field: #6a4430;
+    --rug-flower: #e0a860;
     --shade: #b5643f;
     --lamp-glow: rgba(255, 190, 110, 0.38);
     --font-heading: "Averia Serif Libre", "Fraunces", Georgia, serif;
@@ -406,6 +426,12 @@
 ========================================================= */
 
 [data-theme="gothic"] {
+    --curtain: #7a2038;
+    --curtain-fold: #3a0c18;
+    --rug-edge: #13070b;
+    --rug-border: #6a1a2a;
+    --rug-field: #3a1622;
+    --rug-flower: #c46a7e;
     --font-heading: "Grenze Gotisch", "Cinzel", Georgia, serif;
 
     --color-ink: #24121a;
