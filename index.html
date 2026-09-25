@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="original">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="robots" content="noindex">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Novellow — your reading life, kept between the pages. A private illustrated library and reading journal."
+    >
+    <!-- Link previews (Messages, Discord, Facebook, Slack, X…) -->
+    <meta name="theme-color" content="#3b2231">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Novellow">
+    <meta property="og:title" content="Novellow (test) · Your reading life, kept between the pages">
+    <meta property="og:description" content="A cozy illustrated library and reading journal. Fill your shelves, open each book, and keep your notes, quotes, new words and reviews inside.">
+    <meta property="og:url" content="https://renomstead.github.io/Novellow_test/">
+    <meta property="og:image" content="https://renomstead.github.io/Novellow_test/assets/social/preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Novellow: a sleeping black cat on a shelf of colourful books beneath a moonlit window, beside the words “Your reading life, kept between the pages.”">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Novellow (test) · Your reading life, kept between the pages">
+    <meta name="twitter:description" content="A cozy illustrated library and reading journal.">
+    <meta name="twitter:image" content="https://renomstead.github.io/Novellow_test/assets/social/preview.png">
+
+
+    <title>Novellow | Enter Your Library</title>
+
+    <link rel="icon" href="assets/illustrations/favicon.svg?v=__VERSION__" type="image/svg+xml">
+
+    <link rel="stylesheet" href="css/tokens.css?v=__VERSION__">
+    <link rel="stylesheet" href="css/base.css?v=__VERSION__">
+    <link rel="stylesheet" href="css/auth.css?v=__VERSION__">
+
+    <script type="module" src="js/pages/entrance.js?v=__VERSION__"></script>
+</head>
+
+
+<body class="entrance">
+
+    <a class="skip-link" href="#authPanel">Skip to sign in</a>
+
+
+    <!-- =====================================================
+         THE READING ROOM (decoration only)
+    ====================================================== -->
+
+    <div
+        class="entrance-scene"
+        aria-hidden="true"
+    >
+
+        <div class="entrance-glow"></div>
+
+
+        <!-- Arched window with autumn ivy -->
+
+        <svg class="entrance-window" viewBox="0 0 440 330">
+            <use href="#scene-window" />
+        </svg>
+
+        <svg
+            class="ivy entrance-ivy entrance-ivy--window"
+            viewBox="0 0 520 620"
+            data-seed="41"
+            data-density="15"
+            data-leaf-size="0.95"
+            data-palette="autumn"
+        >
+            <path class="ivy-stem" d="M20 0C60 40 30 90 70 140C110 190 80 250 120 300" />
+            <path class="ivy-stem" d="M40 60C10 120 40 180 10 240C-10 290 20 340 6 400C-4 450 16 520 8 620" />
+            <path class="ivy-stem" d="M120 10C200 30 260 8 340 22C400 32 450 20 520 30" />
+            <path class="ivy-stem" d="M470 26C490 80 470 130 490 190" />
+        </svg>
+
+
+        <!-- Frames on the wall -->
+
+        <svg class="entrance-frame entrance-frame--ghost" viewBox="0 0 70 90">
+            <use href="#frame-ghost" />
+        </svg>
+
+        <svg class="entrance-frame entrance-frame--moth" viewBox="0 0 80 100">
+            <use href="#frame-moth" />
+        </svg>
+
+        <svg class="entrance-frame entrance-frame--castle" viewBox="0 0 130 100">
+            <use href="#frame-castle" />
+        </svg>
+
+        <svg class="entrance-charm" viewBox="0 0 40 52">
+            <use href="#decor-starcharm" />
+        </svg>
+
+
+        <!-- Bookshelf along the right wall (spines added by entrance.js) -->
+
+        <div class="entrance-shelves">
+            <div class="entrance-shelf" data-seed="a"></div>
+            <div class="entrance-shelf" data-seed="b"></div>
+            <div class="entrance-shelf" data-seed="c"></div>
+            <div class="entrance-shelf" data-seed="d"></div>
+
+            <svg class="entrance-shelf-decor entrance-shelf-decor--ghost" viewBox="0 0 44 54">
+                <use href="#decor-ghost" />
+            </svg>
+
+            <svg class="entrance-shelf-decor entrance-shelf-decor--pumpkin" viewBox="0 0 56 42">
+                <use href="#decor-pumpkin" />
+            </svg>
+
+            <svg class="entrance-shelf-decor entrance-shelf-decor--crystal" viewBox="0 0 48 60">
+                <use href="#decor-crystal" />
+            </svg>
+        </div>
+
+        <svg
+            class="ivy entrance-ivy entrance-ivy--shelves"
+            viewBox="0 0 160 700"
+            data-seed="52"
+            data-density="17"
+            data-leaf-size="0.9"
+        >
+            <path class="ivy-stem" d="M150 0C120 60 150 120 118 190C94 250 126 310 100 380C82 430 104 480 90 540" />
+        </svg>
+
+
+        <!-- The cozy corner -->
+
+        <svg class="entrance-rug" viewBox="0 0 700 180" preserveAspectRatio="none">
+            <use href="#scene-rug" />
+        </svg>
+
+        <svg class="entrance-candle entrance-candle--tall" viewBox="0 0 40 90">
+            <use href="#decor-candle" />
+        </svg>
+
+        <svg class="entrance-armchair" viewBox="0 0 260 280">
+            <use href="#scene-armchair" />
+        </svg>
+
+        <svg class="entrance-plant" viewBox="0 0 60 78">
+            <use href="#decor-plant" />
+        </svg>
+
+        <svg class="entrance-table" viewBox="0 0 170 210">
+            <use href="#scene-side-table" />
+        </svg>
+
+        <svg class="entrance-open-book" viewBox="0 0 32 32">
+            <use href="#ui-open-book" />
+        </svg>
+
+        <svg class="entrance-lantern" viewBox="0 0 50 92">
+            <use href="#decor-lantern" />
+        </svg>
+
+        <svg class="entrance-candle entrance-candle--right" viewBox="0 0 40 90">
+            <use href="#decor-candle" />
+        </svg>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         ENTRANCE
+    ====================================================== -->
+
+    <main class="entrance-main">
+
+
+        <!-- Brand -->
+
+        <section
+            class="entrance-brand"
+            aria-labelledby="brandTitle"
+        >
+
+            <svg class="entrance-crest" viewBox="0 0 140 80" aria-hidden="true">
+                <use href="#brand-crest" />
+            </svg>
+
+            <h1 class="entrance-wordmark" id="brandTitle">Novellow</h1>
+
+            <div class="entrance-divider" aria-hidden="true">
+                <span></span>
+                <svg viewBox="0 0 20 20"><use href="#motif-star" /></svg>
+                <span></span>
+            </div>
+
+            <p class="entrance-tagline">
+                Your reading life,<br>
+                kept between<br>
+                the pages.
+            </p>
+
+            <div class="entrance-phases" aria-hidden="true">
+                <svg viewBox="0 0 20 20"><use href="#motif-star" /></svg>
+                <svg viewBox="0 0 20 20" class="is-flipped"><use href="#motif-moon" /></svg>
+                <svg viewBox="0 0 20 20"><use href="#motif-moon" /></svg>
+                <svg viewBox="0 0 20 20"><use href="#motif-star" /></svg>
+            </div>
+
+            <p class="entrance-description">
+                Build shelves, collect books, keep reading journals,
+                save passages, gather unfamiliar words, and return to
+                everything a book left behind.
+            </p>
+
+        </section>
+
+
+
+        <!-- Bookplate: sign in / create account -->
+
+        <section
+            class="bookplate"
+            id="authPanel"
+            aria-labelledby="authTitle"
+        >
+
+            <svg
+                class="ivy bookplate-ivy bookplate-ivy--left"
+                viewBox="0 0 120 260"
+                data-seed="61"
+                data-density="16"
+                data-leaf-size="0.85"
+                aria-hidden="true"
+            >
+                <path class="ivy-stem" d="M110 4C70 10 40 30 30 70C22 110 36 150 20 200C14 220 18 240 12 258" />
+            </svg>
+
+            <svg
+                class="ivy bookplate-ivy bookplate-ivy--right"
+                viewBox="0 0 120 300"
+                data-seed="67"
+                data-density="16"
+                data-leaf-size="0.85"
+                aria-hidden="true"
+            >
+                <path class="ivy-stem" d="M10 4C50 12 84 36 92 80C100 124 84 170 100 220C106 250 100 276 108 298" />
+            </svg>
+
+            <div class="bookplate-frame">
+
+                <div class="bookplate-paper">
+
+                    <p class="bookplate-eyebrow">
+                        <span aria-hidden="true">✧</span>
+                        Private Library
+                        <span aria-hidden="true">✧</span>
+                    </p>
+
+                    <h2 class="bookplate-title" id="authTitle">
+                        Welcome Back
+                    </h2>
+
+                    <div class="bookplate-rule" aria-hidden="true">
+                        <span></span>
+                        <svg viewBox="0 0 20 28"><use href="#motif-diamond" /></svg>
+                        <span></span>
+                    </div>
+
+                    <p class="bookplate-subtitle" id="authSubtitle">
+                        Enter your library and pick up where you left off.
+                    </p>
+
+
+                    <!-- Messages (confirmed email, expired session, errors) -->
+
+                    <p class="form-note" id="authNote" role="status" hidden></p>
+
+                    <p class="form-error" id="authError" role="alert" hidden></p>
+
+
+                    <!-- Sign In / Create Account switch -->
+
+                    <div
+                        class="auth-switch"
+                        role="tablist"
+                        aria-label="Choose how to enter"
+                        id="authSwitch"
+                    >
+                        <button
+                            class="auth-switch__tab is-active"
+                            type="button"
+                            role="tab"
+                            id="tabSignIn"
+                            aria-selected="true"
+                            aria-controls="signInForm"
+                            data-mode="sign-in"
+                        >
+                            Sign In
+                        </button>
+
+                        <button
+                            class="auth-switch__tab"
+                            type="button"
+                            role="tab"
+                            id="tabSignUp"
+                            aria-selected="false"
+                            aria-controls="signUpForm"
+                            data-mode="sign-up"
+                            tabindex="-1"
+                        >
+                            Create Account
+                        </button>
+                    </div>
+
+
+                    <!-- SIGN IN -->
+
+                    <form
+                        class="auth-form"
+                        id="signInForm"
+                        role="tabpanel"
+                        aria-labelledby="tabSignIn"
+                        novalidate
+                    >
+
+                        <label class="field">
+                            <span class="field__label">Email</span>
+                            <span class="field__control">
+                                <svg aria-hidden="true"><use href="#ui-mail" /></svg>
+                                <input class="field__input" type="email" name="email" autocomplete="email" required>
+                            </span>
+                        </label>
+
+                        <label class="field">
+                            <span class="field__label">Password</span>
+                            <span class="field__control">
+                                <svg aria-hidden="true"><use href="#ui-lock" /></svg>
+                                <input class="field__input" type="password" name="password" autocomplete="current-password" required>
+                            </span>
+                        </label>
+
+                        <button class="button button--primary button--block button--enter" type="submit">
+                            <svg aria-hidden="true"><use href="#ui-sparkle" /></svg>
+                            Enter Library
+                            <svg aria-hidden="true"><use href="#ui-sparkle" /></svg>
+                        </button>
+
+                        <button class="text-button auth-link" type="button" data-mode="forgot">
+                            Forgot your password?
+                        </button>
+
+                    </form>
+
+
+                    <!-- CREATE ACCOUNT -->
+
+                    <form
+                        class="auth-form"
+                        id="signUpForm"
+                        role="tabpanel"
+                        aria-labelledby="tabSignUp"
+                        novalidate
+                        hidden
+                    >
+
+                        <label class="field">
+                            <span class="field__label">Display name</span>
+                            <span class="field__control">
+                                <svg aria-hidden="true"><use href="#ui-user" /></svg>
+                                <input class="field__input" type="text" name="displayName" autocomplete="nickname" maxlength="60" required>
+                            </span>
+                        </label>
+
+                        <label class="field">
+                            <span class="field__label">Email</span>
+                            <span class="field__control">
+                                <svg aria-hidden="true"><use href="#ui-mail" /></svg>
+                                <input class="field__input" type="email" name="email" autocomplete="email" required>
+                            </span>
+                        </label>
+
+                        <label class="field">
+                            <span class="field__label">Password</span>
+                            <span class="field__control">
+                                <svg aria-hidden="true"><use href="#ui-lock" /></svg>
+                                <input class="field__input" type="password" name="password" autocomplete="new-password" minlength="8" required aria-describedby="passwordHint">
+                            </span>
+                            <span class="field__hint" id="passwordHint">At least 8 characters.</span>
+                        </label>
+
+                        <label class="field">
+                            <span class="field__label">Confirm password</span>
+                            <span class="field__control">
+                                <svg aria-hidden="true"><use href="#ui-lock" /></svg>
+                                <input class="field__input" type="password" name="confirmPassword" autocomplete="new-password" required>
+                            </span>
+                        </label>
+
+                        <button class="button button--primary button--block button--enter" type="submit">
+                            <svg aria-hidden="true"><use href="#ui-sparkle" /></svg>
+                            Create My Library
+                            <svg aria-hidden="true"><use href="#ui-sparkle" /></svg>
+                        </button>
+
+                    </form>
+
+
+                    <!-- FORGOT PASSWORD -->
+
+                    <form
+                        class="auth-form"
+                        id="forgotForm"
+                        novalidate
+                        hidden
+                    >
+
+                        <label class="field">
+                            <span class="field__label">Email</span>
+                            <span class="field__control">
+                                <svg aria-hidden="true"><use href="#ui-mail" /></svg>
+                                <input class="field__input" type="email" name="email" autocomplete="email" required>
+                            </span>
+                        </label>
+
+                        <button class="button button--primary button--block" type="submit">
+                            Send a reset link
+                        </button>
+
+                        <button class="text-button auth-link" type="button" data-mode="sign-in">
+                            Back to sign in
+                        </button>
+
+                    </form>
+
+
+                    <!-- NEW PASSWORD (after following a reset link) -->
+
+                    <form
+                        class="auth-form"
+                        id="resetForm"
+                        novalidate
+                        hidden
+                    >
+
+                        <label class="field">
+                            <span class="field__label">New password</span>
+                            <span class="field__control">
+                                <svg aria-hidden="true"><use href="#ui-lock" /></svg>
+                                <input class="field__input" type="password" name="password" autocomplete="new-password" minlength="8" required>
+                            </span>
+                            <span class="field__hint">At least 8 characters.</span>
+                        </label>
+
+                        <label class="field">
+                            <span class="field__label">Confirm new password</span>
+                            <span class="field__control">
+                                <svg aria-hidden="true"><use href="#ui-lock" /></svg>
+                                <input class="field__input" type="password" name="confirmPassword" autocomplete="new-password" required>
+                            </span>
+                        </label>
+
+                        <button class="button button--primary button--block" type="submit">
+                            Save new password
+                        </button>
+
+                    </form>
+
+
+                    <div class="bookplate-footer" aria-hidden="true">
+                        <svg viewBox="0 0 20 40" class="bookplate-sprig bookplate-sprig--left"><use href="#motif-sprig" /></svg>
+                        <svg viewBox="0 0 20 20" class="bookplate-moon"><use href="#motif-moon" /></svg>
+                        <svg viewBox="0 0 20 40" class="bookplate-sprig bookplate-sprig--right"><use href="#motif-sprig" /></svg>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <noscript>
+        <p class="noscript-note">
+            Novellow needs JavaScript turned on to open your library.
+        </p>
+    </noscript>
+
+</body>
+
+</html>

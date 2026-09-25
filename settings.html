@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="original">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="robots" content="noindex">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Your account, reading and appearance settings, and your library data."
+    >
+    <!-- Link previews (Messages, Discord, Facebook, Slack, X…) -->
+    <meta name="theme-color" content="#3b2231">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Novellow">
+    <meta property="og:title" content="Novellow (test) · Your reading life, kept between the pages">
+    <meta property="og:description" content="A cozy illustrated library and reading journal. Fill your shelves, open each book, and keep your notes, quotes, new words and reviews inside.">
+    <meta property="og:url" content="https://renomstead.github.io/Novellow_test/">
+    <meta property="og:image" content="https://renomstead.github.io/Novellow_test/assets/social/preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Novellow: a sleeping black cat on a shelf of colourful books beneath a moonlit window, beside the words “Your reading life, kept between the pages.”">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Novellow (test) · Your reading life, kept between the pages">
+    <meta name="twitter:description" content="A cozy illustrated library and reading journal.">
+    <meta name="twitter:image" content="https://renomstead.github.io/Novellow_test/assets/social/preview.png">
+
+
+    <title>Settings | Novellow</title>
+
+    <link rel="icon" href="assets/illustrations/favicon.svg?v=__VERSION__" type="image/svg+xml">
+
+    <link rel="stylesheet" href="css/tokens.css?v=__VERSION__">
+    <link rel="stylesheet" href="css/base.css?v=__VERSION__">
+    <link rel="stylesheet" href="css/app-shell.css?v=__VERSION__">
+    <link rel="stylesheet" href="css/books.css?v=__VERSION__">
+    <link rel="stylesheet" href="css/forms.css?v=__VERSION__">
+    <link rel="stylesheet" href="css/pages.css?v=__VERSION__">
+    <link rel="stylesheet" href="css/themes.css?v=__VERSION__">
+
+    <script type="module" src="js/pages/settings.js?v=__VERSION__"></script>
+</head>
+
+
+<body class="app" data-page="settings">
+
+    <div class="boot-screen" id="boot">
+        <div class="book-loader" role="status">
+            <div class="book-loader__book" aria-hidden="true">
+                <span class="book-loader__cover"></span>
+                <span class="book-loader__page"></span>
+                <span class="book-loader__page"></span>
+                <span class="book-loader__page"></span>
+            </div>
+            <p>Opening your settings…</p>
+        </div>
+    </div>
+
+
+    <main
+        id="main"
+        class="page page--settings"
+        hidden
+    >
+
+        <div class="page-body">
+            <div id="pageContent" aria-live="polite"></div>
+        </div>
+
+    </main>
+
+
+    <noscript>
+        <p class="noscript-note">Novellow needs JavaScript turned on to open your library.</p>
+    </noscript>
+
+</body>
+
+</html>

@@ -1,0 +1,407 @@
+/* =========================================================
+   NOVELLOW
+   EDITORS
+
+   The Add / Edit Book drawer with its live preview, and
+   the shelf editor.
+========================================================= */
+
+
+/* =========================================================
+   BOOK EDITOR DRAWER
+========================================================= */
+
+.parchment-dialog.book-editor {
+    width: min(1040px, calc(100vw - 24px));
+    max-width: none;
+    height: min(900px, calc(100vh - 24px));
+    max-height: none;
+
+    margin: auto 12px auto auto;
+
+    overflow: hidden;
+}
+
+.parchment-dialog.book-editor[open] {
+    animation: drawerIn 0.35s cubic-bezier(.2, .8, .2, 1);
+}
+
+@keyframes drawerIn {
+
+    from {
+        transform: translateX(40px);
+
+        opacity: 0;
+    }
+
+}
+
+.book-editor__form {
+    height: 100%;
+
+    display: grid;
+
+    grid-template-rows: auto 1fr auto;
+}
+
+.book-editor__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    padding: 22px 26px 14px;
+
+    border-bottom: 1px solid rgba(160, 120, 100, 0.3);
+}
+
+.book-editor__header .dialog-close {
+    position: static;
+}
+
+.book-editor__body {
+    min-height: 0;
+
+    display: grid;
+
+    grid-template-columns: 260px 1fr;
+}
+
+.book-editor__preview {
+    display: grid;
+    align-content: start;
+    justify-items: center;
+
+    gap: 12px;
+
+    padding: 20px 18px;
+
+    border-right: 1px solid rgba(160, 120, 100, 0.3);
+
+    background:
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(255, 196, 120, 0.18),
+            transparent 60%
+        ),
+        rgba(233, 214, 186, 0.45);
+
+    overflow-y: auto;
+}
+
+.preview-shelf {
+    width: 100%;
+}
+
+.preview-shelf__books {
+    height: 170px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    padding: 10px 0 0;
+
+    border-radius: 8px 8px 0 0;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(255, 176, 96, 0.2),
+            transparent 65%
+        ),
+        linear-gradient(
+            180deg,
+            var(--shelf-back-top),
+            var(--shelf-back-bottom)
+        );
+
+    box-shadow: inset 0 16px 16px -8px rgba(0, 0, 0, 0.6);
+}
+
+.preview-shelf__books .book-spine {
+    flex: 0 0 var(--w);
+}
+
+.preview-shelf__board {
+    height: 18px;
+
+    border-top: 1px solid #b07a52;
+    border-radius: 0 0 4px 4px;
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--shelf-board-top),
+            var(--shelf-board-middle) 45%,
+            var(--shelf-board-bottom)
+        );
+
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.35);
+}
+
+.preview-cover .book-cover--medium {
+    width: 160px;
+}
+
+.book-editor__fields {
+    min-height: 0;
+
+    display: grid;
+    align-content: start;
+
+    gap: 16px;
+
+    padding: 18px 26px 26px;
+
+    overflow-y: auto;
+}
+
+.editor-section {
+    display: grid;
+
+    gap: 12px;
+
+    margin: 0;
+    padding: 14px 16px 16px;
+
+    border: 1px solid rgba(160, 120, 100, 0.35);
+    border-radius: 14px;
+
+    background: rgba(255, 250, 238, 0.55);
+}
+
+.editor-section legend {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 0 6px;
+
+    color: var(--color-plum-deep);
+
+    font-family: var(--font-heading);
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.editor-section__art {
+    width: 26px;
+    height: 26px;
+}
+
+.book-editor__footer {
+    display: grid;
+
+    gap: 10px;
+
+    padding: 14px 26px 18px;
+
+    border-top: 1px solid rgba(160, 120, 100, 0.3);
+
+    background: rgba(233, 214, 186, 0.35);
+}
+
+.book-editor__actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 10px;
+}
+
+.book-editor__spacer {
+    flex: 1;
+}
+
+.book-editor__delete {
+    color: #7a2f28;
+}
+
+
+/* Colours */
+
+.palette-picker {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 6px;
+}
+
+.palette-picker__swatch {
+    width: 30px;
+    height: 30px;
+
+    padding: 0;
+
+    border: 2px solid rgba(40, 20, 12, 0.35);
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--c) 0 55%,
+            var(--a) 55% 100%
+        );
+
+    transition: transform 0.15s ease;
+}
+
+.palette-picker__swatch:hover,
+.palette-picker__swatch:focus-visible {
+    transform: scale(1.12);
+}
+
+.color-input {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    min-height: 46px;
+
+    padding: 6px 10px;
+
+    border: 1.5px solid var(--field-border);
+    border-radius: 10px;
+
+    background: var(--field-bg);
+}
+
+.color-input input {
+    width: 40px;
+    height: 32px;
+
+    padding: 0;
+
+    border: 0;
+
+    background: none;
+
+    cursor: pointer;
+}
+
+.color-input__value {
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 400;
+
+    text-transform: uppercase;
+}
+
+.field__input--color {
+    height: 46px;
+
+    padding: 4px;
+}
+
+
+/* Cover */
+
+.cover-picker {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 12px;
+}
+
+.cover-picker__button {
+    cursor: pointer;
+}
+
+.cover-picker__button:focus-within {
+    box-shadow: var(--focus-ring);
+}
+
+
+/* =========================================================
+   SHELF EDITOR
+========================================================= */
+
+.shelf-editor__manage {
+    display: grid;
+
+    gap: 8px;
+
+    padding-top: 12px;
+
+    border-top: 1px solid rgba(160, 120, 100, 0.3);
+}
+
+.shelf-editor__row {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.shelf-editor__delete {
+    justify-self: start;
+
+    color: #7a2f28;
+}
+
+
+/* =========================================================
+   PHONE AND TABLET
+========================================================= */
+
+@media (max-width: 860px) {
+
+    .parchment-dialog.book-editor {
+        width: 100vw;
+        height: 100dvh;
+
+        margin: 0;
+
+        border-radius: 0;
+    }
+
+    .book-editor__body {
+        grid-template-columns: 1fr;
+
+        overflow-y: auto;
+    }
+
+    .book-editor__preview {
+        grid-template-columns: 1fr 1fr;
+        align-items: end;
+
+        border-right: 0;
+        border-bottom: 1px solid rgba(160, 120, 100, 0.3);
+
+        overflow: visible;
+    }
+
+    .book-editor__preview .eyebrow {
+        display: none;
+    }
+
+    .book-editor__preview [data-surprise] {
+        grid-column: 1 / -1;
+    }
+
+    .preview-cover .book-cover--medium {
+        width: 110px;
+    }
+
+    .preview-shelf__books {
+        height: 160px;
+    }
+
+    .book-editor__fields {
+        overflow: visible;
+
+        padding: 16px 14px 20px;
+    }
+
+    .book-editor__header,
+    .book-editor__footer {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+}

@@ -1,0 +1,440 @@
+/* =========================================================
+   NOVELLOW
+   AMBIENCE (dashboard)
+
+   Dust, fog, fireflies, rain on the window, candle glow and
+   the occasional oddity. Drawn by js/room/ambience.js and
+   switched on by classes on <html>. Nothing here takes
+   clicks.
+========================================================= */
+
+.ambience {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 3;
+
+    overflow: hidden;
+
+    pointer-events: none;
+}
+
+.ambience > * {
+    display: none;
+}
+
+
+/* ---------------------------------------------------------
+   CANDLE GLOW
+--------------------------------------------------------- */
+
+html:not(.candle-glow) {
+    --glow-display: none;
+}
+
+.candle-glow .sill-candle,
+.candle-glow .crown-piece--candle,
+.candle-glow .crown-piece--lantern {
+    animation: candleHalo 3.6s ease-in-out infinite;
+}
+
+.sill-candle.is-flaring,
+.crown-piece--candle.is-flaring {
+    animation: candleFlare 1.6s ease-out;
+}
+
+@keyframes candleHalo {
+    0%, 100% { filter: drop-shadow(0 -4px 10px rgba(255, 190, 110, 0.45)); }
+    45% { filter: drop-shadow(0 -4px 16px rgba(255, 200, 120, 0.7)); }
+    70% { filter: drop-shadow(0 -4px 12px rgba(255, 180, 100, 0.5)); }
+}
+
+@keyframes candleFlare {
+    0% { filter: drop-shadow(0 -4px 10px rgba(255, 190, 110, 0.5)); }
+    25% { filter: drop-shadow(0 -8px 26px rgba(255, 215, 140, 0.95)) brightness(1.2); }
+    100% { filter: drop-shadow(0 -4px 10px rgba(255, 190, 110, 0.5)); }
+}
+
+
+/* ---------------------------------------------------------
+   FLOATING DUST
+--------------------------------------------------------- */
+
+.ambient-dust .dust-mote {
+    display: block;
+}
+
+.dust-mote {
+    position: absolute;
+
+    width: var(--size);
+    height: var(--size);
+
+    border-radius: 50%;
+
+    background: radial-gradient(circle, rgba(255, 236, 190, 0.9), rgba(255, 236, 190, 0));
+
+    opacity: 0;
+
+    animation: dustDrift linear infinite;
+}
+
+@keyframes dustDrift {
+    0% { opacity: 0; transform: translate(0, 0); }
+    15% { opacity: 0.8; }
+    85% { opacity: 0.6; }
+    100% { opacity: 0; transform: translate(var(--drift), -120px); }
+}
+
+
+/* ---------------------------------------------------------
+   FOG
+--------------------------------------------------------- */
+
+.ambient-fog .fog-bank {
+    display: block;
+}
+
+.fog-bank {
+    position: absolute;
+
+    left: -30%;
+    right: -30%;
+    bottom: -8%;
+
+    height: 46%;
+
+    background:
+        radial-gradient(ellipse 30% 45% at 20% 70%, rgba(214, 214, 236, 0.3), transparent 70%),
+        radial-gradient(ellipse 26% 40% at 55% 80%, rgba(214, 214, 236, 0.26), transparent 70%),
+        radial-gradient(ellipse 34% 48% at 85% 72%, rgba(214, 214, 236, 0.28), transparent 70%);
+
+    filter: blur(8px);
+
+    animation: fogDrift 60s ease-in-out infinite alternate;
+}
+
+.fog-bank--front {
+    height: 30%;
+
+    opacity: 0.7;
+
+    animation-duration: 42s;
+    animation-direction: alternate-reverse;
+}
+
+@keyframes fogDrift {
+    from { transform: translateX(-8%); }
+    to { transform: translateX(8%); }
+}
+
+
+/* ---------------------------------------------------------
+   FIREFLIES
+--------------------------------------------------------- */
+
+.ambient-fireflies .firefly {
+    display: block;
+}
+
+.firefly {
+    position: absolute;
+
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: #fff3a8;
+
+    box-shadow: 0 0 8px 3px rgba(240, 230, 120, 0.7);
+
+    animation-name: fireflyWander, fireflyBlink;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes fireflyWander {
+    from { transform: translate(0, 0); }
+    to { transform: translate(var(--dx), var(--dy)); }
+}
+
+@keyframes fireflyBlink {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 1; }
+}
+
+
+/* ---------------------------------------------------------
+   THE WINDOW: RAIN, LIGHTNING, SHOOTING STARS
+   Sized exactly like .moon-window (room.css).
+--------------------------------------------------------- */
+
+.window-clip-defs {
+    position: absolute;
+}
+
+.window-weather {
+    position: absolute;
+
+    top: 0;
+    left: 7%;
+
+    width: min(66%, 460px);
+
+    aspect-ratio: 440 / 330;
+
+    overflow: hidden;
+
+    clip-path: url(#windowGlassBox);
+}
+
+.window-weather > * {
+    display: none;
+}
+
+.ambient-rain .window-weather__rain,
+.ambient-rain .window-weather__drop,
+.window-weather .shooting-star {
+    display: block;
+}
+
+.window-weather__rain {
+    position: absolute;
+
+    inset: -40px 0 0;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Cg stroke='%23d8e4ff' stroke-opacity='0.45' stroke-width='1' stroke-linecap='round'%3E%3Cpath d='M10 4l-3 14'/%3E%3Cpath d='M38 30l-3 14'/%3E%3Cpath d='M66 10l-3 14'/%3E%3Cpath d='M24 58l-3 14'/%3E%3Cpath d='M80 52l-3 14'/%3E%3Cpath d='M52 74l-3 14'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 90px 90px;
+
+    animation: rainFall 0.55s linear infinite;
+}
+
+.window-weather__rain--near {
+    background-size: 140px 140px;
+
+    opacity: 0.7;
+
+    animation-duration: 0.4s;
+}
+
+@keyframes rainFall {
+    from { background-position: 0 0; }
+    to { background-position: -12px 90px; }
+}
+
+.window-weather__drop {
+    position: absolute;
+
+    top: 30%;
+
+    width: 4px;
+    height: 7px;
+
+    border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+
+    background: rgba(220, 232, 255, 0.55);
+
+    animation: dropSlide 7s ease-in infinite;
+}
+
+@keyframes dropSlide {
+    0% { transform: translateY(0); opacity: 0; }
+    10% { opacity: 1; }
+    100% { transform: translateY(260%) translateY(120px); opacity: 0; }
+}
+
+.window-weather.is-lightning {
+    animation: lightning 0.9s ease-out;
+}
+
+@keyframes lightning {
+    0%, 100% { background: transparent; }
+    8% { background: rgba(235, 240, 255, 0.75); }
+    16% { background: transparent; }
+    26% { background: rgba(235, 240, 255, 0.5); }
+}
+
+.shooting-star {
+    position: absolute;
+
+    width: 70px;
+    height: 2px;
+
+    border-radius: 2px;
+
+    background: linear-gradient(90deg, rgba(255, 245, 210, 0), #fff6d8);
+
+    transform: rotate(-24deg);
+
+    opacity: 0;
+
+    animation: shootingStar 1.3s ease-out forwards;
+}
+
+@keyframes shootingStar {
+    0% { opacity: 0; translate: 0 0; }
+    15% { opacity: 1; }
+    100% { opacity: 0; translate: 120px 54px; }
+}
+
+
+/* ---------------------------------------------------------
+   ODDITIES
+--------------------------------------------------------- */
+
+.ambience > .oddity {
+    display: block;
+}
+
+.oddity {
+    position: absolute;
+}
+
+.oddity--ghost {
+    left: 0;
+
+    width: 64px;
+
+    opacity: 0;
+
+    animation: ghostDrift linear forwards;
+}
+
+.oddity--bat {
+    left: 0;
+
+    width: 58px;
+
+    animation: batFlit linear forwards;
+}
+
+.oddity--leftward {
+    animation-direction: reverse;
+}
+
+@keyframes ghostDrift {
+    0% { transform: translate(-10vw, 0); opacity: 0; }
+    12% { opacity: 0.55; }
+    25% { transform: translate(20vw, -20px); }
+    50% { transform: translate(50vw, 12px); }
+    75% { transform: translate(80vw, -16px); }
+    88% { opacity: 0.55; }
+    100% { transform: translate(110vw, 0); opacity: 0; }
+}
+
+@keyframes batFlit {
+    0% { transform: translate(-10vw, 0) scaleY(1); }
+    10% { transform: translate(5vw, -30px) scaleY(0.6); }
+    20% { transform: translate(20vw, 10px) scaleY(1); }
+    30% { transform: translate(35vw, -40px) scaleY(0.6); }
+    40% { transform: translate(50vw, 0) scaleY(1); }
+    50% { transform: translate(62vw, -26px) scaleY(0.6); }
+    60% { transform: translate(74vw, 12px) scaleY(1); }
+    70% { transform: translate(86vw, -30px) scaleY(0.6); }
+    100% { transform: translate(115vw, -10px) scaleY(1); }
+}
+
+.oddity--z {
+    color: rgba(255, 240, 210, 0.85);
+
+    font-family: var(--font-hand);
+    font-size: 18px;
+
+    opacity: 0;
+
+    animation: catDream 2.6s ease-out forwards;
+}
+
+@keyframes catDream {
+    0% { opacity: 0; transform: translate(0, 0) scale(0.6); }
+    20% { opacity: 1; }
+    100% { opacity: 0; transform: translate(18px, -44px) scale(1.2); }
+}
+
+.oddity--leaf {
+    top: -30px;
+
+    width: 16px;
+    height: 20px;
+
+    border-radius: 0 80% 0 80%;
+
+    background: linear-gradient(135deg, #7f9c56, #3e5a36);
+
+    opacity: 0;
+
+    animation: leafFall 9s ease-in-out forwards;
+}
+
+@keyframes leafFall {
+    0% { opacity: 0; transform: translate(0, 0) rotate(0deg); }
+    10% { opacity: 0.9; }
+    50% { transform: translate(var(--sway), 50vh) rotate(200deg); }
+    90% { opacity: 0.8; }
+    100% { opacity: 0; transform: translate(0, 105vh) rotate(400deg); }
+}
+
+.book-spine.is-shuffling {
+    animation: bookShuffle 1.4s ease-in-out;
+}
+
+@keyframes bookShuffle {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    20% { transform: translateY(-7px) rotate(-2deg); }
+    40% { transform: translateY(-3px) rotate(2deg); }
+    60% { transform: translateY(-6px) rotate(-1deg); }
+}
+
+
+/* ---------------------------------------------------------
+   TABLET AND PHONE
+--------------------------------------------------------- */
+
+@media (max-width: 1180px) {
+
+    .window-weather {
+        top: 20px;
+        left: 12%;
+
+        width: min(56%, 460px);
+    }
+
+}
+
+@media (max-width: 820px) {
+
+    .fog-bank,
+    .firefly:nth-child(2n) {
+        opacity: 0.6;
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   STILLNESS
+--------------------------------------------------------- */
+
+.reduce-motion .ambience > :not(.fog-bank),
+.reduce-motion .window-weather__rain,
+.reduce-motion .window-weather__drop {
+    display: none !important;
+}
+
+.reduce-motion.candle-glow .sill-candle {
+    animation: none;
+    filter: drop-shadow(0 -4px 12px rgba(255, 190, 110, 0.55));
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .ambience > :not(.fog-bank),
+    .window-weather__rain,
+    .window-weather__drop {
+        display: none !important;
+    }
+
+}

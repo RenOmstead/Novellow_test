@@ -1,0 +1,406 @@
+/* =========================================================
+   NOVELLOW
+   THEMES
+
+   Novellow Original is defined in tokens.css. Each other
+   room overrides the tokens here under [data-theme="…"]:
+   its wall and wallpaper, wood, window sky, armchair,
+   paper, accent colours and heading lettering.
+
+   Weather, ivy, the bookcase crown and the wall frames are
+   chosen per theme in js/shell/themes.js.
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   WALLPAPER LAYER
+   Drawn over the wall colour and under everything else.
+--------------------------------------------------------- */
+
+.app-stage {
+    isolation: isolate;
+}
+
+.app-stage::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: -1;
+
+    background-image: var(--wall-pattern, none);
+    background-size: var(--wall-pattern-size, auto);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   HAUNTED LIBRARY
+   Mist, violet-grey paper, ghostly damask.
+========================================================= */
+
+[data-theme="haunted"] {
+    --font-heading: "IM Fell English", "Cormorant Garamond", Georgia, serif;
+
+    --color-ink: #22202a;
+    --color-ink-soft: #4e4a58;
+    --color-ink-faint: #7e7888;
+
+    --color-paper: #ece8e0;
+    --color-paper-light: #f5f2ec;
+    --color-paper-deep: #dcd6cb;
+    --color-paper-edge: #b0a898;
+
+    --color-plum-deep: #1f1b29;
+    --color-plum: #3f3a55;
+    --color-plum-light: #5a5475;
+    --color-mauve: #8e86a8;
+    --color-rose: #a89cc0;
+    --color-blush: #cfc6e6;
+    --color-gold: #d0c49a;
+    --color-gold-light: #ece2b8;
+
+    --wall-left: #2a2733;
+    --wall-middle: #3a3647;
+    --wall-right: #4a4559;
+    --wall-panel-line: rgba(200, 190, 230, 0.04);
+    --wall-glow: rgba(190, 200, 255, 0.16);
+    --wall-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='96' viewBox='0 0 72 96'%3E%3Cpath d='M36 0L72 48L36 96L0 48Z' fill='none' stroke='%23c8bfe0' stroke-opacity='0.08' stroke-width='1.2'/%3E%3Cg fill='%23c8bfe0' fill-opacity='0.07'%3E%3Cpath d='M36 30c6 6 10 12 0 22c-10-10-6-16 0-22z'/%3E%3Ccircle cx='36' cy='60' r='2'/%3E%3Ccircle cx='0' cy='0' r='3'/%3E%3Ccircle cx='72' cy='0' r='3'/%3E%3Ccircle cx='0' cy='96' r='3'/%3E%3Ccircle cx='72' cy='96' r='3'/%3E%3C/g%3E%3C/svg%3E");
+    --wall-pattern-size: 72px 96px;
+
+    --floor-top: #25212c;
+    --floor-bottom: #1a1720;
+
+    --panel-top: #2b2735;
+    --panel-middle: #211d29;
+    --panel-bottom: #17141d;
+    --panel-border: #4a4459;
+
+    --shelf-back-top: #15131b;
+    --shelf-back-bottom: #221f2a;
+    --shelf-board-top: #6a6275;
+    --shelf-board-middle: #4a4453;
+    --shelf-board-bottom: #2e2a35;
+
+    --case-side-dark: #1a1720;
+    --case-side-light: #5a5366;
+    --case-side-mid: #3a3545;
+
+    --crown-top: #625a70;
+    --crown-middle: #433d4f;
+    --crown-bottom: #2d2936;
+
+    --night-top: #0e1018;
+    --night-middle: #262a3a;
+    --night-bottom: #5a5e70;
+
+    --chair-light: #6a6488;
+    --chair-mid: #4a4466;
+    --chair-dark: #2e2a44;
+
+    --button-primary-top: #5a5475;
+    --button-primary-bottom: #3f3a55;
+    --field-border-focus: #8e86a8;
+}
+
+/* Portraits and frames fade a little, as if seen through mist. */
+[data-theme="haunted"] .wall-art > svg:not(.ivy) {
+    filter: saturate(0.6) drop-shadow(0 0 12px rgba(200, 210, 255, 0.14));
+}
+
+
+/* =========================================================
+   RAINY LONDON LIBRARY
+   Striped green wallpaper, walnut, grey skies.
+========================================================= */
+
+[data-theme="rainy"] {
+    --font-heading: "Playfair Display", "Fraunces", Georgia, serif;
+
+    --color-ink: #1e2622;
+    --color-ink-soft: #4a5650;
+    --color-ink-faint: #7a8680;
+
+    --color-paper: #eef0e6;
+    --color-paper-light: #f6f7f0;
+    --color-paper-deep: #dde2d2;
+    --color-paper-edge: #aab4a0;
+
+    --color-plum-deep: #1a2a24;
+    --color-plum: #2f4a3f;
+    --color-plum-light: #3f6153;
+    --color-mauve: #7a9a8a;
+    --color-rose: #a8b8a0;
+    --color-blush: #cfdcc8;
+    --color-gold: #d9c79a;
+    --color-gold-light: #efe0b0;
+
+    --wall-left: #2f3a36;
+    --wall-middle: #3e4b46;
+    --wall-right: #4d5b55;
+    --wall-panel-line: transparent;
+    --wall-glow: rgba(220, 230, 200, 0.14);
+    --wall-pattern:
+        repeating-linear-gradient(
+            90deg,
+            rgba(12, 26, 20, 0.2) 0 22px,
+            transparent 22px 26px,
+            rgba(220, 230, 200, 0.05) 26px 28px,
+            transparent 28px 54px
+        );
+
+    --floor-top: #2a2622;
+    --floor-bottom: #1f1c19;
+
+    --panel-top: #22302b;
+    --panel-middle: #1a2622;
+    --panel-bottom: #131c19;
+    --panel-border: #3f4f47;
+
+    --shelf-back-top: #1a120c;
+    --shelf-back-bottom: #2a1d14;
+    --shelf-board-top: #7a5a3e;
+    --shelf-board-middle: #57402c;
+    --shelf-board-bottom: #36281c;
+
+    --case-side-dark: #1f160f;
+    --case-side-light: #6e5038;
+    --case-side-mid: #4a3526;
+
+    --crown-top: #6e5038;
+    --crown-middle: #4a3526;
+    --crown-bottom: #32241a;
+
+    --night-top: #1d252c;
+    --night-middle: #3a4650;
+    --night-bottom: #6d7a80;
+
+    --chair-light: #3e6b58;
+    --chair-mid: #2c5242;
+    --chair-dark: #1c382c;
+
+    --button-primary-top: #3f6153;
+    --button-primary-bottom: #2f4a3f;
+    --field-border-focus: #7a9a8a;
+}
+
+
+/* =========================================================
+   ENCHANTED FOREST
+   Moss, oak, violet velvet, falling leaves.
+========================================================= */
+
+[data-theme="forest"] {
+    --font-heading: "Almendra", "Fraunces", Georgia, serif;
+
+    --color-ink: #232a1c;
+    --color-ink-soft: #4e5640;
+    --color-ink-faint: #7e8670;
+
+    --color-paper: #f1ecd6;
+    --color-paper-light: #f8f4e4;
+    --color-paper-deep: #e2dcbf;
+    --color-paper-edge: #b8ae88;
+
+    --color-plum-deep: #1f2a1a;
+    --color-plum: #3a4a2e;
+    --color-plum-light: #50653e;
+    --color-mauve: #b98ab2;
+    --color-rose: #c49ab8;
+    --color-blush: #e2c6dc;
+    --color-gold: #e8d98a;
+    --color-gold-light: #f5eab0;
+
+    --wall-left: #2a3522;
+    --wall-middle: #3a4a2e;
+    --wall-right: #4d5e3a;
+    --wall-panel-line: rgba(20, 30, 12, 0.14);
+    --wall-glow: rgba(240, 230, 140, 0.16);
+    --wall-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='%23a9c486' fill-opacity='0.1'%3E%3Cpath d='M20 30c8-10 22-10 26 0c-8 8-18 8-26 0z' transform='rotate(-30 33 30)'/%3E%3Cpath d='M80 70c8-10 22-10 26 0c-8 8-18 8-26 0z' transform='rotate(40 93 70)'/%3E%3Cpath d='M60 10c5-6 13-6 16 0c-5 5-11 5-16 0z' transform='rotate(15 68 10)'/%3E%3Cpath d='M10 90c5-6 13-6 16 0c-5 5-11 5-16 0z' transform='rotate(-60 18 90)'/%3E%3C/g%3E%3Cg fill='%23f3e08a' fill-opacity='0.12'%3E%3Ccircle cx='50' cy='55' r='1.6'/%3E%3Ccircle cx='100' cy='20' r='1.2'/%3E%3Ccircle cx='30' cy='110' r='1.2'/%3E%3C/g%3E%3C/svg%3E");
+    --wall-pattern-size: 120px 120px;
+
+    --floor-top: #2b2418;
+    --floor-bottom: #1f1a11;
+
+    --panel-top: #2a3324;
+    --panel-middle: #1f271b;
+    --panel-bottom: #161c13;
+    --panel-border: #4a5a3a;
+
+    --shelf-back-top: #16140c;
+    --shelf-back-bottom: #241f14;
+    --shelf-board-top: #7e6a44;
+    --shelf-board-middle: #5a4a2e;
+    --shelf-board-bottom: #3a2f1c;
+
+    --case-side-dark: #1f1a10;
+    --case-side-light: #7a6440;
+    --case-side-mid: #52432a;
+
+    --crown-top: #7e6a44;
+    --crown-middle: #5a4a2e;
+    --crown-bottom: #3a2f1c;
+
+    --night-top: #0f1a1c;
+    --night-middle: #1f3a3a;
+    --night-bottom: #6a7a5a;
+
+    --chair-light: #8a6aa0;
+    --chair-mid: #6a4a80;
+    --chair-dark: #48305a;
+
+    --button-primary-top: #50653e;
+    --button-primary-bottom: #3a4a2e;
+    --field-border-focus: #b98ab2;
+}
+
+
+/* =========================================================
+   COZY STUDY CAFÉ
+   Espresso wood, amber light, coffee-bean wallpaper.
+========================================================= */
+
+[data-theme="cafe"] {
+    --font-heading: "Averia Serif Libre", "Fraunces", Georgia, serif;
+
+    --color-ink: #2a1c15;
+    --color-ink-soft: #5e4838;
+    --color-ink-faint: #8e7868;
+
+    --color-paper: #f6ecdc;
+    --color-paper-light: #fbf5ea;
+    --color-paper-deep: #eadcc4;
+    --color-paper-edge: #cfb48e;
+
+    --color-plum-deep: #2a1c15;
+    --color-plum: #5a3f30;
+    --color-plum-light: #7a5640;
+    --color-mauve: #a8805e;
+    --color-rose: #c9955f;
+    --color-blush: #e8c49a;
+    --color-gold: #e0a860;
+    --color-gold-light: #f5d49a;
+
+    --wall-left: #4a3024;
+    --wall-middle: #5e3f2f;
+    --wall-right: #6e4c38;
+    --wall-panel-line: transparent;
+    --wall-glow: rgba(255, 190, 110, 0.28);
+    --wall-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='%23f1dcb6' fill-opacity='0.07'%3E%3Cellipse cx='16' cy='16' rx='5' ry='7' transform='rotate(30 16 16)'/%3E%3Cellipse cx='48' cy='48' rx='5' ry='7' transform='rotate(-30 48 48)'/%3E%3Ccircle cx='48' cy='16' r='1.6'/%3E%3Ccircle cx='16' cy='48' r='1.6'/%3E%3C/g%3E%3Cg fill='none' stroke='%232a1c15' stroke-opacity='0.18' stroke-width='1.2'%3E%3Cpath d='M19 10c-4 4-2 8-6 12' /%3E%3Cpath d='M45 42c4 4 2 8 6 12' /%3E%3C/g%3E%3C/svg%3E");
+    --wall-pattern-size: 64px 64px;
+
+    --floor-top: #3a261b;
+    --floor-bottom: #2a1b13;
+
+    --panel-top: #3a281e;
+    --panel-middle: #2c1e16;
+    --panel-bottom: #21160f;
+    --panel-border: #6a4a34;
+
+    --shelf-back-top: #1c120c;
+    --shelf-back-bottom: #2c1c12;
+    --shelf-board-top: #8a5e3c;
+    --shelf-board-middle: #684428;
+    --shelf-board-bottom: #442c1a;
+
+    --case-side-dark: #2a1a10;
+    --case-side-light: #7a5236;
+    --case-side-mid: #563823;
+
+    --crown-top: #8a5e3c;
+    --crown-middle: #684428;
+    --crown-bottom: #442c1a;
+
+    --night-top: #1c1830;
+    --night-middle: #3e3450;
+    --night-bottom: #b0785a;
+
+    --chair-light: #b07a4a;
+    --chair-mid: #8a5a32;
+    --chair-dark: #5e3c20;
+
+    --button-primary-top: #7a5640;
+    --button-primary-bottom: #5a3f30;
+    --field-border-focus: #c9955f;
+}
+
+
+/* =========================================================
+   ROMANTIC GOTHIC
+   Burgundy velvet damask, ebony, candlelit gold.
+========================================================= */
+
+[data-theme="gothic"] {
+    --font-heading: "Grenze Gotisch", "Cinzel", Georgia, serif;
+
+    --color-ink: #24121a;
+    --color-ink-soft: #5a3a44;
+    --color-ink-faint: #8a6a74;
+
+    --color-paper: #f3e6e0;
+    --color-paper-light: #faf1ec;
+    --color-paper-deep: #e6d2c8;
+    --color-paper-edge: #c49a9a;
+
+    --color-plum-deep: #1a0d12;
+    --color-plum: #4a1c2b;
+    --color-plum-light: #6a2a3d;
+    --color-mauve: #a8546a;
+    --color-rose: #c46a7e;
+    --color-blush: #e8a8b4;
+    --color-gold: #e8c27c;
+    --color-gold-light: #f5dca0;
+
+    --wall-left: #2a0f18;
+    --wall-middle: #3a1622;
+    --wall-right: #4a1c2b;
+    --wall-panel-line: transparent;
+    --wall-glow: rgba(255, 170, 120, 0.2);
+    --wall-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='120' viewBox='0 0 80 120'%3E%3Cg fill='%23000' fill-opacity='0.16'%3E%3Cpath d='M40 12c10 10 18 22 10 36c-3 6-8 10-10 18c-2-8-7-12-10-18c-8-14 0-26 10-36z'/%3E%3Cpath d='M40 74c6 4 10 10 6 16c-2 3-4 5-6 10c-2-5-4-7-6-10c-4-6 0-12 6-16z'/%3E%3Cpath d='M0 54c8 6 12 14 6 22c-2 3-4 5-6 10zM80 54c-8 6-12 14-6 22c2 3 4 5 6 10z'/%3E%3C/g%3E%3Cg fill='%23e8c27c' fill-opacity='0.06'%3E%3Ccircle cx='40' cy='40' r='3'/%3E%3Ccircle cx='0' cy='0' r='2.5'/%3E%3Ccircle cx='80' cy='0' r='2.5'/%3E%3Ccircle cx='0' cy='120' r='2.5'/%3E%3Ccircle cx='80' cy='120' r='2.5'/%3E%3C/g%3E%3C/svg%3E");
+    --wall-pattern-size: 80px 120px;
+
+    --floor-top: #1f0b12;
+    --floor-bottom: #15070c;
+
+    --panel-top: #2a1219;
+    --panel-middle: #1d0c12;
+    --panel-bottom: #13070b;
+    --panel-border: #5a2a36;
+
+    --shelf-back-top: #0f0608;
+    --shelf-back-bottom: #1c0c10;
+    --shelf-board-top: #4a2a2e;
+    --shelf-board-middle: #321a1e;
+    --shelf-board-bottom: #1f0f12;
+
+    --case-side-dark: #140709;
+    --case-side-light: #4a262c;
+    --case-side-mid: #2e161a;
+
+    --crown-top: #4a262c;
+    --crown-middle: #321a1e;
+    --crown-bottom: #1f0f12;
+
+    --night-top: #0c0610;
+    --night-middle: #2a1024;
+    --night-bottom: #6a2a3a;
+
+    --chair-light: #a8354e;
+    --chair-mid: #7a2038;
+    --chair-dark: #4e1224;
+
+    --button-primary-top: #6a2a3d;
+    --button-primary-bottom: #4a1c2b;
+    --field-border-focus: #c46a7e;
+}
+
+/* Blackletter reads best a touch larger and not too heavy. */
+[data-theme="gothic"] .page-heading__title,
+[data-theme="gothic"] .section-title {
+    font-weight: 700;
+
+    letter-spacing: 0.01em;
+}

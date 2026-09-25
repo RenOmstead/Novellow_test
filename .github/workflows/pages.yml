@@ -1,0 +1,53 @@
+# Publishes Novellow to GitHub Pages.
+#
+# Every relative file reference in the site ends in ?v=__VERSION__.
+# This replaces __VERSION__ with the commit being published, so each
+# release loads fresh CSS and JavaScript instead of a stale cached copy.
+#
+# One-time setup: repository Settings → Pages → Source: GitHub Actions.
+
+name: Publish to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Stamp the version for cache busting
+        run: |
+          VERSION="${GITHUB_SHA::8}"
+          mkdir -p _site
+          cp -r *.html css js assets _site/
+          find _site -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' -o -name '*.svg' \) \
+            -exec sed -i "s/__VERSION__/${VERSION}/g" {} +
+          if grep -rl "__VERSION__" _site; then
+            echo "Some files still contain __VERSION__" && exit 1
+          fi
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

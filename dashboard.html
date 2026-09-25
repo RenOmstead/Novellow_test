@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="original">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="robots" content="noindex">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Your Novellow library: an illustrated bookcase and reading journal."
+    >
+    <!-- Link previews (Messages, Discord, Facebook, Slack, X…) -->
+    <meta name="theme-color" content="#3b2231">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Novellow">
+    <meta property="og:title" content="Novellow (test) · Your reading life, kept between the pages">
+    <meta property="og:description" content="A cozy illustrated library and reading journal. Fill your shelves, open each book, and keep your notes, quotes, new words and reviews inside.">
+    <meta property="og:url" content="https://renomstead.github.io/Novellow_test/">
+    <meta property="og:image" content="https://renomstead.github.io/Novellow_test/assets/social/preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Novellow: a sleeping black cat on a shelf of colourful books beneath a moonlit window, beside the words “Your reading life, kept between the pages.”">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Novellow (test) · Your reading life, kept between the pages">
+    <meta name="twitter:description" content="A cozy illustrated library and reading journal.">
+    <meta name="twitter:image" content="https://renomstead.github.io/Novellow_test/assets/social/preview.png">
+
+
+    <title>My Library | Novellow</title>
+
+    <link rel="icon" href="assets/illustrations/favicon.svg?v=__VERSION__" type="image/svg+xml">
+
+    <link rel="stylesheet" href="css/tokens.css?v=__VERSION__">
+    <link rel="stylesheet" href="css/base.css?v=__VERSION__">
+    <link rel="stylesheet" href="css/app-shell.css?v=__VERSION__">
+    <link rel="stylesheet" href="css/room.css?v=__VERSION__">
+    <link rel="stylesheet" href="css/bookcase.css?v=__VERSION__">
+    <link rel="stylesheet" href="css/books.css?v=__VERSION__">
+    <link rel="stylesheet" href="css/journal.css?v=__VERSION__">
+    <link rel="stylesheet" href="css/forms.css?v=__VERSION__">
+    <link rel="stylesheet" href="css/ambience.css?v=__VERSION__">
+    <link rel="stylesheet" href="css/decorations.css?v=__VERSION__">
+    <link rel="stylesheet" href="css/themes.css?v=__VERSION__">
+
+    <script type="module" src="js/pages/dashboard.js?v=__VERSION__"></script>
+</head>
+
+
+<body class="app" data-page="home">
+
+    <div class="boot-screen" id="boot">
+        <div class="book-loader" role="status">
+            <div class="book-loader__book" aria-hidden="true">
+                <span class="book-loader__cover"></span>
+                <span class="book-loader__page"></span>
+                <span class="book-loader__page"></span>
+                <span class="book-loader__page"></span>
+            </div>
+            <p>Opening the library…</p>
+        </div>
+    </div>
+
+
+    <main
+        id="main"
+        class="page page--dashboard"
+        hidden
+    >
+
+        <h1 class="visually-hidden">My Library</h1>
+
+        <div class="library-room">
+
+
+            <!-- =================================================
+                 BOOKCASE
+            ================================================== -->
+
+            <section
+                class="bookcase-zone"
+                aria-label="Your bookcase"
+            >
+
+                <div class="bookcase">
+
+                    <svg
+                        class="ivy ivy--case-left"
+                        viewBox="0 0 110 700"
+                        data-seed="3"
+                        data-density="19"
+                        data-leaf-size="0.72"
+                        aria-hidden="true"
+                    >
+                        <path class="ivy-stem" d="M40 60C28 100 44 140 32 190C22 240 40 280 30 330C22 370 34 400 28 440" />
+                    </svg>
+
+                    <svg
+                        class="ivy ivy--case-right"
+                        viewBox="0 0 110 820"
+                        data-seed="17"
+                        data-density="19"
+                        data-leaf-size="0.72"
+                        aria-hidden="true"
+                    >
+                        <path class="ivy-stem" d="M40 0C60 50 36 100 56 160C72 210 44 260 62 320C78 380 50 430 66 500C72 540 62 570 66 600" />
+                    </svg>
+
+
+                    <!-- The carved crown and the decorations on top -->
+
+                    <div class="bookcase-top">
+
+                        <div
+                            class="crown-decor"
+                            data-crown-decor
+                            aria-hidden="true"
+                        ></div>
+
+                        <svg
+                        class="bookcase-crown"
+                        viewBox="0 0 600 140"
+                        role="img"
+                        aria-label="My Library"
+                    >
+
+                        <defs>
+
+                            <linearGradient id="crownWood" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" style="stop-color: var(--crown-top, #8a5636)" />
+                                <stop offset="60%" style="stop-color: var(--crown-middle, #5f3624)" />
+                                <stop offset="100%" style="stop-color: var(--crown-bottom, #43261a)" />
+                            </linearGradient>
+
+                            <linearGradient id="crownFrieze" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#5a3322" />
+                                <stop offset="100%" stop-color="#3e2317" />
+                            </linearGradient>
+
+                            <linearGradient id="plaqueFace" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#f4e2bd" />
+                                <stop offset="100%" stop-color="#d8b27a" />
+                            </linearGradient>
+
+                        </defs>
+
+                        <path d="M0 44H232C252 44 262 26 280 20C290 16 310 16 320 20C338 26 348 44 368 44H600V68H0Z" fill="url(#crownWood)" stroke="#2a160e" stroke-width="2" />
+
+                        <path d="M0 46.5H232C252 46.5 262 28.5 280 22.5C290 18.5 310 18.5 320 22.5C338 28.5 348 46.5 368 46.5H600" fill="none" stroke="#b27a50" stroke-width="1.6" />
+
+                        <path d="M282 32C280 20 296 16 300 26C304 16 320 20 318 32" fill="none" stroke="#d8aa66" stroke-width="3" stroke-linecap="round" />
+
+                        <circle cx="300" cy="30" r="4.5" fill="#d8aa66" stroke="#5a3522" stroke-width="1" />
+
+                        <rect x="0" y="68" width="600" height="8" fill="#361d12" />
+
+                        <rect x="0" y="76" width="600" height="64" fill="url(#crownFrieze)" />
+
+                        <rect x="14" y="82" width="572" height="52" rx="6" fill="none" stroke="#d8aa66" stroke-opacity="0.35" stroke-width="1.2" />
+
+                        <circle cx="36" cy="106" r="9" fill="#6e4029" stroke="#d8aa66" stroke-width="1.4" />
+
+                        <circle cx="36" cy="106" r="3.6" fill="#d8aa66" />
+
+                        <circle cx="564" cy="106" r="9" fill="#6e4029" stroke="#d8aa66" stroke-width="1.4" />
+
+                        <circle cx="564" cy="106" r="3.6" fill="#d8aa66" />
+
+                        <path d="M190 104C160 96 130 112 100 104C84 100 70 104 58 108" fill="none" stroke="#d8aa66" stroke-width="1.4" stroke-opacity="0.7" />
+
+                        <path d="M410 104C440 96 470 112 500 104C516 100 530 104 542 108" fill="none" stroke="#d8aa66" stroke-width="1.4" stroke-opacity="0.7" />
+
+                        <g transform="translate(198 101) rotate(-90)">
+                            <use href="#motif-sprig" x="-20" y="-86" width="40" height="80" color="#86a058" />
+                        </g>
+
+                        <g transform="translate(402 101) rotate(90)">
+                            <use href="#motif-sprig" x="-20" y="-86" width="40" height="80" color="#86a058" />
+                        </g>
+
+                        <circle cx="190" cy="101" r="7" fill="url(#plaqueFace)" stroke="#3b2418" stroke-width="1.6" />
+
+                        <circle cx="410" cy="101" r="7" fill="url(#plaqueFace)" stroke="#3b2418" stroke-width="1.6" />
+
+                        <rect x="194" y="85" width="212" height="32" rx="7" fill="url(#plaqueFace)" stroke="#3b2418" stroke-width="2" />
+
+                        <rect x="198" y="89" width="204" height="24" rx="5" fill="none" stroke="#8a5a36" stroke-opacity="0.55" stroke-width="0.9" />
+
+                        <text class="crown-plaque-text" x="300" y="107.5" text-anchor="middle">My Library</text>
+
+                        <path d="M236 118H364Q360 138 300 139Q240 138 236 118Z" fill="#3a2016" stroke="#d8aa66" stroke-opacity="0.5" stroke-width="1" />
+
+                        <use href="#motif-moon" x="254" y="121" width="13" height="13" color="#f0cf8a" transform="translate(521 0) scale(-1 1)" />
+
+                        <path d="M281 121.5A6.5 6.5 0 0 1 281 134.5Z" fill="#f0cf8a" />
+
+                        <circle cx="281" cy="128" r="6.5" fill="none" stroke="#f0cf8a" stroke-width="0.8" stroke-opacity="0.6" />
+
+                        <circle cx="300" cy="128" r="7.5" fill="#f5d796" />
+
+                        <path d="M319 121.5A6.5 6.5 0 0 0 319 134.5Z" fill="#f0cf8a" />
+
+                        <circle cx="319" cy="128" r="6.5" fill="none" stroke="#f0cf8a" stroke-width="0.8" stroke-opacity="0.6" />
+
+                        <use href="#motif-moon" x="333" y="121" width="13" height="13" color="#f0cf8a" />
+
+                        </svg>
+
+                    </div>
+
+
+                    <!-- Shelves, drawn by js/books/bookcase.js -->
+
+                    <div
+                        class="bookcase-body"
+                        id="bookcaseBody"
+                        aria-live="polite"
+                    ></div>
+
+
+                    <div
+                        class="bookcase-base"
+                        aria-hidden="true"
+                    ></div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 JOURNAL SIDE
+            ================================================== -->
+
+            <section
+                class="journal-zone"
+                aria-label="Reading journal"
+            >
+
+                <div
+                    class="wall-art"
+                    aria-hidden="true"
+                >
+
+                    <svg class="moon-window" viewBox="0 0 440 330">
+                        <use href="#scene-window" />
+                    </svg>
+
+                    <svg class="tiffany-lamp" viewBox="0 0 210 250">
+                        <use href="#scene-lamp" />
+                    </svg>
+
+                    <svg class="wall-frame wall-frame--moth" viewBox="0 0 80 100">
+                        <use href="#frame-moth" />
+                    </svg>
+
+                    <svg class="wall-frame wall-frame--charm" viewBox="0 0 40 52">
+                        <use href="#decor-starcharm" />
+                    </svg>
+
+                    <svg class="wall-frame wall-frame--castle" viewBox="0 0 130 100">
+                        <use href="#frame-castle" />
+                    </svg>
+
+                    <svg class="sill-candle sill-candle--left" viewBox="0 0 40 90">
+                        <use href="#decor-candle" />
+                    </svg>
+
+                    <svg class="sill-candle sill-candle--right" viewBox="0 0 40 90">
+                        <use href="#decor-candle" />
+                    </svg>
+
+                    <svg class="sill-plant" viewBox="0 0 60 78">
+                        <use href="#decor-plant" />
+                    </svg>
+
+                    <svg
+                        class="ivy ivy--window"
+                        viewBox="0 0 520 200"
+                        data-seed="31"
+                        data-density="20"
+                        data-leaf-size="0.7"
+                    >
+                        <path class="ivy-stem" d="M0 20C80 6 150 30 230 14C300 0 380 16 520 8" />
+                        <path class="ivy-stem" d="M150 22C160 60 140 100 156 150" />
+                        <path class="ivy-stem" d="M330 10C344 50 326 90 340 130" />
+                    </svg>
+
+                </div>
+
+
+                <!-- The open book, drawn by js/journal/journal.js -->
+
+                <div
+                    class="journal"
+                    id="journal"
+                    data-mode="desk"
+                ></div>
+
+
+                <!-- Little paper notes under the journal -->
+
+                <div
+                    class="desk-notes"
+                    id="deskNotes"
+                ></div>
+
+
+                <div
+                    class="cozy-corner"
+                    aria-hidden="true"
+                >
+                    <svg class="armchair" viewBox="0 0 260 280">
+                        <use href="#scene-armchair" />
+                    </svg>
+
+                    <svg class="side-table" viewBox="0 0 170 210">
+                        <use href="#scene-side-table" />
+                    </svg>
+                </div>
+
+
+                <div
+                    class="room-floor"
+                    aria-hidden="true"
+                >
+                    <svg class="room-rug" viewBox="0 0 700 180" preserveAspectRatio="none">
+                        <use href="#scene-rug" />
+                    </svg>
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- Weather and floating dust (js/room/ambience.js) -->
+
+        <div
+            class="ambience"
+            id="ambience"
+            aria-hidden="true"
+        ></div>
+
+    </main>
+
+
+    <noscript>
+        <p class="noscript-note">Novellow needs JavaScript turned on to open your library.</p>
+    </noscript>
+
+</body>
+
+</html>

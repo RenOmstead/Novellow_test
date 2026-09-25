@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="robots" content="noindex">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    
+    <!-- Link previews (Messages, Discord, Facebook, Slack, X…) -->
+    <meta name="theme-color" content="#3b2231">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Novellow">
+    <meta property="og:title" content="Novellow (test) · Your reading life, kept between the pages">
+    <meta property="og:description" content="A cozy illustrated library and reading journal. Fill your shelves, open each book, and keep your notes, quotes, new words and reviews inside.">
+    <meta property="og:url" content="https://renomstead.github.io/Novellow_test/">
+    <meta property="og:image" content="https://renomstead.github.io/Novellow_test/assets/social/preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Novellow: a sleeping black cat on a shelf of colourful books beneath a moonlit window, beside the words “Your reading life, kept between the pages.”">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Novellow (test) · Your reading life, kept between the pages">
+    <meta name="twitter:description" content="A cozy illustrated library and reading journal.">
+    <meta name="twitter:image" content="https://renomstead.github.io/Novellow_test/assets/social/preview.png">
+
+
+    <title>Page not found | Novellow</title>
+
+    <!--
+        GitHub Pages serves this page for any missing address,
+        at any depth, so it carries its own styles instead of
+        linking to the app's relative stylesheets.
+    -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=IM+Fell+English:ital@0;1&display=swap">
+
+    <style>
+        :root {
+            --wall-top: #3b2231;
+            --wall-bottom: #1f121b;
+            --paper: #f6ead2;
+            --paper-deep: #e8d3ad;
+            --ink: #3a2530;
+            --ink-soft: #6d5560;
+            --plum: #6e3b58;
+            --brass: #c9974f;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: grid;
+            place-items: center;
+
+            margin: 0;
+            padding: 24px 16px;
+
+            background:
+                radial-gradient(ellipse at 50% 20%, rgba(240, 207, 138, 0.18), transparent 60%),
+                linear-gradient(180deg, var(--wall-top), var(--wall-bottom));
+
+            color: var(--ink);
+
+            font-family: "IM Fell English", Georgia, serif;
+        }
+
+        .lost {
+            width: min(100%, 460px);
+
+            padding: 34px 30px 30px;
+
+            border: 1px solid rgba(160, 120, 90, 0.5);
+            border-radius: 18px;
+
+            background: linear-gradient(180deg, var(--paper), var(--paper-deep));
+
+            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45);
+
+            text-align: center;
+        }
+
+        .lost svg {
+            width: 120px;
+            height: auto;
+        }
+
+        h1 {
+            margin: 10px 0 6px;
+
+            color: var(--plum);
+
+            font-family: "Berkshire Swash", Georgia, serif;
+            font-size: 36px;
+            font-weight: 400;
+        }
+
+        p {
+            margin: 0 0 22px;
+
+            color: var(--ink-soft);
+
+            font-size: 19px;
+            line-height: 1.45;
+        }
+
+        a {
+            display: inline-block;
+
+            padding: 12px 22px;
+
+            border-radius: 999px;
+
+            background: linear-gradient(180deg, #8a4d6e, var(--plum));
+
+            color: #fff5e6;
+
+            font-size: 18px;
+            text-decoration: none;
+
+            box-shadow: 0 6px 12px rgba(60, 20, 40, 0.35);
+        }
+
+        a:focus-visible {
+            outline: 3px solid var(--brass);
+            outline-offset: 3px;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <main class="lost">
+
+        <!-- An empty little shelf with one book fallen over -->
+        <svg viewBox="0 0 120 80" aria-hidden="true">
+            <rect x="6" y="62" width="108" height="8" rx="2" fill="#7c4d38" />
+            <rect x="6" y="68" width="108" height="4" rx="1" fill="#4e2e22" />
+            <rect x="18" y="22" width="14" height="40" rx="2" fill="#6e3b58" />
+            <rect x="20" y="28" width="10" height="3" fill="#e2b86a" />
+            <rect x="20" y="52" width="10" height="3" fill="#e2b86a" />
+            <rect x="34" y="30" width="11" height="32" rx="2" fill="#3f5a4a" />
+            <rect x="36" y="36" width="7" height="2" fill="#e2b86a" />
+            <rect x="60" y="50" width="38" height="12" rx="2" fill="#8a4a3c" />
+            <rect x="66" y="53" width="26" height="2" fill="#e2b86a" />
+            <path d="M84 40c3-6 9-6 12 0" fill="none" stroke="#c9974f" stroke-width="1.6" stroke-linecap="round" />
+            <circle cx="90" cy="34" r="2" fill="#c9974f" />
+        </svg>
+
+        <h1>This page wandered off</h1>
+
+        <p>We looked on every shelf, but there's nothing at this address. Perhaps it was borrowed and never returned.</p>
+
+        <a id="homeLink" href="./">Back to my library</a>
+
+    </main>
+
+    <script>
+        // A GitHub Pages project site lives under /<repository>/.
+        (function () {
+            var link = document.getElementById("homeLink");
+            var parts = window.location.pathname.split("/").filter(Boolean);
+            if (/\.github\.io$/.test(window.location.hostname) && parts.length) {
+                link.href = "/" + parts[0] + "/";
+            }
+            else {
+                link.href = "/";
+            }
+        })();
+    </script>
+
+</body>
+
+</html>

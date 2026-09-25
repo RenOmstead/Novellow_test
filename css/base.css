@@ -1,0 +1,1197 @@
+/* =========================================================
+   NOVELLOW
+   BASE
+
+   Reset, typography, buttons, form fields, dialogs, toasts,
+   loading and empty states. Shared by every page.
+========================================================= */
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    min-height: 100vh;
+
+    margin: 0;
+
+    color: var(--color-ink);
+
+    background: var(--wall-left);
+
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.45;
+
+    overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    margin: 0;
+
+    line-height: 1.1;
+}
+
+p {
+    margin: 0;
+}
+
+a {
+    color: inherit;
+}
+
+img,
+svg {
+    display: block;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: not-allowed;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.art-sprite {
+    position: absolute;
+
+    width: 0;
+    height: 0;
+
+    overflow: hidden;
+}
+
+/* Ivy vines: stems are drawn here, js/room/ivy.js adds leaves. */
+
+.ivy {
+    position: absolute;
+
+    overflow: visible;
+
+    pointer-events: none;
+}
+
+.ivy-stem {
+    fill: none;
+
+    stroke: #4a5a2c;
+    stroke-width: 2.2;
+
+    stroke-linecap: round;
+}
+
+.visually-hidden {
+    position: absolute !important;
+
+    width: 1px;
+    height: 1px;
+
+    overflow: hidden;
+
+    clip: rect(0 0 0 0);
+
+    white-space: nowrap;
+}
+
+:focus-visible {
+    outline: none;
+
+    box-shadow: var(--focus-ring);
+}
+
+.skip-link {
+    position: fixed;
+
+    top: 10px;
+    left: 10px;
+
+    z-index: 5000;
+
+    padding: 10px 16px;
+
+    border-radius: var(--radius-small);
+
+    color: var(--color-ink);
+
+    background: var(--color-paper);
+
+    transform: translateY(-160%);
+
+    transition: transform 0.2s ease;
+}
+
+.skip-link:focus {
+    transform: none;
+}
+
+
+/* =========================================================
+   TYPE HELPERS
+========================================================= */
+
+.eyebrow {
+    color: var(--color-ink-soft);
+
+    font-family: var(--font-engraved);
+    font-size: 14px;
+    font-weight: 400;
+
+    letter-spacing: 0.1em;
+}
+
+.handwritten {
+    font-family: var(--font-hand);
+    font-weight: 400;
+}
+
+.muted {
+    color: var(--color-ink-soft);
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.button {
+    min-height: 44px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 0 18px;
+
+    border: 1.5px solid transparent;
+    border-radius: 999px;
+
+    font-family: var(--font-ui);
+    font-size: 16px;
+    font-weight: 700;
+
+    text-decoration: none;
+    white-space: nowrap;
+
+    transition:
+        transform 0.18s ease,
+        filter 0.18s ease,
+        background 0.18s ease;
+}
+
+.button:hover:not(:disabled) {
+    transform: translateY(-1px);
+
+    filter: brightness(1.06);
+}
+
+.button:disabled {
+    opacity: 0.6;
+}
+
+.button svg {
+    width: 20px;
+    height: 20px;
+
+    flex: 0 0 auto;
+}
+
+.button--primary {
+    color: var(--button-primary-ink);
+
+    border-color: #2c1824;
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--button-primary-top),
+            var(--button-primary-bottom)
+        );
+
+    box-shadow:
+        inset 0 1px rgba(255, 255, 255, 0.18),
+        0 6px 14px rgba(40, 16, 24, 0.3);
+}
+
+.button--brass {
+    color: #3b2418;
+
+    border-color: #5a3522;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f1d9ad,
+            #d6ac72
+        );
+
+    box-shadow:
+        inset 0 1px rgba(255, 255, 255, 0.5),
+        0 6px 14px rgba(40, 16, 12, 0.25);
+}
+
+.button--ghost {
+    color: var(--color-ink);
+
+    border-color: var(--color-paper-edge);
+
+    background: rgba(255, 250, 240, 0.6);
+}
+
+.button--danger {
+    color: #fff3e8;
+
+    border-color: #4a1a14;
+
+    background:
+        linear-gradient(
+            180deg,
+            #b85a4e,
+            #8e3a31
+        );
+}
+
+.button--small {
+    min-height: 36px;
+
+    padding: 0 14px;
+
+    font-size: 14px;
+}
+
+.button--block {
+    width: 100%;
+}
+
+.button.is-busy {
+    cursor: progress;
+}
+
+.icon-button {
+    width: 44px;
+    height: 44px;
+
+    display: inline-grid;
+    place-items: center;
+
+    flex: 0 0 auto;
+
+    padding: 0;
+
+    border: 1px solid var(--color-paper-edge);
+    border-radius: 50%;
+
+    color: var(--color-ink);
+
+    background: rgba(255, 250, 240, 0.85);
+
+    transition:
+        transform 0.18s ease,
+        background 0.18s ease;
+}
+
+.icon-button:hover {
+    transform: translateY(-1px);
+
+    background: #fffaf0;
+}
+
+.icon-button svg {
+    width: 22px;
+    height: 22px;
+}
+
+.icon-button--small {
+    width: 34px;
+    height: 34px;
+}
+
+.icon-button--small svg {
+    width: 17px;
+    height: 17px;
+}
+
+.text-button {
+    padding: 4px 2px;
+
+    border: 0;
+
+    color: var(--color-plum);
+
+    background: none;
+
+    font-family: var(--font-ui);
+    font-size: 15px;
+    font-weight: 700;
+
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+}
+
+
+/* =========================================================
+   FORM FIELDS
+========================================================= */
+
+.field {
+    display: grid;
+
+    gap: 6px;
+}
+
+.field__label {
+    color: var(--color-ink);
+
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.field__hint {
+    color: var(--color-ink-soft);
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.field__control {
+    position: relative;
+}
+
+.field__control > svg {
+    position: absolute;
+
+    left: 12px;
+    top: 50%;
+
+    width: 22px;
+    height: 22px;
+
+    transform: translateY(-50%);
+
+    pointer-events: none;
+}
+
+.field__control > svg + .field__input {
+    padding-left: 44px;
+}
+
+.field__input {
+    width: 100%;
+    min-height: 46px;
+
+    padding: 10px 14px;
+
+    border: 1.5px solid var(--field-border);
+    border-radius: 10px;
+
+    background: var(--field-bg);
+
+    font-family: var(--font-ui);
+    font-size: 16px;
+    font-weight: 400;
+
+    box-shadow: inset 0 1px 3px rgba(60, 30, 20, 0.08);
+
+    transition:
+        border-color 0.18s ease,
+        background 0.18s ease;
+}
+
+.field__input:focus {
+    outline: none;
+
+    border-color: var(--field-border-focus);
+
+    background: var(--field-bg-focus);
+
+    box-shadow: var(--focus-ring);
+}
+
+.field__input[aria-invalid="true"] {
+    border-color: var(--color-danger);
+}
+
+textarea.field__input {
+    min-height: 110px;
+
+    resize: vertical;
+
+    line-height: 1.45;
+}
+
+textarea.field__input--hand {
+    font-family: var(--font-hand);
+    font-size: 18px;
+}
+
+select.field__input {
+    appearance: none;
+
+    padding-right: 40px;
+
+    background-image:
+        linear-gradient(45deg, transparent 50%, var(--color-ink-soft) 50%),
+        linear-gradient(135deg, var(--color-ink-soft) 50%, transparent 50%);
+
+    background-position:
+        calc(100% - 20px) 50%,
+        calc(100% - 14px) 50%;
+
+    background-size: 6px 6px;
+
+    background-repeat: no-repeat;
+}
+
+.field-row {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(150px, 1fr));
+
+    gap: 14px;
+}
+
+.check {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    min-height: 44px;
+
+    font-family: var(--font-ui);
+    font-size: 15px;
+    font-weight: 400;
+
+    cursor: pointer;
+}
+
+.check input {
+    width: 20px;
+    height: 20px;
+
+    accent-color: var(--color-plum);
+}
+
+.form-error {
+    padding: 10px 14px;
+
+    border: 1px solid rgba(161, 73, 63, 0.4);
+    border-radius: 10px;
+
+    color: #7a2f28;
+
+    background: rgba(233, 167, 180, 0.2);
+
+    font-size: 15px;
+}
+
+.form-note {
+    padding: 10px 14px;
+
+    border: 1px solid rgba(95, 125, 69, 0.4);
+    border-radius: 10px;
+
+    color: #34502a;
+
+    background: rgba(135, 144, 120, 0.18);
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   STAR RATING
+========================================================= */
+
+.star-rating {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 2px;
+}
+
+.star-rating svg {
+    width: 24px;
+    height: 24px;
+}
+
+.star-rating--input {
+    position: relative;
+}
+
+.star-rating__button {
+    width: 32px;
+    height: 36px;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0;
+
+    border: 0;
+
+    background: none;
+}
+
+.star-rating__button svg {
+    width: 26px;
+    height: 26px;
+
+    transition: transform 0.15s ease;
+}
+
+.star-rating__button:hover svg {
+    transform: scale(1.15) rotate(-6deg);
+}
+
+
+/* =========================================================
+   DIALOGS
+========================================================= */
+
+.parchment-dialog {
+    width: min(520px, calc(100vw - 24px));
+    max-height: calc(100vh - 32px);
+
+    padding: 0;
+
+    border: 2px solid #6b4538;
+    border-radius: var(--radius-large);
+
+    color: var(--color-ink);
+
+    background:
+        radial-gradient(
+            ellipse at 20% 0%,
+            rgba(255, 255, 255, 0.55),
+            transparent 55%
+        ),
+        linear-gradient(
+            180deg,
+            var(--color-paper-light),
+            var(--color-paper-deep)
+        );
+
+    box-shadow: var(--shadow-heavy);
+
+    overflow: auto;
+}
+
+.parchment-dialog::backdrop {
+    background: rgba(29, 15, 20, 0.66);
+
+    backdrop-filter: blur(3px);
+}
+
+.parchment-dialog[open] {
+    animation: dialogIn 0.28s ease;
+}
+
+.parchment-dialog--wide {
+    width: min(720px, calc(100vw - 24px));
+}
+
+.dialog-form {
+    position: relative;
+
+    display: grid;
+
+    gap: 16px;
+
+    padding: 28px 28px 24px;
+}
+
+.dialog-art {
+    width: 46px;
+    height: 46px;
+}
+
+.dialog-eyebrow {
+    color: var(--color-ink-soft);
+
+    font-family: var(--font-engraved);
+    font-size: 14px;
+
+    letter-spacing: 0.12em;
+}
+
+.dialog-title {
+    padding-right: 36px;
+
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 800;
+
+    color: var(--color-plum-deep);
+}
+
+.dialog-message {
+    color: var(--color-ink-soft);
+
+    font-size: 18px;
+}
+
+.dialog-body {
+    display: grid;
+
+    gap: 14px;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+
+    gap: 10px;
+}
+
+.dialog-close {
+    position: absolute;
+
+    top: 16px;
+    right: 16px;
+
+    width: 36px;
+    height: 36px;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0;
+
+    border: 1px solid var(--color-paper-edge);
+    border-radius: 50%;
+
+    color: var(--color-ink-soft);
+
+    background: rgba(255, 250, 240, 0.8);
+}
+
+.dialog-close__art {
+    width: 16px;
+    height: 16px;
+}
+
+
+/* =========================================================
+   TOASTS
+========================================================= */
+
+.toast-shelf {
+    position: fixed;
+
+    right: 18px;
+    bottom: 18px;
+
+    z-index: 4000;
+
+    display: grid;
+
+    gap: 10px;
+
+    width: min(380px, calc(100vw - 24px));
+
+    pointer-events: none;
+}
+
+.toast {
+    display: grid;
+
+    grid-template-columns: 32px 1fr 28px;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 12px 12px 12px 14px;
+
+    border: 1px solid var(--color-paper-edge);
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--color-paper-light),
+            var(--color-paper-deep)
+        );
+
+    box-shadow: var(--shadow-paper);
+
+    font-size: 17px;
+
+    pointer-events: auto;
+
+    transform: rotate(-0.6deg);
+
+    animation: toastIn 0.35s cubic-bezier(.2, .8, .2, 1);
+}
+
+.toast--error {
+    border-color: rgba(161, 73, 63, 0.6);
+}
+
+.toast--success {
+    border-color: rgba(95, 125, 69, 0.6);
+}
+
+.toast__art {
+    width: 30px;
+    height: 30px;
+}
+
+.toast__close {
+    width: 28px;
+    height: 28px;
+
+    padding: 0;
+
+    border: 0;
+
+    color: var(--color-ink-soft);
+
+    background: none;
+
+    font-size: 22px;
+    line-height: 1;
+}
+
+.toast.is-leaving {
+    opacity: 0;
+
+    transform: translateY(10px);
+
+    transition:
+        opacity 0.35s ease,
+        transform 0.35s ease;
+}
+
+
+/* =========================================================
+   LOADING: A LITTLE BOOK TURNING ITS PAGES
+========================================================= */
+
+.book-loader {
+    display: grid;
+    justify-items: center;
+
+    gap: 14px;
+
+    padding: 40px 20px;
+
+    color: var(--color-paper);
+
+    font-family: var(--font-engraved);
+    font-size: 18px;
+
+    letter-spacing: 0.05em;
+
+    text-align: center;
+}
+
+.book-loader__book {
+    position: relative;
+
+    width: 72px;
+    height: 52px;
+
+    perspective: 400px;
+}
+
+.book-loader__cover {
+    position: absolute;
+
+    inset: 0;
+
+    border: 2px solid #2e140e;
+    border-radius: 4px;
+
+    background: #6b3528;
+}
+
+.book-loader__page {
+    position: absolute;
+
+    top: 4px;
+    bottom: 4px;
+    left: 50%;
+
+    width: 32px;
+
+    border-radius: 0 4px 4px 0;
+
+    background: #f6ead4;
+
+    box-shadow: inset 4px 0 6px -3px rgba(120, 80, 50, 0.5);
+
+    transform-origin: left center;
+
+    animation: pageTurn 1.8s ease-in-out infinite;
+}
+
+.book-loader__page:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.book-loader__page:nth-child(4) {
+    animation-delay: 0.6s;
+}
+
+.book-loader__book::before {
+    content: "";
+
+    position: absolute;
+
+    top: 4px;
+    bottom: 4px;
+    right: 50%;
+
+    width: 32px;
+
+    border-radius: 4px 0 0 4px;
+
+    background: #efdfc3;
+
+    z-index: 1;
+}
+
+.boot-screen {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 6000;
+
+    display: grid;
+    place-items: center;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 40%,
+            rgba(255, 196, 120, 0.2),
+            transparent 55%
+        ),
+        linear-gradient(
+            180deg,
+            var(--wall-middle),
+            var(--wall-left)
+        );
+
+    transition: opacity 0.4s ease;
+}
+
+.boot-screen.is-done {
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   EMPTY STATES
+========================================================= */
+
+.empty-state {
+    display: grid;
+    justify-items: center;
+
+    gap: 12px;
+
+    max-width: 440px;
+
+    margin: 0 auto;
+    padding: 28px 24px;
+
+    border: 1px solid var(--color-paper-edge);
+    border-radius: var(--radius-large);
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--color-paper-light),
+            var(--color-paper-deep)
+        );
+
+    box-shadow: var(--shadow-paper);
+
+    text-align: center;
+}
+
+.empty-state__art {
+    width: 120px;
+    height: 90px;
+}
+
+.empty-state h2 {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight: 800;
+
+    color: var(--color-plum-deep);
+}
+
+.empty-state p {
+    color: var(--color-ink-soft);
+
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   PAPER PANELS
+========================================================= */
+
+.paper {
+    position: relative;
+
+    border: 1px solid var(--color-paper-edge);
+    border-radius: var(--radius-large);
+
+    background:
+        radial-gradient(
+            ellipse at 20% 0%,
+            rgba(255, 255, 255, 0.5),
+            transparent 55%
+        ),
+        linear-gradient(
+            180deg,
+            var(--color-paper-light),
+            var(--color-paper-deep)
+        );
+
+    box-shadow: var(--shadow-paper);
+}
+
+.paper::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 7px;
+
+    border: 1px solid rgba(121, 77, 61, 0.14);
+    border-radius: calc(var(--radius-large) - 6px);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes dialogIn {
+
+    from {
+        opacity: 0;
+
+        transform: translateY(12px) scale(0.98);
+    }
+
+}
+
+
+@keyframes toastIn {
+
+    from {
+        opacity: 0;
+
+        transform: translateY(14px) rotate(-2deg);
+    }
+
+}
+
+
+@keyframes pageTurn {
+
+    0%,
+    15% {
+        transform: rotateY(0deg);
+    }
+
+    55%,
+    100% {
+        transform: rotateY(-180deg);
+    }
+
+}
+
+
+@keyframes steamRise {
+
+    0% {
+        transform: translateY(3px);
+
+        opacity: 0;
+    }
+
+    35% {
+        opacity: 0.85;
+    }
+
+    100% {
+        transform: translateY(-7px);
+
+        opacity: 0;
+    }
+
+}
+
+
+@keyframes glowFlicker {
+
+    from {
+        opacity: 0.72;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}
+
+
+@keyframes sparkleTwinkle {
+
+    0%,
+    100% {
+        transform: scale(1);
+
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(0.55) rotate(45deg);
+
+        opacity: 0.55;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   Honoured from the OS setting and from Novellow's own
+   Settings → Appearance switch (html.reduce-motion).
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+}
+
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+}
+
+
+/* =========================================================
+   PROGRESS RIBBON
+========================================================= */
+
+.progress-ribbon {
+    width: 100%;
+    height: 9px;
+
+    overflow: hidden;
+
+    border: 1px solid #b89a8a;
+    border-radius: 999px;
+
+    background: #eee0cf;
+}
+
+.progress-ribbon span {
+    display: block;
+
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            #6e4658,
+            #9a6a80
+        );
+}
+
+
+/* =========================================================
+   TEST COPY RIBBON
+   Shown only when js/config.js sets SITE_LABEL.
+========================================================= */
+
+html[data-site-label]::after {
+    content: attr(data-site-label);
+
+    position: fixed;
+
+    top: 18px;
+    right: -46px;
+
+    z-index: 9999;
+
+    width: 170px;
+
+    padding: 5px 0;
+
+    background: linear-gradient(180deg, #d8aa66, #b8843f);
+
+    box-shadow: 0 4px 10px rgba(20, 8, 4, 0.4);
+
+    color: #2b1d24;
+
+    font-family: var(--font-engraved);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-align: center;
+    text-transform: uppercase;
+
+    transform: rotate(40deg);
+
+    pointer-events: none;
+}
