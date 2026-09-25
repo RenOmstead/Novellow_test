@@ -43,6 +43,11 @@
 ========================================================= */
 
 [data-theme="haunted"] {
+    /* Ghostly green candle flames and cobwebs on the chandelier. */
+    --flame: #9df27a;
+    --chandelier-cobweb: inline;
+    --chandelier-drops: none;
+    --lamp-glow: rgba(170, 240, 150, 0.22);
     --font-heading: "IM Fell English", "Cormorant Garamond", Georgia, serif;
 
     --color-ink: #22202a;
@@ -143,20 +148,21 @@
     transform: scaleX(-1);
 }
 
-[data-theme="haunted"] .wall-art > .cobweb--window {
-    top: 4px;
-    left: calc(7% + 18px);
+/* Cobwebs in the window's top corners. */
+[data-theme="haunted"] .wall-art > .cobweb--window,
+[data-theme="haunted"] .wall-art > .cobweb--wall {
+    bottom: calc(var(--window-bottom) + 190px);
 
-    width: 90px;
-    height: 90px;
+    width: 96px;
+    height: 96px;
+}
+
+[data-theme="haunted"] .wall-art > .cobweb--window {
+    left: calc(var(--scene-centre) - var(--window-width) / 2 + 8px);
 }
 
 [data-theme="haunted"] .wall-art > .cobweb--wall {
-    top: 0;
-    right: 0;
-
-    width: 150px;
-    height: 150px;
+    left: calc(var(--scene-centre) + var(--window-width) / 2 - 104px);
 
     transform: scaleX(-1);
 }
@@ -180,6 +186,7 @@
 ========================================================= */
 
 [data-theme="rainy"] {
+    --shade: #2f4a3f;
     --font-heading: "Playfair Display", "Fraunces", Georgia, serif;
 
     --color-ink: #1e2622;
@@ -256,6 +263,7 @@
 ========================================================= */
 
 [data-theme="forest"] {
+    --lamp-glow: rgba(250, 240, 140, 0.3);
     --font-heading: "Almendra", "Fraunces", Georgia, serif;
 
     --color-ink: #232a1c;
@@ -326,6 +334,8 @@
 ========================================================= */
 
 [data-theme="cafe"] {
+    --shade: #b5643f;
+    --lamp-glow: rgba(255, 190, 110, 0.38);
     --font-heading: "Averia Serif Libre", "Fraunces", Georgia, serif;
 
     --color-ink: #2a1c15;
@@ -480,4 +490,71 @@
         display: none;
     }
 
+}
+
+
+/* =========================================================
+   THE LIBRARY CAT
+   One drawing (scene-cat) coloured by these tokens; chosen in
+   Settings and set on <html data-cat="…">.
+========================================================= */
+
+[data-cat="orange"] {
+    --cat-fur: #e08a3c;
+    --cat-line: #7a3e14;
+    --cat-shine: #f6bc78;
+    --cat-ear: #f2a7a0;
+    --cat-eye: #5a2e14;
+    --cat-whisker: #fff2e0;
+    --cat-stripe: #c26a24;
+    --cat-stripes: inline;
+}
+
+[data-cat="tabby"] {
+    --cat-fur: #9a8872;
+    --cat-line: #3a3028;
+    --cat-shine: #c4b49c;
+    --cat-ear: #d9a0a0;
+    --cat-eye: #2a2220;
+    --cat-whisker: #f4ece0;
+    --cat-stripe: #4a3e32;
+    --cat-stripes: inline;
+}
+
+[data-cat="calico"] {
+    --cat-fur: #f6efe4;
+    --cat-line: #6a5a4a;
+    --cat-shine: #fffaf2;
+    --cat-ear: #f2b8b0;
+    --cat-eye: #3a2e28;
+    --cat-whisker: #8a7a6a;
+    --cat-patch-a: #e08a3c;
+    --cat-patch-b: #2e2628;
+    --cat-patches: inline;
+}
+
+[data-cat="fluffy"] {
+    --cat-fur: #8e939c;
+    --cat-line: #3a3e46;
+    --cat-shine: #c2c8d2;
+    --cat-ear: #e8b4b8;
+    --cat-eye: #2a2e36;
+    --cat-whisker: #f4f4f2;
+    --cat-white: #f6f6f3;
+    --cat-white-show: inline;
+    --cat-fluff: inline;
+}
+
+[data-cat="white"] {
+    --cat-fur: #f7f4ef;
+    --cat-line: #8a8078;
+    --cat-shine: #ffffff;
+    --cat-ear: #f2bcc0;
+    --cat-eye: #6a5e58;
+    --cat-whisker: #b0a8a0;
+}
+
+[data-cat="tuxedo"] {
+    --cat-white: #f6f3ee;
+    --cat-white-show: inline;
 }

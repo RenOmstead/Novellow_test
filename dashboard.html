@@ -299,16 +299,18 @@
                         <use href="#decor-plant" />
                     </svg>
 
+                    <!-- Ivy climbing round the window's arch (same box as the window) -->
                     <svg
                         class="ivy ivy--window"
-                        viewBox="0 0 520 200"
+                        viewBox="0 0 440 330"
                         data-seed="31"
-                        data-density="20"
-                        data-leaf-size="0.7"
+                        data-density="17"
+                        data-leaf-size="0.68"
                     >
-                        <path class="ivy-stem" d="M0 20C80 6 150 30 230 14C300 0 380 16 520 8" />
-                        <path class="ivy-stem" d="M150 22C160 60 140 100 156 150" />
-                        <path class="ivy-stem" d="M330 10C344 50 326 90 340 130" />
+                        <path class="ivy-stem" d="M16 250C8 170 26 104 86 56C140 14 214 0 280 14C330 24 372 50 398 84" />
+                        <path class="ivy-stem" d="M120 34C126 64 116 92 126 124" />
+                        <path class="ivy-stem" d="M300 22C312 50 304 78 314 108" />
+                        <path class="ivy-stem" d="M34 150C50 170 46 196 60 214" />
                     </svg>
 
                 </div>
@@ -317,6 +319,19 @@
                 <!-- The open book, drawn by js/journal/journal.js.
                      It opens in front of the room when a book is
                      taken off the shelf, and goes back when closed. -->
+
+                <!-- The ceiling lamp; each theme hangs its own -->
+
+                <div
+                    class="ceiling-lamp"
+                    aria-hidden="true"
+                >
+                    <span class="ceiling-lamp__glow"></span>
+                    <svg viewBox="0 0 210 250">
+                        <use href="#scene-lamp" />
+                    </svg>
+                </div>
+
 
                 <div
                     class="journal-stage"
@@ -382,13 +397,16 @@
                     </div>
 
                     <div class="corner-scene corner-scene--forest">
-                        <svg class="corner-fairy-ring" viewBox="0 0 360 240">
-                            <use href="#scene-fairy-ring" />
+                        <svg class="corner-stump" viewBox="0 0 320 250">
+                            <use href="#scene-stump" />
                         </svg>
                     </div>
 
                     <div class="corner-scene corner-scene--cafe">
-                        <svg class="corner-bistro" viewBox="0 0 300 240">
+                        <svg class="armchair" viewBox="0 0 260 280">
+                            <use href="#scene-armchair" />
+                        </svg>
+                        <svg class="corner-bistro" viewBox="20 0 180 240">
                             <use href="#scene-bistro" />
                         </svg>
                     </div>

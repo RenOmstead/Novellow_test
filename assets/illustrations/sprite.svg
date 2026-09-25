@@ -406,50 +406,79 @@
         <g>
             <animateTransform attributeName="transform" type="rotate" values="0 184 92;7 184 92;0 184 92;-3 184 92;0 184 92" dur="6s" repeatCount="indefinite" />
 
-            <path d="M182 90C203 96 208 118 199 134C193 145 197 154 208 152" fill="none" stroke="#0d0a0c" stroke-width="16" stroke-linecap="round" />
+            <path style="stroke: var(--cat-line, #0d0a0c)" d="M182 90C203 96 208 118 199 134C193 145 197 154 208 152" fill="none" stroke-width="16" stroke-linecap="round" />
 
-            <path d="M182 90C203 96 208 118 199 134C193 145 197 154 208 152" fill="none" stroke="#1f181e" stroke-width="12.5" stroke-linecap="round" />
+            <path style="stroke: var(--cat-fur, #1f181e)" d="M182 90C203 96 208 118 199 134C193 145 197 154 208 152" fill="none" stroke-width="12.5" stroke-linecap="round" />
 
-            <path d="M186 96C198 104 201 118 196 130" fill="none" stroke="#4d3d57" stroke-width="2.4" stroke-linecap="round" opacity="0.65" />
+            <path style="stroke: var(--cat-shine, #4d3d57)" d="M186 96C198 104 201 118 196 130" fill="none" stroke-width="2.4" stroke-linecap="round" opacity="0.65" />
+        <!-- Tail stripes (tabby, orange) and a white tip (tuxedo, grey-and-white) -->
+            <path d="M194 101L204 97M201 116L211 116M197 131L207 135" style="stroke: var(--cat-stripe, #000); display: var(--cat-stripes, none)" stroke-width="3.4" stroke-linecap="round" />
+            <path d="M198 142C196 149 200 153 208 152" fill="none" style="stroke: var(--cat-white, #fff); display: var(--cat-white-show, none)" stroke-width="11" stroke-linecap="round" />
         </g>
 
-        <path d="M72 100C58 100 51 88 57 71C65 50 100 40 136 42C170 44 191 58 193 79C194 93 185 101 170 101Z" fill="#1f181e" stroke="#0d0a0c" stroke-width="2.5" />
+        <path style="fill: var(--cat-fur, #1f181e); stroke: var(--cat-line, #0d0a0c)" d="M72 100C58 100 51 88 57 71C65 50 100 40 136 42C170 44 191 58 193 79C194 93 185 101 170 101Z" stroke-width="2.5" />
+            <!-- Body markings: tabby stripes, calico patches -->
+            <path d="M100 46C104 56 104 66 100 76M120 44C124 56 124 68 120 80M140 45C144 57 144 69 140 81M160 50C163 60 163 70 160 81M178 60C180 66 180 74 178 82" fill="none" style="stroke: var(--cat-stripe, #000); display: var(--cat-stripes, none)" stroke-width="4" stroke-linecap="round" />
+            <g style="display: var(--cat-patches, none)">
+                <path d="M96 46C112 40 132 44 136 58C132 72 110 74 98 64C90 58 90 50 96 46Z" style="fill: var(--cat-patch-a, #e08a3c)" />
+                <path d="M150 50C166 50 184 60 186 74C176 82 158 80 150 70C144 62 144 54 150 50Z" style="fill: var(--cat-patch-b, #2a2224)" />
+            </g>
 
-            <path d="M62 56C77 47 106 41 136 44C160 46 180 56 188 72" fill="none" stroke="#5a4865" stroke-width="3.4" stroke-linecap="round" opacity="0.75" />
 
-            <path d="M120 70C135 66 152 68 164 76" fill="none" stroke="#0d0a0c" stroke-width="2" stroke-linecap="round" opacity="0.6" />
+            <path style="stroke: var(--cat-shine, #5a4865)" d="M62 56C77 47 106 41 136 44C160 46 180 56 188 72" fill="none" stroke-width="3.4" stroke-linecap="round" opacity="0.75" />
 
-            <path d="M30 60L27 25C27 22 30 21 32 23L55 43Z" fill="#1f181e" stroke="#0d0a0c" stroke-width="2.5" stroke-linejoin="round" />
+            <path style="stroke: var(--cat-line, #0d0a0c)" d="M120 70C135 66 152 68 164 76" fill="none" stroke-width="2" stroke-linecap="round" opacity="0.6" />
 
-            <path d="M64 43L87 23C89 21 92 22 92 25L90 60Z" fill="#1f181e" stroke="#0d0a0c" stroke-width="2.5" stroke-linejoin="round" />
+            <path style="fill: var(--cat-fur, #1f181e); stroke: var(--cat-line, #0d0a0c)" d="M30 60L27 25C27 22 30 21 32 23L55 43Z" stroke-width="2.5" stroke-linejoin="round" />
 
-            <path d="M33 51L31 31L47 44Z" fill="#6b4556" />
+            <path style="fill: var(--cat-fur, #1f181e); stroke: var(--cat-line, #0d0a0c)" d="M64 43L87 23C89 21 92 22 92 25L90 60Z" stroke-width="2.5" stroke-linejoin="round" />
 
-            <path d="M72 44L88 31L87 51Z" fill="#6b4556" />
+            <path style="fill: var(--cat-ear, #6b4556)" d="M33 51L31 31L47 44Z" />
 
-            <path d="M24 72C22 53 37 40 59 40C81 40 96 53 94 72C93 88 79 99 59 99C39 99 25 88 24 72Z" fill="#1f181e" stroke="#0d0a0c" stroke-width="2.5" />
+            <path style="fill: var(--cat-ear, #6b4556)" d="M72 44L88 31L87 51Z" />
 
-            <path d="M25 76L18 79L25 82M93 76L100 79L93 82" fill="#1f181e" stroke="#0d0a0c" stroke-width="2" stroke-linejoin="round" />
+            <!-- Fluffy cheek tufts -->
+            <g style="display: var(--cat-fluff, none)">
+                <path d="M27 68L11 64L20 73L8 78L20 82L9 88L26 86Z" style="fill: var(--cat-fur, #1f181e); stroke: var(--cat-line, #0d0a0c)" stroke-width="1.8" stroke-linejoin="round" />
+                <path d="M91 68L107 64L98 73L110 78L98 82L109 88L92 86Z" style="fill: var(--cat-fur, #1f181e); stroke: var(--cat-line, #0d0a0c)" stroke-width="1.8" stroke-linejoin="round" />
+            </g>
 
-            <path d="M36 50C43 44 51 42 59 42C68 42 76 44 82 49" fill="none" stroke="#5a4865" stroke-width="2.6" stroke-linecap="round" opacity="0.75" />
+            <path style="fill: var(--cat-fur, #1f181e); stroke: var(--cat-line, #0d0a0c)" d="M24 72C22 53 37 40 59 40C81 40 96 53 94 72C93 88 79 99 59 99C39 99 25 88 24 72Z" stroke-width="2.5" />
+            <!-- Head markings -->
+            <path d="M52 44L54 54M59 43V54M66 44L64 54" fill="none" style="stroke: var(--cat-stripe, #000); display: var(--cat-stripes, none)" stroke-width="2.6" stroke-linecap="round" />
+            <g style="display: var(--cat-patches, none)">
+                <path d="M28 60C30 48 44 42 56 42C54 52 46 60 36 66C32 66 29 64 28 60Z" style="fill: var(--cat-patch-a, #e08a3c)" />
+                <path d="M62 42C76 42 88 50 92 62C84 64 72 58 66 50Z" style="fill: var(--cat-patch-b, #2a2224)" />
+            </g>
+            <path d="M44 79C46 71 54 69 59 73C64 69 72 71 74 79C74 89 66 95 59 95C52 95 44 89 44 79Z" style="fill: var(--cat-white, #fff); display: var(--cat-white-show, none)" />
+
+
+            <path style="fill: var(--cat-fur, #1f181e); stroke: var(--cat-line, #0d0a0c)" d="M25 76L18 79L25 82M93 76L100 79L93 82" stroke-width="2" stroke-linejoin="round" />
+
+            <path style="stroke: var(--cat-shine, #5a4865)" d="M36 50C43 44 51 42 59 42C68 42 76 44 82 49" fill="none" stroke-width="2.6" stroke-linecap="round" opacity="0.75" />
 
             <ellipse cx="40" cy="80" rx="6" ry="3" fill="#b8798b" opacity="0.4" />
 
             <ellipse cx="78" cy="80" rx="6" ry="3" fill="#b8798b" opacity="0.4" />
 
-            <path d="M37 71Q43 76.5 50 71M68 71Q75 76.5 81 71" fill="none" stroke="#d8b9c4" stroke-width="2.3" stroke-linecap="round" />
+            <path style="stroke: var(--cat-eye, #d8b9c4)" d="M37 71Q43 76.5 50 71M68 71Q75 76.5 81 71" fill="none" stroke-width="2.3" stroke-linecap="round" />
 
             <path d="M55.5 80H62.5L59 84Z" fill="#c28595" />
 
             <path d="M59 84Q56 88 52.5 86.5M59 84Q62 88 65.5 86.5" fill="none" stroke="#7c6070" stroke-width="1.3" stroke-linecap="round" />
 
-            <path d="M42 85L17 81M42 88.5L19 92M76 85L101 81M76 88.5L99 92" fill="none" stroke="#b9a7b3" stroke-width="1.1" stroke-linecap="round" opacity="0.7" />
+            <path style="stroke: var(--cat-whisker, #b9a7b3)" d="M42 85L17 81M42 88.5L19 92M76 85L101 81M76 88.5L99 92" fill="none" stroke-width="1.1" stroke-linecap="round" opacity="0.7" />
 
-            <ellipse cx="44" cy="100" rx="13" ry="6.5" fill="#1f181e" stroke="#0d0a0c" stroke-width="2.2" />
+            <ellipse style="fill: var(--cat-fur, #1f181e); stroke: var(--cat-line, #0d0a0c)" cx="44" cy="100" rx="13" ry="6.5" stroke-width="2.2" />
 
-            <ellipse cx="74" cy="101" rx="13" ry="6.5" fill="#1f181e" stroke="#0d0a0c" stroke-width="2.2" />
+            <ellipse style="fill: var(--cat-fur, #1f181e); stroke: var(--cat-line, #0d0a0c)" cx="74" cy="101" rx="13" ry="6.5" stroke-width="2.2" />
 
-            <path d="M40 97.5V102M45 97.5V102M70 98.5V103M75 98.5V103" fill="none" stroke="#0d0a0c" stroke-width="1.3" stroke-linecap="round" />
+            <g style="display: var(--cat-white-show, none)">
+                <ellipse cx="44" cy="100" rx="11.5" ry="5.2" style="fill: var(--cat-white, #fff)" />
+                <ellipse cx="74" cy="101" rx="11.5" ry="5.2" style="fill: var(--cat-white, #fff)" />
+            </g>
+
+            <path style="stroke: var(--cat-line, #0d0a0c)" d="M40 97.5V102M45 97.5V102M70 98.5V103M75 98.5V103" fill="none" stroke-width="1.3" stroke-linecap="round" />
 
         </symbol>
 
@@ -880,12 +909,7 @@
 
         <!-- The café: a bistro table with coffee and cake, and a chair -->
 
-        <symbol id="scene-bistro" viewBox="0 0 300 240">
-            <!-- Bentwood chair -->
-            <path d="M206 236L214 150M262 236L252 150" stroke="#3a2416" stroke-width="6" stroke-linecap="round" />
-            <path d="M212 70C212 40 258 40 258 70V150" fill="none" stroke="#3a2416" stroke-width="7" stroke-linecap="round" />
-            <path d="M218 76C224 96 246 96 252 76" fill="none" stroke="#3a2416" stroke-width="4" />
-            <ellipse cx="234" cy="150" rx="34" ry="9" fill="#6e4029" stroke="#3a2416" stroke-width="2" />
+        <symbol id="scene-bistro" viewBox="20 0 180 240">
             <!-- Table -->
             <path d="M110 128V226M84 236H136" stroke="#1f1a1d" stroke-width="7" stroke-linecap="round" />
             <path d="M110 200C96 210 88 222 84 236M110 200C124 210 132 222 136 236" fill="none" stroke="#1f1a1d" stroke-width="4" />
@@ -986,6 +1010,83 @@
                 <circle cx="300" cy="120" r="2.2"><animate attributeName="opacity" values="0;1;0" dur="3.4s" begin="1s" repeatCount="indefinite" /></circle>
                 <circle cx="250" cy="150" r="2"><animate attributeName="opacity" values="0;1;0" dur="2.4s" begin="0.5s" repeatCount="indefinite" /></circle>
                 <circle cx="150" cy="130" r="2"><animate attributeName="opacity" values="0;1;0" dur="3s" begin="1.6s" repeatCount="indefinite" /></circle>
+            </g>
+        </symbol>
+
+
+        <!-- The enchanted forest: a mossy tree-stump seat with a fairy door -->
+
+        <symbol id="scene-stump" viewBox="0 0 320 250">
+            <!-- Ferns behind -->
+            <g fill="#4f6b3c">
+                <path d="M40 246C30 200 20 170 4 150C30 164 46 196 52 246Z" />
+                <path d="M280 246C290 200 302 172 318 156C292 168 276 198 268 246Z" />
+            </g>
+            <!-- Roots and trunk -->
+            <path d="M58 246C74 236 82 222 84 204C86 170 86 130 88 100H232C234 130 234 170 236 204C238 222 246 236 262 246Z" fill="#6e4a2e" stroke="#3a2416" stroke-width="2" stroke-linejoin="round" />
+            <g stroke="#4a2f1c" stroke-width="2.4" fill="none" stroke-linecap="round" opacity="0.8">
+                <path d="M106 110C104 150 108 190 100 236" />
+                <path d="M138 108C140 150 134 196 140 240" />
+                <path d="M186 110C184 150 190 194 182 238" />
+                <path d="M214 108C218 150 212 196 222 236" />
+            </g>
+            <!-- The rings on top -->
+            <ellipse cx="160" cy="100" rx="74" ry="20" fill="#d9b27a" stroke="#6e4a2e" stroke-width="2" />
+            <g fill="none" stroke="#a9804a" stroke-width="1.4">
+                <ellipse cx="160" cy="100" rx="56" ry="14" />
+                <ellipse cx="160" cy="100" rx="38" ry="9" />
+                <ellipse cx="160" cy="100" rx="18" ry="4" />
+            </g>
+            <!-- Moss over the rim -->
+            <path d="M86 100C90 112 98 104 104 116C110 104 118 114 124 108C130 118 138 108 146 116C152 108 160 118 168 110C174 118 182 108 190 116C196 106 204 116 212 106C218 114 226 104 234 100C220 110 190 118 160 118C130 118 100 110 86 100Z" fill="#6f8b4e" />
+            <!-- A knitted cushion and an open book on the seat -->
+            <ellipse cx="160" cy="92" rx="48" ry="13" fill="#9b82a0" stroke="#5c4a64" stroke-width="1.6" />
+            <path d="M118 90C140 96 180 96 202 90M124 86C144 91 176 91 196 86" fill="none" stroke="#c4b0c8" stroke-width="1.2" opacity="0.8" />
+            <path d="M136 84L160 90L184 84L184 78L160 84L136 78Z" fill="#faf2e3" stroke="#8a7458" stroke-width="1.2" stroke-linejoin="round" />
+            <path d="M160 84V90" stroke="#8a7458" stroke-width="1" />
+            <!-- Bracket mushrooms up the side -->
+            <g fill="#e8c27c" stroke="#8a6020" stroke-width="1.2">
+                <path d="M232 150C250 146 258 154 252 160C246 162 238 160 232 158Z" />
+                <path d="M234 174C248 172 254 178 250 184C244 186 238 184 234 182Z" />
+                <path d="M88 140C72 136 64 144 70 150C76 152 84 150 88 148Z" />
+            </g>
+            <!-- The fairy door in the roots -->
+            <path d="M142 244V214C142 196 178 196 178 214V244Z" fill="#7a4a2e" stroke="#3a2416" stroke-width="2" />
+            <path d="M160 200V244M146 222H174" stroke="#5a3422" stroke-width="1.4" />
+            <circle cx="170" cy="230" r="2" fill="#e8c27c" />
+            <circle cx="160" cy="212" r="6" fill="#ffe7a0" stroke="#3a2416" stroke-width="1.4">
+                <animate attributeName="fill" values="#ffe7a0;#fff3c8;#ffe7a0" dur="3s" repeatCount="indefinite" />
+            </circle>
+            <ellipse cx="160" cy="246" rx="24" ry="4" fill="#9a8a78" />
+            <!-- Toadstools at the base -->
+            <g stroke="#6a1a20" stroke-width="1.2">
+                <g transform="translate(70 246)"><path d="M-3 0V-12H3V0Z" fill="#f4ead8" stroke="#8a7a5a" /><path d="M-11 -11C-11 -24 11 -24 11 -11Z" fill="#c8323a" /><circle cx="-3" cy="-17" r="2" fill="#fff4e8" stroke="none" /></g>
+                <g transform="translate(88 248)"><path d="M-2 0V-8H2V0Z" fill="#f4ead8" stroke="#8a7a5a" /><path d="M-7 -7C-7 -16 7 -16 7 -7Z" fill="#c8323a" /><circle cx="2" cy="-11" r="1.5" fill="#fff4e8" stroke="none" /></g>
+                <g transform="translate(258 246)"><path d="M-3 0V-10H3V0Z" fill="#f4ead8" stroke="#8a7a5a" /><path d="M-9 -9C-9 -20 9 -20 9 -9Z" fill="#b98ab2" stroke="#6a4a70" /><circle cx="-2" cy="-14" r="1.8" fill="#fff4e8" stroke="none" /></g>
+            </g>
+            <!-- Ferns in front -->
+            <g fill="#5f7d45">
+                <path d="M20 250C26 222 40 206 60 196C48 212 40 230 38 250Z" />
+                <path d="M300 250C296 224 284 208 264 198C276 214 282 232 282 250Z" />
+            </g>
+            <!-- A little fairy, wings fluttering -->
+            <g transform="translate(250 60)">
+                <animateTransform attributeName="transform" type="translate" values="250 60;258 48;266 58;254 68;250 60" dur="7s" repeatCount="indefinite" />
+                <g fill="#dff3ff" fill-opacity="0.75" stroke="#9fc4dc" stroke-width="0.8">
+                    <ellipse cx="-8" cy="-8" rx="9" ry="5" transform="rotate(-30 -8 -8)"><animate attributeName="ry" values="5;1.5;5" dur="0.25s" repeatCount="indefinite" /></ellipse>
+                    <ellipse cx="8" cy="-8" rx="9" ry="5" transform="rotate(30 8 -8)"><animate attributeName="ry" values="5;1.5;5" dur="0.25s" repeatCount="indefinite" /></ellipse>
+                </g>
+                <circle r="10" fill="url(#warmGlow)" opacity="0.8" />
+                <path d="M-3 0L0 12L3 0Z" fill="#b98ab2" />
+                <circle cy="-4" r="3.4" fill="#f6dccb" />
+                <path d="M-3.5 -6C-2 -10 2 -10 3.5 -6" fill="#e8c27c" />
+            </g>
+            <!-- Fireflies -->
+            <g fill="#fff3a8">
+                <circle cx="46" cy="120" r="2.4"><animate attributeName="opacity" values="0;1;0" dur="2.8s" repeatCount="indefinite" /></circle>
+                <circle cx="290" cy="110" r="2.2"><animate attributeName="opacity" values="0;1;0" dur="3.4s" begin="1s" repeatCount="indefinite" /></circle>
+                <circle cx="110" cy="54" r="2"><animate attributeName="opacity" values="0;1;0" dur="2.4s" begin="0.5s" repeatCount="indefinite" /></circle>
+                <circle cx="200" cy="40" r="2"><animate attributeName="opacity" values="0;1;0" dur="3s" begin="1.6s" repeatCount="indefinite" /></circle>
             </g>
         </symbol>
 
@@ -1972,6 +2073,85 @@
 
         
     </symbol>
+
+
+        <!-- ===================================================
+             CEILING LAMPS (one per room; see THEMES in
+             js/shell/themes.js). All share the lamp's size.
+        ==================================================== -->
+
+        <!-- A wrought-iron candle chandelier (gothic, haunted) -->
+
+        <symbol id="lamp-chandelier" viewBox="0 0 210 250">
+        <path d="M105 0V74" stroke="#3a2a22" stroke-width="3.4" stroke-dasharray="5 3" />
+        <path d="M105 2V74" stroke="#8a7458" stroke-width="1.4" stroke-dasharray="3 5" />
+            <path d="M105 74V120M105 120L40 138M105 120L72 150M105 120L138 150M105 120L170 138" stroke="#2a2228" stroke-width="3" fill="none" />
+            <ellipse cx="105" cy="146" rx="70" ry="14" fill="none" stroke="#2a2228" stroke-width="4" />
+            <path d="M92 118C92 108 118 108 118 118C118 128 92 128 92 118Z" fill="#3a3040" stroke="#1a1418" stroke-width="1.4" />
+            <path d="M105 128V172M100 172C100 180 110 180 110 172" stroke="#2a2228" stroke-width="3" fill="none" />
+            <g fill="#b33a4e" stroke="#5a1a24" stroke-width="0.8" style="display: var(--chandelier-drops, inline)">
+                <path d="M58 158L62 170L66 158Z" /><path d="M101 166L105 180L109 166Z" /><path d="M144 158L148 170L152 158Z" />
+            </g>
+            <g fill="none" stroke="#efeaf6" stroke-width="0.7" opacity="0.6" style="display: var(--chandelier-cobweb, none)">
+                <path d="M40 138C60 170 90 176 105 172C120 176 150 170 170 138" />
+                <path d="M72 150C80 172 96 184 105 186C114 184 130 172 138 150" />
+                <path d="M105 172V200" />
+            </g>
+            <circle cx="40" cy="112" r="16" fill="url(#warmGlow)" style="display: var(--glow-display, inline)"><animate attributeName="opacity" values="0.6;1;0.7;1;0.6" dur="3.0s" repeatCount="indefinite" /></circle>
+            <rect x="35" y="118" width="10" height="20" rx="2" fill="#efe4d0" stroke="#6d5a44" stroke-width="1" />
+            <path d="M35 121C37 125 35 127 37 129" fill="none" stroke="#e0d2b8" stroke-width="2" stroke-linecap="round" />
+            <path d="M40 104C44 110 43 115 40 116C37 115 36 110 40 104Z" style="fill: var(--flame, #f5b04a)"><animateTransform attributeName="transform" type="rotate" values="-4 40 116;4 40 116;-4 40 116" dur="1.2s" repeatCount="indefinite" /></path>
+            <circle cx="72" cy="124" r="16" fill="url(#warmGlow)" style="display: var(--glow-display, inline)"><animate attributeName="opacity" values="0.6;1;0.7;1;0.6" dur="2.4s" repeatCount="indefinite" /></circle>
+            <rect x="67" y="130" width="10" height="20" rx="2" fill="#efe4d0" stroke="#6d5a44" stroke-width="1" />
+            <path d="M67 133C69 137 67 139 69 141" fill="none" stroke="#e0d2b8" stroke-width="2" stroke-linecap="round" />
+            <path d="M72 116C76 122 75 127 72 128C69 127 68 122 72 116Z" style="fill: var(--flame, #f5b04a)"><animateTransform attributeName="transform" type="rotate" values="-4 72 128;4 72 128;-4 72 128" dur="1.4s" repeatCount="indefinite" /></path>
+            <circle cx="105" cy="128" r="16" fill="url(#warmGlow)" style="display: var(--glow-display, inline)"><animate attributeName="opacity" values="0.6;1;0.7;1;0.6" dur="2.0s" repeatCount="indefinite" /></circle>
+            <rect x="100" y="134" width="10" height="20" rx="2" fill="#efe4d0" stroke="#6d5a44" stroke-width="1" />
+            <path d="M100 137C102 141 100 143 102 145" fill="none" stroke="#e0d2b8" stroke-width="2" stroke-linecap="round" />
+            <path d="M105 120C109 126 108 131 105 132C102 131 101 126 105 120Z" style="fill: var(--flame, #f5b04a)"><animateTransform attributeName="transform" type="rotate" values="-4 105 132;4 105 132;-4 105 132" dur="1.2s" repeatCount="indefinite" /></path>
+            <circle cx="138" cy="124" r="16" fill="url(#warmGlow)" style="display: var(--glow-display, inline)"><animate attributeName="opacity" values="0.6;1;0.7;1;0.6" dur="3.0s" repeatCount="indefinite" /></circle>
+            <rect x="133" y="130" width="10" height="20" rx="2" fill="#efe4d0" stroke="#6d5a44" stroke-width="1" />
+            <path d="M133 133C135 137 133 139 135 141" fill="none" stroke="#e0d2b8" stroke-width="2" stroke-linecap="round" />
+            <path d="M138 116C142 122 141 127 138 128C135 127 134 122 138 116Z" style="fill: var(--flame, #f5b04a)"><animateTransform attributeName="transform" type="rotate" values="-4 138 128;4 138 128;-4 138 128" dur="1.5s" repeatCount="indefinite" /></path>
+            <circle cx="170" cy="112" r="16" fill="url(#warmGlow)" style="display: var(--glow-display, inline)"><animate attributeName="opacity" values="0.6;1;0.7;1;0.6" dur="2.4s" repeatCount="indefinite" /></circle>
+            <rect x="165" y="118" width="10" height="20" rx="2" fill="#efe4d0" stroke="#6d5a44" stroke-width="1" />
+            <path d="M165 121C167 125 165 127 167 129" fill="none" stroke="#e0d2b8" stroke-width="2" stroke-linecap="round" />
+            <path d="M170 104C174 110 173 115 170 116C167 115 166 110 170 104Z" style="fill: var(--flame, #f5b04a)"><animateTransform attributeName="transform" type="rotate" values="-4 170 116;4 170 116;-4 170 116" dur="1.2s" repeatCount="indefinite" /></path>
+        </symbol>
+
+        <!-- A jar of fireflies on a twine (the forest) -->
+
+        <symbol id="lamp-jar" viewBox="0 0 210 250">
+            <path d="M105 0V64" stroke="#8a6a3a" stroke-width="2.6" />
+            <ellipse cx="105" cy="150" rx="74" ry="64" fill="url(#warmGlow)" opacity="0.8" style="display: var(--glow-display, inline)"><animate attributeName="opacity" values="0.6;0.9;0.6" dur="4s" repeatCount="indefinite" /></ellipse>
+            <path d="M84 70C84 60 126 60 126 70" fill="none" stroke="#8a6a3a" stroke-width="2.6" />
+            <rect x="78" y="70" width="54" height="14" rx="3" fill="url(#brassBody)" stroke="#3a2518" stroke-width="1.2" />
+            <path d="M80 84H130C142 96 142 106 140 120V178C140 192 128 198 105 198C82 198 70 192 70 178V120C68 106 68 96 80 84Z" fill="#e9f6ec" fill-opacity="0.35" stroke="#7a9a8a" stroke-width="2" />
+            <path d="M80 100C78 130 78 160 82 186" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.4" stroke-linecap="round" />
+            <path d="M86 196C92 178 104 172 110 184C114 174 126 176 128 192" fill="#5f7d45" opacity="0.9" />
+            <g fill="#fff3a8">
+                <circle cx="94" cy="130" r="3.2"><animate attributeName="opacity" values="0.2;1;0.2" dur="2.2s" repeatCount="indefinite" /><animateMotion path="M0 0C8 -10 16 4 6 12C-4 18 -8 6 0 0" dur="6s" repeatCount="indefinite" /></circle>
+                <circle cx="116" cy="150" r="2.8"><animate attributeName="opacity" values="1;0.2;1" dur="2.8s" repeatCount="indefinite" /><animateMotion path="M0 0C-10 -8 -16 6 -6 12C4 16 8 6 0 0" dur="7s" repeatCount="indefinite" /></circle>
+                <circle cx="104" cy="170" r="2.6"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.8s" repeatCount="indefinite" /><animateMotion path="M0 0C6 -12 18 -4 10 6C2 12 -6 6 0 0" dur="5s" repeatCount="indefinite" /></circle>
+                <circle cx="122" cy="118" r="2.2"><animate attributeName="opacity" values="1;0.3;1" dur="2.5s" repeatCount="indefinite" /><animateMotion path="M0 0C-6 8 -14 2 -8 -6C-2 -12 4 -6 0 0" dur="6.5s" repeatCount="indefinite" /></circle>
+            </g>
+            <path d="M80 72C70 64 64 70 70 78C60 78 60 88 70 88" fill="#5f7d45" />
+            <path d="M130 72C140 64 146 70 140 78" fill="#6f8b4e" />
+        </symbol>
+
+        <!-- A pendant lamp with a coloured shade (café, rainy) -->
+
+        <symbol id="lamp-pendant" viewBox="0 0 210 250">
+        <path d="M105 0V92" stroke="#3a2a22" stroke-width="3.4" stroke-dasharray="5 3" />
+        <path d="M105 2V92" stroke="#8a7458" stroke-width="1.4" stroke-dasharray="3 5" />
+            <ellipse cx="105" cy="176" rx="96" ry="52" fill="url(#warmGlow)" style="display: var(--glow-display, inline)"><animate attributeName="opacity" values="0.8;1;0.8" dur="6s" repeatCount="indefinite" /></ellipse>
+            <path d="M96 90H114L112 104H98Z" fill="url(#brassBody)" stroke="#3a2518" stroke-width="1.2" />
+            <path d="M98 104C74 108 40 130 34 158H176C170 130 136 108 112 104Z" style="fill: var(--shade, #2f4a3f)" stroke="#1a1418" stroke-width="2" stroke-linejoin="round" />
+            <path d="M58 132C74 118 94 112 105 111" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.25" stroke-linecap="round" />
+            <path d="M34 158H176" stroke="url(#brassBody)" stroke-width="5" stroke-linecap="round" />
+            <ellipse cx="105" cy="162" rx="16" ry="12" fill="#fff4c6" />
+            <ellipse cx="105" cy="162" rx="9" ry="7" fill="#ffffff" />
+        </symbol>
 
     <symbol id="scene-lamp" viewBox="0 0 210 250">
 

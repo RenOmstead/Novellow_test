@@ -179,10 +179,13 @@ html:not(.candle-glow) {
 .window-weather {
     position: absolute;
 
-    top: 0;
-    left: 7%;
+    /* Exactly over the window (css/room.css). */
+    left: var(--scene-centre);
+    bottom: var(--window-bottom);
 
-    width: min(66%, 460px);
+    width: var(--window-width);
+
+    transform: translateX(-50%);
 
     aspect-ratio: 440 / 330;
 
@@ -458,12 +461,6 @@ html:not(.candle-glow) {
 
 @media (max-width: 1180px) {
 
-    .window-weather {
-        top: 20px;
-        left: 12%;
-
-        width: min(56%, 460px);
-    }
 
 }
 

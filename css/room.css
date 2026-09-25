@@ -32,7 +32,7 @@
     right: 0;
     bottom: 0;
 
-    height: 150px;
+    height: 96px;
 
     background:
         repeating-linear-gradient(
@@ -66,7 +66,7 @@
     /* Stands on the floor when the room is taller than it. */
     align-self: end;
 
-    padding: 110px 14px 34px 18px;
+    padding: 110px 14px 16px 18px;
 }
 
 
@@ -87,7 +87,7 @@
        at the bottom, however tall the bookcase grows. */
     justify-content: flex-end;
 
-    padding: 460px 52px 330px 6px;
+    padding: 240px 40px 560px 6px;
 
     overflow: hidden;
 }
@@ -99,11 +99,21 @@
     right: 0;
     bottom: 0;
 
-    /* Anchored to the floor, so the window and pictures stay
-       with the corner scene as the bookcase grows. */
-    height: min(100%, 980px);
+    /* Everything on the wall is measured up from the floor,
+       so it stays with the corner scene however tall the
+       bookcase grows. */
+    height: 760px;
 
     pointer-events: none;
+
+    --window-width: 360px;
+    --window-bottom: 124px;
+
+    /* The window, the lamp and the corner scene share one
+       centre line, just beside the bookcase. */
+    --scene-left: 14px;
+    --scene-width: 390px;
+    --scene-centre: calc(var(--scene-left) + var(--scene-width) / 2);
 }
 
 .wall-art > svg {
@@ -114,80 +124,134 @@
     overflow: visible;
 }
 
+/* The window stands behind the corner scene. */
+.moon-window,
+.ivy--window {
+    left: var(--scene-centre);
+    bottom: var(--window-bottom);
+
+    width: var(--window-width);
+
+    transform: translateX(-50%);
+}
+
 .moon-window {
-    top: 0;
-    left: 7%;
-
-    width: min(66%, 460px);
-
     filter: drop-shadow(0 10px 14px rgba(30, 12, 8, 0.35));
 }
 
-.tiffany-lamp {
-    top: -80px;
-    left: calc(7% + min(66%, 460px) - 120px);
+.ivy--window {
+    height: auto;
+}
 
-    width: 176px;
-
-    z-index: 3;
+/* The old wall lamp gave way to the ceiling lamp. */
+.tiffany-lamp,
+.wall-frame--charm,
+.sill-plant {
+    display: none;
 }
 
 .wall-frame {
     filter: drop-shadow(0 6px 8px rgba(30, 12, 8, 0.4));
 }
 
-.wall-frame--moth {
-    top: 16px;
-    right: 1%;
-
-    width: 64px;
-
-    transform: rotate(2deg);
-}
-
-.wall-frame--charm {
-    top: 40px;
-    left: 0.5%;
-
-    width: 30px;
-}
-
+/* A little gallery beside the window. */
 .wall-frame--castle {
-    top: 116px;
-    right: 0;
+    left: calc(var(--scene-centre) + var(--window-width) / 2 + 30px);
+    bottom: calc(var(--window-bottom) + 170px);
 
-    width: 84px;
+    width: 108px;
 
-    transform: rotate(-2deg);
+    transform: rotate(-1.5deg);
+}
+
+.wall-frame--moth {
+    left: calc(var(--scene-centre) + var(--window-width) / 2 + 52px);
+    bottom: calc(var(--window-bottom) + 30px);
+
+    width: 70px;
+
+    transform: rotate(1.5deg);
+}
+
+/* Candles on the window sill. */
+.sill-candle--left,
+.sill-candle--right {
+    bottom: calc(var(--window-bottom) - 4px);
+
+    width: 22px;
 }
 
 .sill-candle--left {
-    top: 118px;
-    left: 1.5%;
-
-    width: 24px;
+    left: calc(var(--scene-centre) - var(--window-width) / 2 + 24px);
 }
 
 .sill-candle--right {
-    top: 100px;
-    left: calc(7% + min(66%, 460px) + 6px);
-
-    width: 20px;
+    left: calc(var(--scene-centre) + var(--window-width) / 2 - 46px);
 }
 
-.sill-plant {
-    top: 136px;
-    left: 3.5%;
 
-    width: 48px;
+/* =========================================================
+   THE CEILING LAMP
+   Hangs from the top of the room; each theme has its own
+   (js/room/ambience.js swaps the drawing).
+========================================================= */
+
+.ceiling-lamp {
+    position: absolute;
+
+    top: 0;
+    left: calc(14px + 390px / 2);
+
+    z-index: 3;
+
+    width: 150px;
+
+    display: grid;
+    justify-items: center;
+
+    transform: translateX(-50%);
+
+    pointer-events: none;
 }
 
-.ivy--window {
-    top: -24px;
-    left: 0;
+.ceiling-lamp::before {
+    content: "";
 
+    width: 3px;
+    height: 10px;
+
+    background: repeating-linear-gradient(180deg, #3a2a22 0 5px, #6e5a44 5px 7px);
+}
+
+.ceiling-lamp svg {
     width: 100%;
-    height: 190px;
+    height: auto;
+
+    overflow: visible;
+
+    filter: drop-shadow(0 12px 14px rgba(20, 8, 4, 0.4));
+}
+
+.ceiling-lamp__glow {
+    position: absolute;
+
+    top: 60%;
+    left: 50%;
+
+    width: 340px;
+    height: 260px;
+
+    border-radius: 50%;
+
+    background: radial-gradient(ellipse at 50% 30%, var(--lamp-glow, rgba(255, 206, 128, 0.32)), transparent 65%);
+
+    transform: translateX(-50%);
+
+    z-index: -1;
+}
+
+html:not(.candle-glow) .ceiling-lamp__glow {
+    display: none;
 }
 
 
@@ -458,11 +522,15 @@ body.sidebar-collapsed .journal-stage {
 .cozy-corner {
     position: absolute;
 
-    /* Stands on the floor, right beside the bookcase. */
-    left: 8px;
-    bottom: 22px;
+    /* Stands on the floor, right beside the bookcase, in front
+       of the window. */
+    left: 14px;
+    bottom: 12px;
 
-    width: 400px;
+    display: flex;
+    justify-content: center;
+
+    width: 390px;
 
     z-index: 4;
 
@@ -572,14 +640,16 @@ body.sidebar-collapsed .journal-stage {
     display: none;
 }
 
-.corner-fairy-ring {
-    width: 380px;
+.corner-stump {
+    width: 340px;
 
-    margin-bottom: -10px;
+    margin-bottom: -6px;
 }
 
 .corner-bistro {
-    width: 300px;
+    width: 160px;
+
+    margin-left: -26px;
 }
 
 .room-floor {
@@ -589,7 +659,7 @@ body.sidebar-collapsed .journal-stage {
     right: 0;
     bottom: 0;
 
-    height: 150px;
+    height: 96px;
 
     z-index: 0;
 }
@@ -804,34 +874,9 @@ body.sidebar-collapsed .journal-stage {
     }
 
     .journal-zone {
-        min-height: 1000px;
+        min-height: 960px;
 
-        padding: 330px 60px 280px 28px;
-    }
-
-    .moon-window {
-        top: 20px;
-        left: 12%;
-
-        width: min(56%, 460px);
-    }
-
-    .tiffany-lamp {
-        top: -30px;
-        left: calc(12% + min(56%, 460px) - 110px);
-    }
-
-    .sill-candle--right {
-        left: calc(12% + min(56%, 460px) + 10px);
-    }
-
-    .wall-frame--castle {
-        top: 220px;
-        right: 3%;
-    }
-
-    .wall-frame--moth {
-        right: 4%;
+        padding: 230px 60px 560px 28px;
     }
 
     .desk-notes {
@@ -841,10 +886,7 @@ body.sidebar-collapsed .journal-stage {
         margin-right: auto;
     }
 
-    .cozy-corner {
-        left: auto;
-        right: 4%;
-    }
+
 
 }
 
