@@ -9,8 +9,9 @@
 
 
 .library-room {
-    /* Vines and the crown may reach past the edge; never scroll to them. */
-    overflow-x: clip;
+    /* Vines may reach past the sides or hang below a short
+       bookcase; the room ends at its floor, so trim them. */
+    overflow: clip;
 
     min-height: calc(100vh - var(--header-height));
 
