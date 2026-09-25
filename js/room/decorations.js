@@ -10,6 +10,12 @@
 
    Outside "Arrange the room" the pieces are pictures only:
    they never catch a click meant for a book.
+
+   While arranging, the pieces wait in a tray that stays on
+   screen as the page scrolls: a panel down one side on a
+   computer, a strip along the bottom on a phone. Tap a piece
+   to drop it into the part of the room in view, or drag it
+   straight to its spot.
 ========================================================= */
 
 import { listDecorations, createRow, updateRow, deleteRow } from "../core/store.js?v=__VERSION__";
@@ -99,6 +105,55 @@ let bar = null;
 let loadToken = 0;
 let paletteGroup = "pictures";
 
+// The tray: which side it sits on (computers) and whether it
+// is folded down (phones).
+const SIDE_KEY = "novellow-arrange-side";
+let trayFolded = false;
+let skipNextClick = false;
+let trayObserver = null;
+
+
+function onPhone() {
+    return window.matchMedia("(max-width: 820px)").matches;
+}
+
+
+function traySide() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(SIDE_KEY);
+
+        if (saved === "left" || saved === "right") {
+            return saved;
+        }
+
+    }
+
+    catch {
+        // Private windows can refuse storage; use the default.
+    }
+
+    // With the sidebar folded to a rail, the bookcase starts
+    // near the left edge, so the tray waits on the right.
+    return document.body.classList.contains("sidebar-collapsed") ? "right" : "left";
+
+}
+
+
+function setTraySide(side) {
+
+    try {
+        localStorage.setItem(SIDE_KEY, side);
+    }
+
+    catch {
+        // Not remembered, but it still moves.
+    }
+
+}
+
 
 function assetFor(id) {
     return DECOR_ASSETS.find((asset) => asset.id === id);
@@ -181,8 +236,13 @@ function drawBar() {
 
     if (!arranging) {
 
+        trayObserver?.disconnect();
+        trayObserver = null;
+
         bar?.remove();
         bar = null;
+
+        document.documentElement.style.removeProperty("--arrange-tray");
 
         return;
 
@@ -195,8 +255,19 @@ function drawBar() {
         bar = document.body.lastElementChild;
 
         bar.addEventListener("click", onBarClick);
+        bar.addEventListener("pointerdown", onPalettePointerDown);
+
+        // Leave room under the page for the tray on a phone.
+        trayObserver = new ResizeObserver(() => {
+            document.documentElement.style.setProperty("--arrange-tray", `${bar ? bar.offsetHeight : 0}px`);
+        });
+
+        trayObserver.observe(bar);
 
     }
+
+    bar.dataset.side = traySide();
+    bar.dataset.folded = String(trayFolded);
 
     const selected =
         pieces.find((piece) => piece.id === selectedId);
@@ -204,11 +275,26 @@ function drawBar() {
     render(bar, html`
 
         <div class="arrange-bar__head">
-            <div>
-                <p class="eyebrow">Arrange the room</p>
-                <p class="arrange-bar__hint">Choose a piece to add it, then drag it anywhere: the wall, the window sill, the shelves or the top of the bookcase.</p>
-            </div>
+            <p class="arrange-bar__title">Arrange the room</p>
+            <button class="icon-button arrange-bar__fold" type="button" data-arrange="fold" aria-expanded="${String(!trayFolded)}" aria-label="${trayFolded ? "Show the decorations" : "Fold the tray down"}">
+                ${art("ui-chevron-down")}
+            </button>
             <button class="button button--primary button--small" type="button" data-arrange="done">Done</button>
+        </div>
+
+        <p class="arrange-bar__hint">Tap a piece to add it to the part of the room you can see, or drag it straight to its spot. Drag pieces to move them.</p>
+
+        <div class="arrange-bar__tools" ${selected ? "" : html`hidden`}>
+            <span class="arrange-bar__selected">${selected ? assetFor(selected.asset_id)?.name : ""}</span>
+            <div class="arrange-bar__buttons">
+                <button class="icon-button" type="button" data-arrange="smaller" aria-label="Smaller" title="Smaller">−</button>
+                <button class="icon-button" type="button" data-arrange="bigger" aria-label="Bigger" title="Bigger">+</button>
+                <button class="icon-button" type="button" data-arrange="tilt-left" aria-label="Tilt left" title="Tilt left">↺</button>
+                <button class="icon-button" type="button" data-arrange="tilt-right" aria-label="Tilt right" title="Tilt right">↻</button>
+                <button class="icon-button" type="button" data-arrange="back" aria-label="Send behind" title="Send behind">⤓</button>
+                <button class="icon-button" type="button" data-arrange="forward" aria-label="Bring to front" title="Bring to front">⤒</button>
+                <button class="icon-button" type="button" data-arrange="remove" aria-label="Remove" title="Remove">${art("ui-trash")}</button>
+            </div>
         </div>
 
         <div class="arrange-bar__tabs" role="tablist" aria-label="Kinds of decoration">
@@ -222,21 +308,15 @@ function drawBar() {
                 <li>
                     <button class="arrange-bar__asset ${asset.dark ? "arrange-bar__asset--dark" : ""}" type="button" data-add-decor="${asset.id}" title="${asset.name}" aria-label="Add ${asset.name}">
                         <svg viewBox="${asset.box}" aria-hidden="true"><use href="#${asset.id}"></use></svg>
+                        <span class="arrange-bar__label" aria-hidden="true">${asset.name}</span>
                     </button>
                 </li>
             `)}
         </ul>
 
-        <div class="arrange-bar__tools" ${selected ? "" : html`hidden`}>
-            <span class="arrange-bar__selected">${selected ? assetFor(selected.asset_id)?.name : ""}</span>
-            <button class="icon-button" type="button" data-arrange="smaller" aria-label="Smaller">−</button>
-            <button class="icon-button" type="button" data-arrange="bigger" aria-label="Bigger">+</button>
-            <button class="icon-button" type="button" data-arrange="tilt-left" aria-label="Tilt left">↺</button>
-            <button class="icon-button" type="button" data-arrange="tilt-right" aria-label="Tilt right">↻</button>
-            <button class="icon-button" type="button" data-arrange="back" aria-label="Send behind">⤓</button>
-            <button class="icon-button" type="button" data-arrange="forward" aria-label="Bring to front">⤒</button>
-            <button class="icon-button" type="button" data-arrange="remove" aria-label="Remove">${art("ui-trash")}</button>
-        </div>
+        <button class="text-button arrange-bar__side" type="button" data-arrange="side">
+            ${bar.dataset.side === "left" ? html`Move this panel to the right ${art("ui-chevron-right")}` : html`${art("ui-chevron-left")} Move this panel to the left`}
+        </button>
 
     `);
 
@@ -282,15 +362,136 @@ function saveSoon(piece) {
 }
 
 
-async function addPiece(assetId) {
+/*
+    The part of the screen the room shows through: the whole
+    window, less the tray.
+*/
+
+function openView() {
+
+    const view = {
+        left: 0,
+        top: 0,
+        right: window.innerWidth,
+        bottom: window.innerHeight
+    };
+
+    if (!bar) {
+        return view;
+    }
+
+    const box =
+        bar.getBoundingClientRect();
+
+    if (onPhone()) {
+        view.bottom = Math.max(view.top + 80, box.top);
+    }
+
+    else if (bar.dataset.side === "left") {
+        view.left = box.right;
+    }
+
+    else {
+        view.right = box.left;
+    }
+
+    return view;
+
+}
+
+
+/*
+    Where a tapped piece goes: the middle of whichever part of
+    the room (wall or bookcase) is in view, nudged a little so
+    several in a row don't stack exactly.
+*/
+
+function spotInView() {
+
+    const view =
+        openView();
+
+    const middleX =
+        (view.left + view.right) / 2;
+
+    const middleY =
+        (view.top + view.bottom) / 2;
+
+    const tries = [
+        [middleX, middleY],
+        [middleX, view.top + (view.bottom - view.top) * 0.3],
+        [middleX, view.top + (view.bottom - view.top) * 0.7],
+        [view.left + (view.right - view.left) * 0.25, middleY],
+        [view.left + (view.right - view.left) * 0.75, middleY]
+    ];
+
+    const area =
+        tries.map(([x, y]) => areaAt(x, y)).find(Boolean)
+        || Object.keys(AREAS).find((name) => layerShown(name));
+
+    if (!area) {
+        return null;
+    }
+
+    const box =
+        room.querySelector(AREAS[area]).getBoundingClientRect();
+
+    const left = Math.max(box.left, view.left);
+    const right = Math.min(box.right, view.right);
+    const top = Math.max(box.top, view.top);
+    const bottom = Math.min(box.bottom, view.bottom);
+
+    const nudge =
+        () => Math.round((Math.random() - 0.5) * 50);
+
+    return {
+        area,
+        x: clamp((left + right) / 2 + nudge(), left + 20, right - 20),
+        y: clamp((top + bottom) / 2 + nudge(), top + 20, bottom - 20)
+    };
+
+}
+
+
+/*
+    A point on screen as a place in one part of the room. A
+    point outside that part (dragged past the bottom of the
+    bookcase, say) is kept to its edge.
+*/
+
+function positionIn(area, pointX, pointY) {
+
+    const zone =
+        room.querySelector(AREAS[area]).getBoundingClientRect();
+
+    const x =
+        clamp(pointX, zone.left + 8, zone.right - 8);
+
+    const y =
+        clamp(pointY, zone.top + 8, zone.bottom - 28);
+
+    const box =
+        layerFor(area).getBoundingClientRect();
+
+    return {
+        position_x: Number(clamp(((x - box.left) / box.width) * 100, 0, 100).toFixed(2)),
+        position_y: Number(clamp(((y - box.top) / box.height) * 100, 0, 100).toFixed(2))
+    };
+
+}
+
+
+async function addPiece(assetId, spot = spotInView()) {
 
     if (pieces.length >= LIMIT) {
         toast(`The room can hold ${LIMIT} decorations. Remove one to add another.`);
         return;
     }
 
-    const onPhone =
-        window.matchMedia("(max-width: 820px)").matches;
+    if (!spot) {
+        toast("Scroll to the part of the room where it should go, then try again.");
+        return;
+    }
 
     try {
 
@@ -298,22 +499,32 @@ async function addPiece(assetId) {
             await createRow("decorations", {
                 asset_id: assetId,
                 decoration_type: assetId.startsWith("frame-") ? "frame" : "ornament",
-                room_area: onPhone ? "shelf" : "wall",
+                room_area: spot.area,
                 theme,
-                position_x: 30 + Math.round(Math.random() * 40),
-                position_y: onPhone ? 8 : 18 + Math.round(Math.random() * 20),
+                ...positionIn(spot.area, spot.x, spot.y),
                 scale: 1,
                 rotation: 0,
                 z_index: Math.min(50, pieces.reduce((top, piece) => Math.max(top, piece.z_index), 0) + 1)
             });
 
-        pieces.push(saved);
+        pieces.push({
+            ...saved,
+            position_x: Number(saved.position_x),
+            position_y: Number(saved.position_y),
+            scale: Number(saved.scale),
+            rotation: Number(saved.rotation)
+        });
 
         selectedId = saved.id;
 
         draw();
 
-        room.querySelector(`[data-decor-id="${saved.id}"]`)?.focus();
+        const element =
+            room.querySelector(`[data-decor-id="${saved.id}"]`);
+
+        element?.focus({ preventScroll: true });
+
+        element?.classList.add("is-new");
 
     }
 
@@ -388,6 +599,12 @@ function select(id) {
 
 function onBarClick(event) {
 
+    // A drag out of the tray ends in a click; it isn't a tap.
+    if (skipNextClick) {
+        skipNextClick = false;
+        return;
+    }
+
     const tab =
         event.target.closest("[data-decor-group]");
 
@@ -411,6 +628,20 @@ function onBarClick(event) {
 
     if (action === "done") {
         setArranging(false);
+        return;
+    }
+
+    if (action === "side") {
+        setTraySide(bar.dataset.side === "left" ? "right" : "left");
+        drawBar();
+        bar.querySelector("[data-arrange=side]")?.focus();
+        return;
+    }
+
+    if (action === "fold") {
+        trayFolded = !trayFolded;
+        drawBar();
+        bar.querySelector("[data-arrange=fold]")?.focus();
         return;
     }
 
@@ -441,14 +672,81 @@ function onBarClick(event) {
 
 
 /*
-    Dragging: the piece follows the pointer. Dropping it over
-    the other half of the room moves it there.
+    While something is dragged near the top or bottom of the
+    open view, the page scrolls so it can travel the whole
+    room. `follow` re-places the dragged thing after each step.
+*/
+
+function autoScroll(pointer, follow, ready = () => true) {
+
+    let frame = 0;
+
+    const EDGE = 70;
+
+    const step = () => {
+
+        const view =
+            openView();
+
+        let distance = 0;
+
+        if (!ready()) {
+            frame = requestAnimationFrame(step);
+            return;
+        }
+
+        if (pointer.y < view.top + EDGE) {
+            distance = -(view.top + EDGE - pointer.y);
+        }
+
+        else if (pointer.y > view.bottom - EDGE) {
+            distance = pointer.y - (view.bottom - EDGE);
+        }
+
+        if (distance) {
+
+            const before =
+                window.scrollY;
+
+            window.scrollBy(0, clamp(distance / 3, -18, 18));
+
+            if (window.scrollY !== before) {
+                follow();
+            }
+
+        }
+
+        frame = requestAnimationFrame(step);
+
+    };
+
+    frame = requestAnimationFrame(step);
+
+    return () => cancelAnimationFrame(frame);
+
+}
+
+
+/*
+    Dragging a placed piece: it follows the pointer. Dropping
+    it over the other part of the room moves it there.
 */
 
 function onPointerDown(event) {
 
     const element =
         event.target.closest(".placed-decor");
+
+    if (arranging && !element && !event.target.closest(".arrange-bar")) {
+
+        // A tap on the room itself puts the tools away.
+        if (selectedId) {
+            select(null);
+        }
+
+        return;
+
+    }
 
     if (!arranging || !element || event.button > 0) {
         return;
@@ -465,13 +763,22 @@ function onPointerDown(event) {
 
     select(piece.id);
 
+    element.classList.remove("is-new");
+
     element.setPointerCapture(event.pointerId);
     element.classList.add("is-dragging");
 
-    const move = (moveEvent) => {
+    bar?.classList.add("is-dragging");
+
+    const pointer = {
+        x: event.clientX,
+        y: event.clientY
+    };
+
+    const place = () => {
 
         const area =
-            areaAt(moveEvent.clientX, moveEvent.clientY) || piece.room_area;
+            areaAt(pointer.x, pointer.y) || piece.room_area;
 
         const layer =
             layerFor(area);
@@ -485,19 +792,29 @@ function onPointerDown(event) {
             layer.appendChild(element);
         }
 
-        const box =
-            layer.getBoundingClientRect();
-
-        adjust(piece, {
-            position_x: ((moveEvent.clientX - box.left) / box.width) * 100,
-            position_y: ((moveEvent.clientY - box.top) / box.height) * 100
-        });
+        adjust(piece, positionIn(area, pointer.x, pointer.y));
 
     };
 
+    const move = (moveEvent) => {
+
+        pointer.x = moveEvent.clientX;
+        pointer.y = moveEvent.clientY;
+
+        place();
+
+    };
+
+    const stopScrolling =
+        autoScroll(pointer, place);
+
     const stop = () => {
 
+        stopScrolling();
+
         element.classList.remove("is-dragging");
+        bar?.classList.remove("is-dragging");
+
         element.removeEventListener("pointermove", move);
         element.removeEventListener("pointerup", stop);
         element.removeEventListener("pointercancel", stop);
@@ -511,19 +828,187 @@ function onPointerDown(event) {
 }
 
 
+/*
+    Dragging a new piece out of the tray. A short press is a
+    tap (handled as a click). On a touch screen the tray's own
+    scrolling direction is left to the browser, so a drag out
+    has to head the other way: up out of the phone's strip, or
+    sideways out of the computer's panel.
+*/
+
+function onPalettePointerDown(event) {
+
+    const button =
+        event.target.closest("[data-add-decor]");
+
+    if (!button || event.button > 0) {
+        return;
+    }
+
+    const asset =
+        assetFor(button.dataset.addDecor);
+
+    const start = {
+        x: event.clientX,
+        y: event.clientY
+    };
+
+    const pointer = { ...start };
+
+    const touch =
+        event.pointerType !== "mouse";
+
+    let ghost = null;
+    let stopScrolling = null;
+
+    // Until the piece is out of the tray, the page stays put.
+    let outOfTray = false;
+
+    button.setPointerCapture(event.pointerId);
+
+    const begin = () => {
+
+        ghost = document.createElement("div");
+        ghost.className = "decor-ghost";
+        ghost.style.width = `${asset.width}px`;
+        ghost.innerHTML = `<svg viewBox="${asset.box}" aria-hidden="true"><use href="#${asset.id}"></use></svg>`;
+        document.body.appendChild(ghost);
+
+        bar.classList.add("is-dragging");
+
+        stopScrolling = autoScroll(pointer, () => follow(), () => outOfTray);
+
+    };
+
+    const follow = () => {
+
+        ghost.style.left = `${pointer.x}px`;
+        ghost.style.top = `${pointer.y}px`;
+
+        const inTray =
+            overTray(pointer.x, pointer.y);
+
+        outOfTray = outOfTray || !inTray;
+
+        const area =
+            inTray ? null : areaAt(pointer.x, pointer.y);
+
+        ghost.classList.toggle("is-droppable", Boolean(area));
+
+    };
+
+    const move = (moveEvent) => {
+
+        pointer.x = moveEvent.clientX;
+        pointer.y = moveEvent.clientY;
+
+        if (!ghost) {
+
+            const dx =
+                Math.abs(pointer.x - start.x);
+
+            const dy =
+                Math.abs(pointer.y - start.y);
+
+            if (Math.max(dx, dy) < 8) {
+                return;
+            }
+
+            // Let the browser scroll the tray if that's what
+            // this touch is doing.
+            if (touch && (onPhone() ? dx > dy : dy > dx)) {
+                finish();
+                return;
+            }
+
+            begin();
+
+        }
+
+        follow();
+
+    };
+
+    const finish = (upEvent) => {
+
+        button.removeEventListener("pointermove", move);
+        button.removeEventListener("pointerup", finish);
+        button.removeEventListener("pointercancel", cancel);
+
+        if (!ghost) {
+            return;
+        }
+
+        stopScrolling?.();
+
+        ghost.remove();
+
+        bar?.classList.remove("is-dragging");
+
+        // The click that follows a drag isn't a tap.
+        skipNextClick = true;
+        window.setTimeout(() => {
+            skipNextClick = false;
+        }, 400);
+
+        if (!upEvent) {
+            return;
+        }
+
+        const area =
+            overTray(pointer.x, pointer.y) ? null : areaAt(pointer.x, pointer.y);
+
+        if (area) {
+            addPiece(asset.id, { area, x: pointer.x, y: pointer.y });
+        }
+
+    };
+
+    const cancel = () => finish();
+
+    button.addEventListener("pointermove", move);
+    button.addEventListener("pointerup", finish);
+    button.addEventListener("pointercancel", cancel);
+
+}
+
+
+function overTray(x, y) {
+
+    if (!bar) {
+        return false;
+    }
+
+    const box =
+        bar.getBoundingClientRect();
+
+    return x >= box.left && x <= box.right && y >= box.top && y <= box.bottom;
+
+}
+
+
+/* Only parts of the room on show take pieces (a phone folds the wall away). */
+
+function layerShown(area) {
+
+    const layer =
+        layerFor(area);
+
+    return Boolean(layer && layer.offsetParent && getComputedStyle(layer).display !== "none");
+
+}
+
+
 function areaAt(x, y) {
 
     return Object.keys(AREAS).find((area) => {
 
-        const zone =
-            room.querySelector(AREAS[area]);
-
-        if (!zone || !zone.offsetParent) {
+        if (!layerShown(area)) {
             return false;
         }
 
         const box =
-            zone.getBoundingClientRect();
+            room.querySelector(AREAS[area]).getBoundingClientRect();
 
         return x >= box.left && x <= box.right && y >= box.top && y <= box.bottom;
 
@@ -593,6 +1078,23 @@ export function setArranging(on) {
 
     if (!on) {
         selectedId = null;
+        trayFolded = false;
+    }
+
+    document.documentElement.classList.toggle("is-arranging-room", on);
+
+    // Opened from another page with ?arrange=1: don't reopen
+    // on the next reload.
+    if (!on) {
+
+        const url =
+            new URL(window.location.href);
+
+        if (url.searchParams.has("arrange")) {
+            url.searchParams.delete("arrange");
+            window.history.replaceState(null, "", url);
+        }
+
     }
 
     draw();

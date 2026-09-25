@@ -330,7 +330,7 @@ function editorMarkup(book, shelves, editing) {
 
                         <div class="field-row">
                             ${field("Status", select("status", READING_STATUSES, book.status))}
-                            <div class="field">
+                            <div class="field field--rating">
                                 <span class="field__label" id="ratingLabel">Rating</span>
                                 ${ratingMarkup(book.rating, { name: "rating", label: "Your rating" })}
                             </div>

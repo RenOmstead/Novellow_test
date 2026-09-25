@@ -1578,6 +1578,22 @@ export function createJournal(root, { mode = "desk", onClose, onOpenEditor } = {
 
         renderRight({ turn: true });
 
+        // On a phone the section opens below the ribbons; bring
+        // it into view if the reader has scrolled away from it.
+        if (window.matchMedia("(max-width: 820px)").matches) {
+
+            const ribbons =
+                root.querySelector(".journal-ribbons");
+
+            const box =
+                ribbons?.getBoundingClientRect();
+
+            if (box && (box.top < 0 || box.bottom > window.innerHeight * 0.55)) {
+                ribbons.scrollIntoView({ block: "start", behavior: prefersReducedMotion() ? "auto" : "smooth" });
+            }
+
+        }
+
     }
 
 

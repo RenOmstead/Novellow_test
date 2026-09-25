@@ -404,4 +404,55 @@
         padding-right: 16px;
     }
 
+    .book-editor__header {
+        padding-top: 14px;
+        padding-bottom: 10px;
+    }
+
+    .book-editor__header .dialog-title {
+        font-size: 23px;
+    }
+
+    /* The stars need the whole row. */
+    .book-editor .field--rating {
+        grid-column: 1 / -1;
+    }
+
+}
+
+@media (max-width: 520px) {
+
+    /* One design choice per row, so the longer names
+       ("Playfair, editorial") aren't cut off. */
+    .editor-section--design .field-row {
+        grid-template-columns: 1fr;
+    }
+
+    .editor-section--design .field-row:has(.field--color) {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    /* Save and Cancel side by side; removing the book
+       sits quietly underneath. */
+    .book-editor__actions {
+        display: grid;
+
+        grid-template-columns: 1fr 1.5fr;
+    }
+
+    .book-editor__spacer {
+        display: none;
+    }
+
+    .book-editor__delete {
+        grid-column: 1 / -1;
+        order: 3;
+
+        justify-self: center;
+
+        min-height: 38px;
+
+        font-size: 15px;
+    }
+
 }

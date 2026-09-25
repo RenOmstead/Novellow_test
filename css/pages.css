@@ -109,6 +109,15 @@
     font-size: 13px;
 }
 
+/* The fold-away button only shows on phones. */
+.filter-bar__more {
+    display: contents;
+}
+
+.filter-bar__toggle {
+    display: none;
+}
+
 .filter-summary {
     display: flex;
     align-items: center;
@@ -1343,6 +1352,50 @@
 
     .filter-bar > :first-child {
         grid-column: 1 / -1;
+    }
+
+    /* Library: search, then a Filters button that opens the
+       rest. */
+    .filter-bar:has(.filter-bar__toggle) {
+        grid-template-columns: 1fr auto;
+        align-items: end;
+    }
+
+    .filter-bar:has(.filter-bar__toggle) > :first-child {
+        grid-column: auto;
+    }
+
+    .filter-bar__toggle {
+        display: inline-flex;
+
+        min-height: 46px;
+
+        padding: 0 14px;
+    }
+
+    .filter-bar__toggle svg {
+        width: 16px;
+        height: 16px;
+
+        transition: transform 0.2s ease;
+    }
+
+    .filter-bar.is-open .filter-bar__toggle svg {
+        transform: rotate(180deg);
+    }
+
+    .filter-bar__more {
+        display: none;
+
+        grid-column: 1 / -1;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 12px;
+    }
+
+    .filter-bar.is-open .filter-bar__more {
+        display: grid;
     }
 
     .catalogue,
