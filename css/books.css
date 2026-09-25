@@ -446,8 +446,20 @@ button.book-spine {
     transition-duration: 0.26s;
 }
 
+/* Off the shelf, open in the journal: an empty gap. */
 .book-spine.is-lent {
-    opacity: 0.25;
+    opacity: 0.12;
+
+    filter: grayscale(0.8);
+}
+
+.book-spine.is-returning {
+    animation: bookReturns 0.42s cubic-bezier(.3, 1.4, .5, 1);
+}
+
+@keyframes bookReturns {
+    from { transform: translateY(-16px); }
+    to { transform: translateY(0); }
 }
 
 .book-spine.is-dimmed {
