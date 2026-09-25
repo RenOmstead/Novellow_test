@@ -31,20 +31,48 @@ const STORE =
 const FOLDER =
     "assets/sounds/";
 
+/*
+    bed:     a recording that plays continuously.
+      use:   the steady part of it to loop, in seconds.
+      boost: evens out recordings made louder or softer.
+    moments: short cuts from recordings, played now and then:
+             [file, from (s), to (s), loudness]. Each cut is
+             just the sound itself, without the silence
+             around it.
+    every:   how often a moment happens, in seconds.
+*/
+
 export const SOUNDS = [
-    // use: the steady part of the recording to loop (seconds).
-    // boost: evens out recordings made louder or softer.
-    { id: "rain", name: "Rain", note: "Rain on the window and the roof", bed: ["rain.mp3"], use: [1, 58], boost: 2.4 },
-    { id: "thunder", name: "Distant thunder", note: "Now and then, far away", moments: ["thunder-1.mp3", "thunder-2.mp3"], every: [45, 110], lightning: true },
-    { id: "fire", name: "Crackling fire", note: "Logs burning in the grate", bed: ["fire.mp3"] },
-    { id: "wind", name: "Wind", note: "Round the eaves on a stormy night", bed: ["wind.mp3"] },
-    { id: "murmurs", name: "Soft murmurs", note: "People talking quietly nearby", bed: ["murmurs.mp3"] },
-    { id: "spoon", name: "Spoon stirring", note: "A teaspoon clinking in a cup", moments: ["spoon-1.mp3", "spoon-2.mp3"], every: [25, 60] },
-    { id: "coffee", name: "Coffee pouring", note: "A fresh cup being poured", moments: ["coffee-pour.mp3"], every: [50, 120] },
-    { id: "purr", name: "Purring cat", note: "Curled up somewhere nearby", bed: ["purr.mp3"] },
-    { id: "clock", name: "Ticking clock", note: "An old clock on the mantel", bed: ["clock.mp3"] },
-    { id: "pages", name: "Turning pages", note: "Someone reading close by", moments: ["page-1.mp3", "page-2.mp3", "page-3.mp3"], every: [30, 75] },
-    { id: "night", name: "Night garden", note: "Crickets, and sometimes an owl", bed: ["crickets.mp3"], moments: ["owl.mp3"], every: [50, 120] }
+    { id: "rain", name: "Rain", note: "Rain on the window and the roof", bed: ["rain.mp3"], use: [0.5, 58], boost: 2 },
+    {
+        id: "thunder", name: "Distant thunder", note: "Now and then, far away", every: [45, 110], lightning: true,
+        moments: [["thunder-1.mp3", 0.4, 7.2, 0.6], ["thunder-2.mp3", 0.5, 9.9, 2.4]]
+    },
+    { id: "fire", name: "Crackling fire", note: "Logs burning in the grate", bed: ["fire.mp3"], boost: 1.3 },
+    { id: "wind", name: "Wind", note: "Round the eaves on a stormy night", bed: ["wind.mp3"], boost: 1.2 },
+    { id: "murmurs", name: "Soft murmurs", note: "People talking quietly nearby", bed: ["murmurs.mp3"], boost: 12 },
+    {
+        id: "spoon", name: "Spoon stirring", note: "A teaspoon clinking in a cup", every: [25, 60],
+        moments: [["spoon-1.mp3", 3, 6.4, 4.5], ["spoon-2.mp3", 1, 7.5, 1.3], ["spoon-2.mp3", 34.8, 43.6, 1.1]]
+    },
+    {
+        id: "coffee", name: "Coffee pouring", note: "A fresh cup being poured", every: [50, 120],
+        moments: [["coffee-pour.mp3", 0.3, 9.8, 16]]
+    },
+    { id: "purr", name: "Purring cat", note: "Curled up somewhere nearby", bed: ["purr.mp3"], boost: 1.6 },
+    { id: "clock", name: "Ticking clock", note: "An old clock on the mantel", bed: ["clock.mp3"], boost: 15 },
+    {
+        id: "pages", name: "Turning pages", note: "Someone reading close by", every: [30, 75],
+        moments: [
+            ["page-1.mp3", 0.1, 0.7, 1.4],
+            ["page-2.mp3", 1.4, 2.4, 3], ["page-2.mp3", 3.5, 5.1, 3.5], ["page-2.mp3", 6, 7.1, 2.5],
+            ["page-3.mp3", 0.8, 1.6, 9], ["page-3.mp3", 8.9, 10, 8], ["page-3.mp3", 22.2, 22.9, 5], ["page-3.mp3", 36.5, 37.4, 7]
+        ]
+    },
+    {
+        id: "night", name: "Night garden", note: "Crickets, and sometimes an owl", bed: ["crickets.mp3"], boost: 9, every: [50, 120],
+        moments: [["owl.mp3", 0.8, 3.6, 0.25]]
+    }
 ];
 
 // Each room's own mix (0 = silent, 1 = full).
@@ -115,7 +143,7 @@ function room() {
 
 
 function filesOf(sound) {
-    return [...(sound.bed || []), ...(sound.moments || [])];
+    return [...new Set([...(sound.bed || []), ...(sound.moments || []).map(([file]) => file)])];
 }
 
 
@@ -167,7 +195,20 @@ function wake() {
 
         master = ctx.createGain();
         master.gain.value = 0;
-        master.connect(ctx.destination);
+
+        // A safety limiter: nothing ever gets painfully loud,
+        // however the sliders are set.
+        const limiter =
+            ctx.createDynamicsCompressor();
+
+        limiter.threshold.value = -8;
+        limiter.knee.value = 6;
+        limiter.ratio.value = 12;
+        limiter.attack.value = 0.003;
+        limiter.release.value = 0.25;
+
+        master.connect(limiter);
+        limiter.connect(ctx.destination);
 
     }
 
@@ -352,7 +393,7 @@ function playBed(buffer, out, [from, to] = [0, buffer.duration]) {
     slightly louder or softer, a touch to the left or right.
 */
 
-function playMoment(buffer, out) {
+function playMoment(buffer, out, [from, to, loudness]) {
 
     const at =
         ctx.currentTime + 0.05;
@@ -366,7 +407,23 @@ function playMoment(buffer, out) {
     const level =
         ctx.createGain();
 
-    level.gain.value = random(0.75, 1);
+    const start =
+        Math.min(from, buffer.duration - 0.1);
+
+    const length =
+        Math.max(0.1, Math.min(to, buffer.duration) - start);
+
+    // Soft edges, so a cut never clicks.
+    const edge =
+        Math.min(0.05, length / 4);
+
+    const peak =
+        loudness * random(0.75, 1);
+
+    level.gain.setValueAtTime(0, at);
+    level.gain.linearRampToValueAtTime(peak, at + edge);
+    level.gain.setValueAtTime(peak, at + length - edge * 4);
+    level.gain.linearRampToValueAtTime(0, at + length);
 
     let last =
         level;
@@ -387,7 +444,7 @@ function playMoment(buffer, out) {
     source.connect(level);
     last.connect(out);
 
-    source.start(at);
+    source.start(at, start, length + 0.05);
 
 }
 
@@ -428,7 +485,7 @@ function startSound(sound, out) {
                     return;
                 }
 
-                const file =
+                const [file, ...cut] =
                     sound.moments[Math.floor(Math.random() * sound.moments.length)];
 
                 const buffer =
@@ -443,14 +500,14 @@ function startSound(sound, out) {
 
                         window.setTimeout(() => {
                             if (!stopped) {
-                                playMoment(buffer, out);
+                                playMoment(buffer, out, cut);
                             }
                         }, random(700, 2000));
 
                     }
 
                     else {
-                        playMoment(buffer, out);
+                        playMoment(buffer, out, cut);
                     }
 
                 }
