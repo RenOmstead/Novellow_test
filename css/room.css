@@ -610,12 +610,17 @@ body.sidebar-collapsed .journal-stage {
     margin-left: calc(var(--chair-width) * -0.14);
 }
 
+/* The broom leans on the cauldron's rim. */
 .corner-broom {
+    position: relative;
+
+    z-index: 1;
+
     width: calc(var(--chair-width) * 0.3);
 
-    margin-right: calc(var(--chair-width) * -0.16);
+    margin-right: calc(var(--chair-width) * -0.2);
 
-    transform: rotate(-8deg);
+    transform: rotate(17deg);
     transform-origin: bottom center;
 }
 

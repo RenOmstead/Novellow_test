@@ -864,11 +864,61 @@
         <!-- A witch's broom -->
 
         <symbol id="decor-broom" viewBox="0 0 70 210">
-            <path d="M52 4L22 150" stroke="#3a2416" stroke-width="7" stroke-linecap="round" />
-            <path d="M52 4L22 150" stroke="#7a5236" stroke-width="3.4" stroke-linecap="round" />
-            <path d="M24 142L6 204C18 208 32 208 44 206L34 146Z" fill="#c9a15a" stroke="#6e5024" stroke-width="1.4" stroke-linejoin="round" />
-            <path d="M28 150L14 202M31 152L24 204M34 152L34 204M26 148L8 196" stroke="#8a6a32" stroke-width="1" />
-            <path d="M22 146L36 150" stroke="#5a2a3a" stroke-width="5" stroke-linecap="round" />
+            <defs>
+                <linearGradient id="broomStraw" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#e6c979" />
+                    <stop offset="55%" stop-color="#c9a052" />
+                    <stop offset="100%" stop-color="#9e7535" />
+                </linearGradient>
+                <linearGradient id="broomWood" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#5a3a24" />
+                    <stop offset="45%" stop-color="#8a5e3c" />
+                    <stop offset="100%" stop-color="#4a2e1c" />
+                </linearGradient>
+            </defs>
+
+            <!-- A soft shadow where it meets the floor -->
+            <ellipse cx="36" cy="205" rx="30" ry="3.4" fill="#000000" opacity="0.22" />
+
+            <!-- A crooked, knotted handle -->
+            <path d="M38 6C36.4 38 36.6 64 34.6 92C33.8 106 33 118 32.6 132H39.2C39.4 118 40 106 40.8 92C42.6 64 43.4 38 43.6 6C43.6 3 38 3 38 6Z" fill="url(#broomWood)" stroke="#2e1a10" stroke-width="1.4" stroke-linejoin="round" />
+            <path d="M40.6 10C40 40 39.4 66 38 94" fill="none" stroke="#b08058" stroke-width="0.9" stroke-linecap="round" opacity="0.7" />
+            <path d="M41.4 74L47.4 67.6L48.6 69L42 76.6" fill="#7a5236" stroke="#2e1a10" stroke-width="1" stroke-linejoin="round" />
+            <ellipse cx="38.2" cy="52" rx="1.6" ry="2.4" fill="#3a2416" />
+            <ellipse cx="36.4" cy="104" rx="1.3" ry="2" fill="#3a2416" />
+
+            <!-- The straw tucked up round the handle -->
+            <path d="M28.4 132C28 124 44 124 43.6 132Z" fill="url(#broomStraw)" stroke="#6e5024" stroke-width="1.1" />
+
+            <!-- The bundle, flared and a little ragged -->
+            <path d="M28 140C24 160 15 180 5 203L9 200.6L11.6 207L15.6 201.6L19 208L23 202.4L26.6 208.4L30.4 203L34 208.6L37.8 203L41.4 208.4L45.2 202.6L49 207.6L52.6 202L56.4 206.8L60 201.4L63.4 205.6L66.6 201.8C57 180 48 160 44.4 140Z" fill="url(#broomStraw)" stroke="#6e5024" stroke-width="1.2" stroke-linejoin="round" />
+            <g fill="none" stroke-linecap="round">
+                <path d="M29.0 144Q17.3 172 8.0 201" stroke="#8a6a32" stroke-width="1.1" />
+                <path d="M30.0 144Q22.1 172 11.9 203" stroke="#b58f45" stroke-width="0.9" />
+                <path d="M31.0 144Q22.2 172 15.7 199" stroke="#eed49a" stroke-width="0.8" />
+                <path d="M32.0 144Q27.0 172 19.6 205" stroke="#8a6a32" stroke-width="1.1" />
+                <path d="M33.0 144Q27.0 172 23.4 199" stroke="#b58f45" stroke-width="0.9" />
+                <path d="M34.0 144Q31.8 172 27.3 203" stroke="#eed49a" stroke-width="0.8" />
+                <path d="M35.0 144Q31.9 172 31.1 201" stroke="#8a6a32" stroke-width="1.1" />
+                <path d="M36.0 144Q36.7 172 35.0 203" stroke="#b58f45" stroke-width="0.9" />
+                <path d="M37.0 144Q36.7 172 38.9 199" stroke="#eed49a" stroke-width="0.8" />
+                <path d="M38.0 144Q41.6 172 42.7 205" stroke="#8a6a32" stroke-width="1.1" />
+                <path d="M39.0 144Q41.6 172 46.6 199" stroke="#b58f45" stroke-width="0.9" />
+                <path d="M40.0 144Q46.4 172 50.4 203" stroke="#eed49a" stroke-width="0.8" />
+                <path d="M41.0 144Q46.4 172 54.3 201" stroke="#8a6a32" stroke-width="1.1" />
+                <path d="M42.0 144Q51.3 172 58.1 203" stroke="#b58f45" stroke-width="0.9" />
+                <path d="M43.0 144Q51.3 172 62.0 199" stroke="#eed49a" stroke-width="0.8" />
+            </g>
+            <!-- Stray straws -->
+            <g stroke="#b58f45" stroke-width="1" stroke-linecap="round">
+                <path d="M12 190L4 184M17 176L10 171M58 186L67 180M53 170L60 165M31 200L28 209" />
+            </g>
+
+            <!-- Twine bindings -->
+            <path d="M26.6 131H45.2L46.4 137.4H25.4Z" fill="#6b3a2a" stroke="#2e1a10" stroke-width="1" stroke-linejoin="round" />
+            <path d="M28 133.2L30 136M32 133.2L34 136M36 133.2L38 136M40 133.2L42 136" stroke="#a8674a" stroke-width="0.8" />
+            <path d="M25.8 140.4H46.4L47.2 144.6H25Z" fill="#6b3a2a" stroke="#2e1a10" stroke-width="1" stroke-linejoin="round" />
+            <path d="M28 141.8L29.6 143.6M33 141.8L34.6 143.6M38 141.8L39.6 143.6M43 141.8L44.6 143.6" stroke="#a8674a" stroke-width="0.8" />
         </symbol>
 
         <!-- A floor candelabra (the gothic room) -->
@@ -2863,9 +2913,6 @@
             <path d="M230 126C238 150 240 176 238 206" stroke="#ffffff" stroke-opacity="0.18" stroke-width="4" />
             <path d="M188 72C196 90 198 108 196 124" stroke="#ffffff" stroke-opacity="0.16" stroke-width="3" />
         </g>
-        <!-- A folded-back corner on top -->
-        <path d="M164 38C172 50 186 52 198 44C188 36 176 32 164 38Z" style="fill: var(--throw-base, #d8a54a)" stroke="#2a1a1a" stroke-width="1.4" />
-        <path d="M168 40C176 46 186 47 194 44" fill="none" stroke="#1a1010" stroke-opacity="0.25" stroke-width="2" stroke-linecap="round" />
         <!-- Fringe along the ragged hem -->
         <g style="stroke: var(--throw-line, #fff3dc)" stroke-width="1.8" stroke-linecap="round">
             <path d="M210 234L208 244M214 242L213 252M220 244L221 254M226 240L227 250M232 246L232 256M238 252L239 262M244 246L246 256M250 242L252 252M256 246L258 256M261 250L263 259" />
