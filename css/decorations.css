@@ -424,17 +424,12 @@
 
 
 /* ---------------------------------------------------------
-   PHONE
-   The wall is folded away, so only the bookcase takes
-   pieces. The tray is a strip along the bottom that folds
-   down to a single line.
+   PHONE, HELD UPRIGHT
+   The tray is a strip along the bottom that folds down to a
+   single line. (Held sideways, the side panel fits better.)
 --------------------------------------------------------- */
 
-@media (max-width: 820px) {
-
-    .journal-zone > .decor-layer {
-        display: none;
-    }
+@media (max-width: 820px) and (orientation: portrait) {
 
     .arrange-bar,
     .arrange-bar[data-side="right"] {

@@ -971,30 +971,6 @@ body.sidebar-collapsed .journal-stage {
         padding: 48px 8px 24px;
     }
 
-    /* Journals open on their own page here, so only the
-       little desk notes stay below the bookcase. */
-    .journal-zone,
-    :is([data-reading-note="on"], [data-snippet-note="on"]) .journal-zone {
-        min-height: 0;
-
-        padding: 0 12px 36px;
-    }
-
-    html:not([data-reading-note="on"]):not([data-snippet-note="on"]) .journal-zone {
-        display: none;
-    }
-
-    .journal-zone > .wall-art,
-    .journal-zone > .journal-stage,
-    .journal-zone > .cozy-corner,
-    .journal-zone > .room-floor,
-    .journal-zone > .ceiling-lamp {
-        display: none;
-    }
-
-    .desk-notes {
-        margin-top: 0;
-    }
 
     .crown-slot--frame,
     .crown-slot--stack {
@@ -1025,4 +1001,109 @@ body.sidebar-collapsed .journal-stage {
         grid-template-columns: 1fr;
     }
 
+}
+
+
+/* =========================================================
+   SMALL SCREENS: THE ROOM IN MINIATURE
+   js/room/fit-room.js marks a phone held upright
+   (html.room-upright) or sideways (html.room-sideways) and
+   sets --room-zoom and --room-height. The room is drawn 600
+   wide, exactly as on a computer, then zoomed to fit, so the
+   window, the chair and every decoration keep their places.
+   Books open on their own page here.
+========================================================= */
+
+html:is(.room-upright, .room-sideways) .journal-zone {
+    display: flex;
+
+    width: var(--room-width, 600px);
+    height: var(--room-height, 820px);
+    min-height: 0;
+
+    padding: 0;
+
+    zoom: var(--room-zoom, 1);
+
+    --window-left: 22px;
+    --window-width: 324px;
+    --window-bottom: 210px;
+    --gap: 24px;
+    --picture-width: 120px;
+    --chair-width: 216px;
+}
+
+html:is(.room-upright, .room-sideways) .journal-stage {
+    display: none;
+}
+
+/* The chair tucks a little further under the window, so the
+   café's table fits inside the room. */
+html:is(.room-upright, .room-sideways):not([data-theme="haunted"]) .cozy-corner {
+    left: calc(var(--window-left) + var(--window-width) - var(--chair-width) * 0.5);
+}
+
+/* The room brings its own floor, so it stays under the chair
+   however the room is placed. */
+html:is(.room-upright, .room-sideways) .library-room::before {
+    display: none;
+}
+
+html:is(.room-upright, .room-sideways) .journal-zone::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 96px;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.18) 0 2px,
+            transparent 2px 96px
+        ),
+        linear-gradient(
+            180deg,
+            var(--floor-top),
+            var(--floor-bottom)
+        );
+
+    box-shadow: inset 0 10px 14px -6px rgba(0, 0, 0, 0.5);
+
+    pointer-events: none;
+}
+
+/* The paper notes move under the bookcase (fit-room.js). */
+.bookcase-zone > .desk-notes {
+    width: auto;
+
+    margin: 22px 0 0;
+}
+
+/* Held sideways: the shelves on the left, the room on the
+   right. The room stands at the bottom of the screen while
+   the shelves scroll, and comes to rest on the floor beside
+   the foot of the bookcase. */
+html.room-sideways .library-room {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) auto;
+}
+
+html.room-sideways .bookcase-zone {
+    align-self: start;
+
+    padding: 44px 10px 24px 12px;
+}
+
+html.room-sideways .journal-zone {
+    position: sticky;
+
+    bottom: 0;
+
+    align-self: end;
 }
