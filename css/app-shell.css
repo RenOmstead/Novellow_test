@@ -1211,3 +1211,53 @@ body.sidebar-collapsed .app-stage {
     }
 
 }
+
+
+/* A phone held sideways: a slim top bar, so the shelves and
+   the room get the height. */
+html.room-sideways .scene-header {
+    min-height: 0;
+
+    gap: 8px;
+
+    padding: 6px 12px 4px;
+}
+
+html.room-sideways .scene-header .icon-button,
+html.room-sideways .header-add {
+    width: 36px;
+    height: 36px;
+}
+
+html.room-sideways .scene-header .icon-button svg,
+html.room-sideways .header-add svg {
+    width: 18px;
+    height: 18px;
+}
+
+html.room-sideways .profile-button {
+    padding: 2px;
+}
+
+html.room-sideways .avatar {
+    width: 32px;
+    height: 32px;
+
+    font-size: 15px;
+}
+
+html.room-sideways .library-search {
+    height: 36px;
+}
+
+html.room-sideways .library-search input {
+    font-size: 15px;
+}
+
+html.room-sideways .header-add {
+    min-height: 0;
+
+    padding: 0;
+
+    border-radius: 50%;
+}
