@@ -96,7 +96,7 @@ JavaScript modules, and GitHub Pages serves it as-is.
 ├── stats.html              Reading statistics and goal
 ├── challenges.html         Annual goal + reader-made challenges
 ├── discover.html           Open Library search, TBR pick, prompts
-├── community.html          Foundation: future public libraries / clubs
+├── community.html          Friends, shared shelves, book clubs, buddy reads
 ├── settings.html           Account, sign-ins, reading, appearance, data
 ├── 404.html                "This page wandered off" (self-contained)
 │
@@ -124,7 +124,8 @@ JavaScript modules, and GitHub Pages serves it as-is.
 │   ├── core/
 │   │   ├── supabase.js     Creates the single Supabase client
 │   │   ├── auth.js         Sign up/in/out, session guard, sign-in log
-│   │   ├── store.js        Every database query (single source of truth)
+│   │   ├── store.js        Every library query (single source of truth)
+│   │   ├── community.js    Friends, shared shelves, clubs and buddy-read queries
 │   │   ├── covers.js       Cover resize/upload, signed URLs
 │   │   ├── errors.js       Friendly messages for auth and data errors
 │   │   ├── rating.js       Half-star rating widget

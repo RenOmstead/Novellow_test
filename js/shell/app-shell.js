@@ -86,6 +86,8 @@ export async function startApp({ page, eyebrow = "My Library" }) {
 
         finishBoot();
 
+        showCommunityBadge();
+
         return { session, profile, settings };
 
     }
@@ -96,6 +98,41 @@ export async function startApp({ page, eyebrow = "My Library" }) {
 
         throw error;
 
+    }
+
+}
+
+
+/*
+    A little count on the Community link when friend requests
+    or invitations are waiting. Quietly skipped if the
+    community tables aren't set up yet.
+*/
+
+export async function showCommunityBadge() {
+
+    try {
+
+        const { countWaiting } =
+            await import("../core/community.js?v=__VERSION__");
+
+        const waiting =
+            await countWaiting();
+
+        $all('[data-nav="community"]').forEach((link) => {
+
+            link.querySelector(".sidebar-badge")?.remove();
+
+            if (waiting) {
+                link.insertAdjacentHTML("beforeend", `<span class="sidebar-badge" aria-label="${waiting} waiting">${Math.min(waiting, 99)}</span>`);
+            }
+
+        });
+
+    }
+
+    catch (error) {
+        console.warn("Community count unavailable", error);
     }
 
 }
@@ -242,7 +279,7 @@ function sidebarMarkup(page, collapsed) {
                 ${NAV.map((item) => item.divider
                     ? html`<div class="sidebar-divider" role="separator"></div>`
                     : html`
-                        <a class="sidebar-link ${item.id === page ? "is-active" : ""}" href="${item.href}" ${item.id === page ? raw('aria-current="page"') : ""}>
+                        <a class="sidebar-link ${item.id === page ? "is-active" : ""}" href="${item.href}" data-nav="${item.id}" ${item.id === page ? raw('aria-current="page"') : ""}>
                             <span class="sidebar-link__icon">
                                 <svg class="nav-art" aria-hidden="true"><use href="#${item.art}"></use></svg>
                             </span>

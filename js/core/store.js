@@ -282,6 +282,7 @@ export async function fetchBook(id) {
                 .from("books")
                 .select("*")
                 .eq("id", id)
+                .eq("user_id", mine())
                 .maybeSingle()
         );
 
@@ -722,6 +723,7 @@ export async function getReview(bookId) {
             .from("reviews")
             .select("*")
             .eq("book_id", bookId)
+            .eq("user_id", mine())
             .maybeSingle()
     );
 
