@@ -1240,3 +1240,16 @@ html.room-sideways .bookcase-zone {
 
     transform: rotate(-90deg);
 }
+
+
+/* Sideways, the room reaches under the notch but its shelves
+   and chair stay clear of it; the bookcase is drawn smaller,
+   to match the room (fit-room.js sets --shelf-zoom). */
+html.room-sideways .library-room {
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+}
+
+html.room-sideways .bookcase-zone {
+    zoom: var(--shelf-zoom, 1);
+}

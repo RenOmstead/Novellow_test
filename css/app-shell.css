@@ -1261,3 +1261,27 @@ html.room-sideways .header-add {
 
     border-radius: 50%;
 }
+
+
+/* =========================================================
+   EDGE TO EDGE (phones with a notch, and the installed app)
+   The page fills the whole screen; the top bar and the room
+   keep clear of the notch, the rounded corners and the
+   status bar.
+========================================================= */
+
+.scene-header {
+    padding-top: calc(12px + env(safe-area-inset-top, 0px));
+    padding-left: calc(18px + env(safe-area-inset-left, 0px));
+    padding-right: calc(20px + env(safe-area-inset-right, 0px));
+}
+
+html.room-sideways .scene-header {
+    padding-top: calc(6px + env(safe-area-inset-top, 0px));
+    padding-left: max(12px, env(safe-area-inset-left, 0px));
+    padding-right: max(12px, env(safe-area-inset-right, 0px));
+}
+
+.library-sidebar {
+    padding-top: env(safe-area-inset-top, 0px);
+}
