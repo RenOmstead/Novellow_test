@@ -101,6 +101,10 @@ export function startRoomFit(room) {
             Math.min(width / (sideways ? ROOM_WIDTH : NARROW_ROOM_WIDTH), height / ROOM_MIN_HEIGHT);
 
         root.style.setProperty("--room-zoom", zoom.toFixed(4));
+
+        // Sideways, the bookcase shrinks to match, so two shelves
+        // and the top of the bookcase fit on the screen.
+        root.style.setProperty("--shelf-zoom", sideways ? Math.max(0.5, Math.min(1, height / 470)).toFixed(4) : "1");
         root.style.setProperty("--room-width", `${Math.floor(width / zoom)}px`);
         root.style.setProperty("--room-height", `${Math.floor(height / zoom)}px`);
 
