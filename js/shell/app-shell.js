@@ -438,9 +438,18 @@ function measureHeader() {
         return;
     }
 
-    new ResizeObserver(() => {
+    const measure = () => {
         document.documentElement.style.setProperty("--header-h", `${Math.ceil(header.offsetHeight)}px`);
-    }).observe(header);
+    };
+
+    // The whole box, padding included: turning a phone changes
+    // the safe-area padding without changing the bar's content.
+    new ResizeObserver(measure).observe(header, { box: "border-box" });
+
+    window.addEventListener("resize", measure);
+    window.addEventListener("orientationchange", () => window.setTimeout(measure, 250));
+
+    measure();
 
 }
 

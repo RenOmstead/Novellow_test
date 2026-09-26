@@ -349,6 +349,7 @@ function renderPage() {
                         <div class="stack" style="gap: 6px">
                             ${prefToggle("readingNote", "“Currently reading” note", "A little card on the wall with the book you're reading.", prefs.readingNote === "on")}
                             ${prefToggle("snippetNote", "“Journal snippets” note", "A card with your latest saved quote or note.", prefs.snippetNote === "on")}
+                            ${prefToggle("bookcaseIvy", "Ivy on the bookcase", "Vines climbing up the sides of your bookcase.", prefs.bookcaseIvy === "on")}
                         </div>
 
                         <p class="muted">To place and move decorations, choose “Arrange the room” from the moon menu at the top of the page.</p>

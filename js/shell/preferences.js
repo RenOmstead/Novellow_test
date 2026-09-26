@@ -94,7 +94,8 @@ const DEFAULTS = {
     china: "rose",
     teaset: "gold",
     readingNote: "off",
-    snippetNote: "off"
+    snippetNote: "off",
+    bookcaseIvy: "off"
 };
 
 
@@ -155,6 +156,9 @@ export function applyPreferences() {
 
     root.dataset.readingNote = readingNote === "on" ? "on" : "off";
     root.dataset.snippetNote = snippetNote === "on" ? "on" : "off";
+
+    // Ivy climbing the sides of the bookcase, if the reader wants it.
+    root.dataset.bookcaseIvy = getPreferences().bookcaseIvy === "on" ? "on" : "off";
 
     // The drink on the side table.
     const mugId =
