@@ -1066,9 +1066,17 @@ function onPalettePointerDown(event) {
     // Until the piece is out of the tray, the page stays put.
     let outOfTray = false;
 
-    button.setPointerCapture(event.pointerId);
-
     const begin = () => {
+
+        // Held only once a drag begins: holding it from the first
+        // touch can stop iPhones scrolling the tray.
+        try {
+            button.setPointerCapture(event.pointerId);
+        }
+
+        catch {
+            // The pointer has already gone.
+        }
 
         ghost = document.createElement("div");
         ghost.className = "decor-ghost";

@@ -820,7 +820,14 @@ body.sidebar-collapsed .app-stage {
 
     min-width: 240px;
 
+    /* On a short screen (a phone held sideways) the menu
+       scrolls instead of running off the bottom. */
+    max-height: calc(100dvh - var(--header-h, var(--header-height)) - 12px);
+
     padding: 10px;
+
+    overflow-y: auto;
+    overscroll-behavior: contain;
 
     z-index: 80;
 }

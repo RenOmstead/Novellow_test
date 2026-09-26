@@ -426,6 +426,71 @@
 
 
 /* ---------------------------------------------------------
+   PHONE, HELD SIDEWAYS
+   A short screen: the panel keeps to one line of tabs that
+   slides sideways, so the pieces get the height.
+--------------------------------------------------------- */
+
+@media (orientation: landscape) and (max-height: 540px) {
+
+    .arrange-bar {
+        top: 8px;
+        bottom: 8px;
+        left: max(8px, env(safe-area-inset-left, 0px));
+
+        width: 300px;
+
+        gap: 8px;
+
+        padding: 10px 12px 12px;
+    }
+
+    .arrange-bar[data-side="right"] {
+        right: max(8px, env(safe-area-inset-right, 0px));
+    }
+
+    .arrange-bar__title {
+        font-size: 17px;
+    }
+
+    .arrange-bar__hint {
+        display: none;
+    }
+
+    .arrange-bar__tabs {
+        flex: none;
+        flex-wrap: nowrap;
+
+        margin: 0 -12px;
+        padding: 0 12px 2px;
+
+        overflow-x: auto;
+
+        scrollbar-width: none;
+    }
+
+    .arrange-bar__tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .arrange-bar__asset {
+        grid-template-rows: 46px auto;
+
+        padding: 6px 4px 4px;
+    }
+
+    .arrange-bar__asset svg {
+        height: 46px;
+    }
+
+    .arrange-bar__label {
+        font-size: 11px;
+    }
+
+}
+
+
+/* ---------------------------------------------------------
    PHONE, HELD UPRIGHT
    The tray is a strip along the bottom that folds down to a
    single line. (Held sideways, the side panel fits better.)
