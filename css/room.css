@@ -1145,3 +1145,98 @@ html.room-narrow .ceiling-lamp {
 html.room-narrow .ceiling-lamp::before {
     height: calc(10px + max(0px, var(--room-height, 820px) - 960px));
 }
+
+
+/* Sideways, the bookcase starts right under the top bar and
+   its crown sits snug under it. */
+html.room-sideways .bookcase-zone {
+    padding-top: 6px;
+}
+
+
+/* =========================================================
+   A PHONE HELD UPRIGHT: TURN IT SIDEWAYS
+   The reading room is made for a phone held sideways; held
+   upright, the home page asks to be turned (fit-room.js).
+========================================================= */
+
+.turn-sideways {
+    display: none;
+}
+
+@media (max-width: 820px) and (orientation: portrait) {
+
+    html.room-compact .turn-sideways {
+        position: fixed;
+
+        inset: 0;
+
+        z-index: 950;
+
+        display: grid;
+        place-items: center;
+        align-content: center;
+
+        gap: 18px;
+
+        padding: 32px 28px;
+
+        background:
+            radial-gradient(ellipse at 50% 40%, rgba(255, 206, 128, 0.22), transparent 60%),
+            linear-gradient(180deg, var(--wall-top, #3b2231), var(--wall-bottom, #1f121b));
+
+        color: #fbeede;
+
+        text-align: center;
+    }
+
+    html.room-compact:has(.library-sidebar.is-open) .turn-sideways {
+        display: none;
+    }
+
+}
+
+.turn-sideways__phone {
+    width: 96px;
+    height: 96px;
+
+    animation: turnPhone 2.8s ease-in-out infinite;
+}
+
+@keyframes turnPhone {
+    0%, 25% { transform: rotate(0deg); }
+    55%, 85% { transform: rotate(-90deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.turn-sideways h2 {
+    margin: 0;
+
+    font-family: var(--font-heading);
+    font-size: 28px;
+}
+
+.turn-sideways p {
+    max-width: 300px;
+
+    margin: 0;
+
+    color: #e8d6c4;
+
+    font-size: 17px;
+    line-height: 1.4;
+}
+
+.turn-sideways__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    gap: 10px;
+}
+
+.reduce-motion .turn-sideways__phone {
+    animation: none;
+
+    transform: rotate(-90deg);
+}

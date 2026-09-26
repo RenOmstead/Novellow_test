@@ -113,6 +113,24 @@ export function startRoomFit(room) {
         frame = requestAnimationFrame(fit);
     };
 
+    // Held upright, the home page asks to be turned sideways.
+    document.body.insertAdjacentHTML("beforeend", `
+        <section class="turn-sideways" aria-label="Turn your phone sideways">
+            <svg class="turn-sideways__phone" viewBox="0 0 64 64" aria-hidden="true">
+                <rect x="20" y="6" width="24" height="52" rx="5" fill="#f6e3d6" stroke="#2b1d24" stroke-width="2.4" />
+                <rect x="23.4" y="12" width="17.2" height="38" rx="1.6" fill="#6e3b58" />
+                <circle cx="32" cy="54" r="1.8" fill="#2b1d24" />
+                <path d="M28 26C28 22 36 22 36 26V34H28Z" fill="#f0cf8a" />
+            </svg>
+            <h2>Turn your phone sideways</h2>
+            <p>Your reading room opens up when your phone is held sideways: the shelves on one side, the window and the chair on the other.</p>
+            <div class="turn-sideways__links">
+                <a class="button button--brass button--small" href="library.html">My Books</a>
+                <a class="button button--ghost button--small" href="reading.html">Reading Now</a>
+            </div>
+        </section>
+    `);
+
     fit();
 
     UPRIGHT.addEventListener("change", fit);
