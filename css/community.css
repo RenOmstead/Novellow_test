@@ -1,0 +1,1066 @@
+/* =========================================================
+   NOVELLOW
+   COMMUNITY
+
+   Friends, a friend's shelves, book clubs and buddy reads
+   (community.html). Paper cards on the dark room, like the
+   other library pages.
+========================================================= */
+
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.community-layout {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) 320px;
+    align-items: start;
+
+    gap: 22px;
+}
+
+.community-card {
+    padding: 20px 22px;
+}
+
+.community-card__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-bottom: 4px;
+}
+
+.community-card__head .section-title {
+    margin-bottom: 8px;
+}
+
+.community-card__head .button svg {
+    width: 18px;
+    height: 18px;
+}
+
+.community-card__hint {
+    font-size: 17px;
+}
+
+.community-card__hint--light {
+    color: #f0dcc0;
+
+    text-shadow: 0 2px 6px rgba(20, 8, 4, 0.6);
+}
+
+.community-card h2:not(.section-title) {
+    color: var(--color-plum-deep);
+
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.eyebrow--light {
+    color: #f0dcc0;
+
+    text-shadow: 0 2px 6px rgba(20, 8, 4, 0.6);
+}
+
+
+/* =========================================================
+   READERS
+========================================================= */
+
+.reader-avatar {
+    --size: 42px;
+
+    width: var(--size);
+    height: var(--size);
+
+    flex: 0 0 var(--size);
+
+    display: inline-grid;
+    place-items: center;
+
+    border: 2px solid rgba(255, 240, 214, 0.75);
+    border-radius: 50%;
+
+    color: #fff4e3;
+
+    background:
+        radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.25), transparent 60%),
+        var(--avatar, var(--color-plum-light));
+
+    box-shadow: 0 2px 5px rgba(30, 12, 8, 0.3);
+
+    font-family: var(--font-heading);
+    font-size: calc(var(--size) * 0.38);
+    font-weight: 800;
+    line-height: 1;
+}
+
+.reader-avatar--tiny {
+    --size: 24px;
+
+    border-width: 1.5px;
+}
+
+.reader-avatar--small {
+    --size: 32px;
+}
+
+.reader-avatar--large {
+    --size: 64px;
+}
+
+.reader-handle {
+    color: var(--color-mauve);
+
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+/* Your reader card */
+
+.reader-card {
+    display: grid;
+
+    gap: 14px;
+}
+
+.reader-card__top {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+}
+
+.reader-card__top h2 {
+    line-height: 1.1;
+}
+
+.reader-card__bio {
+    font-size: 17px;
+    font-style: italic;
+}
+
+.reader-card__nudge {
+    padding: 8px 12px;
+
+    border-radius: var(--radius);
+
+    background: rgba(240, 207, 138, 0.35);
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.reader-card__share {
+    padding-top: 12px;
+
+    border-top: 1px dashed rgba(160, 120, 100, 0.35);
+}
+
+.reader-card > .button {
+    justify-self: start;
+}
+
+.community-privacy .stat-list li {
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   LISTS OF PEOPLE AND INVITATIONS
+========================================================= */
+
+.community-list {
+    display: grid;
+
+    gap: 10px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.community-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    padding: 10px 12px;
+
+    border: 1px solid rgba(160, 120, 100, 0.3);
+    border-radius: var(--radius);
+
+    background: rgba(255, 250, 240, 0.55);
+}
+
+.community-row__text {
+    flex: 1 1 200px;
+
+    display: grid;
+
+    font-size: 17px;
+}
+
+.community-row__actions {
+    display: flex;
+
+    gap: 8px;
+}
+
+.community-row__badge {
+    width: 42px;
+    height: 42px;
+
+    flex: 0 0 42px;
+}
+
+.community-row__badge svg {
+    width: 100%;
+    height: 100%;
+}
+
+.community-list--compact .community-row {
+    padding: 6px 10px;
+}
+
+.community-list--compact .community-row__text {
+    font-size: 16px;
+}
+
+.community-waiting {
+    border-color: var(--color-gold);
+
+    box-shadow:
+        0 0 0 3px rgba(240, 207, 138, 0.35),
+        var(--shadow-paper);
+}
+
+.community-sent {
+    display: grid;
+
+    gap: 8px;
+
+    margin-top: 18px;
+}
+
+.community-empty {
+    display: grid;
+    justify-items: center;
+
+    gap: 10px;
+
+    padding: 10px 0 4px;
+
+    text-align: center;
+
+    font-size: 17px;
+}
+
+.community-empty__art {
+    width: 110px;
+    height: auto;
+}
+
+
+/* Friend cards */
+
+.friend-grid,
+.group-grid {
+    display: grid;
+
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+
+    gap: 14px;
+
+    margin: 8px 0 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.friend-card {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    padding: 14px;
+
+    border: 1px solid rgba(160, 120, 100, 0.35);
+    border-radius: var(--radius);
+
+    background: rgba(255, 250, 240, 0.7);
+}
+
+.friend-card__top {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.friend-card__name {
+    flex: 1;
+
+    display: grid;
+
+    min-width: 0;
+
+    font-size: 18px;
+    line-height: 1.15;
+}
+
+.friend-card__name strong {
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.friend-card__more {
+    width: 30px;
+    height: 30px;
+
+    opacity: 0.55;
+}
+
+.friend-card__more:hover,
+.friend-card__more:focus-visible {
+    opacity: 1;
+}
+
+.friend-card__more svg {
+    width: 14px;
+    height: 14px;
+}
+
+.friend-card__bio {
+    font-size: 16px;
+    font-style: italic;
+}
+
+.friend-card__reading {
+    display: grid;
+
+    gap: 4px;
+}
+
+.friend-card__book {
+    display: grid;
+
+    font-size: 16px;
+    line-height: 1.2;
+}
+
+.friend-card__book .muted {
+    font-size: 14px;
+}
+
+.friend-card__quiet {
+    font-size: 16px;
+}
+
+.friend-card .button {
+    margin-top: auto;
+
+    align-self: flex-start;
+}
+
+
+/* =========================================================
+   GROUP CARDS
+========================================================= */
+
+.group-card {
+    height: 100%;
+
+    display: grid;
+    align-content: start;
+
+    gap: 6px;
+
+    padding: 14px 16px;
+
+    border: 1px solid rgba(160, 120, 100, 0.35);
+    border-radius: var(--radius);
+
+    color: inherit;
+
+    background:
+        linear-gradient(135deg, rgba(255, 250, 240, 0.9), rgba(239, 223, 195, 0.9));
+
+    text-decoration: none;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.group-card:hover,
+.group-card:focus-visible {
+    transform: translateY(-2px);
+
+    box-shadow: var(--shadow-soft);
+}
+
+.group-card__kind {
+    color: var(--color-mauve);
+
+    font-family: var(--font-engraved);
+    font-size: 13px;
+
+    letter-spacing: 0.08em;
+}
+
+.group-card__name {
+    color: var(--color-plum-deep);
+
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.15;
+}
+
+.group-card__book {
+    font-size: 16px;
+}
+
+.group-card__faces,
+.group-card__progress {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 6px;
+
+    margin-top: 4px;
+}
+
+.group-card__faces .reader-avatar + .reader-avatar {
+    margin-left: -12px;
+}
+
+.group-card__faces .muted {
+    margin-left: 4px;
+
+    font-size: 14px;
+}
+
+.group-card__progress {
+    display: grid;
+}
+
+.mini-progress {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+}
+
+.mini-progress__bar {
+    flex: 1;
+
+    height: 8px;
+
+    overflow: hidden;
+
+    border-radius: 999px;
+
+    background: rgba(94, 74, 68, 0.18);
+}
+
+.mini-progress__bar span {
+    display: block;
+
+    height: 100%;
+
+    border-radius: inherit;
+
+    background: linear-gradient(90deg, var(--color-rose), var(--color-plum-light));
+}
+
+
+/* =========================================================
+   A FRIEND'S SHELVES
+========================================================= */
+
+.friend-heading__who {
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+}
+
+.friend-bio {
+    max-width: 760px;
+
+    margin: 0 auto 22px;
+    padding: 14px 20px;
+
+    font-size: 18px;
+    font-style: italic;
+}
+
+.friend-reading {
+    max-width: 760px;
+
+    margin: 0 auto 22px;
+}
+
+.friend-reading__list {
+    display: grid;
+
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+
+    gap: 12px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.friend-reading__book {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 10px 14px;
+
+    color: inherit;
+
+    font: inherit;
+    text-align: left;
+
+    cursor: pointer;
+}
+
+.friend-reading__book > span {
+    display: grid;
+
+    gap: 3px;
+
+    font-size: 16px;
+}
+
+.friend-reading__book strong {
+    font-family: var(--font-heading);
+    font-size: 17px;
+    line-height: 1.15;
+}
+
+.friend-reading__book .book-cover {
+    flex: 0 0 auto;
+}
+
+.progress-ribbon--thin {
+    display: block;
+
+    height: 7px;
+
+    margin: 3px 0 1px;
+}
+
+.friend-bookcase {
+    margin-bottom: 30px;
+}
+
+.friend-bookcase .book-spine {
+    cursor: pointer;
+}
+
+
+/* A friend's book */
+
+.friend-book-dialog {
+    width: min(620px, calc(100vw - 32px));
+}
+
+.friend-book {
+    display: grid;
+
+    grid-template-columns: 150px 1fr;
+    align-items: start;
+
+    gap: 20px;
+}
+
+.friend-book .book-cover {
+    width: 150px;
+}
+
+.friend-book__details {
+    display: grid;
+
+    gap: 8px;
+}
+
+.friend-book__author {
+    margin-top: -4px;
+
+    font-size: 18px;
+    font-style: italic;
+}
+
+.friend-book .stat-list li {
+    font-size: 16px;
+}
+
+.friend-book .star-rating {
+    justify-content: flex-end;
+}
+
+.friend-review {
+    display: grid;
+
+    gap: 10px;
+
+    margin-top: 18px;
+    padding-top: 16px;
+
+    border-top: 1px dashed rgba(160, 120, 100, 0.45);
+
+    font-size: 18px;
+}
+
+.friend-review h3 {
+    color: var(--color-plum-deep);
+
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   DIALOGS
+========================================================= */
+
+.dialog-note {
+    margin-bottom: 12px;
+
+    font-size: 17px;
+}
+
+.field__prefix {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+}
+
+.field__prefix > span {
+    color: var(--color-ink-soft);
+
+    font-family: var(--font-ui);
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.invite-picker {
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+}
+
+.invite-picker__option {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 6px 10px;
+
+    border-radius: var(--radius);
+
+    font-size: 17px;
+
+    cursor: pointer;
+}
+
+.invite-picker__option:hover {
+    background: rgba(240, 207, 138, 0.25);
+}
+
+.invite-picker__option input {
+    width: 20px;
+    height: 20px;
+
+    accent-color: var(--color-plum-light);
+}
+
+
+/* =========================================================
+   CLUBS AND BUDDY READS
+========================================================= */
+
+.group-invite {
+    max-width: 680px;
+
+    display: grid;
+
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+
+    gap: 22px;
+}
+
+.group-invite__art {
+    width: 120px;
+    height: auto;
+}
+
+.group-invite p {
+    margin-top: 6px;
+
+    font-size: 18px;
+}
+
+.group-invite__actions {
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 14px;
+}
+
+.group-description {
+    padding: 14px 20px;
+
+    font-size: 18px;
+    font-style: italic;
+}
+
+.member-list {
+    display: grid;
+
+    gap: 12px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.member-list__label {
+    margin: 16px 0 8px;
+}
+
+.member-list--invited {
+    opacity: 0.8;
+}
+
+.member-row {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.member-row__text {
+    flex: 1;
+
+    display: grid;
+
+    min-width: 0;
+
+    font-size: 16px;
+    line-height: 1.2;
+}
+
+.member-row__text .muted {
+    font-size: 14px;
+}
+
+.member-row__tag {
+    color: var(--color-mauve);
+
+    font-family: var(--font-engraved);
+    font-size: 12px;
+
+    letter-spacing: 0.06em;
+}
+
+.member-row .icon-button {
+    width: 28px;
+    height: 28px;
+
+    opacity: 0.55;
+}
+
+.member-row .icon-button svg {
+    width: 12px;
+    height: 12px;
+}
+
+.member-row .icon-button:hover {
+    opacity: 1;
+}
+
+.chapter-form {
+    display: grid;
+
+    gap: 10px;
+}
+
+.chapter-form .button {
+    justify-self: start;
+}
+
+
+/* Up next */
+
+.next-chapter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    gap: 16px;
+}
+
+.next-chapter > div {
+    flex: 1 1 260px;
+}
+
+.next-chapter .muted {
+    margin-top: 4px;
+
+    font-size: 16px;
+}
+
+.next-chapter--done {
+    border-color: var(--color-gold);
+}
+
+
+/* One chapter's comments */
+
+.chapter-thread {
+    padding: 0;
+}
+
+.chapter-thread > summary {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 14px 22px;
+
+    cursor: pointer;
+
+    list-style: none;
+}
+
+.chapter-thread > summary::-webkit-details-marker {
+    display: none;
+}
+
+.chapter-thread > summary::before {
+    content: "›";
+
+    display: inline-block;
+
+    margin-right: 4px;
+
+    color: var(--color-mauve);
+
+    font-size: 22px;
+    line-height: 1;
+
+    transition: transform 0.2s ease;
+}
+
+.chapter-thread[open] > summary::before {
+    transform: rotate(90deg);
+}
+
+.chapter-thread__title {
+    flex: 1;
+
+    color: var(--color-plum-deep);
+
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.chapter-thread > summary .muted {
+    font-size: 15px;
+}
+
+.chapter-thread > .post-list,
+.chapter-thread > .composer {
+    margin: 0 22px 18px;
+}
+
+
+/* Posts */
+
+.post-list {
+    display: grid;
+
+    gap: 14px;
+
+    margin: 6px 0 16px;
+    padding: 0;
+
+    list-style: none;
+}
+
+.post {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 10px;
+}
+
+.post__bubble {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 10px 14px;
+
+    border: 1px solid rgba(160, 120, 100, 0.3);
+    border-radius: 4px 14px 14px 14px;
+
+    background: rgba(255, 252, 245, 0.85);
+}
+
+.post--mine .post__bubble {
+    background: rgba(233, 167, 180, 0.18);
+}
+
+.post__meta {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+
+    gap: 4px 10px;
+
+    font-size: 15px;
+}
+
+.post__meta time {
+    color: var(--color-ink-faint);
+
+    font-size: 13px;
+}
+
+.post__delete {
+    margin-left: auto;
+
+    font-size: 13px;
+}
+
+.post__body {
+    display: grid;
+
+    gap: 8px;
+
+    margin-top: 4px;
+
+    font-size: 17px;
+
+    overflow-wrap: anywhere;
+}
+
+.composer {
+    display: grid;
+
+    grid-template-columns: 1fr auto;
+    align-items: end;
+
+    gap: 10px;
+}
+
+.composer textarea.field__input {
+    min-height: 64px;
+}
+
+
+/* =========================================================
+   SMALLER SCREENS
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .community-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .community-layout > aside {
+        order: -1;
+    }
+
+    .community-layout--group > aside {
+        order: 0;
+    }
+
+}
+
+@media (max-width: 640px) {
+
+    .community-card {
+        padding: 16px;
+    }
+
+    .friend-book {
+        grid-template-columns: 1fr;
+
+        justify-items: center;
+    }
+
+    .friend-book__details {
+        width: 100%;
+    }
+
+    .group-invite {
+        grid-template-columns: 1fr;
+
+        justify-items: center;
+
+        text-align: center;
+    }
+
+    .group-invite__actions {
+        justify-content: center;
+    }
+
+    .composer {
+        grid-template-columns: 1fr;
+    }
+
+    .composer .button {
+        justify-self: end;
+    }
+
+    .chapter-thread > summary {
+        padding: 12px 16px;
+    }
+
+    .chapter-thread > .post-list,
+    .chapter-thread > .composer {
+        margin: 0 16px 16px;
+    }
+
+}

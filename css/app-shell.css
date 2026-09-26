@@ -281,6 +281,47 @@ body.sidebar-collapsed .app-stage {
         transform 0.2s ease;
 }
 
+.sidebar-badge {
+    min-width: 22px;
+    height: 22px;
+
+    display: grid;
+    place-items: center;
+
+    margin-left: auto;
+    padding: 0 6px;
+
+    border-radius: 999px;
+
+    color: #2b1a10;
+
+    background: linear-gradient(180deg, #f3d38c, #d7a452);
+
+    box-shadow: 0 1px 3px rgba(20, 8, 4, 0.45);
+
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.library-sidebar.is-collapsed .sidebar-link {
+    position: relative;
+}
+
+.library-sidebar.is-collapsed .sidebar-badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+
+    min-width: 18px;
+    height: 18px;
+
+    padding: 0 4px;
+
+    font-size: 11px;
+}
+
 .sidebar-link:hover {
     color: #fff1dc;
 

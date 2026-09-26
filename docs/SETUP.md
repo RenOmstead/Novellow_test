@@ -12,7 +12,7 @@ You'll need the Supabase dashboard for your project
 
 ## 1. Create the tables, security rules and cover storage
 
-In Supabase, open **SQL Editor** → **New query**. Run these three
+In Supabase, open **SQL Editor** → **New query**. Run these four
 files from the `sql/` folder, **in this order**. For each one, paste the
 whole file into the editor and select **Run**:
 
@@ -24,6 +24,10 @@ whole file into the editor and select **Run**:
    signed-in reader see and change their own rows.
 3. `sql/storage.sql`: the private `book-covers` bucket and its rules.
    Each reader can only reach the covers in their own folder.
+4. `sql/community.sql`: friends, shared shelves, book clubs and buddy
+   reads. Shelves are private unless a reader turns sharing on, and then
+   only their friends can see them. Journals, notes, quotes and words are
+   never shared. It's safe to run again.
 
 Each should finish with "Success. No rows returned". If one shows an
 error, stop there and send me the message.

@@ -1144,45 +1144,6 @@
 
 
 /* =========================================================
-   COMMUNITY
-========================================================= */
-
-.community-foundation {
-    display: grid;
-
-    grid-template-columns: 220px 1fr;
-    align-items: center;
-
-    gap: 28px;
-
-    padding: 28px;
-}
-
-.community-foundation__art {
-    width: 220px;
-    height: auto;
-}
-
-.community-foundation h2 {
-    font-family: var(--font-heading);
-    font-size: 26px;
-    font-weight: 800;
-
-    color: var(--color-plum-deep);
-}
-
-.community-foundation ul {
-    display: grid;
-
-    gap: 6px;
-
-    padding-left: 20px;
-
-    font-size: 18px;
-}
-
-
-/* =========================================================
    SETTINGS
 ========================================================= */
 
@@ -1419,8 +1380,7 @@
         justify-self: center;
     }
 
-    .goal-card,
-    .community-foundation {
+    .goal-card {
         grid-template-columns: 1fr;
 
         justify-items: center;

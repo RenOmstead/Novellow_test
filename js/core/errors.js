@@ -80,6 +80,19 @@ export function friendlyDataError(error, fallback = "That didn't save. Please tr
         return "This shelf still holds books. Move them to another shelf first.";
     }
 
+    // Community actions explain themselves (sql/community.sql).
+    if (error?.code === "P0001") {
+        return error.message;
+    }
+
+    if (error?.code === "23505" && /username/i.test(message)) {
+        return "Someone already has that username. Try another.";
+    }
+
+    if (error?.code === "23514" && /username/i.test(message)) {
+        return "Usernames are 3 to 24 lowercase letters, numbers or underscores.";
+    }
+
     if (error?.code === "23514") {
         return "Some of those details aren't valid. Check the highlighted fields and try again.";
     }
