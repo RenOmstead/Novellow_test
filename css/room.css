@@ -727,6 +727,14 @@ body.sidebar-collapsed .journal-stage {
 [data-rug="spiderweb"] .room-rug--spiderweb,
 [data-rug="pumpkin"] .room-rug--pumpkin,
 [data-rug="sheepskin"] .room-rug--sheepskin,
+[data-rug="oriental"] .room-rug--oriental,
+[data-rug="kilim"] .room-rug--kilim,
+[data-rug="hearts"] .room-rug--hearts,
+[data-rug="rosegarden"] .room-rug--rosegarden,
+[data-rug="trellis"] .room-rug--trellis,
+[data-rug="cat"] .room-rug--cat,
+[data-rug="patchwork"] .room-rug--patchwork,
+[data-rug="autumn"] .room-rug--autumn,
 [data-rug="braided"] .room-rug--braided {
     display: block;
 }

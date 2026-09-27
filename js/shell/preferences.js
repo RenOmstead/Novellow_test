@@ -51,6 +51,14 @@ export const RUGS = [
     { id: "spiderweb", name: "Spiderweb" },
     { id: "pumpkin", name: "Pumpkin potion" },
     { id: "sheepskin", name: "Fluffy round" },
+    { id: "oriental", name: "Oriental medallion" },
+    { id: "kilim", name: "Kilim diamonds" },
+    { id: "hearts", name: "Hearts" },
+    { id: "rosegarden", name: "Rose garden" },
+    { id: "trellis", name: "Moroccan trellis" },
+    { id: "cat", name: "Black cat" },
+    { id: "patchwork", name: "Patchwork quilt" },
+    { id: "autumn", name: "Autumn leaves" },
     { id: "none", name: "No rug" }
 ];
 
