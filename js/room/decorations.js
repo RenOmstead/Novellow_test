@@ -230,7 +230,20 @@ const LIMIT = 80;
 
 // Bookcase pieces are placed in pixels down from the top of
 // the bookcase: position_y is a percentage of this height.
+// The bookcase is always drawn 760 wide and scaled to fit
+// (fit-room.js), so a piece stays on the same spot on every
+// screen.
 const SHELF_SPAN = 1600;
+
+
+// How much the bookcase is scaled down on this screen.
+function caseZoom() {
+
+    return Number.parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue("--case-zoom")
+    ) || 1;
+
+}
 
 
 function topFor(piece) {
@@ -244,7 +257,7 @@ function topFor(piece) {
 // room_area in the database → the part of the room it hangs on.
 const AREAS = {
     wall: ".journal-zone",
-    shelf: ".bookcase-zone"
+    shelf: ".bookcase"
 };
 
 let room = null;
@@ -625,8 +638,9 @@ function positionIn(area, pointX, pointY) {
     const box =
         layerFor(area).getBoundingClientRect();
 
+    // On the bookcase, pixels on screen are scaled pixels.
     const height =
-        area === "shelf" ? SHELF_SPAN : box.height;
+        area === "shelf" ? SHELF_SPAN * caseZoom() : box.height;
 
     return {
         position_x: Number(clamp(((x - box.left) / box.width) * 100, 0, 100).toFixed(2)),

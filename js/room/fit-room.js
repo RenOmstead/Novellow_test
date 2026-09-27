@@ -18,6 +18,9 @@ const ROOM_WIDTH = 600;
 const NARROW_ROOM_WIDTH = 480;
 const ROOM_MIN_HEIGHT = 620;
 
+// The bookcase's own width, before it is scaled to fit.
+const CASE_WIDTH = 760;
+
 // How much of the width the room takes.
 const ROOM_SHARE = 0.46;
 
@@ -85,8 +88,22 @@ export function startRoomFit(room) {
         }
 
         if (!compact) {
+            root.style.setProperty("--case-zoom", "1");
             return;
         }
+
+        // The bookcase is drawn 760 wide and scaled to fit its
+        // side, so decorations on it keep their places on every
+        // phone, in the browser and the installed app alike.
+        const style =
+            getComputedStyle(bookcaseZone);
+
+        const shelfWidth =
+            bookcaseZone.clientWidth
+            - Number.parseFloat(style.paddingLeft)
+            - Number.parseFloat(style.paddingRight);
+
+        root.style.setProperty("--case-zoom", Math.min(1, Math.max(0.3, shelfWidth / CASE_WIDTH)).toFixed(4));
 
         // The room's side of the screen, and the scale that fits
         // the room into it. The room grows taller (more wall) or
@@ -102,9 +119,6 @@ export function startRoomFit(room) {
 
         root.style.setProperty("--room-zoom", zoom.toFixed(4));
 
-        // Sideways, the bookcase shrinks to match, so two shelves
-        // and the top of the bookcase fit on the screen.
-        root.style.setProperty("--shelf-zoom", sideways ? Math.max(0.5, Math.min(1, height / 470)).toFixed(4) : "1");
         root.style.setProperty("--room-width", `${Math.floor(width / zoom)}px`);
         root.style.setProperty("--room-height", `${Math.floor(height / zoom)}px`);
 
