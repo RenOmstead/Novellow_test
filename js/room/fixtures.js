@@ -180,6 +180,47 @@ export const BUILT_IN = [
 ];
 
 
+// Where each built-in piece is in the room, so it can be
+// picked out and removed right there while arranging.
+const BUILT_IN_SELECTORS = {
+    lamp: ".ceiling-lamp",
+    armchair: ".corner-scene .armchair",
+    sidetable: ".side-table",
+    cafetable: ".cafe-table",
+    cauldron: ".corner-cauldron",
+    broom: ".corner-broom",
+    pumpkin: ".corner-pumpkin",
+    floorcat: ".corner-floor-cat"
+};
+
+
+/*
+    The built-in piece under a tap, if any (only the ones this
+    room actually has).
+*/
+
+export function builtInAt(target) {
+
+    const theme =
+        document.documentElement.dataset.theme;
+
+    const part =
+        BUILT_IN.find((item) =>
+            BUILT_IN_SELECTORS[item.id]
+            && item.rooms.includes(theme)
+            && target.closest?.(BUILT_IN_SELECTORS[item.id])
+        );
+
+    return part || null;
+
+}
+
+
+export function builtInElements(id) {
+    return BUILT_IN_SELECTORS[id] ? [...document.querySelectorAll(BUILT_IN_SELECTORS[id])] : [];
+}
+
+
 export const WINDOW_CHOICES = [
     ...WINDOW_SHAPES,
     { id: "none", name: "No window" }
@@ -427,7 +468,24 @@ export function setFixtureRows(theme, fixtureRows) {
 }
 
 
-async function save(kind, choice, extra = {}) {
+// One save at a time for each kind, in the order they were
+// made, so quick changes never land out of order (or twice).
+const saveQueues =
+    new Map();
+
+function save(kind, choice, extra = {}) {
+
+    const next =
+        (saveQueues.get(kind) || Promise.resolve()).then(() => saveNow(kind, choice, extra));
+
+    saveQueues.set(kind, next);
+
+    return next;
+
+}
+
+
+async function saveNow(kind, choice, extra = {}) {
 
     const theme =
         themeId || document.documentElement.dataset.theme;
@@ -747,7 +805,7 @@ export function roomPanelMarkup() {
             ${builtIn.length ? html`
                 <fieldset class="room-choices">
                     <legend class="room-choices__label">Built into this room</legend>
-                    <p class="room-choices__note">Tap to take a piece away, and again to put it back.</p>
+                    <p class="room-choices__note">Tap a piece here, or tap it in the room, to take it away. Tap it here again to put it back.</p>
                     <div class="room-choices__chips">
                         ${builtIn.map((part) => html`
                             <button class="room-chip room-chip--toggle ${hidden.has(part.id) ? "" : "is-current"}" type="button" data-built-in="${part.id}" aria-pressed="${String(!hidden.has(part.id))}">${hidden.has(part.id) ? "＋ " : "✓ "}${part.name}</button>

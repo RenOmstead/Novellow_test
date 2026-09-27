@@ -496,6 +496,28 @@ html.room-compact .journal-zone > .decor-layer {
     background: rgba(255, 250, 238, 0.6);
 }
 
+.arrange-bar__built-in-note {
+    color: var(--color-ink-soft);
+
+    font-size: 13.5px;
+    line-height: 1.35;
+}
+
+.arrange-bar__remove-built-in {
+    justify-self: start;
+
+    border-color: var(--color-danger);
+
+    color: var(--color-danger);
+
+    background: rgba(255, 250, 238, 0.9);
+}
+
+.arrange-bar__remove-built-in svg {
+    width: 16px;
+    height: 16px;
+}
+
 .arrange-bar__fabrics {
     grid-column: 1 / -1;
 

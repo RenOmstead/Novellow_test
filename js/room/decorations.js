@@ -21,7 +21,7 @@
 import { listDecorations, createRow, updateRow, deleteRow } from "../core/store.js?v=__VERSION__";
 import { html, render, clamp, debounce } from "../core/helpers.js?v=__VERSION__";
 import { art, toast, toastError } from "../core/ui.js?v=__VERSION__";
-import { setFixtureRows, roomPanelMarkup, onRoomPanelClick, dragWindow } from "./fixtures.js?v=__VERSION__";
+import { setFixtureRows, roomPanelMarkup, onRoomPanelClick, dragWindow, builtInAt, builtInElements, toggleBuiltIn } from "./fixtures.js?v=__VERSION__";
 
 
 /*
@@ -355,6 +355,9 @@ let theme = "original";
 let pieces = [];
 let arranging = false;
 let selectedId = null;
+// A piece the room came with (the armchair, the chandelier…),
+// picked out to be removed.
+let selectedBuiltIn = null;
 let bar = null;
 let loadToken = 0;
 let paletteGroup = "room";
@@ -537,9 +540,17 @@ function drawBar() {
             <button class="button button--primary button--small" type="button" data-arrange="done">Done</button>
         </div>
 
-        <p class="arrange-bar__hint">${paletteGroup === "room"
+        <p class="arrange-bar__hint" ${selectedBuiltIn ? html`hidden` : ""}>${paletteGroup === "room"
             ? "Choose the wallpaper, floor, window, curtains and rug for this room."
             : "Tap a piece to add it to the part of the room you can see, or drag it straight to its spot. Drag pieces to move them."}</p>
+
+        ${selectedBuiltIn ? html`
+            <div class="arrange-bar__tools arrange-bar__tools--built-in">
+                <span class="arrange-bar__selected">${selectedBuiltIn.name}</span>
+                <p class="arrange-bar__built-in-note">This came with the room. Take it out to make space for your own pieces; you can put it back in the Room tab.</p>
+                <button class="button button--small arrange-bar__remove-built-in" type="button" data-arrange="remove-built-in">${art("ui-trash")} Take it out of the room</button>
+            </div>
+        ` : ""}
 
         <div class="arrange-bar__tools" ${selected ? "" : html`hidden`}>
             <span class="arrange-bar__selected">${selected ? assetFor(selected.asset_id)?.name : ""}</span>
@@ -855,7 +866,29 @@ function adjust(piece, change) {
    ARRANGE MODE: TOOLS, DRAGGING, KEYS
 ========================================================= */
 
+function selectBuiltIn(part) {
+
+    selectedBuiltIn = part;
+    selectedId = null;
+
+    room.querySelectorAll(".placed-decor.is-selected").forEach((element) => element.classList.remove("is-selected"));
+    room.querySelectorAll(".is-built-in-selected").forEach((element) => element.classList.remove("is-built-in-selected"));
+
+    if (part) {
+        builtInElements(part.id).forEach((element) => element.classList.add("is-built-in-selected"));
+    }
+
+    drawBar();
+
+}
+
+
 function select(id) {
+
+    if (selectedBuiltIn) {
+        selectedBuiltIn = null;
+        room.querySelectorAll(".is-built-in-selected").forEach((element) => element.classList.remove("is-built-in-selected"));
+    }
 
     selectedId = id;
 
@@ -915,6 +948,13 @@ function onBarClick(event) {
 
     const action =
         event.target.closest("[data-arrange]")?.dataset.arrange;
+
+    if (action === "remove-built-in" && selectedBuiltIn) {
+        toggleBuiltIn(selectedBuiltIn.id);
+        toast(`${selectedBuiltIn.name} taken out. Put it back any time from the Room tab.`);
+        selectBuiltIn(null);
+        return;
+    }
 
     if (action === "done") {
         setArranging(false);
@@ -1084,10 +1124,25 @@ function onPointerDown(event) {
 
     }
 
+    // A piece the room came with: pick it out, to remove it.
+    const builtIn =
+        arranging && event.button <= 0 && !event.target.closest(".placed-decor") ? builtInAt(event.target) : null;
+
+    if (builtIn) {
+        event.preventDefault();
+        selectBuiltIn(builtIn);
+        return;
+    }
+
     const element =
         event.target.closest(".placed-decor");
 
     if (arranging && !element && !event.target.closest(".arrange-bar")) {
+
+        if (selectedBuiltIn) {
+            selectBuiltIn(null);
+        }
+
 
         // A tap on the room itself puts the tools away.
         if (selectedId) {
@@ -1472,7 +1527,9 @@ export function setArranging(on) {
 
     if (!on) {
         selectedId = null;
+        selectedBuiltIn = null;
         trayFolded = false;
+        room.querySelectorAll(".is-built-in-selected").forEach((element) => element.classList.remove("is-built-in-selected"));
     }
 
     document.documentElement.classList.toggle("is-arranging-room", on);
