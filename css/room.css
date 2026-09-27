@@ -716,6 +716,17 @@ body.sidebar-collapsed .journal-stage {
 
 [data-rug="oval"] .room-rug--oval,
 [data-rug="persian"] .room-rug--persian,
+[data-rug="runner"] .room-rug--runner,
+[data-rug="celestial"] .room-rug--celestial,
+[data-rug="checker"] .room-rug--checker,
+[data-rug="rag"] .room-rug--rag,
+[data-rug="scallop"] .room-rug--scallop,
+[data-rug="mandala"] .room-rug--mandala,
+[data-rug="medallion"] .room-rug--medallion,
+[data-rug="moons"] .room-rug--moons,
+[data-rug="spiderweb"] .room-rug--spiderweb,
+[data-rug="pumpkin"] .room-rug--pumpkin,
+[data-rug="sheepskin"] .room-rug--sheepskin,
 [data-rug="braided"] .room-rug--braided {
     display: block;
 }
@@ -1318,4 +1329,117 @@ html.room-compact .wall-art {
 [data-theme="sandbox"] .corner-scene,
 [data-theme="sandbox"] .ceiling-lamp {
     display: none;
+}
+
+
+/* =========================================================
+   ONE FLOOR FOR THE WHOLE ROOM
+   A single floor runs under the bookcase and the reading
+   corner alike, with a skirting board where it meets the
+   wall, so the bookcase stands in the room like any other
+   piece of furniture. On a phone it is drawn at the room's
+   scale (--room-zoom), so its boards and tiles match the
+   room exactly.
+========================================================= */
+
+.library-room::before,
+html.room-compact .journal-zone::before {
+    display: none;
+}
+
+.room-floorboards {
+    --floor-zoom: 1;
+
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    z-index: 0;
+
+    width: calc(100% / var(--floor-zoom));
+    height: 112px;
+
+    zoom: var(--floor-zoom);
+
+    background:
+        var(--floor-pattern, none),
+        repeating-linear-gradient(
+            180deg,
+            transparent 0 26px,
+            var(--floor-plank-line, rgba(0, 0, 0, 0.14)) 26px 28px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            var(--floor-plank-line, rgba(0, 0, 0, 0.18)) 0 2px,
+            transparent 2px 96px
+        ),
+        linear-gradient(
+            180deg,
+            var(--floor-top),
+            var(--floor-bottom)
+        );
+
+    background-size: var(--floor-pattern-size, auto), auto, auto, auto;
+
+    box-shadow: inset 0 10px 14px -6px rgba(0, 0, 0, 0.5);
+
+    pointer-events: none;
+}
+
+html.room-compact .room-floorboards {
+    --floor-zoom: var(--room-zoom, 1);
+}
+
+/* The skirting board along the foot of the wall. */
+.room-floorboards::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 100%;
+
+    height: 16px;
+
+    border-top: 2px solid color-mix(in srgb, var(--floor-bottom) 60%, #000);
+
+    background:
+        linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--floor-top) 85%, #fff) 0 3px,
+            color-mix(in srgb, var(--floor-top) 92%, #000) 3px 12px,
+            color-mix(in srgb, var(--floor-bottom) 70%, #000) 12px
+        );
+
+    box-shadow: 0 -6px 10px -8px rgba(0, 0, 0, 0.45);
+}
+
+/* The bookcase stands on the boards, a little way into the
+   room, with its shadow on the floor. */
+.bookcase-zone {
+    padding-bottom: 38px;
+}
+
+html.room-compact .bookcase-zone {
+    padding-bottom: calc(38px * var(--room-zoom, 1));
+}
+
+.bookcase-zone > .bookcase::after {
+    content: "";
+
+    position: absolute;
+
+    left: -2%;
+    right: -2%;
+    bottom: -18px;
+
+    z-index: -1;
+
+    height: 34px;
+
+    background: radial-gradient(ellipse at 50% 40%, rgba(10, 4, 2, 0.55), transparent 70%);
+
+    pointer-events: none;
 }

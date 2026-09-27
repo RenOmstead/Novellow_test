@@ -40,6 +40,17 @@ export const RUGS = [
     { id: "oval", name: "Round, with flowers" },
     { id: "persian", name: "Rectangle, with tassels" },
     { id: "braided", name: "Round braided" },
+    { id: "runner", name: "Striped runner" },
+    { id: "celestial", name: "Moon and stars" },
+    { id: "checker", name: "Checkerboard" },
+    { id: "rag", name: "Rag stripes" },
+    { id: "scallop", name: "Scalloped flower" },
+    { id: "mandala", name: "Round lace" },
+    { id: "medallion", name: "Faded medallion" },
+    { id: "moons", name: "Moon phases" },
+    { id: "spiderweb", name: "Spiderweb" },
+    { id: "pumpkin", name: "Pumpkin potion" },
+    { id: "sheepskin", name: "Fluffy round" },
     { id: "none", name: "No rug" }
 ];
 
