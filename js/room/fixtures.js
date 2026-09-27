@@ -158,6 +158,28 @@ const RUG_VARS =
     ["--rug-edge", "--rug-border", "--rug-field", "--rug-flower", "--rug-cream", "--rug-web"];
 
 
+/* ---------------------------------------------------------
+   BUILT INTO THE THEMED ROOMS
+   Pieces a themed room comes with, which the reader can take
+   away (and put back). Saved as one fixture: "hidden", the
+   ids of the pieces taken away.
+--------------------------------------------------------- */
+
+const ARMCHAIR_ROOMS = ["original", "rainy", "forest", "gothic"];
+
+export const BUILT_IN = [
+    { id: "lamp", name: "Ceiling light", rooms: ["original", "haunted", "rainy", "forest", "cafe", "gothic"] },
+    { id: "armchair", name: "Armchair", rooms: [...ARMCHAIR_ROOMS, "cafe"] },
+    { id: "sidetable", name: "Side table and drink", rooms: ARMCHAIR_ROOMS },
+    { id: "cafetable", name: "Café table and tea set", rooms: ["cafe"] },
+    { id: "cauldron", name: "Cauldron", rooms: ["haunted"] },
+    { id: "broom", name: "Broom", rooms: ["haunted"] },
+    { id: "pumpkin", name: "Pumpkin", rooms: ["haunted"] },
+    { id: "floorcat", name: "Cat on the floor", rooms: ["haunted"] },
+    { id: "ghosts", name: "Floating ghosts", rooms: ["haunted"] }
+];
+
+
 export const WINDOW_CHOICES = [
     ...WINDOW_SHAPES,
     { id: "none", name: "No window" }
@@ -237,10 +259,10 @@ function defaultsFor(theme) {
         getPreferences();
 
     if (theme === "sandbox") {
-        return { wallpaper: "plaster", floor: "oak", window: "none", wood: prefs.wood, curtains: "none", rug: "none", rugColour: "room", windowX: null, windowY: null };
+        return { wallpaper: "plaster", floor: "oak", window: "none", wood: prefs.wood, curtains: "none", rug: "none", rugColour: "room", hidden: "", windowX: null, windowY: null };
     }
 
-    return { wallpaper: "room", floor: "room", window: prefs.window, wood: prefs.wood, curtains: prefs.curtains, rug: prefs.rug, rugColour: "room", windowX: null, windowY: null };
+    return { wallpaper: "room", floor: "room", window: prefs.window, wood: prefs.wood, curtains: prefs.curtains, rug: prefs.rug, rugColour: "room", hidden: "", windowX: null, windowY: null };
 
 }
 
@@ -282,6 +304,7 @@ export function applyFixtures(theme = document.documentElement.dataset.theme) {
     root.dataset.wood = fixtures.wood;
     root.dataset.curtains = fixtures.curtains;
     root.dataset.rug = fixtures.rug;
+    root.dataset.hidden = String(fixtures.hidden || "").split(",").filter(Boolean).join(" ");
 
     // The wallpaper and floor, over the room's own.
     const paper =
@@ -374,6 +397,12 @@ export function setFixtureRows(theme, fixtureRows) {
         const [, kind, choice] =
             String(row.asset_id).split(":");
 
+        if (kind === "hidden") {
+            rows.set(kind, row);
+            values.hidden = choice || "";
+            return;
+        }
+
         if (!KINDS.includes(kind)) {
             return;
         }
@@ -454,6 +483,44 @@ export function chooseFixture(kind, choice) {
     applyFixtures(theme);
 
     save(kind, choice);
+
+}
+
+
+/*
+    Takes a built-in piece away, or puts it back.
+*/
+
+export function toggleBuiltIn(id) {
+
+    if (!BUILT_IN.some((part) => part.id === id)) {
+        return;
+    }
+
+    const theme =
+        themeId || document.documentElement.dataset.theme;
+
+    const fixtures =
+        getFixtures(theme);
+
+    const hidden =
+        new Set(String(fixtures.hidden || "").split(",").filter(Boolean));
+
+    if (hidden.has(id)) {
+        hidden.delete(id);
+    }
+
+    else {
+        hidden.add(id);
+    }
+
+    fixtures.hidden = [...hidden].join(",");
+
+    writeCache(theme, fixtures);
+
+    applyFixtures(theme);
+
+    save("hidden", fixtures.hidden);
 
 }
 
@@ -665,8 +732,29 @@ export function roomPanelMarkup() {
     const sandbox =
         document.documentElement.dataset.theme === "sandbox";
 
+    const theme =
+        document.documentElement.dataset.theme;
+
+    const hidden =
+        new Set(String(fixtures.hidden || "").split(",").filter(Boolean));
+
+    const builtIn =
+        BUILT_IN.filter((part) => part.rooms.includes(theme));
+
     return html`
         <div class="arrange-bar__room">
+
+            ${builtIn.length ? html`
+                <fieldset class="room-choices">
+                    <legend class="room-choices__label">Built into this room</legend>
+                    <p class="room-choices__note">Tap to take a piece away, and again to put it back.</p>
+                    <div class="room-choices__chips">
+                        ${builtIn.map((part) => html`
+                            <button class="room-chip room-chip--toggle ${hidden.has(part.id) ? "" : "is-current"}" type="button" data-built-in="${part.id}" aria-pressed="${String(!hidden.has(part.id))}">${hidden.has(part.id) ? "＋ " : "✓ "}${part.name}</button>
+                        `)}
+                    </div>
+                </fieldset>
+            ` : ""}
 
             ${sandbox ? "" : html`
                 <p class="room-choices__note">Each room keeps its own choices. For a room that starts empty, choose <strong>Sandbox</strong> from the moon menu.</p>
@@ -709,6 +797,14 @@ export function onRoomPanelClick(event) {
 
     if (pick) {
         chooseFixture(pick.dataset.fixture, pick.dataset.choice);
+        return true;
+    }
+
+    const part =
+        event.target.closest("[data-built-in]");
+
+    if (part) {
+        toggleBuiltIn(part.dataset.builtIn);
         return true;
     }
 

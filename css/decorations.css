@@ -496,6 +496,40 @@ html.room-compact .journal-zone > .decor-layer {
     background: rgba(255, 250, 238, 0.6);
 }
 
+.arrange-bar__fabrics {
+    grid-column: 1 / -1;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 5px;
+}
+
+.arrange-bar__fabric {
+    width: 26px;
+    height: 26px;
+
+    border: 2px solid var(--color-paper-edge);
+    border-radius: 50%;
+
+    cursor: pointer;
+}
+
+.arrange-bar__fabric--own {
+    background: repeating-linear-gradient(45deg, rgba(120, 90, 70, 0.25) 0 4px, rgba(255, 250, 238, 0.9) 4px 8px);
+}
+
+.arrange-bar__fabric.is-current {
+    border-color: var(--color-plum-light);
+
+    box-shadow: 0 0 0 2px var(--color-gold-light);
+}
+
+.arrange-bar__fabric:focus-visible {
+    box-shadow: var(--focus-ring);
+    outline: none;
+}
+
 .arrange-bar__tools[hidden] {
     display: none;
 }
