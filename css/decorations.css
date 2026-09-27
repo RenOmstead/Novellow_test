@@ -58,6 +58,15 @@ html.room-compact .journal-zone > .decor-layer {
     filter: drop-shadow(0 6px 6px rgba(20, 8, 6, 0.35));
 }
 
+/* The finish from the sprite (#decorInk): a bold outer outline,
+   shade on the lower right and a highlight on the upper left,
+   in screen pixels so every piece matches. Fine line work
+   (cobwebs, garlands) goes without. */
+.placed-decor:not(.placed-decor--plain) svg,
+.arrange-bar__asset:not(.arrange-bar__asset--plain) svg {
+    filter: url(#decorInk);
+}
+
 .placed-decor svg {
     display: block;
 
