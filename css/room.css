@@ -1457,3 +1457,22 @@ html.room-compact .bookcase-zone {
 [data-hidden~="ghosts"] .ghost-layer {
     display: none !important;
 }
+
+
+/* While arranging, the pieces a room came with can be tapped
+   and taken out, like the reader's own. */
+.is-arranging :is(.ceiling-lamp svg, .corner-scene svg) {
+    pointer-events: auto;
+
+    cursor: pointer;
+}
+
+.is-arranging :is(.ceiling-lamp svg, .corner-scene svg):hover {
+    filter: drop-shadow(0 0 3px rgba(240, 207, 138, 0.95)) drop-shadow(0 0 1px rgba(240, 207, 138, 0.95));
+}
+
+.is-arranging .is-built-in-selected,
+.is-arranging .is-built-in-selected svg {
+    outline: 2px dashed rgba(240, 207, 138, 0.95);
+    outline-offset: 4px;
+}
