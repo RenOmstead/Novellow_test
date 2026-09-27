@@ -890,6 +890,20 @@ html.room-compact .journal-zone > .decor-layer {
     height: 30px;
 }
 
+.piece-editor__tip {
+    display: none;
+
+    /* Wraps to the editor's width rather than widening it. */
+    width: 0;
+    min-width: 100%;
+
+    margin: 6px 0 0;
+
+    font-size: 12px;
+
+    color: var(--color-ink-soft);
+}
+
 .piece-editor__close svg {
     width: 12px;
     height: 12px;
@@ -918,6 +932,180 @@ html.room-compact .journal-zone > .decor-layer {
 
     .arrange-bar {
         overflow-y: auto;
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   LIGHTER ON A PHONE'S MEMORY
+   The pictures in the tray, and the piece following a finger,
+   skip the outline finish (a filter drawn for every piece).
+--------------------------------------------------------- */
+
+.arrange-bar__asset svg,
+.decor-ghost svg {
+    --ink: none;
+}
+
+@media (pointer: coarse) {
+
+    .is-arranging .placed-decor.is-dragging {
+        --ink: none;
+
+        filter: none;
+    }
+
+    /* Small pieces are easier to pick up with a finger. */
+    .is-arranging .placed-decor::before {
+        content: "";
+
+        position: absolute;
+
+        inset: -14px;
+    }
+
+    /* While a piece is held, a second finger pinches it
+       rather than zooming the page. */
+    html.is-dragging-piece,
+    html.is-dragging-piece * {
+        touch-action: none;
+    }
+
+    .piece-editor__tip {
+        display: block;
+    }
+
+    /* No pull-to-refresh or bounce while arranging. */
+    html.is-arranging-room,
+    html.is-arranging-room body {
+        overscroll-behavior: none;
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   PHONE, HELD SIDEWAYS: MORE ROOM TO WORK IN
+   A narrower panel of small pictures, which folds away to a
+   little tab, fades while a piece is dragged, and a smaller
+   pop-up for the chosen piece.
+--------------------------------------------------------- */
+
+@media (orientation: landscape) and (max-height: 540px) {
+
+    .arrange-bar {
+        width: 236px;
+
+        padding: 8px 10px 10px;
+    }
+
+    .arrange-bar__head {
+        gap: 6px;
+    }
+
+    .arrange-bar__title {
+        font-size: 15px;
+    }
+
+    .arrange-bar__fold {
+        display: inline-grid;
+
+        width: 34px;
+        height: 34px;
+    }
+
+    .arrange-bar__fold svg {
+        transform: rotate(90deg);
+    }
+
+    .arrange-bar[data-side="right"] .arrange-bar__fold svg,
+    .arrange-bar[data-folded="true"] .arrange-bar__fold svg {
+        transform: rotate(-90deg);
+    }
+
+    .arrange-bar[data-side="right"][data-folded="true"] .arrange-bar__fold svg {
+        transform: rotate(90deg);
+    }
+
+    .arrange-bar[data-folded="true"] {
+        bottom: auto;
+
+        width: auto;
+
+        overflow: visible;
+    }
+
+    .arrange-bar[data-folded="true"] > :not(.arrange-bar__head) {
+        display: none;
+    }
+
+    .arrange-bar[data-folded="true"] .arrange-bar__title {
+        display: none;
+    }
+
+    .arrange-bar__tabs {
+        margin: 0 -10px;
+        padding: 0 10px 2px;
+    }
+
+    .arrange-bar__tab {
+        padding: 5px 10px;
+
+        font-size: 13px;
+    }
+
+    .arrange-bar__palette {
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 6px;
+    }
+
+    .arrange-bar__asset {
+        grid-template-rows: 44px;
+
+        padding: 5px;
+    }
+
+    .arrange-bar__asset svg {
+        height: 44px;
+    }
+
+    .arrange-bar__label {
+        display: none;
+    }
+
+    .arrange-bar.is-dragging {
+        opacity: 0.25;
+
+        pointer-events: none;
+    }
+
+    .piece-editor {
+        width: max-content;
+        max-width: calc(100vw - 16px);
+
+        padding: 8px 8px 6px;
+    }
+
+    .piece-editor .arrange-bar__selected {
+        font-size: 14px;
+    }
+
+    .piece-editor .arrange-bar__buttons {
+        flex-wrap: nowrap;
+
+        gap: 4px;
+    }
+
+    .piece-editor .arrange-bar__buttons .icon-button {
+        width: 34px;
+        height: 34px;
+    }
+
+    .piece-editor__close {
+        top: 4px;
+        right: 4px;
     }
 
 }
