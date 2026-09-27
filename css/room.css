@@ -1519,6 +1519,16 @@ html.room-compact .bookcase-zone {
     mix-blend-mode: soft-light;
 }
 
+/* Phones: the same warmth without the blending, which costs
+   memory on a layer the size of the screen. */
+@media (pointer: coarse) {
+    .room-glow {
+        mix-blend-mode: normal;
+
+        opacity: 0.5;
+    }
+}
+
 .room-vignette {
     z-index: 7;
 

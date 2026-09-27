@@ -113,6 +113,9 @@ export const ROOM_MIXES = {
 
 const CROSSFADE = 3;
 
+// How far ahead (seconds) a bed's copies are queued.
+const AHEAD = 90;
+
 let state = load();
 
 let ctx = null;
@@ -220,6 +223,18 @@ function wake() {
 
         if (!AudioContext) {
             return false;
+        }
+
+        // Plays like music (through the silent switch, and on
+        // with the screen off) where the browser allows it.
+        try {
+            if (navigator.audioSession) {
+                navigator.audioSession.type = "playback";
+            }
+        }
+
+        catch {
+            // Not offered here.
         }
 
         ctx = new AudioContext();
@@ -382,9 +397,17 @@ function playBed(buffer, out, [from, to] = [0, buffer.duration], crossfade = CRO
         sources.add(source);
         source.onended = () => sources.delete(source);
 
-        // Start the next copy as this one fades out.
+        // The next copy starts as this one fades out. Copies are
+        // queued well ahead on the audio clock, so the sound
+        // carries on when the page is in the background (where
+        // timers run late) or the screen is off.
         const next =
             at + length - fade;
+
+        if (next - ctx.currentTime < AHEAD) {
+            segment(next, start);
+            return;
+        }
 
         timer = window.setTimeout(() => {
 
@@ -392,7 +415,7 @@ function playBed(buffer, out, [from, to] = [0, buffer.duration], crossfade = CRO
                 segment(next, start);
             }
 
-        }, Math.max(0, (next - ctx.currentTime - 1) * 1000));
+        }, Math.max(0, (next - ctx.currentTime - AHEAD + 10) * 1000));
 
     };
 
@@ -639,6 +662,134 @@ function sync() {
 
 
 /* =========================================================
+   PLAYING ON WITH THE SCREEN OFF
+   iPhones pause a page's sound when the screen locks or
+   another app is opened, unless the page is also playing an
+   ordinary audio element. A silent one plays alongside the
+   sounds while they're on, and the lock screen shows
+   Novellow's sounds with a play and pause button.
+========================================================= */
+
+let keeper = null;
+
+// One second of silence, as a tiny WAV file.
+function silence() {
+
+    const rate = 8000;
+
+    const bytes =
+        new Uint8Array(44 + rate);
+
+    const view =
+        new DataView(bytes.buffer);
+
+    const text = (at, value) =>
+        [...value].forEach((letter, index) => bytes[at + index] = letter.charCodeAt(0));
+
+    text(0, "RIFF");
+    view.setUint32(4, 36 + rate, true);
+    text(8, "WAVE");
+    text(12, "fmt ");
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true);
+    view.setUint16(22, 1, true);
+    view.setUint32(24, rate, true);
+    view.setUint32(28, rate, true);
+    view.setUint16(32, 1, true);
+    view.setUint16(34, 8, true);
+    text(36, "data");
+    view.setUint32(40, rate, true);
+    bytes.fill(128, 44);
+
+    return URL.createObjectURL(new Blob([bytes], { type: "audio/wav" }));
+
+}
+
+
+function keepPlaying(on) {
+
+    if (on) {
+
+        if (!keeper) {
+            keeper = new Audio(silence());
+            keeper.loop = true;
+            keeper.setAttribute("playsinline", "");
+        }
+
+        keeper.play().catch(() => {
+            // Needs a tap first; the next one tries again.
+        });
+
+    }
+
+    else {
+        keeper?.pause();
+    }
+
+    showOnLockScreen();
+
+}
+
+
+function showOnLockScreen() {
+
+    if (!("mediaSession" in navigator)) {
+        return;
+    }
+
+    try {
+
+        if (!navigator.mediaSession.metadata && window.MediaMetadata) {
+
+            navigator.mediaSession.metadata = new MediaMetadata({
+                title: "Reading room sounds",
+                artist: "Novellow",
+                artwork: [
+                    { src: "assets/app/icon-192.png", sizes: "192x192", type: "image/png" },
+                    { src: "assets/app/icon-512.png", sizes: "512x512", type: "image/png" }
+                ]
+            });
+
+            navigator.mediaSession.setActionHandler("play", () => {
+                setSoundOn(true);
+                announce();
+            });
+
+            navigator.mediaSession.setActionHandler("pause", () => {
+                setSoundOn(false);
+                announce();
+            });
+
+        }
+
+        navigator.mediaSession.playbackState = state.on ? "playing" : "paused";
+
+    }
+
+    catch {
+        // Not offered here.
+    }
+
+}
+
+
+// Back from the background (or a phone call): carry on.
+document.addEventListener("visibilitychange", () => {
+
+    if (document.visibilityState !== "visible" || !state.on || !ctx) {
+        return;
+    }
+
+    if (ctx.state !== "running") {
+        ctx.resume().then(sync).catch(() => {});
+    }
+
+    keeper?.play().catch(() => {});
+
+});
+
+
+/* =========================================================
    WHAT THE MIXER CALLS
 ========================================================= */
 
@@ -657,6 +808,8 @@ export function setSoundOn(on) {
     }
 
     save();
+
+    keepPlaying(on);
 
     ctx?.resume().then(sync);
 
@@ -737,6 +890,7 @@ export function startSoundscape() {
         window.removeEventListener("keydown", begin, true);
 
         if (state.on && wake()) {
+            keepPlaying(true);
             ctx.resume().then(() => {
                 sync();
                 announce();

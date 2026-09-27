@@ -598,7 +598,7 @@ function drawBarNow() {
 
         <div class="arrange-bar__head">
             <p class="arrange-bar__title">Edit the room</p>
-            <button class="icon-button arrange-bar__fold" type="button" data-arrange="fold" aria-expanded="${String(!trayFolded)}" aria-label="${trayFolded ? "Show the decorations" : "Fold the tray down"}">
+            <button class="icon-button arrange-bar__fold" type="button" data-arrange="fold" aria-expanded="${String(!trayFolded)}" aria-label="${trayFolded ? "Show the panel" : "Hide the panel"}" title="${trayFolded ? "Show the panel" : "Hide the panel"}">
                 ${art("ui-chevron-down")}
             </button>
             <button class="button button--primary button--small" type="button" data-arrange="done">Done</button>
@@ -683,6 +683,7 @@ function drawEditor() {
                 <button class="icon-button" type="button" data-arrange="forward" aria-label="Bring to front" title="Bring to front">⤒</button>
                 <button class="icon-button" type="button" data-arrange="remove" aria-label="Remove" title="Remove">${art("ui-trash")}</button>
             </div>
+            <p class="piece-editor__tip">Hold it with one finger and pinch with another to resize or turn it.</p>
             ${selected && assetFor(selected.asset_id)?.tint ? html`
                 <div class="arrange-bar__fabrics" role="group" aria-label="Fabric colour">
                     <button class="arrange-bar__fabric arrange-bar__fabric--own ${fabricFor(selected) ? "" : "is-current"}" type="button" data-fabric="" title="Its own colours" aria-label="Its own colours"></button>
@@ -1272,10 +1273,19 @@ function autoScroll(pointer, follow, ready = () => true) {
 
 /*
     Dragging a placed piece: it follows the pointer. Dropping
-    it over the other part of the room moves it there.
+    it over the other part of the room moves it there. On a
+    touch screen a second finger pinches it bigger or smaller
+    and twists it round.
 */
 
+let draggingPiece = false;
+
 function onPointerDown(event) {
+
+    // A second finger during a drag pinches the piece (below).
+    if (draggingPiece) {
+        return;
+    }
 
     // While arranging, the window can be dragged along the wall.
     if (arranging && event.button <= 0 && event.target.closest(".moon-window") && !event.target.closest(".placed-decor")) {
@@ -1379,25 +1389,85 @@ function onPointerDown(event) {
 
     };
 
-    const move = (moveEvent) => {
+    // The second finger, while it's down.
+    let pinch = null;
 
-        if (moveEvent.pointerId !== event.pointerId) {
+    const spread = () =>
+        Math.hypot(pinch.x - pointer.x, pinch.y - pointer.y);
+
+    const angle = () =>
+        Math.atan2(pinch.y - pointer.y, pinch.x - pointer.x) * 180 / Math.PI;
+
+    const secondFinger = (downEvent) => {
+
+        if (downEvent.pointerId === event.pointerId || downEvent.pointerType !== "touch" || pinch) {
             return;
         }
 
-        pointer.x = moveEvent.clientX;
-        pointer.y = moveEvent.clientY;
+        downEvent.preventDefault();
+
+        pinch = { id: downEvent.pointerId, x: downEvent.clientX, y: downEvent.clientY };
+        pinch.spread = Math.max(20, spread());
+        pinch.angle = angle();
+        pinch.scale = piece.scale;
+        pinch.rotation = piece.rotation;
+
+    };
+
+    const move = (moveEvent) => {
+
+        if (pinch && moveEvent.pointerId === pinch.id) {
+            pinch.x = moveEvent.clientX;
+            pinch.y = moveEvent.clientY;
+        }
+
+        else if (moveEvent.pointerId === event.pointerId) {
+            pointer.x = moveEvent.clientX;
+            pointer.y = moveEvent.clientY;
+        }
+
+        else {
+            return;
+        }
+
+        if (pinch) {
+
+            let turn =
+                angle() - pinch.angle;
+
+            turn = ((turn + 540) % 360) - 180;
+
+            adjust(piece, {
+                scale: pinch.scale * spread() / pinch.spread,
+                // A small twist is a slip of the fingers.
+                rotation: Math.abs(turn) < 8 ? pinch.rotation : pinch.rotation + turn
+            });
+
+            return;
+
+        }
 
         place();
 
     };
 
     const stopScrolling =
-        autoScroll(pointer, place);
+        autoScroll(pointer, () => {
+            if (!pinch) {
+                place();
+            }
+        });
 
     // Listened for on the whole window, so the drag carries on
     // even when the piece moves between the wall and the shelves.
     const stop = (upEvent) => {
+
+        // The second finger lifting ends the pinch; the first
+        // finger carries on dragging from where it is.
+        if (pinch && upEvent.pointerId === pinch.id) {
+            pinch = null;
+            return;
+        }
 
         if (upEvent.pointerId !== event.pointerId) {
             return;
@@ -1405,15 +1475,25 @@ function onPointerDown(event) {
 
         stopScrolling();
 
+        draggingPiece = false;
+        document.documentElement.classList.remove("is-dragging-piece");
+
         element.classList.remove("is-dragging");
         bar?.classList.remove("is-dragging");
 
+        window.removeEventListener("pointerdown", secondFinger, true);
         window.removeEventListener("pointermove", move);
         window.removeEventListener("pointerup", stop);
         window.removeEventListener("pointercancel", stop);
 
+        drawEditor();
+
     };
 
+    draggingPiece = true;
+    document.documentElement.classList.add("is-dragging-piece");
+
+    window.addEventListener("pointerdown", secondFinger, true);
     window.addEventListener("pointermove", move);
     window.addEventListener("pointerup", stop);
     window.addEventListener("pointercancel", stop);
