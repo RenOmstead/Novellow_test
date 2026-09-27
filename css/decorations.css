@@ -16,7 +16,7 @@
     pointer-events: none;
 }
 
-.bookcase-zone > .decor-layer {
+.bookcase > .decor-layer {
     z-index: 7;
 
     /* Measured in pixels from the top of the bookcase (a piece
@@ -34,6 +34,17 @@
     top: auto;
 
     height: 820px;
+}
+
+/* On a phone the room grows wider or narrower to fill the
+   screen (a browser's toolbars make it wider). The window
+   keeps its place on the left, so the wall's pieces are
+   measured across a fixed width from the left too, and stay
+   by the window in the browser and the installed app. */
+html.room-compact .journal-zone > .decor-layer {
+    right: auto;
+
+    width: 600px;
 }
 
 .placed-decor {

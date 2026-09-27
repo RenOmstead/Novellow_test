@@ -19,6 +19,17 @@
     filter: drop-shadow(0 18px 22px rgba(20, 8, 4, 0.45));
 }
 
+/* On a phone the bookcase is always drawn 760 wide, then
+   scaled to fit (js/room/fit-room.js sets --case-zoom), so it
+   looks the same, and decorations stay put, in the browser
+   and the installed app, whatever the screen. */
+html.room-compact .bookcase-zone > .bookcase {
+    width: 760px;
+    max-width: none;
+
+    zoom: var(--case-zoom, 1);
+}
+
 /* Ivy is optional (Settings). It never grows past the foot of
    the bookcase: a short bookcase shows the top of the vine. */
 :root:not([data-bookcase-ivy="on"]) .ivy--case-left,

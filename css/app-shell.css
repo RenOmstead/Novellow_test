@@ -1283,13 +1283,28 @@ html.room-sideways .header-add svg {
     height: 18px;
 }
 
+/* Just the round avatar, the same size as the other buttons. */
 html.room-sideways .profile-button {
-    padding: 2px;
+    width: 36px;
+    height: 36px;
+
+    justify-content: center;
+
+    gap: 0;
+
+    padding: 0;
 }
 
-html.room-sideways .avatar {
+html.room-sideways .profile-button__name,
+html.room-sideways .profile-button > svg {
+    display: none;
+}
+
+html.room-sideways .profile-button .avatar {
     width: 32px;
     height: 32px;
+
+    flex: 0 0 32px;
 
     font-size: 15px;
 }
