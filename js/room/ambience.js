@@ -113,7 +113,7 @@ function ghostLayer() {
 
 
 const GHOSTS = [
-    ["decor-ghost", "0 0 44 54", 46],
+    ["decor-ghost", "0 0 92 108", 46],
     ["decor-ghost-wisp", "0 0 64 92", 50],
     ["decor-ghost-lantern", "0 0 84 80", 72]
 ];
@@ -261,9 +261,9 @@ function briefly(element, className, ms) {
 
 const HAPPENINGS = {
 
-    ghost: () => flyAcross("decor-ghost", "0 0 44 54", "oddity--ghost", 16),
+    ghost: () => flyAcross("decor-ghost", "0 0 92 108", "oddity--ghost", 16),
 
-    bat: () => flyAcross("decor-bat", "0 0 84 46", "oddity--bat", 7),
+    bat: () => flyAcross("decor-bat", "0 0 168 84", "oddity--bat", 7),
 
     book: () => {
 
