@@ -10,6 +10,7 @@
 ========================================================= */
 
 import { applyPreferences } from "./preferences.js?v=__VERSION__";
+import { applyFixtures } from "../room/fixtures.js?v=__VERSION__";
 
 
 export const THEMES = [
@@ -84,6 +85,18 @@ export const THEMES = [
         ivy: "autumn",
         weather: { rain: false, fog: true, fireflies: false },
         crownDecor: []
+    },
+
+    {
+        id: "sandbox",
+        pictures: { landscape: "pic-castle", portrait: "pic-moth" },
+        lamp: null,
+        name: "Sandbox",
+        description: "An empty room to make your own: choose the wallpaper, floor, window, curtains and rug in Arrange the room, then furnish and decorate it.",
+        swatch: ["#6c5c52", "#8a6440", "#e8dcc4", "#c9954f"],
+        ivy: "ivy",
+        weather: { rain: false, fog: false, fireflies: false },
+        crownDecor: []
     }
 
 ];
@@ -120,6 +133,7 @@ export function applyAppearance(settings) {
     root.dataset.theme = theme.id;
 
     applyPreferences();
+    applyFixtures(theme.id);
     root.dataset.ivy = theme.ivy;
     root.dataset.density = settings.decoration_density || "cozy";
 

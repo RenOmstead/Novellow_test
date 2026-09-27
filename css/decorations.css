@@ -280,6 +280,141 @@ html.room-compact .journal-zone > .decor-layer {
     overscroll-behavior: contain;
 }
 
+/* The Room tab: the room's own fixtures. It scrolls inside
+   the panel like the pieces do. */
+.arrange-bar__room {
+    min-height: 0;
+
+    flex: 1;
+
+    display: grid;
+    align-content: start;
+
+    gap: 14px;
+
+    margin: 0 -4px;
+    padding: 2px 4px 4px;
+
+    overflow-y: auto;
+
+    overscroll-behavior: contain;
+}
+
+.room-choices {
+    display: grid;
+
+    gap: 6px;
+
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+}
+
+.room-choices__label {
+    margin-bottom: 4px;
+
+    color: var(--color-plum);
+
+    font-family: var(--font-engraved);
+    font-size: 14px;
+    letter-spacing: 0.06em;
+}
+
+.room-choices__note {
+    color: var(--color-ink-soft);
+
+    font-size: 13.5px;
+    line-height: 1.35;
+}
+
+.room-choices__reset {
+    justify-self: start;
+
+    font-size: 13.5px;
+}
+
+.room-choices__swatches {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 6px;
+}
+
+.room-swatch {
+    aspect-ratio: 1;
+
+    display: grid;
+    place-items: center;
+
+    padding: 2px;
+
+    border: 2px solid var(--color-paper-edge);
+    border-radius: 10px;
+
+    background-color: #d8c8b0;
+
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+
+    cursor: pointer;
+}
+
+.room-swatch--own {
+    background: repeating-linear-gradient(45deg, rgba(120, 90, 70, 0.12) 0 6px, transparent 6px 12px), rgba(255, 250, 238, 0.85);
+
+    color: var(--color-ink-soft);
+
+    font-family: var(--font-ui);
+    font-size: 10.5px;
+    line-height: 1.1;
+    text-align: center;
+}
+
+.room-swatch.is-current {
+    border-color: var(--color-plum-light);
+
+    box-shadow:
+        0 0 0 2px var(--color-gold-light),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+
+.room-swatch:focus-visible,
+.room-chip:focus-visible {
+    box-shadow: var(--focus-ring);
+    outline: none;
+}
+
+.room-choices__chips {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 6px;
+}
+
+.room-chip {
+    padding: 5px 11px;
+
+    border: 1px solid var(--color-paper-edge);
+    border-radius: 999px;
+
+    background: rgba(255, 250, 238, 0.7);
+
+    color: var(--color-ink-soft);
+
+    font-family: var(--font-ui);
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+.room-chip.is-current {
+    border-color: var(--color-plum-light);
+
+    background: var(--color-plum-light);
+
+    color: #fff3e2;
+}
+
 .arrange-bar__asset {
     width: 100%;
 
@@ -508,6 +643,12 @@ html.room-compact .journal-zone > .decor-layer {
 --------------------------------------------------------- */
 
 @media (max-width: 820px) and (orientation: portrait) {
+
+    .arrange-bar__room {
+        flex: 1 1 auto;
+
+        max-height: 40dvh;
+    }
 
     .arrange-bar,
     .arrange-bar[data-side="right"] {

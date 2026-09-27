@@ -21,6 +21,7 @@
 import { listDecorations, createRow, updateRow, deleteRow } from "../core/store.js?v=__VERSION__";
 import { html, render, clamp, debounce } from "../core/helpers.js?v=__VERSION__";
 import { art, toast, toastError } from "../core/ui.js?v=__VERSION__";
+import { setFixtureRows, roomPanelMarkup, onRoomPanelClick, dragWindow } from "./fixtures.js?v=__VERSION__";
 
 
 /*
@@ -29,6 +30,7 @@ import { art, toast, toastError } from "../core/ui.js?v=__VERSION__";
 */
 
 export const DECOR_GROUPS = [
+    { id: "furniture", name: "Furniture" },
     { id: "pictures", name: "Pictures" },
     { id: "bookish", name: "Bookish" },
     { id: "cozy", name: "Cozy" },
@@ -40,6 +42,37 @@ export const DECOR_GROUPS = [
 ];
 
 export const DECOR_ASSETS = [
+    // Furniture
+    { id: "furn-wingback-floral", box: "0 0 200 232", width: 190, name: "Floral wingback chair", group: "furniture" },
+    { id: "furn-wingback-rust", box: "0 0 200 232", width: 190, name: "Velvet wingback chair", group: "furniture" },
+    { id: "furn-wingback-black", box: "0 0 200 262", width: 190, name: "Black gothic wingback", group: "furniture" },
+    { id: "furn-armchair-pink", box: "0 0 210 220", width: 200, name: "Pink tufted armchair", group: "furniture" },
+    { id: "furn-throne-purple", box: "0 0 210 236", width: 200, name: "Purple tufted throne", group: "furniture" },
+    { id: "furn-chair-carved", box: "0 0 130 222", width: 120, name: "Carved wooden chair", group: "furniture" },
+    { id: "furn-chair-wood", box: "0 0 110 204", width: 100, name: "Wooden chair", group: "furniture" },
+    { id: "furn-sofa-coral", box: "0 0 330 180", width: 310, name: "Coral sofa", group: "furniture" },
+    { id: "furn-daybed-purple", box: "0 0 300 176", width: 290, name: "Velvet daybed", group: "furniture" },
+    { id: "furn-bench-cushions", box: "0 0 230 104", width: 220, name: "Cushioned bench", group: "furniture" },
+    { id: "furn-table-side", box: "0 0 90 122", width: 86, name: "Little side table", group: "furniture" },
+    { id: "furn-table-tea", box: "0 0 150 152", width: 140, name: "Tea table", group: "furniture" },
+    { id: "furn-table-rustic", box: "0 0 200 142", width: 190, name: "Table with a cloth", group: "furniture" },
+    { id: "furn-candle-stand", box: "0 0 70 172", width: 66, name: "Candle stand", group: "furniture" },
+    { id: "furn-dresser-apothecary", box: "0 0 200 176", width: 190, name: "Apothecary dresser", group: "furniture" },
+    { id: "furn-shelf-potions", box: "0 0 170 114", width: 160, name: "Potion shelf", group: "furniture" },
+    { id: "furn-bookcase-tall", box: "0 0 170 334", width: 160, name: "Tall bookcase", group: "furniture" },
+    { id: "furn-bookcase-low", box: "0 0 190 142", width: 180, name: "Low bookcase", group: "furniture" },
+    { id: "furn-wardrobe", box: "0 0 160 304", width: 150, name: "Wardrobe", group: "furniture" },
+    { id: "furn-clock-grandfather", box: "0 0 90 286", width: 86, name: "Grandfather clock", group: "furniture" },
+    { id: "furn-tv-vintage", box: "0 0 120 138", width: 110, name: "Vintage television", group: "furniture" },
+    { id: "furn-fireplace-marble", box: "0 0 260 234", width: 250, name: "Marble fireplace", group: "furniture" },
+    { id: "furn-fireplace-gothic", box: "0 0 260 246", width: 250, name: "Gothic stone fireplace", group: "furniture" },
+    { id: "furn-fireplace-brick", box: "0 0 260 234", width: 250, name: "Brick fireplace", group: "furniture" },
+    { id: "furn-lamp-floor-pink", box: "0 0 80 240", width: 76, name: "Pink floor lamp", group: "furniture" },
+    { id: "furn-lamp-table", box: "0 0 64 86", width: 56, name: "Table lamp", group: "furniture" },
+    { id: "furn-candelabra-floor", box: "0 0 80 224", width: 76, name: "Standing candelabra", group: "furniture" },
+    { id: "furn-chandelier-gold", box: "0 0 170 130", width: 160, name: "Gold chandelier", group: "furniture" },
+    { id: "furn-lantern-hanging", box: "0 0 60 156", width: 56, name: "Hanging lantern", group: "furniture" },
+    { id: "furn-plant-hanging", box: "0 0 92 250", width: 86, name: "Hanging plant", group: "furniture" },
     // Pictures and frames
     { id: "portrait-ghost-reader", box: "0 0 120 152", width: 140, name: "Ghost reader portrait", group: "pictures" },
     { id: "portrait-moth-ornate", box: "0 0 120 152", width: 140, name: "Moth in a gilt frame", group: "pictures" },
@@ -267,7 +300,7 @@ let arranging = false;
 let selectedId = null;
 let bar = null;
 let loadToken = 0;
-let paletteGroup = "pictures";
+let paletteGroup = "room";
 
 // The tray: which side it sits on (computers) and whether it
 // is folded down (phones).
@@ -447,7 +480,9 @@ function drawBar() {
             <button class="button button--primary button--small" type="button" data-arrange="done">Done</button>
         </div>
 
-        <p class="arrange-bar__hint">Tap a piece to add it to the part of the room you can see, or drag it straight to its spot. Drag pieces to move them.</p>
+        <p class="arrange-bar__hint">${paletteGroup === "room"
+            ? "Choose the wallpaper, floor, window, curtains and rug for this room."
+            : "Tap a piece to add it to the part of the room you can see, or drag it straight to its spot. Drag pieces to move them."}</p>
 
         <div class="arrange-bar__tools" ${selected ? "" : html`hidden`}>
             <span class="arrange-bar__selected">${selected ? assetFor(selected.asset_id)?.name : ""}</span>
@@ -463,12 +498,13 @@ function drawBar() {
         </div>
 
         <div class="arrange-bar__tabs" role="tablist" aria-label="Kinds of decoration">
+            <button class="arrange-bar__tab arrange-bar__tab--room ${paletteGroup === "room" ? "is-current" : ""}" type="button" role="tab" aria-selected="${String(paletteGroup === "room")}" data-decor-group="room">Room</button>
             ${DECOR_GROUPS.map((group) => html`
                 <button class="arrange-bar__tab ${group.id === paletteGroup ? "is-current" : ""}" type="button" role="tab" aria-selected="${String(group.id === paletteGroup)}" data-decor-group="${group.id}">${group.name}</button>
             `)}
         </div>
 
-        <ul class="arrange-bar__palette" aria-label="Decorations to add">
+        ${paletteGroup === "room" ? roomPanelMarkup() : html`<ul class="arrange-bar__palette" aria-label="Decorations to add">
             ${DECOR_ASSETS.filter((asset) => asset.group === paletteGroup).map((asset) => html`
                 <li>
                     <button class="arrange-bar__asset ${asset.dark ? "arrange-bar__asset--dark" : ""}" type="button" data-add-decor="${asset.id}" title="${asset.name}" aria-label="Add ${asset.name}">
@@ -477,7 +513,7 @@ function drawBar() {
                     </button>
                 </li>
             `)}
-        </ul>
+        </ul>`}
 
         <button class="text-button arrange-bar__side" type="button" data-arrange="side">
             ${bar.dataset.side === "left" ? html`Move this panel to the right ${art("ui-chevron-right")}` : html`${art("ui-chevron-left")} Move this panel to the left`}
@@ -784,6 +820,25 @@ function onBarClick(event) {
         return;
     }
 
+    if (paletteGroup === "room" && onRoomPanelClick(event)) {
+
+        // Redraw, keeping the panel where it was scrolled to.
+        const scrolled =
+            bar.querySelector(".arrange-bar__room")?.scrollTop || 0;
+
+        drawBar();
+
+        const panel =
+            bar.querySelector(".arrange-bar__room");
+
+        if (panel) {
+            panel.scrollTop = scrolled;
+        }
+
+        return;
+
+    }
+
     const add =
         event.target.closest("[data-add-decor]");
 
@@ -927,6 +982,19 @@ function autoScroll(pointer, follow, ready = () => true) {
 */
 
 function onPointerDown(event) {
+
+    // While arranging, the window can be dragged along the wall.
+    if (arranging && event.button <= 0 && event.target.closest(".moon-window") && !event.target.closest(".placed-decor")) {
+
+        if (selectedId) {
+            select(null);
+        }
+
+        dragWindow(event);
+
+        return;
+
+    }
 
     const element =
         event.target.closest(".placed-decor");
@@ -1364,7 +1432,11 @@ async function load(themeId) {
             return;
         }
 
-        pieces = rows.map((row) => ({
+        // The room's own fixtures (wallpaper, window…) come with
+        // the decorations; js/room/fixtures.js looks after them.
+        setFixtureRows(themeId, rows.filter((row) => row.decoration_type === "fixture"));
+
+        pieces = rows.filter((row) => row.decoration_type !== "fixture").map((row) => ({
             ...row,
             position_x: Number(row.position_x),
             position_y: Number(row.position_y),
