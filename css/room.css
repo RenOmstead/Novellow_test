@@ -1484,3 +1484,52 @@ html.room-compact .bookcase-zone {
     outline: 2px dashed rgba(240, 207, 138, 0.95);
     outline-offset: 4px;
 }
+
+
+/* =========================================================
+   A COZIER ROOM
+   Warm lamplight pooling across the wall and floor, soft
+   shadow gathering in the corners and under the ceiling,
+   and a gentle sheen on the floorboards.
+========================================================= */
+
+.room-glow,
+.room-vignette {
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+}
+
+.room-glow {
+    z-index: 7;
+
+    background:
+        radial-gradient(ellipse 55% 45% at 72% 30%, rgb(255 196 128 / 0.22), transparent 70%),
+        radial-gradient(ellipse 60% 40% at 55% 100%, rgb(255 176 104 / 0.16), transparent 70%),
+        radial-gradient(ellipse 40% 50% at 28% 60%, rgb(255 210 150 / 0.08), transparent 70%);
+
+    mix-blend-mode: soft-light;
+}
+
+.room-vignette {
+    z-index: 7;
+
+    background:
+        linear-gradient(180deg, rgb(24 10 18 / 0.32), transparent 22%),
+        radial-gradient(ellipse 85% 75% at 55% 55%, transparent 60%, rgb(24 10 18 / 0.34) 100%);
+}
+
+/* The floorboards: grain, and the lamp's sheen across them. */
+.room-floorboards {
+    background:
+        var(--floor-pattern, none),
+        linear-gradient(180deg, rgb(255 222 180 / 0.14), transparent 45%),
+        repeating-linear-gradient(90deg, transparent 0 40px, rgb(0 0 0 / 0.05) 40px 41px, transparent 41px 96px),
+        repeating-linear-gradient(180deg, transparent 0 26px, var(--floor-plank-line, rgba(0, 0, 0, 0.14)) 26px 28px),
+        repeating-linear-gradient(90deg, var(--floor-plank-line, rgba(0, 0, 0, 0.18)) 0 2px, transparent 2px 96px),
+        linear-gradient(180deg, var(--floor-top), var(--floor-bottom));
+
+    background-size: var(--floor-pattern-size, auto), auto, auto, auto, auto, auto;
+}
