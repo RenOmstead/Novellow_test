@@ -366,7 +366,7 @@ function headerMarkup(eyebrow) {
                         <div class="popover-divider" role="separator"></div>
                         <button class="popover-item" type="button" data-arrange-room>
                             <svg aria-hidden="true"><use href="#ui-brush"></use></svg>
-                            Arrange the room
+                            Edit the room
                         </button>
                     </div>
 

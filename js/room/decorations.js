@@ -8,7 +8,7 @@
    theme keeps its own arrangement, saved in the Supabase
    "decorations" table.
 
-   Outside "Arrange the room" the pieces are pictures only:
+   Outside "Edit the room" the pieces are pictures only:
    they never catch a click meant for a book.
 
    While arranging, the pieces wait in a tray that stays on
@@ -51,18 +51,23 @@ export const DECOR_ASSETS = [
     { id: "furn-chair-carved", box: "0 0 130 222", width: 120, name: "Carved wooden chair", group: "furniture", tint: true },
     { id: "furn-chair-wood", box: "0 0 110 204", width: 100, name: "Wooden chair", group: "furniture" },
     { id: "furn-sofa-coral", box: "0 0 350 196", width: 330, name: "Coral sofa", group: "furniture", tint: true },
-    { id: "furn-daybed-purple", box: "0 0 300 176", width: 290, name: "Velvet daybed", group: "furniture", tint: true },
-    { id: "furn-bench-cushions", box: "0 0 230 104", width: 220, name: "Cushioned bench", group: "furniture", tint: true },
+    { id: "furn-daybed-purple", box: "0 0 320 196", width: 290, name: "Velvet daybed", group: "furniture", tint: true },
+    { id: "furn-bench-cushions", box: "0 0 240 144", width: 220, name: "Cushioned bench", group: "furniture", tint: true },
     { id: "furn-club-chair", box: "0 0 230 196", width: 214, name: "Leather club chair", group: "furniture", tint: true },
-    { id: "furn-peacock-chair", box: "0 0 200 232", width: 190, name: "Rattan peacock chair", group: "furniture", tint: true },
+    { id: "furn-peacock-chair", box: "0 0 200 250", width: 190, name: "Rattan peacock chair", group: "furniture", tint: true },
     { id: "furn-parlor-chair", box: "0 -6 130 224", width: 120, name: "Parlour chair", group: "furniture", tint: true },
     { id: "furn-slipper-chair", box: "0 0 150 214", width: 140, name: "Skirted slipper chair", group: "furniture", tint: true },
-    { id: "furn-rocking-chair", box: "0 0 180 204", width: 170, name: "Rocking chair", group: "furniture", tint: true },
+    { id: "furn-rocking-chair", box: "0 0 180 212", width: 170, name: "Rocking chair", group: "furniture", tint: true },
     { id: "furn-shell-chair", box: "0 0 210 196", width: 196, name: "Velvet shell chair", group: "furniture", tint: true },
     { id: "furn-loveseat", box: "0 0 290 196", width: 270, name: "Camelback loveseat", group: "furniture", tint: true },
     { id: "furn-gothic-chair", box: "0 0 150 244", width: 140, name: "Spiky gothic chair", group: "furniture", tint: true },
-    { id: "furn-floor-cushions", box: "0 0 180 98", width: 170, name: "Floor cushions", group: "furniture", tint: true },
+    { id: "furn-floor-cushions", box: "0 0 200 118", width: 180, name: "Floor cushions", group: "furniture", tint: true },
     { id: "furn-ottoman", box: "0 0 140 104", width: 130, name: "Tufted footstool", group: "furniture", tint: true },
+    { id: "furn-table-round-empty", box: "0 0 150 200", width: 140, name: "Round table (empty)", group: "furniture" },
+    { id: "furn-table-cloth-empty", box: "0 0 170 200", width: 160, name: "Table with a lace cloth (empty)", group: "furniture" },
+    { id: "furn-table-side-empty", box: "0 0 100 200", width: 90, name: "Side table (empty)", group: "furniture" },
+    { id: "furn-desk-empty", box: "0 0 260 200", width: 230, name: "Writing desk (empty)", group: "furniture" },
+    { id: "furn-nightstand", box: "0 0 120 166", width: 110, name: "Nightstand (empty)", group: "furniture" },
     { id: "furn-table-side", box: "0 0 90 122", width: 86, name: "Little side table", group: "furniture" },
     { id: "furn-table-tea", box: "0 0 150 152", width: 140, name: "Tea table", group: "furniture" },
     { id: "furn-table-rustic", box: "0 0 200 142", width: 190, name: "Table with a cloth", group: "furniture" },
@@ -492,6 +497,15 @@ function draw() {
 
 function drawBar() {
 
+    drawBarNow();
+
+    drawEditor();
+
+}
+
+
+function drawBarNow() {
+
     if (!arranging) {
 
         trayObserver?.disconnect();
@@ -508,7 +522,7 @@ function drawBar() {
 
     if (!bar) {
 
-        document.body.insertAdjacentHTML("beforeend", `<section class="arrange-bar paper" aria-label="Arrange the room"></section>`);
+        document.body.insertAdjacentHTML("beforeend", `<section class="arrange-bar paper" aria-label="Edit the room"></section>`);
 
         bar = document.body.lastElementChild;
 
@@ -533,7 +547,7 @@ function drawBar() {
     render(bar, html`
 
         <div class="arrange-bar__head">
-            <p class="arrange-bar__title">Arrange the room</p>
+            <p class="arrange-bar__title">Edit the room</p>
             <button class="icon-button arrange-bar__fold" type="button" data-arrange="fold" aria-expanded="${String(!trayFolded)}" aria-label="${trayFolded ? "Show the decorations" : "Fold the tray down"}">
                 ${art("ui-chevron-down")}
             </button>
@@ -543,35 +557,6 @@ function drawBar() {
         <p class="arrange-bar__hint" ${selectedBuiltIn ? html`hidden` : ""}>${paletteGroup === "room"
             ? "Choose the wallpaper, floor, window, curtains and rug for this room."
             : "Tap a piece to add it to the part of the room you can see, or drag it straight to its spot. Drag pieces to move them."}</p>
-
-        ${selectedBuiltIn ? html`
-            <div class="arrange-bar__tools arrange-bar__tools--built-in">
-                <span class="arrange-bar__selected">${selectedBuiltIn.name}</span>
-                <p class="arrange-bar__built-in-note">This came with the room. Take it out to make space for your own pieces; you can put it back in the Room tab.</p>
-                <button class="button button--small arrange-bar__remove-built-in" type="button" data-arrange="remove-built-in">${art("ui-trash")} Take it out of the room</button>
-            </div>
-        ` : ""}
-
-        <div class="arrange-bar__tools" ${selected ? "" : html`hidden`}>
-            <span class="arrange-bar__selected">${selected ? assetFor(selected.asset_id)?.name : ""}</span>
-            <div class="arrange-bar__buttons">
-                <button class="icon-button" type="button" data-arrange="smaller" aria-label="Smaller" title="Smaller">−</button>
-                <button class="icon-button" type="button" data-arrange="bigger" aria-label="Bigger" title="Bigger">+</button>
-                <button class="icon-button" type="button" data-arrange="tilt-left" aria-label="Tilt left" title="Tilt left">↺</button>
-                <button class="icon-button" type="button" data-arrange="tilt-right" aria-label="Tilt right" title="Tilt right">↻</button>
-                <button class="icon-button" type="button" data-arrange="back" aria-label="Send behind" title="Send behind">⤓</button>
-                <button class="icon-button" type="button" data-arrange="forward" aria-label="Bring to front" title="Bring to front">⤒</button>
-                <button class="icon-button" type="button" data-arrange="remove" aria-label="Remove" title="Remove">${art("ui-trash")}</button>
-            </div>
-            ${selected && assetFor(selected.asset_id)?.tint ? html`
-                <div class="arrange-bar__fabrics" role="group" aria-label="Fabric colour">
-                    <button class="arrange-bar__fabric arrange-bar__fabric--own ${fabricFor(selected) ? "" : "is-current"}" type="button" data-fabric="" title="Its own colours" aria-label="Its own colours"></button>
-                    ${FABRICS.map((fabric) => html`
-                        <button class="arrange-bar__fabric ${fabricFor(selected)?.id === fabric.id ? "is-current" : ""}" type="button" data-fabric="${fabric.id}" title="${fabric.name}" aria-label="${fabric.name}" style="background: linear-gradient(135deg, ${fabric.colours[1]} 0 35%, ${fabric.colours[0]} 35% 75%, ${fabric.colours[2]} 75%)"></button>
-                    `)}
-                </div>
-            ` : ""}
-        </div>
 
         <div class="arrange-bar__tabs" role="tablist" aria-label="Kinds of decoration">
             <button class="arrange-bar__tab arrange-bar__tab--room ${paletteGroup === "room" ? "is-current" : ""}" type="button" role="tab" aria-selected="${String(paletteGroup === "room")}" data-decor-group="room">Room</button>
@@ -596,6 +581,123 @@ function drawBar() {
         </button>
 
     `);
+
+}
+
+
+
+/*
+    The editor that pops up beside a piece tapped in the room:
+    its size, tilt, layer, fabric colour, or taking it away.
+*/
+
+let editor = null;
+let editorFrame = 0;
+
+function drawEditor() {
+
+    const selected =
+        pieces.find((piece) => piece.id === selectedId);
+
+    if (!arranging || (!selected && !selectedBuiltIn)) {
+        editor?.remove();
+        editor = null;
+        cancelAnimationFrame(editorFrame);
+        return;
+    }
+
+    if (!editor) {
+        document.body.insertAdjacentHTML("beforeend", `<section class="piece-editor paper" aria-label="Edit this piece"></section>`);
+        editor = document.body.lastElementChild;
+        editor.addEventListener("click", onBarClick);
+    }
+
+    render(editor, html`
+        <button class="icon-button piece-editor__close" type="button" data-arrange="deselect" aria-label="Close">${art("ui-close")}</button>
+        ${selectedBuiltIn ? html`
+            <div class="arrange-bar__tools arrange-bar__tools--built-in">
+                <span class="arrange-bar__selected">${selectedBuiltIn.name}</span>
+                <p class="arrange-bar__built-in-note">This came with the room. Take it out to make space for your own pieces; you can put it back in the Room tab.</p>
+                <button class="button button--small arrange-bar__remove-built-in" type="button" data-arrange="remove-built-in">${art("ui-trash")} Take it out of the room</button>
+            </div>
+        ` : ""}
+
+        ${selected ? html`<div class="arrange-bar__tools">
+            <span class="arrange-bar__selected">${selected ? assetFor(selected.asset_id)?.name : ""}</span>
+            <div class="arrange-bar__buttons">
+                <button class="icon-button" type="button" data-arrange="smaller" aria-label="Smaller" title="Smaller">−</button>
+                <button class="icon-button" type="button" data-arrange="bigger" aria-label="Bigger" title="Bigger">+</button>
+                <button class="icon-button" type="button" data-arrange="tilt-left" aria-label="Tilt left" title="Tilt left">↺</button>
+                <button class="icon-button" type="button" data-arrange="tilt-right" aria-label="Tilt right" title="Tilt right">↻</button>
+                <button class="icon-button" type="button" data-arrange="back" aria-label="Send behind" title="Send behind">⤓</button>
+                <button class="icon-button" type="button" data-arrange="forward" aria-label="Bring to front" title="Bring to front">⤒</button>
+                <button class="icon-button" type="button" data-arrange="remove" aria-label="Remove" title="Remove">${art("ui-trash")}</button>
+            </div>
+            ${selected && assetFor(selected.asset_id)?.tint ? html`
+                <div class="arrange-bar__fabrics" role="group" aria-label="Fabric colour">
+                    <button class="arrange-bar__fabric arrange-bar__fabric--own ${fabricFor(selected) ? "" : "is-current"}" type="button" data-fabric="" title="Its own colours" aria-label="Its own colours"></button>
+                    ${FABRICS.map((fabric) => html`
+                        <button class="arrange-bar__fabric ${fabricFor(selected)?.id === fabric.id ? "is-current" : ""}" type="button" data-fabric="${fabric.id}" title="${fabric.name}" aria-label="${fabric.name}" style="background: linear-gradient(135deg, ${fabric.colours[1]} 0 35%, ${fabric.colours[0]} 35% 75%, ${fabric.colours[2]} 75%)"></button>
+                    `)}
+                </div>
+            ` : ""}
+        </div>` : ""}
+
+    `);
+
+    placeEditor();
+
+}
+
+
+// Keeps the editor beside its piece (above it, or below when
+// there's no room), inside the screen.
+function placeEditor() {
+
+    cancelAnimationFrame(editorFrame);
+
+    if (!editor) {
+        return;
+    }
+
+    const target =
+        selectedId
+            ? room.querySelector(`[data-decor-id="${selectedId}"]`)
+            : selectedBuiltIn ? room.querySelector(".is-built-in-selected") : null;
+
+    if (target) {
+
+        const box =
+            target.getBoundingClientRect();
+
+        const width =
+            editor.offsetWidth;
+
+        const height =
+            editor.offsetHeight;
+
+        const margin =
+            10;
+
+        let left =
+            box.left + box.width / 2 - width / 2;
+
+        let top =
+            box.top - height - margin;
+
+        if (top < 64) {
+            top = box.bottom + margin;
+        }
+
+        left = clamp(left, 8, window.innerWidth - width - 8);
+        top = clamp(top, 8, window.innerHeight - height - 8);
+
+        editor.style.left = `${Math.round(left)}px`;
+        editor.style.top = `${Math.round(top)}px`;
+
+    }
+
+    editorFrame = requestAnimationFrame(placeEditor);
 
 }
 
@@ -948,6 +1050,20 @@ function onBarClick(event) {
 
     const action =
         event.target.closest("[data-arrange]")?.dataset.arrange;
+
+    if (action === "deselect") {
+
+        if (selectedBuiltIn) {
+            selectBuiltIn(null);
+        }
+
+        else {
+            select(null);
+        }
+
+        return;
+
+    }
 
     if (action === "remove-built-in" && selectedBuiltIn) {
         toggleBuiltIn(selectedBuiltIn.id);
