@@ -668,3 +668,54 @@
 
     transition: background 0.4s ease;
 }
+
+
+/* =========================================================
+   THE TREE OUTSIDE AND THE SEASONS (Edit the room → Room)
+========================================================= */
+
+:root { --tree-veil: 0.5; }
+:root[data-time="dusk"] { --tree-veil: 0.28; }
+:root[data-time="afternoon"],
+:root[data-time="morning"] { --tree-veil: 0; --fairy: 0.25; }
+
+:root[data-tree="oak"] { --tree-oak: inline; }
+:root[data-tree="willow"] { --tree-willow: inline; }
+:root[data-tree="cherry"] { --tree-cherry: inline; }
+:root[data-tree="pine"] { --tree-pine: inline; }
+
+:root[data-season="spring"] {
+    --leaf-light: #d4ec9c;
+    --leaf: #9ccc6a;
+    --leaf-dark: #5d8a4a;
+    --cherry-light: #fff0f4;
+    --cherry: #f7c4d4;
+    --cherry-dark: #d98aa8;
+    --blossom: inline;
+}
+
+:root[data-season="summer"] {
+    --leaf-light: #9cd070;
+    --leaf: #5d9a4a;
+    --leaf-dark: #2f5e30;
+    --cherry-light: #9cd070;
+    --cherry: #5d9a4a;
+    --cherry-dark: #2f5e30;
+}
+
+:root[data-season="autumn"] {
+    --leaf-light: #f6c462;
+    --leaf: #e0863a;
+    --leaf-dark: #a8442a;
+    --cherry-light: #f2a060;
+    --cherry: #d4603a;
+    --cherry-dark: #8e3428;
+    --falling: inline;
+}
+
+:root[data-season="winter"] {
+    --leaves: none;
+    --snow: inline;
+    --snowfall: inline;
+    --fairy: 1;
+}
