@@ -719,3 +719,5 @@
     --snowfall: inline;
     --fairy: 1;
 }
+
+:root[data-season="winter"] { --bare: inline; }
