@@ -33,6 +33,12 @@ export const CURTAINS = [
     { id: "drapes", name: "Velvet drapes, tied back" },
     { id: "lace", name: "Sheer lace" },
     { id: "cafe", name: "Café curtains" },
+    { id: "swag", name: "Swags and tails" },
+    { id: "fringe", name: "Velvet with fringe" },
+    { id: "pinch", name: "Pinch-pleat drapes" },
+    { id: "ruffle", name: "Ruffled tie-ups" },
+    { id: "roman", name: "Roman blind" },
+    { id: "stars", name: "Starry sheers" },
     { id: "none", name: "No curtains" }
 ];
 
