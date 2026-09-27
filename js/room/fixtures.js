@@ -133,13 +133,38 @@ export const FLOORS = [
 ];
 
 
+/* ---------------------------------------------------------
+   RUG COLOURS
+   Every rug is drawn in five colours: its edge, border,
+   field, flowers and a pale cream. (The pumpkin and fluffy
+   rugs keep their own.)
+--------------------------------------------------------- */
+
+export const RUG_COLOURS = [
+    { id: "room", name: "The room's own" },
+    { id: "crimson", name: "Crimson", colours: ["#2a1016", "#8a2432", "#5a1a24", "#c84a58", "#e8d6a8"] },
+    { id: "rose", name: "Rose", colours: ["#6a3040", "#c86a88", "#e8a8bc", "#fbe0e8", "#fff4f6"] },
+    { id: "sage", name: "Sage", colours: ["#2e3e2e", "#6a8a5e", "#a8bf94", "#e8f0d8", "#f6f2e4"] },
+    { id: "midnight", name: "Midnight", colours: ["#141a36", "#2c3a70", "#1e2850", "#c9b060", "#e8dcb0"] },
+    { id: "mustard", name: "Mustard", colours: ["#4a3410", "#c9952e", "#e8c46a", "#7a4a1a", "#fbecc4"] },
+    { id: "lavender", name: "Lavender", colours: ["#3a2e52", "#8a74b8", "#c8b8e8", "#5a4a80", "#f4eeff"] },
+    { id: "teal", name: "Teal", colours: ["#0f3436", "#2f7a78", "#1d5456", "#e8b46a", "#f0e8d0"] },
+    { id: "pumpkin", name: "Pumpkin", colours: ["#3a1a0a", "#c8601e", "#7a3814", "#f0a040", "#fbe2b8"] },
+    { id: "charcoal", name: "Charcoal", colours: ["#141214", "#3a363c", "#28252a", "#b8b0bc", "#e8e2ea"] },
+    { id: "cream", name: "Cream", colours: ["#b8a88a", "#e8dcc4", "#f6efe2", "#c9a878", "#fffaf0"] }
+];
+
+const RUG_VARS =
+    ["--rug-edge", "--rug-border", "--rug-field", "--rug-flower", "--rug-cream", "--rug-web"];
+
+
 export const WINDOW_CHOICES = [
     ...WINDOW_SHAPES,
     { id: "none", name: "No window" }
 ];
 
 const KINDS =
-    ["wallpaper", "floor", "window", "wood", "curtains", "rug"];
+    ["wallpaper", "floor", "window", "wood", "curtains", "rug", "rugColour"];
 
 const CHOICES = {
     wallpaper: WALLPAPERS,
@@ -147,7 +172,8 @@ const CHOICES = {
     window: WINDOW_CHOICES,
     wood: WOODS,
     curtains: CURTAINS,
-    rug: RUGS
+    rug: RUGS,
+    rugColour: RUG_COLOURS
 };
 
 const WALL_VARS =
@@ -211,10 +237,10 @@ function defaultsFor(theme) {
         getPreferences();
 
     if (theme === "sandbox") {
-        return { wallpaper: "plaster", floor: "oak", window: "none", wood: prefs.wood, curtains: "none", rug: "none", windowX: null, windowY: null };
+        return { wallpaper: "plaster", floor: "oak", window: "none", wood: prefs.wood, curtains: "none", rug: "none", rugColour: "room", windowX: null, windowY: null };
     }
 
-    return { wallpaper: "room", floor: "room", window: prefs.window, wood: prefs.wood, curtains: prefs.curtains, rug: prefs.rug, windowX: null, windowY: null };
+    return { wallpaper: "room", floor: "room", window: prefs.window, wood: prefs.wood, curtains: prefs.curtains, rug: prefs.rug, rugColour: "room", windowX: null, windowY: null };
 
 }
 
@@ -283,6 +309,17 @@ export function applyFixtures(theme = document.documentElement.dataset.theme) {
         root.style.setProperty("--floor-pattern", floor.pattern || "none");
         root.style.setProperty("--floor-pattern-size", floor.size || "auto");
         root.style.setProperty("--floor-plank-line", floor.planks || "rgba(0, 0, 0, 0.18)");
+    }
+
+    // The rug's colours.
+    const rugColour =
+        RUG_COLOURS.find((item) => item.id === fixtures.rugColour);
+
+    RUG_VARS.forEach((name) => root.style.removeProperty(name));
+
+    if (rugColour?.colours) {
+        RUG_VARS.slice(0, 5).forEach((name, index) => root.style.setProperty(name, rugColour.colours[index]));
+        root.style.setProperty("--rug-web", rugColour.colours[1]);
     }
 
     placeWindow(fixtures);
@@ -561,6 +598,12 @@ function swatchStyle(kind, choice) {
             : "";
     }
 
+    if (kind === "rugColour") {
+        return choice.colours
+            ? `background: linear-gradient(135deg, ${choice.colours[0]} 0 22%, ${choice.colours[1]} 22% 44%, ${choice.colours[2]} 44% 66%, ${choice.colours[3]} 66% 84%, ${choice.colours[4]} 84%)`
+            : "";
+    }
+
     return "";
 
 }
@@ -645,6 +688,8 @@ export function roomPanelMarkup() {
             `}
 
             ${chips("rug", "Rug", fixtures.rug)}
+
+            ${fixtures.rug === "none" ? "" : swatches("rugColour", "Rug colours", fixtures.rugColour)}
 
         </div>
     `;
