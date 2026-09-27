@@ -2,7 +2,7 @@
    NOVELLOW
    THE ROOM'S FIXTURES
 
-   The parts of the room itself, chosen in "Arrange the room"
+   The parts of the room itself, chosen in "Edit the room"
    → Room: the wallpaper, the floor, the window (its shape,
    its wood, and where it hangs on the wall), the curtains
    and the rug. Each room theme keeps its own; the Sandbox
@@ -221,13 +221,28 @@ export function builtInElements(id) {
 }
 
 
+export const TIMES = [
+    { id: "night", name: "Night" },
+    { id: "dusk", name: "Dusk" },
+    { id: "afternoon", name: "Afternoon" },
+    { id: "morning", name: "Morning" }
+];
+
+export const LIGHTS = [
+    { id: "bright", name: "Bright", dim: 0 },
+    { id: "cozy", name: "Cozy", dim: 0.14 },
+    { id: "dim", name: "Dim", dim: 0.3 },
+    { id: "candlelit", name: "Candlelit", dim: 0.46 }
+];
+
+
 export const WINDOW_CHOICES = [
     ...WINDOW_SHAPES,
     { id: "none", name: "No window" }
 ];
 
 const KINDS =
-    ["wallpaper", "floor", "window", "wood", "curtains", "rug", "rugColour"];
+    ["wallpaper", "floor", "window", "wood", "curtains", "rug", "rugColour", "time", "light"];
 
 const CHOICES = {
     wallpaper: WALLPAPERS,
@@ -236,7 +251,9 @@ const CHOICES = {
     wood: WOODS,
     curtains: CURTAINS,
     rug: RUGS,
-    rugColour: RUG_COLOURS
+    rugColour: RUG_COLOURS,
+    time: TIMES,
+    light: LIGHTS
 };
 
 const WALL_VARS =
@@ -300,10 +317,10 @@ function defaultsFor(theme) {
         getPreferences();
 
     if (theme === "sandbox") {
-        return { wallpaper: "plaster", floor: "oak", window: "none", wood: prefs.wood, curtains: "none", rug: "none", rugColour: "room", hidden: "", windowX: null, windowY: null };
+        return { wallpaper: "plaster", floor: "oak", window: "none", wood: prefs.wood, curtains: "none", rug: "none", rugColour: "room", time: "night", light: "bright", hidden: "", windowX: null, windowY: null };
     }
 
-    return { wallpaper: "room", floor: "room", window: prefs.window, wood: prefs.wood, curtains: prefs.curtains, rug: prefs.rug, rugColour: "room", hidden: "", windowX: null, windowY: null };
+    return { wallpaper: "room", floor: "room", window: prefs.window, wood: prefs.wood, curtains: prefs.curtains, rug: prefs.rug, rugColour: "room", time: "night", light: "bright", hidden: "", windowX: null, windowY: null };
 
 }
 
@@ -345,6 +362,8 @@ export function applyFixtures(theme = document.documentElement.dataset.theme) {
     root.dataset.wood = fixtures.wood;
     root.dataset.curtains = fixtures.curtains;
     root.dataset.rug = fixtures.rug;
+    root.dataset.time = fixtures.time;
+    root.style.setProperty("--room-dim", String(LIGHTS.find((item) => item.id === fixtures.light)?.dim || 0));
     root.dataset.hidden = String(fixtures.hidden || "").split(",").filter(Boolean).join(" ");
 
     // The wallpaper and floor, over the room's own.
@@ -801,6 +820,10 @@ export function roomPanelMarkup() {
 
     return html`
         <div class="arrange-bar__room">
+
+            ${chips("time", "Outside the window", fixtures.time)}
+
+            ${chips("light", "Light in the room", fixtures.light)}
 
             ${builtIn.length ? html`
                 <fieldset class="room-choices">

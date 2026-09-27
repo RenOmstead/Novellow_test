@@ -606,3 +606,63 @@
     --floor-top: #8a6440;
     --floor-bottom: #6e4e30;
 }
+
+
+/* =========================================================
+   TIME OF DAY OUTSIDE (Edit the room → Room)
+   Night is each room's own sky.
+========================================================= */
+
+:root[data-time="dusk"] {
+    --night-top: #3a2d5c;
+    --night-middle: #b8607a;
+    --night-bottom: #f0a868;
+    --stars: 0.35;
+    --hills: #4a3050;
+    --town: #2e1f38;
+    --ground: #24182a;
+    --branch: #2e1f38;
+}
+
+:root[data-time="afternoon"],
+:root[data-time="morning"] {
+    --night-top: #5a9ad0;
+    --night-middle: #9cc8e8;
+    --night-bottom: #f2e2b8;
+    --stars: 0;
+    --crescent-display: none;
+    --full-moon-display: none;
+    --sun-display: inline;
+    --hills: #6a9a6a;
+    --town: #56687a;
+    --ground: #4a6a4a;
+    --town-lights: 0;
+    --branch: #3a4a3a;
+}
+
+:root[data-time="morning"] {
+    --night-top: #8cc0e6;
+    --night-middle: #cfe4f0;
+    --night-bottom: #fbd8c0;
+    --hills: #7aa87a;
+    --town: #6a7a8a;
+}
+
+/* How bright the room is: a soft tint over the whole room. */
+.library-room::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 8;
+
+    background: rgb(22 10 34 / var(--room-dim, 0));
+
+    mix-blend-mode: multiply;
+
+    pointer-events: none;
+
+    transition: background 0.4s ease;
+}

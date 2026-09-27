@@ -274,7 +274,7 @@ function renderPage() {
                             </select>
                         </label>
 
-                        <p class="muted">The wallpaper, floor, window, curtains and rug are chosen for each room in <strong>Arrange the room → Room</strong>, from the moon menu at the top of the page.</p>
+                        <p class="muted">The wallpaper, floor, window, curtains and rug are chosen for each room in <strong>Edit the room → Room</strong>, from the moon menu at the top of the page.</p>
 
                         <label class="field">
                             <span class="field__label">On the side table</span>
@@ -318,7 +318,7 @@ function renderPage() {
                             ${prefToggle("bookcaseIvy", "Ivy on the bookcase", "Vines climbing up the sides of your bookcase.", prefs.bookcaseIvy === "on")}
                         </div>
 
-                        <p class="muted">To place and move decorations, choose “Arrange the room” from the moon menu at the top of the page.</p>
+                        <p class="muted">To place and move decorations, choose “Edit the room” from the moon menu at the top of the page.</p>
 
                     </div>
 
