@@ -46,7 +46,8 @@ export const RUGS = [
 export const WINDOW_SHAPES = [
     { id: "arched", name: "Arched" },
     { id: "square", name: "Square" },
-    { id: "gothic", name: "Gothic, pointed" }
+    { id: "gothic", name: "Gothic, pointed" },
+    { id: "stone", name: "Stone arch with ivy" }
 ];
 
 export const WOODS = [
@@ -136,17 +137,17 @@ export function setPreference(key, value) {
 
 export function applyPreferences() {
 
-    const { cat, curtains, rug, mug, china, teaset, window: shape, wood } =
+    const { cat, mug, china, teaset } =
         getPreferences();
 
     const root =
         document.documentElement;
 
     root.dataset.cat = CATS.some((item) => item.id === cat) ? cat : "black";
-    root.dataset.curtains = CURTAINS.some((item) => item.id === curtains) ? curtains : "drapes";
-    root.dataset.rug = RUGS.some((item) => item.id === rug) ? rug : "oval";
-    root.dataset.window = WINDOW_SHAPES.some((item) => item.id === shape) ? shape : "arched";
-    root.dataset.wood = WOODS.some((item) => item.id === wood) ? wood : "walnut";
+
+    // The window, its wood, the curtains and the rug are the
+    // room's own now (js/room/fixtures.js); the choices kept
+    // here are only where each room starts.
     root.dataset.china = CHINA_COLOURS.some((item) => item.id === china) ? china : "rose";
     root.dataset.teaset = TEASETS.some((item) => item.id === teaset) ? teaset : "gold";
 

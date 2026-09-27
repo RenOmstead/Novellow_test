@@ -30,7 +30,7 @@ import { NovellowError } from "../core/errors.js?v=__VERSION__";
 import { SHELF_SORTS } from "../config.js?v=__VERSION__";
 import { exportLibrary, checkImport, importLibrary } from "../data/transfer.js?v=__VERSION__";
 import { mountMixer } from "../sound/mixer.js?v=__VERSION__";
-import { CATS, GHOST_CHOICES, CURTAINS, RUGS, WINDOW_SHAPES, WOODS, MUGS, CHINA_COLOURS, TEASETS, getPreferences, setPreference } from "../shell/preferences.js?v=__VERSION__";
+import { CATS, GHOST_CHOICES, MUGS, CHINA_COLOURS, TEASETS, getPreferences, setPreference } from "../shell/preferences.js?v=__VERSION__";
 
 
 const content =
@@ -274,41 +274,7 @@ function renderPage() {
                             </select>
                         </label>
 
-                        <label class="field">
-                            <span class="field__label">Window</span>
-                            <select class="field__input" data-pref="window">
-                                ${WINDOW_SHAPES.map((choice) => html`
-                                    <option value="${choice.id}" ${choice.id === prefs.window ? html`selected` : ""}>${choice.name}</option>
-                                `)}
-                            </select>
-                        </label>
-
-                        <label class="field">
-                            <span class="field__label">Window wood</span>
-                            <select class="field__input" data-pref="wood">
-                                ${WOODS.map((choice) => html`
-                                    <option value="${choice.id}" ${choice.id === prefs.wood ? html`selected` : ""}>${choice.name}</option>
-                                `)}
-                            </select>
-                        </label>
-
-                        <label class="field">
-                            <span class="field__label">Curtains</span>
-                            <select class="field__input" data-pref="curtains">
-                                ${CURTAINS.map((choice) => html`
-                                    <option value="${choice.id}" ${choice.id === prefs.curtains ? html`selected` : ""}>${choice.name}</option>
-                                `)}
-                            </select>
-                        </label>
-
-                        <label class="field">
-                            <span class="field__label">Rug</span>
-                            <select class="field__input" data-pref="rug">
-                                ${RUGS.map((choice) => html`
-                                    <option value="${choice.id}" ${choice.id === prefs.rug ? html`selected` : ""}>${choice.name}</option>
-                                `)}
-                            </select>
-                        </label>
+                        <p class="muted">The wallpaper, floor, window, curtains and rug are chosen for each room in <strong>Arrange the room → Room</strong>, from the moon menu at the top of the page.</p>
 
                         <label class="field">
                             <span class="field__label">On the side table</span>
