@@ -1443,3 +1443,17 @@ html.room-compact .bookcase-zone {
 
     pointer-events: none;
 }
+
+
+/* Pieces taken out of a themed room (Arrange the room → Room). */
+[data-hidden~="lamp"] .ceiling-lamp,
+[data-hidden~="armchair"] .corner-scene .armchair,
+[data-hidden~="sidetable"] .side-table,
+[data-hidden~="cafetable"] .cafe-table,
+[data-hidden~="cauldron"] .corner-cauldron,
+[data-hidden~="broom"] .corner-broom,
+[data-hidden~="pumpkin"] .corner-pumpkin,
+[data-hidden~="floorcat"] .corner-floor-cat,
+[data-hidden~="ghosts"] .ghost-layer {
+    display: none !important;
+}

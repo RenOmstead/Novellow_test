@@ -44,15 +44,25 @@ export const DECOR_GROUPS = [
 export const DECOR_ASSETS = [
     // Furniture
     { id: "furn-wingback-floral", box: "0 0 200 232", width: 190, name: "Floral wingback chair", group: "furniture" },
-    { id: "furn-wingback-rust", box: "0 0 200 232", width: 190, name: "Velvet wingback chair", group: "furniture" },
-    { id: "furn-wingback-black", box: "0 0 200 262", width: 190, name: "Black gothic wingback", group: "furniture" },
-    { id: "furn-armchair-pink", box: "0 0 210 220", width: 200, name: "Pink tufted armchair", group: "furniture" },
-    { id: "furn-throne-purple", box: "0 0 210 236", width: 200, name: "Purple tufted throne", group: "furniture" },
-    { id: "furn-chair-carved", box: "0 0 130 222", width: 120, name: "Carved wooden chair", group: "furniture" },
+    { id: "furn-wingback-rust", box: "0 0 200 232", width: 190, name: "Velvet wingback chair", group: "furniture", tint: true },
+    { id: "furn-wingback-black", box: "0 0 200 262", width: 190, name: "Black gothic wingback", group: "furniture", tint: true },
+    { id: "furn-armchair-pink", box: "0 0 210 220", width: 200, name: "Pink tufted armchair", group: "furniture", tint: true },
+    { id: "furn-throne-purple", box: "0 0 210 236", width: 200, name: "Purple tufted throne", group: "furniture", tint: true },
+    { id: "furn-chair-carved", box: "0 0 130 222", width: 120, name: "Carved wooden chair", group: "furniture", tint: true },
     { id: "furn-chair-wood", box: "0 0 110 204", width: 100, name: "Wooden chair", group: "furniture" },
-    { id: "furn-sofa-coral", box: "0 0 330 180", width: 310, name: "Coral sofa", group: "furniture" },
-    { id: "furn-daybed-purple", box: "0 0 300 176", width: 290, name: "Velvet daybed", group: "furniture" },
-    { id: "furn-bench-cushions", box: "0 0 230 104", width: 220, name: "Cushioned bench", group: "furniture" },
+    { id: "furn-sofa-coral", box: "0 0 330 180", width: 310, name: "Coral sofa", group: "furniture", tint: true },
+    { id: "furn-daybed-purple", box: "0 0 300 176", width: 290, name: "Velvet daybed", group: "furniture", tint: true },
+    { id: "furn-bench-cushions", box: "0 0 230 104", width: 220, name: "Cushioned bench", group: "furniture", tint: true },
+    { id: "furn-club-chair", box: "0 0 220 170", width: 200, name: "Leather club chair", group: "furniture", tint: true },
+    { id: "furn-peacock-chair", box: "0 0 200 232", width: 190, name: "Rattan peacock chair", group: "furniture", tint: true },
+    { id: "furn-parlor-chair", box: "0 -6 130 224", width: 120, name: "Parlour chair", group: "furniture", tint: true },
+    { id: "furn-slipper-chair", box: "0 0 140 202", width: 130, name: "Skirted slipper chair", group: "furniture", tint: true },
+    { id: "furn-rocking-chair", box: "0 0 180 204", width: 170, name: "Rocking chair", group: "furniture", tint: true },
+    { id: "furn-shell-chair", box: "0 0 200 192", width: 190, name: "Velvet shell chair", group: "furniture", tint: true },
+    { id: "furn-loveseat", box: "0 0 270 174", width: 250, name: "Camelback loveseat", group: "furniture", tint: true },
+    { id: "furn-gothic-chair", box: "0 0 150 244", width: 140, name: "Spiky gothic chair", group: "furniture", tint: true },
+    { id: "furn-floor-cushions", box: "0 0 180 98", width: 170, name: "Floor cushions", group: "furniture", tint: true },
+    { id: "furn-ottoman", box: "0 0 140 104", width: 130, name: "Tufted footstool", group: "furniture", tint: true },
     { id: "furn-table-side", box: "0 0 90 122", width: 86, name: "Little side table", group: "furniture" },
     { id: "furn-table-tea", box: "0 0 150 152", width: 140, name: "Tea table", group: "furniture" },
     { id: "furn-table-rustic", box: "0 0 200 142", width: 190, name: "Table with a cloth", group: "furniture" },
@@ -259,6 +269,53 @@ export const DECOR_ASSETS = [
     { id: "frame-castle", box: "0 0 130 100", width: 100, name: "Castle painting", group: "retired" }
 ];
 
+/*
+    Fabrics for chairs, sofas and cushions: the piece's main
+    colour, a lighter one for seats and buttons, and a shade.
+    Saved on the piece as decoration_type "tint:<id>".
+*/
+
+export const FABRICS = [
+    { id: "rose", name: "Rose velvet", colours: ["#c86a88", "#e08aa4", "#8a3a56"] },
+    { id: "blush", name: "Blush", colours: ["#e8a0a8", "#f2bcc2", "#b0606a"] },
+    { id: "oxblood", name: "Oxblood leather", colours: ["#7a2a26", "#9a3a32", "#4a1614"] },
+    { id: "rust", name: "Rust", colours: ["#c8622e", "#d8784a", "#8e3c16"] },
+    { id: "mustard", name: "Mustard", colours: ["#e0a83a", "#f0c460", "#9a6818"] },
+    { id: "sage", name: "Sage", colours: ["#7a9a78", "#94b290", "#4a6448"] },
+    { id: "emerald", name: "Emerald", colours: ["#2f6e4e", "#3f8a62", "#18402c"] },
+    { id: "teal", name: "Teal", colours: ["#3f8a88", "#5aa4a0", "#1f5654"] },
+    { id: "blue", name: "Dusty blue", colours: ["#7a92b8", "#94aacc", "#4a5e82"] },
+    { id: "navy", name: "Navy", colours: ["#2c3a70", "#3e4e8a", "#161e40"] },
+    { id: "lavender", name: "Lavender", colours: ["#9a82c8", "#b8a2e0", "#5a4488"] },
+    { id: "plum", name: "Plum", colours: ["#5e3056", "#7a4070", "#361a30"] },
+    { id: "cream", name: "Cream", colours: ["#e8dcc4", "#f6efe2", "#b0a080"] },
+    { id: "charcoal", name: "Charcoal", colours: ["#3a363c", "#4e4a52", "#1e1c20"] },
+    { id: "black", name: "Black", colours: ["#242026", "#38323c", "#0c0a0e"] }
+];
+
+
+function fabricFor(piece) {
+
+    const id =
+        String(piece.decoration_type || "").startsWith("tint:") ? piece.decoration_type.slice(5) : null;
+
+    return FABRICS.find((fabric) => fabric.id === id) || null;
+
+}
+
+
+function fabricStyle(piece) {
+
+    const fabric =
+        fabricFor(piece);
+
+    return fabric
+        ? `; --up: ${fabric.colours[0]}; --up-light: ${fabric.colours[1]}; --up-shade: ${fabric.colours[2]}`
+        : "";
+
+}
+
+
 const LIMIT = 80;
 
 // Bookcase pieces are placed in pixels down from the top of
@@ -396,7 +453,7 @@ function pieceMarkup(piece) {
         <div
             class="placed-decor ${piece.id === selectedId ? "is-selected" : ""}"
             data-decor-id="${piece.id}"
-            style="left: ${piece.position_x}%; top: ${topFor(piece)}; width: ${asset.width}px; z-index: ${piece.z_index}; --scale: ${piece.scale}; --rotation: ${piece.rotation}deg"
+            style="left: ${piece.position_x}%; top: ${topFor(piece)}; width: ${asset.width}px; z-index: ${piece.z_index}; --scale: ${piece.scale}; --rotation: ${piece.rotation}deg${fabricStyle(piece)}"
             ${arranging ? html`tabindex="0" role="button" aria-label="${asset.name}. Drag to move, or use the arrow keys."` : html`aria-hidden="true"`}
         >
             <svg viewBox="${asset.box}" aria-hidden="true"><use href="#${asset.id}"></use></svg>
@@ -495,6 +552,14 @@ function drawBar() {
                 <button class="icon-button" type="button" data-arrange="forward" aria-label="Bring to front" title="Bring to front">⤒</button>
                 <button class="icon-button" type="button" data-arrange="remove" aria-label="Remove" title="Remove">${art("ui-trash")}</button>
             </div>
+            ${selected && assetFor(selected.asset_id)?.tint ? html`
+                <div class="arrange-bar__fabrics" role="group" aria-label="Fabric colour">
+                    <button class="arrange-bar__fabric arrange-bar__fabric--own ${fabricFor(selected) ? "" : "is-current"}" type="button" data-fabric="" title="Its own colours" aria-label="Its own colours"></button>
+                    ${FABRICS.map((fabric) => html`
+                        <button class="arrange-bar__fabric ${fabricFor(selected)?.id === fabric.id ? "is-current" : ""}" type="button" data-fabric="${fabric.id}" title="${fabric.name}" aria-label="${fabric.name}" style="background: linear-gradient(135deg, ${fabric.colours[1]} 0 35%, ${fabric.colours[0]} 35% 75%, ${fabric.colours[2]} 75%)"></button>
+                    `)}
+                </div>
+            ` : ""}
         </div>
 
         <div class="arrange-bar__tabs" role="tablist" aria-label="Kinds of decoration">
@@ -540,6 +605,7 @@ function saveSoon(piece) {
             try {
 
                 await updateRow("decorations", latest.id, {
+                    decoration_type: latest.decoration_type,
                     room_area: latest.room_area,
                     position_x: latest.position_x,
                     position_y: latest.position_y,
@@ -867,6 +933,28 @@ function onBarClick(event) {
         drawBar();
         bar.querySelector("[data-arrange=fold]")?.focus();
         return;
+    }
+
+    const fabricButton =
+        event.target.closest("[data-fabric]");
+
+    if (fabricButton) {
+
+        const tinted =
+            pieces.find((item) => item.id === selectedId);
+
+        if (tinted) {
+
+            tinted.decoration_type = fabricButton.dataset.fabric ? `tint:${fabricButton.dataset.fabric}` : "ornament";
+
+            draw();
+            drawBar();
+            saveSoon(tinted);
+
+        }
+
+        return;
+
     }
 
     const piece =
