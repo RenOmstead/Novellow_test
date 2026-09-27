@@ -622,6 +622,7 @@
     --town: #2e1f38;
     --ground: #24182a;
     --branch: #2e1f38;
+    --branch-leaf: #4a2e3e;
 }
 
 :root[data-time="afternoon"],
@@ -637,7 +638,8 @@
     --town: #56687a;
     --ground: #4a6a4a;
     --town-lights: 0;
-    --branch: #3a4a3a;
+    --branch: #4a3624;
+    --branch-leaf: #5d8a4a;
 }
 
 :root[data-time="morning"] {
