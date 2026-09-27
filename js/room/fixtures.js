@@ -154,6 +154,31 @@ export const RUG_COLOURS = [
     { id: "cream", name: "Cream", colours: ["#b8a88a", "#e8dcc4", "#f6efe2", "#c9a878", "#fffaf0"] }
 ];
 
+/*
+    Curtain colours: the fabric, the shade in its folds and the
+    light on it. Every curtain but the lace takes them.
+*/
+
+export const CURTAIN_COLOURS = [
+    { id: "room", name: "The room's own" },
+    { id: "rose", name: "Dusty rose", colours: ["#c0707e", "#8a4454", "#dc98a4"] },
+    { id: "wine", name: "Wine", colours: ["#7a2038", "#4a0c1e", "#a0384e"] },
+    { id: "blush", name: "Blush", colours: ["#e8b4bc", "#b87884", "#f6d4d8"] },
+    { id: "plum", name: "Plum", colours: ["#6a3a70", "#40204a", "#8e5a94"] },
+    { id: "lavender", name: "Lavender", colours: ["#a894c8", "#6e5a94", "#c8b8e0"] },
+    { id: "navy", name: "Midnight blue", colours: ["#2c3a6a", "#161e40", "#46568e"] },
+    { id: "teal", name: "Teal", colours: ["#2f7a78", "#16484a", "#4e9a96"] },
+    { id: "sage", name: "Sage", colours: ["#8aa47e", "#56704c", "#aac29e"] },
+    { id: "forest", name: "Forest green", colours: ["#3e6b4c", "#1e3c28", "#5a8a66"] },
+    { id: "mustard", name: "Mustard", colours: ["#c9952e", "#8a6014", "#e2b454"] },
+    { id: "rust", name: "Rust", colours: ["#b5643f", "#7a3a1e", "#d08660"] },
+    { id: "cream", name: "Cream", colours: ["#efe4cf", "#c9b89a", "#fbf6ea"] },
+    { id: "charcoal", name: "Charcoal", colours: ["#3a363e", "#1c1a20", "#5a5660"] }
+];
+
+const CURTAIN_VARS =
+    ["--curtain", "--curtain-fold", "--curtain-light"];
+
 const RUG_VARS =
     ["--rug-edge", "--rug-border", "--rug-field", "--rug-flower", "--rug-cream", "--rug-web"];
 
@@ -266,7 +291,7 @@ export const WINDOW_CHOICES = [
 ];
 
 const KINDS =
-    ["wallpaper", "floor", "window", "wood", "curtains", "rug", "rugColour", "time", "light", "tree", "season"];
+    ["wallpaper", "floor", "window", "wood", "curtains", "curtainColour", "rug", "rugColour", "time", "light", "tree", "season"];
 
 const CHOICES = {
     wallpaper: WALLPAPERS,
@@ -274,6 +299,7 @@ const CHOICES = {
     window: WINDOW_CHOICES,
     wood: WOODS,
     curtains: CURTAINS,
+    curtainColour: CURTAIN_COLOURS,
     rug: RUGS,
     rugColour: RUG_COLOURS,
     time: TIMES,
@@ -343,10 +369,10 @@ function defaultsFor(theme) {
         getPreferences();
 
     if (theme === "sandbox") {
-        return { wallpaper: "plaster", floor: "oak", window: "none", wood: prefs.wood, curtains: "none", rug: "none", rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", hidden: "", windowX: null, windowY: null };
+        return { wallpaper: "plaster", floor: "oak", window: "none", wood: prefs.wood, curtains: "none", curtainColour: "room", rug: "none", rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", hidden: "", windowX: null, windowY: null };
     }
 
-    return { wallpaper: "room", floor: "room", window: prefs.window, wood: prefs.wood, curtains: prefs.curtains, rug: prefs.rug, rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", hidden: "", windowX: null, windowY: null };
+    return { wallpaper: "room", floor: "room", window: prefs.window, wood: prefs.wood, curtains: prefs.curtains, curtainColour: "room", rug: prefs.rug, rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", hidden: "", windowX: null, windowY: null };
 
 }
 
@@ -431,6 +457,16 @@ export function applyFixtures(theme = document.documentElement.dataset.theme) {
     if (rugColour?.colours) {
         RUG_VARS.slice(0, 5).forEach((name, index) => root.style.setProperty(name, rugColour.colours[index]));
         root.style.setProperty("--rug-web", rugColour.colours[1]);
+    }
+
+    // The curtains' colours.
+    const curtainColour =
+        CURTAIN_COLOURS.find((item) => item.id === fixtures.curtainColour);
+
+    CURTAIN_VARS.forEach((name) => root.style.removeProperty(name));
+
+    if (curtainColour?.colours) {
+        CURTAIN_VARS.forEach((name, index) => root.style.setProperty(name, curtainColour.colours[index]));
     }
 
     placeWindow(fixtures);
@@ -770,6 +806,12 @@ function swatchStyle(kind, choice) {
             : "";
     }
 
+    if (kind === "curtainColour") {
+        return choice.colours
+            ? `background: linear-gradient(90deg, ${choice.colours[1]} 0 18%, ${choice.colours[0]} 18% 42%, ${choice.colours[2]} 42% 58%, ${choice.colours[0]} 58% 82%, ${choice.colours[1]} 82%)`
+            : "";
+    }
+
     if (kind === "rugColour") {
         return choice.colours
             ? `background: linear-gradient(135deg, ${choice.colours[0]} 0 22%, ${choice.colours[1]} 22% 44%, ${choice.colours[2]} 44% 66%, ${choice.colours[3]} 66% 84%, ${choice.colours[4]} 84%)`
@@ -886,6 +928,7 @@ export function roomPanelMarkup() {
                 `}
                 ${chips("wood", "Window frame", fixtures.wood)}
                 ${chips("curtains", "Curtains", fixtures.curtains)}
+                ${fixtures.curtains === "none" || fixtures.curtains === "lace" ? "" : swatches("curtainColour", "Curtain colours", fixtures.curtainColour)}
             `}
 
             ${chips("rug", "Rug", fixtures.rug)}

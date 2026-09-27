@@ -240,7 +240,13 @@
 
 [data-curtains="drapes"] .window-curtains--drapes,
 [data-curtains="lace"] .window-curtains--lace,
-[data-curtains="cafe"] .window-curtains--cafe {
+[data-curtains="cafe"] .window-curtains--cafe,
+[data-curtains="swag"] .window-curtains--swag,
+[data-curtains="fringe"] .window-curtains--fringe,
+[data-curtains="pinch"] .window-curtains--pinch,
+[data-curtains="ruffle"] .window-curtains--ruffle,
+[data-curtains="roman"] .window-curtains--roman,
+[data-curtains="stars"] .window-curtains--stars {
     display: block;
 }
 
