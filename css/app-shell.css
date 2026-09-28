@@ -175,10 +175,13 @@ body.sidebar-collapsed .app-stage {
 
     z-index: 3;
 
-    height: 200px;
+    height: 150px;
 
     display: flex;
+    align-items: center;
     justify-content: center;
+
+    padding-bottom: 36px;
 
     flex: 0 0 auto;
 }
@@ -198,28 +201,26 @@ body.sidebar-collapsed .app-stage {
 }
 
 .brand-logo__art {
+    display: block;
+
     width: 100%;
     height: auto;
 
-    overflow: visible;
-
-    filter: drop-shadow(0 6px 8px rgba(20, 8, 12, 0.45));
+    filter: drop-shadow(0 4px 6px rgba(20, 8, 12, 0.55));
 }
 
 .brand-logo__emblem {
     display: none;
 
-    width: 84px;
+    width: 64px;
     height: auto;
 
-    margin-top: 22px;
-
-    overflow: visible;
+    filter: drop-shadow(0 3px 4px rgba(20, 8, 12, 0.5));
 }
 
 .ivy--garland {
     left: 8px;
-    bottom: -4px;
+    bottom: 20px;
 
     width: 212px;
     height: 36px;
@@ -1155,7 +1156,7 @@ body.sidebar-collapsed .app-stage {
     }
 
     .library-sidebar.is-collapsed .sidebar-brand {
-        height: 200px;
+        height: 150px;
     }
 
     .library-sidebar.is-collapsed .sidebar-panel {
