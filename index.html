@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="original" data-art="room">
+<html lang="en" data-theme="original" data-art="room" data-window="arched" data-wood="walnut" data-time="dusk" data-tree="oak" data-season="autumn">
 
 <head>
     <meta charset="UTF-8">
@@ -46,6 +46,7 @@
 
     <link rel="stylesheet" href="css/tokens.css?v=__VERSION__">
     <link rel="stylesheet" href="css/base.css?v=__VERSION__">
+    <link rel="stylesheet" href="css/themes.css?v=__VERSION__">
     <link rel="stylesheet" href="css/auth.css?v=__VERSION__">
 
     <script type="module" src="js/pages/entrance.js?v=__VERSION__"></script>
@@ -68,111 +69,32 @@
 
         <div class="entrance-glow"></div>
 
+        <!-- The floor -->
+        <div class="entrance-floor"></div>
 
-        <!-- Arched window with autumn ivy -->
-
-        <svg class="entrance-window" viewBox="0 0 440 330">
-            <use href="#scene-window" />
-        </svg>
-
-        <svg
-            class="ivy entrance-ivy entrance-ivy--window"
-            viewBox="0 0 520 620"
-            data-seed="41"
-            data-density="15"
-            data-leaf-size="0.95"
-            data-palette="autumn"
-        >
-            <path class="ivy-stem" d="M20 0C60 40 30 90 70 140C110 190 80 250 120 300" />
-            <path class="ivy-stem" d="M40 60C10 120 40 180 10 240C-10 290 20 340 6 400C-4 450 16 520 8 620" />
-            <path class="ivy-stem" d="M120 10C200 30 260 8 340 22C400 32 450 20 520 30" />
-            <path class="ivy-stem" d="M470 26C490 80 470 130 490 190" />
-        </svg>
-
-
-        <!-- Frames on the wall -->
-
-        <svg class="entrance-frame entrance-frame--ghost" viewBox="0 0 70 90">
-            <use href="#frame-ghost" />
-        </svg>
-
-        <svg class="entrance-frame entrance-frame--moth" viewBox="0 0 80 100">
-            <use href="#frame-moth" />
-        </svg>
-
-        <svg class="entrance-frame entrance-frame--castle" viewBox="0 0 130 100">
-            <use href="#frame-castle" />
-        </svg>
-
-
-        <!-- Bookshelf along the right wall (spines added by entrance.js) -->
-
-        <div class="entrance-shelves">
-            <div class="entrance-shelf" data-seed="a"></div>
-            <div class="entrance-shelf" data-seed="b"></div>
-            <div class="entrance-shelf" data-seed="c"></div>
-            <div class="entrance-shelf" data-seed="d"></div>
-
-            <svg class="entrance-shelf-decor entrance-shelf-decor--ghost" viewBox="0 0 92 108">
-                <use href="#decor-ghost" />
-            </svg>
-
-            <svg class="entrance-shelf-decor entrance-shelf-decor--pumpkin" viewBox="0 0 120 86">
-                <use href="#decor-pumpkin" />
-            </svg>
-
-            <svg class="entrance-shelf-decor entrance-shelf-decor--crystal" viewBox="0 0 96 120">
-                <use href="#decor-crystal" />
-            </svg>
+        <!-- The window, with the autumn oak at dusk (the room's own
+             window: html data-time / data-tree / data-season) -->
+        <div class="entrance-window-wrap">
+            <svg class="entrance-window" viewBox="0 0 440 330"><use href="#scene-window" /></svg>
+            <svg class="entrance-curtains" viewBox="-20 -40 480 380"><use href="#curtain-fringe" x="-20" y="-40" /></svg>
+            <svg class="entrance-sill" viewBox="0 0 480 40"><use href="#window-sill" /></svg>
         </div>
 
-        <svg
-            class="ivy entrance-ivy entrance-ivy--shelves"
-            viewBox="0 0 160 700"
-            data-seed="52"
-            data-density="17"
-            data-leaf-size="0.9"
-        >
-            <path class="ivy-stem" d="M150 0C120 60 150 120 118 190C94 250 126 310 100 380C82 430 104 480 90 540" />
-        </svg>
+        <svg class="entrance-plant" viewBox="0 0 120 270"><use href="#furn-plant-hanging" /></svg>
 
+        <svg class="entrance-portrait" viewBox="0 0 120 152"><use href="#portrait-ghost-reader" /></svg>
 
-        <!-- The cozy corner -->
+        <!-- The reading corner -->
+        <svg class="entrance-rug" viewBox="0 0 700 180" preserveAspectRatio="none"><use href="#rug-autumn" /></svg>
+        <svg class="entrance-lamp" viewBox="0 0 100 250"><use href="#furn-lamp-floor-fringe" /></svg>
+        <svg class="entrance-armchair" viewBox="0 0 220 224"><use href="#furn-armchair-pink" /></svg>
+        <svg class="entrance-table" viewBox="0 0 100 170"><use href="#furn-table-side" /></svg>
+        <svg class="entrance-cat" viewBox="0 0 80 104"><use href="#decor-cat-sitting" /></svg>
 
-        <svg class="entrance-rug" viewBox="0 0 700 180" preserveAspectRatio="none">
-            <use href="#scene-rug" />
-        </svg>
-
-        <svg class="entrance-candle entrance-candle--tall" viewBox="0 0 80 178">
-            <use href="#decor-candle" />
-        </svg>
-
-        <svg class="entrance-armchair" viewBox="0 0 260 280">
-            <use href="#scene-armchair" />
-        </svg>
-
-        <svg class="entrance-plant" viewBox="0 0 120 156">
-            <use href="#decor-plant" />
-        </svg>
-
-        <svg class="entrance-table" viewBox="0 0 170 210">
-            <use href="#scene-side-table" />
-        </svg>
-
-        <svg class="entrance-open-book" viewBox="0 0 32 32">
-            <use href="#ui-open-book" />
-        </svg>
-
-        <svg class="entrance-lantern" viewBox="0 0 100 186">
-            <use href="#decor-lantern" />
-        </svg>
-
-        <svg class="entrance-candle entrance-candle--right" viewBox="0 0 80 178">
-            <use href="#decor-candle" />
-        </svg>
+        <!-- The bookcase on the right wall -->
+        <svg class="entrance-bookcase" viewBox="0 0 170 336"><use href="#furn-bookcase-tall" /></svg>
 
     </div>
-
 
 
     <!-- =====================================================
