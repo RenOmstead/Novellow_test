@@ -942,3 +942,409 @@ body.entrance {
 
     color: var(--color-ink-soft);
 }
+
+
+/* =========================================================
+   MOTION
+   The room lights up as you arrive; the title, the words and
+   the bookplate settle into place; dust drifts through the
+   lamplight, frames and ivy sway, a star falls past the
+   window now and then. Readers who ask their device for less
+   motion get the room still (see the end of this section).
+========================================================= */
+
+/* Arriving: the lamps come up. */
+.entrance-scene::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background: #0e0806;
+
+    opacity: 0;
+
+    animation: lightsUp 1.6s ease-out both;
+
+    pointer-events: none;
+}
+
+@keyframes lightsUp {
+    from { opacity: 0.92; }
+    to { opacity: 0; }
+}
+
+.entrance-logo {
+    animation: inkIn 1.1s 0.35s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes inkIn {
+    from { opacity: 0; transform: translateY(-12px) scale(0.97); filter: blur(6px) drop-shadow(0 6px 14px rgba(10, 4, 2, 0.6)); }
+    to { opacity: 1; transform: none; filter: blur(0) drop-shadow(0 6px 14px rgba(10, 4, 2, 0.6)); }
+}
+
+.entrance-divider,
+.entrance-tagline,
+.entrance-phases,
+.entrance-description {
+    animation: riseIn 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.entrance-divider { animation-delay: 0.8s; }
+.entrance-tagline { animation-delay: 0.95s; }
+.entrance-phases { animation-delay: 1.15s; }
+.entrance-description { animation-delay: 1.3s; }
+
+@keyframes riseIn {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: none; }
+}
+
+.bookplate {
+    animation: plateIn 1.1s 0.45s cubic-bezier(0.18, 0.8, 0.25, 1.05) both;
+}
+
+@keyframes plateIn {
+    from { opacity: 0; transform: translateY(46px) rotate(1.4deg); }
+    to { opacity: 1; transform: none; }
+}
+
+/* The little moon at the top of the bookplate glows. */
+.bookplate-moon {
+    animation: moonGlow 4.5s ease-in-out infinite;
+}
+
+@keyframes moonGlow {
+    0%, 100% { filter: drop-shadow(0 0 0 rgba(240, 200, 120, 0)); }
+    50% { filter: drop-shadow(0 0 6px rgba(240, 200, 120, 0.9)); }
+}
+
+/* Lamplight breathing. */
+.entrance-glow {
+    animation: glowBreathe 7s ease-in-out infinite;
+}
+
+@keyframes glowBreathe {
+    0%, 100% { opacity: 0.85; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.06); }
+}
+
+/* Frames sway a little on their nails; the ivy stirs; the
+   ghost on the shelf floats. */
+.entrance-frame {
+    transform-origin: 50% 0;
+
+    animation: frameSway 7s ease-in-out infinite;
+}
+
+.entrance-frame--moth { animation-duration: 8.5s; animation-delay: -2s; }
+.entrance-frame--castle { animation-duration: 9.5s; animation-delay: -4s; }
+
+@keyframes frameSway {
+    0%, 100% { transform: rotate(-1deg); }
+    50% { transform: rotate(1deg); }
+}
+
+.entrance-ivy {
+    transform-origin: 50% 0;
+
+    animation: ivySway 9s ease-in-out infinite;
+}
+
+.entrance-ivy--shelves { animation-duration: 11s; animation-delay: -3s; }
+
+@keyframes ivySway {
+    0%, 100% { transform: rotate(-0.6deg); }
+    50% { transform: rotate(0.6deg); }
+}
+
+.entrance-shelf-decor--ghost {
+    animation: ghostFloat 4.2s ease-in-out infinite;
+}
+
+@keyframes ghostFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+}
+
+/* Dust in the lamplight (added by entrance.js). */
+.entrance-motes {
+    position: absolute;
+    inset: 0;
+
+    overflow: hidden;
+}
+
+.entrance-motes span {
+    position: absolute;
+
+    left: var(--x);
+    bottom: -10px;
+
+    width: var(--size);
+    height: var(--size);
+
+    border-radius: 50%;
+
+    background: #ffe2a8;
+
+    box-shadow: 0 0 6px 2px rgba(255, 210, 140, 0.55);
+
+    opacity: 0;
+
+    animation: moteRise var(--rise) var(--delay) linear infinite;
+}
+
+@keyframes moteRise {
+    0% { opacity: 0; transform: translate(0, 0); }
+    12% { opacity: 0.8; }
+    50% { transform: translate(var(--sway), -50vh); }
+    85% { opacity: 0.6; }
+    100% { opacity: 0; transform: translate(0, -100vh); }
+}
+
+/* A falling star past the window. */
+.entrance-shooting-star {
+    position: absolute;
+
+    left: 22vw;
+    top: 6vh;
+
+    width: 90px;
+    height: 2px;
+
+    border-radius: 2px;
+
+    background: linear-gradient(90deg, rgba(255, 244, 210, 0), #fff6dc 70%, #ffffff);
+
+    opacity: 0;
+
+    transform: rotate(-24deg);
+
+    animation: fallingStar 11s 3s ease-in infinite;
+}
+
+@keyframes fallingStar {
+    0%, 88% { opacity: 0; transform: translate(0, 0) rotate(-24deg); }
+    90% { opacity: 1; }
+    97% { opacity: 1; }
+    100% { opacity: 0; transform: translate(-16vw, 7vh) rotate(-24deg); }
+}
+
+/* Sparkles around the logo (added by entrance.js). */
+.entrance-wordmark {
+    position: relative;
+}
+
+.entrance-sparkle {
+    position: absolute;
+
+    width: 14px;
+    height: 14px;
+
+    margin: -7px 0 0 -7px;
+
+    background: #ffe6a8;
+
+    clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    animation: sparkle 5s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+    0%, 70%, 100% { opacity: 0; transform: scale(0.3) rotate(0deg); }
+    80% { opacity: 1; transform: scale(1) rotate(45deg); }
+    90% { opacity: 0; transform: scale(0.4) rotate(90deg); }
+}
+
+/* The Enter Library button catches the light now and then. */
+.button--enter {
+    position: relative;
+
+    overflow: hidden;
+}
+
+.button--enter::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    left: -60%;
+
+    width: 40%;
+
+    background: linear-gradient(100deg, transparent, rgba(255, 236, 190, 0.45), transparent);
+
+    transform: skewX(-18deg);
+
+    animation: sheen 6s 2.5s ease-in-out infinite;
+
+    pointer-events: none;
+}
+
+@keyframes sheen {
+    0%, 80% { left: -60%; }
+    100% { left: 130%; }
+}
+
+/* Switching between Sign In and Create Account: a page turns. */
+.auth-form.is-turning {
+    transform-origin: 0 50%;
+
+    animation: pageTurn 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes pageTurn {
+    from { opacity: 0; transform: perspective(900px) rotateY(-28deg) translateX(18px); }
+    to { opacity: 1; transform: none; }
+}
+
+/* Entering the library: the room draws you in. */
+body.is-entering-library .entrance-scene {
+    transform: scale(1.06);
+
+    transition: transform 0.55s ease-in;
+}
+
+body.is-entering-library .entrance-main {
+    opacity: 0;
+
+    transform: translateY(-10px);
+
+    transition: opacity 0.45s ease-in, transform 0.45s ease-in;
+}
+
+body.is-entering-library .entrance-scene::after {
+    animation: lightsDown 0.55s ease-in both;
+}
+
+@keyframes lightsDown {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Less motion, please: everything simply appears and rests. */
+@media (prefers-reduced-motion: reduce) {
+
+    .entrance-scene::after,
+    .entrance-logo,
+    .entrance-divider,
+    .entrance-tagline,
+    .entrance-phases,
+    .entrance-description,
+    .bookplate,
+    .bookplate-moon,
+    .entrance-glow,
+    .entrance-frame,
+    .entrance-ivy,
+    .entrance-shelf-decor--ghost,
+    .button--enter::after {
+        animation: none;
+    }
+
+}
+
+
+/* =========================================================
+   PHONE HELD SIDEWAYS
+   A clean two-column page: the logo and words on the left,
+   the bookplate on the right, the room quietly behind.
+========================================================= */
+
+@media (orientation: landscape) and (max-height: 540px) and (max-width: 1180px) {
+
+    .entrance-scene {
+        position: fixed;
+    }
+
+    .entrance-armchair,
+    .entrance-table,
+    .entrance-rug,
+    .entrance-plant,
+    .entrance-open-book,
+    .entrance-candle,
+    .entrance-lantern,
+    .entrance-frame,
+    .entrance-ivy--window {
+        display: none;
+    }
+
+    .entrance-window {
+        left: 2vw;
+        top: -4vh;
+
+        width: 26vw;
+
+        opacity: 0.55;
+    }
+
+    .entrance-shelves {
+        opacity: 0.45;
+    }
+
+    .entrance-main {
+        min-height: 100dvh;
+
+        grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
+        justify-items: stretch;
+        align-items: start;
+
+        gap: 24px;
+
+        padding:
+            max(14px, env(safe-area-inset-top, 0px))
+            max(20px, calc(env(safe-area-inset-right, 0px) + 12px))
+            24px
+            max(20px, calc(env(safe-area-inset-left, 0px) + 12px));
+    }
+
+    .entrance-brand {
+        position: sticky;
+        top: 20px;
+
+        align-self: start;
+
+        gap: 8px;
+
+        margin-top: 12vh;
+    }
+
+    .entrance-logo {
+        width: min(300px, 100%);
+    }
+
+    .entrance-tagline {
+        font-size: 24px;
+    }
+
+    .entrance-tagline br {
+        display: none;
+    }
+
+    .entrance-description {
+        max-width: 34ch;
+
+        font-size: 15px;
+    }
+
+    .bookplate {
+        max-width: none;
+    }
+
+    .bookplate-paper {
+        padding: 26px 22px 14px;
+
+        gap: 10px;
+    }
+
+    .bookplate-title {
+        font-size: 30px;
+    }
+
+}
