@@ -1549,3 +1549,71 @@ html.room-compact .bookcase-zone {
 
     background-size: var(--floor-pattern-size, auto), auto, auto, auto, auto, auto;
 }
+
+
+/* =========================================================
+   A TALL BOOKCASE ON A COMPUTER
+   The room is always one screen tall, so the window, the
+   chair and the floor stay in view like a real living room.
+   A bookcase with more shelves than fit scrolls by itself
+   (its pieces with it), with a slim brass scrollbar and a
+   soft fade where there are more shelves to see.
+========================================================= */
+
+@media (min-width: 1181px) {
+
+    html:not(.room-compact) .library-room {
+        height: calc(100dvh - var(--header-h, var(--header-height)));
+        min-height: 560px;
+    }
+
+    html:not(.room-compact) .bookcase-zone {
+        align-self: stretch;
+
+        display: flex;
+        flex-direction: column;
+
+        min-height: 0;
+
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        overscroll-behavior: contain;
+
+        scrollbar-width: thin;
+        scrollbar-color: rgba(216, 170, 102, 0.55) transparent;
+    }
+
+    html:not(.room-compact) .bookcase-zone::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    html:not(.room-compact) .bookcase-zone::-webkit-scrollbar-thumb {
+        border-radius: 8px;
+
+        background: rgba(216, 170, 102, 0.55);
+    }
+
+    /* Short, it stands on the floor; tall, it starts at its crown. */
+    html:not(.room-compact) .bookcase-zone > .bookcase {
+        flex: none;
+
+        margin-top: auto;
+    }
+
+}
+
+.bookcase-zone.has-more-below {
+    -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 70px), transparent);
+    mask-image: linear-gradient(180deg, #000 calc(100% - 70px), transparent);
+}
+
+.bookcase-zone.has-more-above.has-more-below {
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 50px, #000 calc(100% - 70px), transparent);
+    mask-image: linear-gradient(180deg, transparent, #000 50px, #000 calc(100% - 70px), transparent);
+}
+
+.bookcase-zone.has-more-above:not(.has-more-below) {
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 50px);
+    mask-image: linear-gradient(180deg, transparent, #000 50px);
+}

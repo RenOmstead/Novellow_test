@@ -149,6 +149,40 @@ export function startRoomFit(room) {
         </section>
     `);
 
+    // A bookcase taller than the room scrolls by itself; a soft
+    // fade at its foot (or top) says there are more shelves.
+    const caseZone =
+        room.querySelector(".bookcase-zone");
+
+    const markShelves = () => {
+
+        if (!caseZone) {
+            return;
+        }
+
+        caseZone.classList.toggle("has-more-below", caseZone.scrollHeight - caseZone.clientHeight - caseZone.scrollTop > 4);
+        caseZone.classList.toggle("has-more-above", caseZone.scrollTop > 4);
+
+    };
+
+    caseZone?.addEventListener("scroll", markShelves, { passive: true });
+
+    if (caseZone && "ResizeObserver" in window) {
+
+        const watch =
+            new ResizeObserver(markShelves);
+
+        watch.observe(caseZone);
+
+        const bookcase =
+            caseZone.querySelector(".bookcase");
+
+        if (bookcase) {
+            watch.observe(bookcase);
+        }
+
+    }
+
     fit();
 
     UPRIGHT.addEventListener("change", fit);
