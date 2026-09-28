@@ -43,62 +43,62 @@ const FOLDER =
 */
 
 export const SOUNDS = [
-    { id: "rain", name: "Rain", note: "Rain on the window and the roof", bed: ["rain.mp3"], use: [0.5, 58], boost: 2 },
+    { id: "rain", name: "Rain", note: "Rain on the window and the roof", bed: ["rain.mp3"], boost: 2 },
     {
         id: "thunder", name: "Distant thunder", note: "Now and then, far away", every: [45, 110], lightning: true,
-        moments: [["thunder-1.mp3", 0.4, 7.2, 0.6], ["thunder-2.mp3", 0.5, 9.9, 2.4]]
+        moments: [["thunder-1.mp3", 0.05, 6.85, 0.6], ["thunder-2.mp3", 0.05, 9.45, 2.4]]
     },
     { id: "fire", name: "Crackling fire", note: "Logs burning in the grate", bed: ["fire.mp3"], boost: 1.3 },
     { id: "wind", name: "Wind", note: "Round the eaves on a stormy night", bed: ["wind.mp3"], boost: 1.2 },
     { id: "murmurs", name: "Soft murmurs", note: "People talking quietly nearby", bed: ["murmurs.mp3"], boost: 12 },
     {
         id: "spoon", name: "Spoon stirring", note: "A teaspoon clinking in a cup", every: [25, 60],
-        moments: [["spoon-1.mp3", 3, 6.4, 4.5], ["spoon-2.mp3", 1, 7.5, 1.3], ["spoon-2.mp3", 34.8, 43.6, 1.1]]
+        moments: [["spoon-1.mp3", 0.05, 3.45, 4.5], ["spoon-2.mp3", 0.05, 6.55, 1.3], ["spoon-3.mp3", 0.05, 8.85, 1.1]]
     },
     {
         id: "coffee", name: "Coffee pouring", note: "A fresh cup being poured", every: [50, 120],
-        moments: [["coffee-pour.mp3", 0.3, 9.8, 16]]
+        moments: [["coffee-pour-1.mp3", 0.05, 9.55, 16]]
     },
     { id: "purr", name: "Purring cat", note: "Curled up somewhere nearby", bed: ["purr.mp3"], boost: 1.6 },
     { id: "clock", name: "Ticking clock", note: "An old clock on the mantel", bed: ["clock.mp3"], boost: 15 },
     {
         id: "pages", name: "Turning pages", note: "Someone reading close by", every: [30, 75],
         moments: [
-            ["page-1.mp3", 0.1, 0.7, 1.4],
-            ["page-2.mp3", 1.4, 2.4, 3], ["page-2.mp3", 3.5, 5.1, 3.5], ["page-2.mp3", 6, 7.1, 2.5],
-            ["page-3.mp3", 0.8, 1.6, 9], ["page-3.mp3", 8.9, 10, 8], ["page-3.mp3", 22.2, 22.9, 5], ["page-3.mp3", 36.5, 37.4, 7]
+            ["page-1.mp3", 0.05, 0.65, 1.4],
+            ["page-2.mp3", 0.05, 1.05, 3], ["page-3.mp3", 0.05, 1.65, 3.5], ["page-4.mp3", 0.05, 1.15, 2.5],
+            ["page-5.mp3", 0.05, 0.85, 9], ["page-6.mp3", 0.05, 1.15, 8], ["page-7.mp3", 0.05, 0.75, 5], ["page-8.mp3", 0.05, 0.95, 7]
         ]
     },
     {
         id: "night", name: "Night garden", note: "Crickets, and sometimes an owl", bed: ["crickets.mp3"], boost: 9, every: [50, 120],
-        moments: [["owl.mp3", 0.8, 3.6, 0.25]]
+        moments: [["owl-1.mp3", 0.05, 2.85, 0.25]]
     },
 
     // The haunted room.
     { id: "cauldron", group: "spooky", name: "Bubbling cauldron", note: "Something brewing by the fire", bed: ["cauldron.mp3"], boost: 0.9 },
     {
         id: "howl", group: "spooky", name: "Werewolves howling", note: "Far off, under the full moon", every: [70, 160],
-        moments: [["howl-1.mp3", 1, 7.2, 1.6], ["howl-2.mp3", 0.5, 5, 0.45]]
+        moments: [["howl-1.mp3", 0.05, 6.25, 1.6], ["howl-2.mp3", 0.05, 4.55, 0.45]]
     },
     {
         id: "creaks", group: "spooky", name: "Creaks", note: "Floorboards, doors and an old rocking chair", every: [20, 55],
-        moments: [["creak-1.mp3", 2.7, 4.5, 0.6], ["creak-2.mp3", 2.3, 6, 1.2], ["creak-2.mp3", 10.8, 14.3, 1.1], ["creak-3.mp3", 1.1, 3, 3.6], ["creak-3.mp3", 4.6, 6.6, 3.6]]
+        moments: [["creak-1.mp3", 0.05, 1.85, 0.6], ["creak-2.mp3", 0.05, 3.75, 1.2], ["creak-3.mp3", 0.05, 3.55, 1.1], ["creak-4.mp3", 0.05, 1.95, 3.6], ["creak-5.mp3", 0.05, 2.05, 3.6]]
     },
     {
         // A tick every 4 seconds: loop exactly 12 of them, with no
         // cross-fade, so the rhythm never stumbles.
         id: "spookyclock", group: "spooky", name: "Haunted clock", note: "A slow, heavy tick, and the midnight chime", bed: ["haunted-clock.mp3"], use: [0, 48], fade: 0.02, boost: 1.2,
-        every: [150, 300], moments: [["clock-chime.mp3", 0.2, 24.8, 0.7]]
+        every: [150, 300], moments: [["clock-chime-1.mp3", 0.05, 24.65, 0.7]]
     },
     {
         id: "humming", group: "spooky", name: "Creepy humming", note: "Someone humming, somewhere in the house", every: [60, 150],
-        moments: [["humming-1.mp3", 0.3, 15.6, 2.6], ["humming-2.mp3", 0, 20, 1.7], ["humming-2.mp3", 20.8, 39.4, 1.5]]
+        moments: [["humming-1.mp3", 0.05, 15.35, 2.6], ["humming-2.mp3", 0, 20, 1.7], ["humming-3.mp3", 0.05, 18.65, 1.5]]
     },
     {
         id: "whispers", group: "spooky", name: "Whispers", note: "Just at the edge of hearing", every: [45, 110],
-        moments: [["whisper-1.mp3", 0, 1.6, 0.6], ["whisper-1.mp3", 3.3, 4.5, 0.6], ["whisper-1.mp3", 12.7, 14.7, 0.7], ["whisper-2.mp3", 0, 10.9, 1.8]]
+        moments: [["whisper-1.mp3", 0, 1.6, 0.6], ["whisper-2.mp3", 0.05, 1.25, 0.6], ["whisper-3.mp3", 0.05, 2.05, 0.7], ["whisper-4.mp3", 0, 10.9, 1.8]]
     },
-    { id: "raven", group: "spooky", name: "Raven", note: "Calling from the window ledge", every: [60, 150], moments: [["raven.mp3", 0, 3, 0.6]] }
+    { id: "raven", group: "spooky", name: "Raven", note: "Calling from the window ledge", every: [60, 150], moments: [["raven-1.mp3", 0, 3, 0.6]] }
 ];
 
 // Each room's own mix (0 = silent, 1 = full).
@@ -237,7 +237,16 @@ function wake() {
             // Not offered here.
         }
 
-        ctx = new AudioContext();
+        // 32 kHz is plenty for rain, fire and the like, and each
+        // recording takes a third less memory once unpacked than
+        // at a speaker's usual 48 kHz.
+        try {
+            ctx = new AudioContext({ sampleRate: 32000, latencyHint: "playback" });
+        }
+
+        catch {
+            ctx = new AudioContext();
+        }
 
         master = ctx.createGain();
         master.gain.value = 0;
@@ -304,6 +313,26 @@ function recording(file) {
     }
 
     return recordings.get(file);
+
+}
+
+
+/*
+    Lets go of a silenced sound's recordings (unpacked, a
+    recording takes far more memory than its file), unless
+    another sound still playing uses them.
+*/
+
+function forget(sound) {
+
+    const stillUsed =
+        new Set([...playing.keys()].flatMap((id) => filesOf(SOUNDS.find((item) => item.id === id))));
+
+    filesOf(sound).forEach((file) => {
+        if (!stillUsed.has(file)) {
+            recordings.delete(file);
+        }
+    });
 
 }
 
@@ -651,6 +680,8 @@ function sync() {
                     layer.stop();
                     layer.out.disconnect();
                     playing.delete(sound.id);
+
+                    forget(sound);
 
                 }, 3000);
 
