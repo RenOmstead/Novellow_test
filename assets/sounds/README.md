@@ -91,16 +91,14 @@ each recording plays, and how loud, is set in `js/sound/soundscape.js`.
 
 ## Where each recording came from
 
-All of the recordings here were downloaded from a free sound-effects
-site under a free-to-use license. Most of these sites (Pixabay's content
-license, Freesound's "Creative Commons 0") need no credit. If any came
-from Freesound under "Attribution" (CC BY) instead, that recording needs
-a credit shown in the app; add it to the table below, and it can go on a
-Credits page.
+All of the recordings here come from Pixabay (pixabay.com/sound-effects),
+under the Pixabay Content License: free to use in apps and websites, no
+credit needed. (Keep new recordings from sources like this, or note
+their license and any credit they need below.)
 
 For new recordings, fill this in as you add them, so the credits stay
 with the sounds.
 
 | File | Source (link) | License |
 | --- | --- | --- |
-| All current files | A free sound-effects site | Free to use |
+| All current files | Pixabay Sound Effects | Pixabay Content License (no credit needed) |
