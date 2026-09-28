@@ -265,8 +265,8 @@ function sidebarMarkup(page, collapsed) {
             <div class="sidebar-brand">
 
                 <a class="brand-logo" href="dashboard.html" aria-label="Novellow — home">
-                    <svg class="brand-logo__art" viewBox="0 0 240 210" aria-hidden="true"><use href="#brand-logo"></use></svg>
-                    <svg class="brand-logo__emblem" viewBox="0 0 120 90" aria-hidden="true"><use href="#brand-emblem"></use></svg>
+                    <img class="brand-logo__art" src="assets/brand/wordmark-light.png?v=__VERSION__" width="900" height="218" alt="">
+                    <img class="brand-logo__emblem" src="assets/brand/cat.png?v=__VERSION__" width="240" height="130" alt="">
                 </a>
 
                 <svg class="ivy ivy--garland" viewBox="0 0 220 40" data-seed="5" data-density="16" data-leaf-size="0.55" aria-hidden="true">

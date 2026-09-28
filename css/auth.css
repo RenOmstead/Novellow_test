@@ -129,7 +129,7 @@ body.entrance {
 }
 
 .entrance-charm {
-    left: 28vw;
+    left: 4vw;
     top: 30vh;
 
     width: min(2.4vw, 36px);
@@ -340,15 +340,18 @@ body.entrance {
     text-align: center;
 }
 
-.entrance-crest {
-    width: min(170px, 36vw);
+
+.entrance-logo {
+    display: block;
+
+    width: min(360px, 100%);
     height: auto;
 
-    filter: drop-shadow(0 4px 6px rgba(10, 4, 2, 0.45));
+    filter: drop-shadow(0 6px 14px rgba(10, 4, 2, 0.6));
 }
 
 .entrance-wordmark {
-    margin-top: -6px;
+    margin: 0;
 
     color: #f7e7cf;
 
@@ -867,12 +870,9 @@ body.entrance {
         width: 22px;
     }
 
-    .entrance-crest {
-        width: 120px;
-    }
 
-    .entrance-wordmark {
-        font-size: 58px;
+    .entrance-logo {
+        width: min(320px, 86vw);
     }
 
     .entrance-tagline {
