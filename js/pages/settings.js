@@ -29,6 +29,7 @@ import { art, loader, toast, toastError, confirmDialog, formDialog, withBusy } f
 import { NovellowError } from "../core/errors.js?v=__VERSION__";
 import { SHELF_SORTS } from "../config.js?v=__VERSION__";
 import { exportLibrary, checkImport, importLibrary } from "../data/transfer.js?v=__VERSION__";
+import { exportPersonalData, deleteAccount } from "../data/account.js?v=__VERSION__";
 import { mountMixer } from "../sound/mixer.js?v=__VERSION__";
 import { CATS, GHOST_CHOICES, MUGS, CHINA_COLOURS, TEASETS, getPreferences, setPreference } from "../shell/preferences.js?v=__VERSION__";
 
@@ -358,6 +359,31 @@ function renderPage() {
                     <p><strong>Start over.</strong> Empties every shelf and journal. Your account, settings and sign-in history stay. This can't be undone, so download your library first.</p>
                     <div style="margin-top: 10px">
                         <button class="button button--danger" type="button" data-action="clear">${art("ui-trash")} Empty my library</button>
+                    </div>
+                </div>
+
+            </section>
+
+            <section class="settings-section settings-section--wide paper" aria-labelledby="privacyHeading">
+
+                <h2 id="privacyHeading">${art("ui-lock")} Privacy and your account</h2>
+
+                <p>
+                    Your library is private unless you choose to share your shelves with friends. Read how Novellow
+                    looks after your information in the <a href="privacy.html">Privacy Policy</a>, and the
+                    <a href="terms.html">Terms of Use</a>.
+                </p>
+
+                <div class="data-actions">
+                    <button class="button button--brass" type="button" data-action="export-all">${art("ui-download")} Download all my data</button>
+                </div>
+
+                <p class="muted">Everything Novellow keeps about you in one file: your account, profile, library, notes, sign-ins, friends and book clubs.</p>
+
+                <div class="danger-zone paper" style="padding: 16px 18px; border-width: 1.5px; border-style: dashed">
+                    <p><strong>Delete my account.</strong> Deletes your account and everything in it for good: your shelves, books, journals, quotes, words, reviews, cover pictures, room, friends, and any book clubs you started. This can't be undone, so download your data first if you'd like to keep it.</p>
+                    <div style="margin-top: 10px">
+                        <button class="button button--danger" type="button" data-action="delete-account">${art("ui-trash")} Delete my account</button>
                     </div>
                 </div>
 
@@ -779,6 +805,62 @@ async function runClear(button) {
 }
 
 
+async function runExportAll(button) {
+
+    await withBusy(button, "Gathering…", async () => {
+
+        try {
+            await exportPersonalData();
+            toast("Your data is downloading.", { tone: "success" });
+        }
+
+        catch (error) {
+            toastError(error, "Your data couldn't be downloaded just now.");
+        }
+
+    });
+
+}
+
+
+async function runDeleteAccount() {
+
+    const deleted =
+        await formDialog({
+            eyebrow: "Delete my account",
+            title: "Delete your account for good?",
+            submitLabel: "Delete my account",
+            className: "parchment-dialog--danger",
+            body: html`
+                <p>Your account and everything in it will be deleted straight away and can't be brought back.</p>
+                <label class="field">
+                    <span class="field__label">Your password</span>
+                    <input class="field__input" type="password" name="password" required autocomplete="current-password">
+                </label>
+                <label class="field">
+                    <span class="field__label">Type <strong>DELETE</strong> to confirm</span>
+                    <input class="field__input" name="confirm" required autocomplete="off">
+                </label>
+            `,
+            onSubmit: async (values, form) => {
+
+                if (String(values.get("confirm")).trim().toUpperCase() !== "DELETE") {
+                    throw new NovellowError("Type DELETE to confirm.");
+                }
+
+                await deleteAccount(String(values.get("password")));
+
+                return true;
+
+            }
+        });
+
+    // (Signing out takes the reader to the sign-in page.)
+    return deleted;
+
+}
+
+
 /* =========================================================
    START
 ========================================================= */
@@ -850,6 +932,14 @@ async function start() {
 
         if (trigger.dataset.action === "clear") {
             runClear(trigger);
+        }
+
+        if (trigger.dataset.action === "export-all") {
+            runExportAll(trigger);
+        }
+
+        if (trigger.dataset.action === "delete-account") {
+            runDeleteAccount();
         }
 
         if (trigger.dataset.action === "sign-out") {
