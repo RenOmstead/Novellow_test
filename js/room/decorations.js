@@ -1214,11 +1214,14 @@ function autoScroll(pointer, follow, ready = () => true) {
             return;
         }
 
-        // On a phone the page stays still and the shelves scroll
-        // by themselves; near their top or bottom, scroll them.
+        // The room stays one screen tall and a tall bookcase
+        // scrolls by itself; near its top or bottom, scroll it.
+        const caseZone =
+            room.querySelector(".bookcase-zone");
+
         const shelves =
-            document.documentElement.classList.contains("room-compact")
-                ? room.querySelector(".bookcase-zone")
+            caseZone && caseZone.scrollHeight > caseZone.clientHeight + 1
+                ? caseZone
                 : null;
 
         let scroller = null;
