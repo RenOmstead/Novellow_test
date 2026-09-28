@@ -30,10 +30,10 @@ body.legal {
 .legal-logo img {
     display: block;
 
-    width: min(300px, 70vw);
+    width: min(333px, 78vw);
     height: auto;
 
-    filter: drop-shadow(0 4px 10px rgba(10, 4, 2, 0.6));
+    margin-block: calc(min(333px, 78vw) * -0.05);
 }
 
 .legal-page {

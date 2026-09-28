@@ -203,19 +203,20 @@ body.sidebar-collapsed .app-stage {
 .brand-logo__art {
     display: block;
 
-    width: 100%;
+    /* The picture has its shadow drawn in, around the logo. */
+    width: calc(100% * 980 / 900);
     height: auto;
 
-    filter: drop-shadow(0 4px 6px rgba(20, 8, 12, 0.55));
+    margin: calc(100% * -40 / 900);
 }
 
 .brand-logo__emblem {
     display: none;
 
-    width: 64px;
+    width: calc(64px * 280 / 240);
     height: auto;
 
-    filter: drop-shadow(0 3px 4px rgba(20, 8, 12, 0.5));
+    margin: calc(64px * -20 / 240);
 }
 
 .ivy--garland {
