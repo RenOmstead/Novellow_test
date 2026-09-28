@@ -6,7 +6,7 @@
    Original theme. Other themes override these in themes.css.
 ========================================================= */
 
-@import url("https://fonts.googleapis.com/css2?family=Almendra:ital,wght@0,400;0,700;1,400&family=Averia+Serif+Libre:ital,wght@0,400;0,700;1,400&family=Berkshire+Swash&family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;1,9..144,600&family=Grenze+Gotisch:wght@500;700&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Patrick+Hand&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Uncial+Antiqua&display=swap");
+@import url("fonts.css?v=__VERSION__");
 
 
 :root {
