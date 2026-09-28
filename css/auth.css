@@ -177,12 +177,34 @@ body.entrance {
 }
 
 .entrance-armchair {
+    position: absolute;
+
     left: 3vw;
     bottom: 5vh;
 
     width: min(18vw, 300px);
+    aspect-ratio: 220 / 224;
 
     filter: drop-shadow(0 10px 14px rgba(10, 4, 2, 0.45));
+}
+
+.entrance-armchair svg {
+    position: absolute;
+}
+
+.entrance-armchair__chair {
+    left: 0;
+    top: 0;
+
+    width: 100%;
+}
+
+/* The cat, curled up asleep on the cushion. */
+.entrance-cat {
+    left: 21%;
+    top: 36%;
+
+    width: 54%;
 }
 
 .entrance-table {
@@ -190,13 +212,6 @@ body.entrance {
     bottom: 6vh;
 
     width: min(6.5vw, 108px);
-}
-
-.entrance-cat {
-    left: 25.5vw;
-    bottom: 3vh;
-
-    width: min(4.2vw, 70px);
 }
 
 .entrance-bookcase {
@@ -705,12 +720,6 @@ body.entrance {
 
     .entrance-armchair {
         width: 24vw;
-    }
-
-    .entrance-cat {
-        left: 26vw;
-
-        width: 6vw;
     }
 
     .entrance-bookcase {
