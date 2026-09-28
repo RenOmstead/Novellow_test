@@ -112,6 +112,94 @@ function markInvalid(input, message) {
    MODES
 ========================================================= */
 
+/* =========================================================
+   MOTION
+   The room lights up, dust drifts in the lamplight, now and
+   then a star falls past the window; forms turn like pages,
+   and entering the library steps into the room. All of it
+   rests for readers who've asked their device for less motion.
+========================================================= */
+
+const STILL =
+    window.matchMedia("(prefers-reduced-motion: reduce)");
+
+
+function leaveTo(url) {
+
+    if (STILL.matches) {
+        window.location.replace(url);
+        return;
+    }
+
+    document.body.classList.add("is-entering-library");
+
+    window.setTimeout(() => window.location.replace(url), 520);
+
+}
+
+
+function startMotion() {
+
+    if (STILL.matches) {
+        return;
+    }
+
+    const scene =
+        $(".entrance-scene");
+
+    // Dust drifting up through the lamplight.
+    const motes =
+        document.createElement("div");
+
+    motes.className = "entrance-motes";
+
+    for (let index = 0; index < 18; index++) {
+
+        const mote =
+            document.createElement("span");
+
+        mote.style.setProperty("--x", `${(Math.random() * 100).toFixed(1)}%`);
+        mote.style.setProperty("--size", `${(2 + Math.random() * 3).toFixed(1)}px`);
+        mote.style.setProperty("--rise", `${(10 + Math.random() * 12).toFixed(1)}s`);
+        mote.style.setProperty("--delay", `${(-Math.random() * 20).toFixed(1)}s`);
+        mote.style.setProperty("--sway", `${(Math.random() * 40 - 20).toFixed(0)}px`);
+
+        motes.appendChild(mote);
+
+    }
+
+    scene.appendChild(motes);
+
+    // A falling star past the window, every so often.
+    const star =
+        document.createElement("span");
+
+    star.className = "entrance-shooting-star";
+
+    scene.appendChild(star);
+
+    // Little sparkles around the logo.
+    const brand =
+        $(".entrance-wordmark");
+
+    [[8, 12], [30, 88], [64, 6], [92, 70], [48, 96]].forEach(([x, y], index) => {
+
+        const sparkle =
+            document.createElement("span");
+
+        sparkle.className = "entrance-sparkle";
+        sparkle.style.left = `${x}%`;
+        sparkle.style.top = `${y}%`;
+        sparkle.style.animationDelay = `${1.2 + index * 0.9}s`;
+        sparkle.setAttribute("aria-hidden", "true");
+
+        brand?.appendChild(sparkle);
+
+    });
+
+}
+
+
 function setMode(mode, { keepMessages = false } = {}) {
 
     if (!keepMessages) {
@@ -119,7 +207,19 @@ function setMode(mode, { keepMessages = false } = {}) {
     }
 
     Object.entries(forms).forEach(([name, form]) => {
-        form.hidden = name !== mode;
+
+        const showing =
+            name === mode;
+
+        // The form that appears turns in like a page.
+        if (showing && form.hidden && !STILL.matches) {
+            form.classList.remove("is-turning");
+            void form.offsetWidth;
+            form.classList.add("is-turning");
+        }
+
+        form.hidden = !showing;
+
     });
 
     title.textContent = COPY[mode].title;
@@ -242,7 +342,7 @@ forms["sign-in"].addEventListener("submit", async (event) => {
                 password: password.value
             });
 
-            window.location.replace(afterSignInUrl());
+            leaveTo(afterSignInUrl());
 
         }
 
@@ -310,7 +410,7 @@ forms["sign-up"].addEventListener("submit", async (event) => {
 
             if (result.status === "signed_in") {
 
-                window.location.replace("dashboard.html");
+                leaveTo("dashboard.html");
 
                 return;
 
@@ -411,7 +511,7 @@ forms.reset.addEventListener("submit", async (event) => {
 
             showNote("Your password was changed. Opening your library…");
 
-            window.setTimeout(() => window.location.replace("dashboard.html"), 900);
+            window.setTimeout(() => leaveTo("dashboard.html"), 900);
 
         }
 
@@ -489,6 +589,7 @@ async function start() {
 
     fillShelves();
     growIvy();
+    startMotion();
 
     if (!isConfigured) {
 
@@ -541,7 +642,7 @@ async function start() {
             }
 
             window.setTimeout(
-                () => window.location.replace(afterSignInUrl()),
+                () => leaveTo(afterSignInUrl()),
                 queryParam("confirmed") === "1" ? 900 : 0
             );
 
