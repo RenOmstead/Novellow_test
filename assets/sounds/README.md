@@ -1,5 +1,14 @@
 # Novellow room sounds
 
+> **How the files are kept now.** To keep the app light on phones, every
+> recording is mono, 32 kHz, 64 kbps. The steady sounds ("beds") are
+> trimmed to about 45 seconds. Each short sound ("moment") is cut out
+> into its own small file, numbered (`page-1.mp3` … `page-8.mp3`,
+> `spoon-1.mp3` … and so on), and listed in `js/sound/soundscape.js`.
+> Unpacked for playing, a sound takes about 15 times more memory than
+> its file, so long or stereo recordings cost a phone a lot. Encode new
+> ones the same way.
+
 Real recordings for the "Sounds of the room" mixer. Put each file in
 this folder with **exactly** the name below. A sound shows up in the mixer
 as soon as its file is here; until then its slider says "not added yet".
