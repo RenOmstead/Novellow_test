@@ -11,6 +11,10 @@ import { friendlyAuthError, NovellowError } from "./errors.js?v=__VERSION__";
 
 
 let signingOut = false;
+
+// Where to go when signed out on purpose (e.g. after deleting
+// the account), instead of the "session ended" note.
+let leavingTo = null;
 let watching = false;
 
 
@@ -103,7 +107,7 @@ function watchAuthChanges() {
         if (event === "SIGNED_OUT") {
 
             window.location.replace(
-                signingOut ? "index.html" : "index.html?expired=1"
+                leavingTo || (signingOut ? "index.html" : "index.html?expired=1")
             );
 
         }
@@ -124,6 +128,10 @@ function watchAuthChanges() {
    SIGN UP
 ========================================================= */
 
+// The date the Terms of Use and Privacy Policy last changed.
+export const TERMS_VERSION = "2026-09-28";
+
+
 export async function signUp({ displayName, email, password }) {
 
     const { data, error } =
@@ -132,7 +140,11 @@ export async function signUp({ displayName, email, password }) {
             password,
             options: {
                 data: {
-                    display_name: displayName
+                    display_name: displayName,
+                    // What the reader agreed to when joining (the
+                    // version is the date the Terms were last changed).
+                    agreed_to_terms: TERMS_VERSION,
+                    confirmed_13_or_older: true
                 },
                 emailRedirectTo: appUrl("index.html?confirmed=1")
             }
@@ -297,5 +309,21 @@ async function recordSignIn(method) {
     catch (error) {
         console.error("Could not record this sign-in.", error);
     }
+
+}
+
+
+/*
+    Signs out on this device after the account has been deleted,
+    and says goodbye on the sign-in page.
+*/
+
+export async function signOutAfterDeleting() {
+
+    leavingTo = "index.html?deleted=1";
+
+    await supabase.auth.signOut({ scope: "local" }).catch(() => {});
+
+    window.location.replace(leavingTo);
 
 }

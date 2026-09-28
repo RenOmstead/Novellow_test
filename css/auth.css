@@ -900,3 +900,45 @@ body.entrance {
     }
 
 }
+
+
+/* ---------------------------------------------------------
+   AGREEING TO THE TERMS, AND THE LEGAL LINKS
+--------------------------------------------------------- */
+
+.auth-agree {
+    align-items: flex-start;
+
+    min-height: 0;
+
+    margin: 2px 0 4px;
+
+    font-size: 13.5px;
+    line-height: 1.4;
+}
+
+.auth-agree input {
+    flex: none;
+
+    margin-top: 2px;
+}
+
+.auth-agree a,
+.entrance-legal a {
+    color: var(--color-plum);
+
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.entrance-legal {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+
+    margin: 4px 0 0;
+
+    font-size: 13px;
+
+    color: var(--color-ink-soft);
+}

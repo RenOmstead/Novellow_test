@@ -28,6 +28,9 @@ whole file into the editor and select **Run**:
    reads. Shelves are private unless a reader turns sharing on, and then
    only their friends can see them. Journals, notes, quotes and words are
    never shared. It's safe to run again.
+5. `sql/account.sql`: lets readers delete their own account (Settings →
+   Delete my account), which deletes everything in it. It's safe to run
+   again.
 
 Each should finish with "Success. No rows returned". If one shows an
 error, stop there and send me the message.

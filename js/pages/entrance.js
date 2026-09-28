@@ -275,7 +275,8 @@ forms["sign-up"].addEventListener("submit", async (event) => {
         displayName,
         email,
         password,
-        confirmPassword
+        confirmPassword,
+        agree
     } = form.elements;
 
     const name =
@@ -287,6 +288,12 @@ forms["sign-up"].addEventListener("submit", async (event) => {
     }
 
     if (!checkEmail(email) || !checkNewPassword(password, confirmPassword)) {
+        return;
+    }
+
+    if (!agree.checked) {
+        showError("Please confirm you're 13 or older and agree to the Terms of Use and Privacy Policy.");
+        agree.focus();
         return;
     }
 
@@ -538,6 +545,10 @@ async function start() {
                 queryParam("confirmed") === "1" ? 900 : 0
             );
 
+        }
+
+        else if (!session && queryParam("deleted") === "1") {
+            showNote("Your account and everything in it have been deleted. Thank you for reading with Novellow.");
         }
 
         else if (!session && recovering) {
