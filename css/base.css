@@ -447,6 +447,50 @@ button:disabled {
     border-color: var(--color-danger);
 }
 
+/* Dates: iPhones draw these their own way (centred, a grey pill,
+   collapsing when empty, spilling out of narrow boxes). Keep them
+   the same size and shape as every other field. */
+input[type="date"].field__input {
+    -webkit-appearance: none;
+    appearance: none;
+
+    display: block;
+
+    height: 46px;
+
+    line-height: 24px;
+    text-align: left;
+
+    color: var(--color-ink);
+}
+
+input[type="date"].field__input::-webkit-date-and-time-value {
+    margin: 0;
+
+    text-align: left;
+}
+
+input[type="date"].field__input::-webkit-datetime-edit {
+    padding: 0;
+}
+
+input[type="date"].field__input::-webkit-calendar-picker-indicator {
+    opacity: 0.6;
+
+    cursor: pointer;
+}
+
+/* Today / Clear under a date field. */
+.date-quick {
+    display: flex;
+    gap: 12px;
+
+    margin-top: 4px;
+
+    font-family: var(--font-ui);
+    font-size: 13.5px;
+}
+
 textarea.field__input {
     min-height: 110px;
 
