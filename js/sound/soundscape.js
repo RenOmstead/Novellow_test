@@ -132,8 +132,10 @@ const playing = new Map();
 
 function load() {
 
+    // On until the reader turns it off: the room's sounds begin at
+    // the first tap (browsers allow nothing sooner).
     const fallback =
-        { on: false, volume: 0.7, matchRoom: true, levels: {} };
+        { on: true, volume: 0.7, matchRoom: true, levels: {} };
 
     try {
         return { ...fallback, ...JSON.parse(localStorage.getItem(STORE) || "{}") };
@@ -247,6 +249,8 @@ function wake() {
         catch {
             ctx = new AudioContext();
         }
+
+        ctx.addEventListener("statechange", announce);
 
         master = ctx.createGain();
         master.gain.value = 0;
@@ -911,26 +915,40 @@ export function startSoundscape() {
         announce();
     });
 
-    if (!state.on) {
-        return;
-    }
+    // Browsers only let sound start from a tap, click or key.
+    // iPhones don't count the start of a touch, only its end, so
+    // every kind is listened for; and they stay listened for, so
+    // sound the phone has paused (a call, the screen locking,
+    // headphones changing) comes back at the next touch.
+    const nudge = () => {
 
-    const begin = () => {
+        if (!state.on) {
+            return;
+        }
 
-        window.removeEventListener("pointerdown", begin, true);
-        window.removeEventListener("keydown", begin, true);
+        if (ctx && ctx.state === "running" && (!keeper || !keeper.paused)) {
+            return;
+        }
 
-        if (state.on && wake()) {
-            keepPlaying(true);
-            ctx.resume().then(() => {
+        if (!wake()) {
+            return;
+        }
+
+        keepPlaying(true);
+
+        ctx.resume()
+            .then(() => {
                 sync();
                 announce();
+            })
+            .catch(() => {
+                // Not allowed from this kind of event; the next one will do.
             });
-        }
 
     };
 
-    window.addEventListener("pointerdown", begin, true);
-    window.addEventListener("keydown", begin, true);
+    ["pointerup", "touchend", "click", "keydown"].forEach((type) => {
+        window.addEventListener(type, nudge, { capture: true, passive: true });
+    });
 
 }
