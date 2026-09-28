@@ -532,51 +532,8 @@ forms.reset.addEventListener("submit", async (event) => {
    DECORATION
 ========================================================= */
 
-const SPINE_COLORS = [
-    ["#6e4258", "#e2b76c"],
-    ["#34503f", "#d8b27a"],
-    ["#a1493f", "#f0cf8a"],
-    ["#2f3552", "#e2b76c"],
-    ["#c47f82", "#3b2a2e"],
-    ["#5f7d45", "#f3ddb2"],
-    ["#6a5486", "#f0cf8a"],
-    ["#b0654e", "#f3ddb2"],
-    ["#e6d2ac", "#6e4029"]
-];
 
 
-function fillShelves() {
-
-    $all(".entrance-shelf").forEach((shelf) => {
-
-        const random =
-            seededRandom(shelf.dataset.seed);
-
-        const count =
-            6 + Math.floor(random() * 3);
-
-        for (let index = 0; index < count; index += 1) {
-
-            const spine =
-                document.createElement("span");
-
-            const [color, accent] =
-                SPINE_COLORS[Math.floor(random() * SPINE_COLORS.length)];
-
-            spine.className = "entrance-spine";
-
-            spine.style.setProperty("--c", color);
-            spine.style.setProperty("--a", accent);
-            spine.style.setProperty("--w", `${14 + Math.round(random() * 10)}px`);
-            spine.style.setProperty("--h", `${68 + Math.round(random() * 24)}%`);
-
-            shelf.appendChild(spine);
-
-        }
-
-    });
-
-}
 
 
 /* =========================================================
@@ -587,7 +544,6 @@ async function start() {
 
     await loadSprite();
 
-    fillShelves();
     growIvy();
     startMotion();
 
