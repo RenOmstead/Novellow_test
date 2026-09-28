@@ -1349,3 +1349,120 @@ html.room-sideways .scene-header {
 .library-sidebar {
     padding-top: env(safe-area-inset-top, 0px);
 }
+
+
+/* =========================================================
+   A PHONE HELD SIDEWAYS: EVERY PAGE
+   The same slim top bar as the room, content kept clear of
+   the notch and rounded corners, and headings sized for a
+   short screen, so each page feels like the same app.
+========================================================= */
+
+@media (orientation: landscape) and (max-height: 540px) and (max-width: 1180px) {
+
+    .scene-header {
+        min-height: 0;
+
+        gap: 8px;
+
+        padding-top: calc(6px + env(safe-area-inset-top, 0px));
+        padding-bottom: 4px;
+        padding-left: max(14px, calc(env(safe-area-inset-left, 0px) + 6px));
+        padding-right: max(14px, calc(env(safe-area-inset-right, 0px) + 6px));
+    }
+
+    .scene-header .icon-button,
+    .header-tools .icon-button,
+    .header-add {
+        width: 36px;
+        height: 36px;
+
+        box-shadow: 0 3px 8px rgba(40, 16, 12, 0.22);
+    }
+
+    .scene-header .icon-button svg,
+    .header-add svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .header-add {
+        min-height: 0;
+
+        padding: 0;
+
+        border-radius: 50%;
+    }
+
+    .header-add > span:not(.visually-hidden) {
+        display: none;
+    }
+
+    .header-search {
+        max-width: 480px;
+    }
+
+    .library-search {
+        height: 36px;
+    }
+
+    .library-search input {
+        font-size: 15px;
+    }
+
+    .profile-button {
+        width: 36px;
+        height: 36px;
+
+        justify-content: center;
+
+        gap: 0;
+
+        padding: 0;
+    }
+
+    .profile-button__name,
+    .profile-button > svg {
+        display: none;
+    }
+
+    .profile-button .avatar {
+        width: 32px;
+        height: 32px;
+
+        flex: 0 0 32px;
+
+        font-size: 15px;
+    }
+
+    .page-body {
+        max-width: 1040px;
+
+        margin: 0 auto;
+
+        padding-top: 4px;
+        padding-bottom: calc(36px + env(safe-area-inset-bottom, 0px));
+        padding-left: max(18px, calc(env(safe-area-inset-left, 0px) + 10px));
+        padding-right: max(18px, calc(env(safe-area-inset-right, 0px) + 10px));
+    }
+
+    .page-heading {
+        align-items: center;
+
+        gap: 10px;
+
+        margin: 6px 0 14px;
+    }
+
+    .page-heading__title {
+        font-size: 27px;
+        line-height: 1.1;
+    }
+
+    .page-heading__subtitle {
+        margin-top: 2px;
+
+        font-size: 16px;
+    }
+
+}
