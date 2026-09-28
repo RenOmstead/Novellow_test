@@ -83,6 +83,24 @@ function input(name, value, attributes = "") {
 }
 
 
+// A date, with quick Today and Clear buttons (easier than the
+// phone's date wheel for the usual cases).
+function dateField(label, name, value) {
+
+    return html`
+        <div class="field">
+            <label class="field__label" for="bookDate-${name}">${label}</label>
+            <input class="field__input" type="date" id="bookDate-${name}" name="${name}" value="${value ?? ""}">
+            <span class="date-quick">
+                <button class="text-button" type="button" data-date-today="${name}">Today</button>
+                <button class="text-button" type="button" data-date-clear="${name}">Clear</button>
+            </span>
+        </div>
+    `;
+
+}
+
+
 function select(name, list, selected, extra = "") {
 
     return html`
@@ -337,8 +355,8 @@ function editorMarkup(book, shelves, editing) {
                         </div>
 
                         <div class="field-row">
-                            ${field("Started", input("date_started", book.date_started, 'type="date"'))}
-                            ${field("Finished", input("date_finished", book.date_finished, 'type="date"'))}
+                            ${dateField("Started", "date_started", book.date_started)}
+                            ${dateField("Finished", "date_finished", book.date_finished)}
                         </div>
 
                         <div class="field-row">
@@ -681,6 +699,22 @@ function wireEditor(dialog, form, book, existing, onSaved, offeredCover = null) 
 
 
     form.addEventListener("click", async (event) => {
+
+        const quickDate =
+            event.target.closest("[data-date-today], [data-date-clear]");
+
+        if (quickDate) {
+
+            const dateInput =
+                form.elements[quickDate.dataset.dateToday || quickDate.dataset.dateClear];
+
+            dateInput.value = quickDate.dataset.dateToday ? todayIso() : "";
+            dateInput.dispatchEvent(new Event("input", { bubbles: true }));
+            dateInput.dispatchEvent(new Event("change", { bubbles: true }));
+
+            return;
+
+        }
 
         if (event.target.closest("[data-close]")) {
 
