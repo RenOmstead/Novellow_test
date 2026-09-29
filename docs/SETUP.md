@@ -31,6 +31,11 @@ whole file into the editor and select **Run**:
 5. `sql/account.sql`: lets readers delete their own account (Settings →
    Delete my account), which deletes everything in it. It's safe to run
    again.
+6. `sql/notes.sql`: the "What's new" list and readers' notes on the About
+   Novellow page. It's safe to run again. Add updates in **Table Editor**
+   → `site_updates`; read notes in `reader_notes`, where you can set a
+   `status` (seen, planned, done, not_planned) and a `reply` that the
+   reader sees.
 
 Each should finish with "Success. No rows returned". If one shows an
 error, stop there and send me the message.

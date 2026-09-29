@@ -45,6 +45,7 @@ const NAV = [
     { id: "journal", href: "journal.html", label: "Journal", art: "art-journal" },
     { id: "discover", href: "discover.html", label: "Discover", art: "art-discover" },
     { divider: true },
+    { id: "about", href: "about.html", label: "About Novellow", art: "art-about" },
     { id: "settings", href: "settings.html", label: "Settings", art: "art-settings" }
 ];
 
