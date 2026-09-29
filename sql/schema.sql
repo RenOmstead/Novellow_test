@@ -6,6 +6,17 @@
 --   1. schema.sql    (this file)
 --   2. policies.sql
 --   3. storage.sql
+--   4. community.sql
+--   5. account.sql
+--   6. notes.sql
+--   7. notes-inbox.sql
+--   8. public.sql
+--   9. workshop.sql
+--
+-- Files 1-3 are run ONCE, when a project is first set up.
+-- Running this file again stops with "relation ... already
+-- exists"; that's harmless and changes nothing. The later
+-- files are safe to run again.
 --
 -- Every user-owned table carries user_id and is protected by
 -- Row Level Security in policies.sql.
