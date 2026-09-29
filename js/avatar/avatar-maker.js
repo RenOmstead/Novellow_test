@@ -83,10 +83,6 @@ function makerMarkup(avatar, seed, openPart) {
                             <span>${touch.label}</span>
                         </label>
                     `)}
-                    <label class="check-line">
-                        <input type="checkbox" data-touch="inChair" ${avatar.inChair ? "checked" : ""}>
-                        <span>Sit in the armchair of my own room, too</span>
-                    </label>
                 </div>
 
                 <div class="dialog-actions">
