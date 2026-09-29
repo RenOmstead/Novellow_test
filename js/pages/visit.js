@@ -36,7 +36,6 @@ import { startRoomFit } from "../room/fit-room.js?v=__VERSION__";
 import { createBookcase } from "../books/bookcase.js?v=__VERSION__";
 import { coverMarkup } from "../books/cover.js?v=__VERSION__";
 import { avatarPortrait } from "../avatar/avatar.js?v=__VERSION__";
-import { sitReader } from "../avatar/avatar-room.js?v=__VERSION__";
 
 
 let page = null;
@@ -458,9 +457,6 @@ async function start() {
     bookcase.render();
 
     startDecorations(room, page.room.theme);
-
-    // They're at home: curled up in their armchair.
-    sitReader(room, page.avatar, { seed: page.id, label: `${page.display_name}, reading in their armchair` });
 
 }
 
