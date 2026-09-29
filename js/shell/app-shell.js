@@ -10,6 +10,7 @@
 
 import { requireSession, signOut } from "../core/auth.js?v=__VERSION__";
 import { loadSprite } from "../core/art.js?v=__VERSION__";
+import { avatarPortrait } from "../avatar/avatar.js?v=__VERSION__";
 
 import {
     setUser,
@@ -23,7 +24,7 @@ import {
     events
 } from "../core/store.js?v=__VERSION__";
 
-import { html, raw, render, $, $all, initials, debounce, truncate } from "../core/helpers.js?v=__VERSION__";
+import { html, raw, render, $, $all, debounce, truncate } from "../core/helpers.js?v=__VERSION__";
 import { friendlyDataError } from "../core/errors.js?v=__VERSION__";
 import { art, toastError, loader } from "../core/ui.js?v=__VERSION__";
 import { growIvy, recolorIvy } from "../room/ivy.js?v=__VERSION__";
@@ -290,7 +291,7 @@ function sidebarMarkup(page, collapsed) {
             </nav>
 
             <a class="sidebar-user" href="settings.html">
-                <span class="avatar" data-avatar>${initials(profile?.display_name)}</span>
+                <span class="avatar" data-avatar>${raw(avatarPortrait(profile?.avatar, { seed: profile?.id }))}</span>
                 <span class="sidebar-user__text">
                     <strong data-display-name>${profile?.display_name || "Reader"}</strong>
                     <span>My library</span>
@@ -376,13 +377,17 @@ function headerMarkup(eyebrow) {
                 <div class="popover-anchor">
 
                     <button class="profile-button" type="button" data-popover="profilePopover" aria-expanded="false" aria-label="Your profile">
-                        <span class="avatar" data-avatar>${initials(profile?.display_name)}</span>
+                        <span class="avatar" data-avatar>${raw(avatarPortrait(profile?.avatar, { seed: profile?.id }))}</span>
                         <span class="profile-button__name" data-display-name>${profile?.display_name || "Reader"}</span>
                         <svg aria-hidden="true"><use href="#ui-chevron-down"></use></svg>
                     </button>
 
                     <div class="popover paper" id="profilePopover" hidden>
                         <p class="popover-heading">${session?.user?.email || ""}</p>
+                        <button class="popover-item" type="button" data-avatar-maker>
+                            <svg aria-hidden="true"><use href="#ui-user"></use></svg>
+                            My avatar
+                        </button>
                         <a class="popover-item" href="settings.html">
                             <svg aria-hidden="true"><use href="#art-settings"></use></svg>
                             Settings
@@ -414,7 +419,7 @@ function refreshNames() {
     });
 
     $all("[data-avatar]").forEach((node) => {
-        node.textContent = initials(profile?.display_name);
+        node.innerHTML = avatarPortrait(profile?.avatar, { seed: profile?.id });
     });
 
 }
@@ -630,6 +635,18 @@ function wirePopovers() {
     });
 
     $("[data-sign-out]").addEventListener("click", () => signOut());
+
+    $("[data-avatar-maker]").addEventListener("click", async () => {
+
+        $("#profilePopover").hidden = true;
+        $("[data-popover=profilePopover]").setAttribute("aria-expanded", "false");
+
+        const { openAvatarMaker } =
+            await import("../avatar/avatar-maker.js?v=__VERSION__");
+
+        openAvatarMaker();
+
+    });
 
     // Decorations are arranged on the library room (dashboard).
     $("[data-arrange-room]").addEventListener("click", () => {

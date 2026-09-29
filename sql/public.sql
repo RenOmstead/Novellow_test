@@ -31,6 +31,27 @@
 
 
 -- ---------------------------------------------------------
+-- AVATARS
+-- The choices behind each reader's drawn avatar (skin, hair,
+-- clothes…; js/avatar/avatar.js draws it). Shown wherever
+-- their name is, and in their armchair when someone visits.
+-- ---------------------------------------------------------
+
+alter table public.profiles
+    add column if not exists avatar jsonb;
+
+alter table public.profiles
+    drop constraint if exists profiles_avatar_check;
+
+alter table public.profiles
+    add constraint profiles_avatar_check
+    check (
+        avatar is null
+        or (jsonb_typeof(avatar) = 'object' and pg_column_size(avatar) <= 2000)
+    );
+
+
+-- ---------------------------------------------------------
 -- WHAT EACH READER SHARES
 -- ---------------------------------------------------------
 
@@ -288,6 +309,7 @@ as $$
         'display_name', coalesce(nullif(p.display_name, ''), 'A reader'),
         'username', p.username,
         'bio', p.bio,
+        'avatar', p.avatar,
         'visibility', p.library_visibility,
         'share_reviews', p.share_reviews,
         'share_quotes', p.share_quotes,
@@ -314,11 +336,15 @@ grant execute on function public.reader_page(text) to anon, authenticated;
 
 
 -- Public libraries to browse in Community (newest first).
-create or replace function public.public_libraries(p_search text default null)
+drop function if exists public.public_libraries(text);
+
+create function public.public_libraries(p_search text default null)
 returns table (
+    id uuid,
     username text,
     display_name text,
     bio text,
+    avatar jsonb,
     book_count bigint
 )
 language sql
@@ -327,9 +353,11 @@ security definer
 set search_path = ''
 as $$
     select
+        p.id,
         p.username,
         coalesce(nullif(p.display_name, ''), 'A reader'),
         p.bio,
+        p.avatar,
         (select count(*) from public.books b where b.user_id = p.id)
     from public.profiles p
     where p.library_visibility = 'public'
