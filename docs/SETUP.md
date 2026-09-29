@@ -41,10 +41,10 @@ whole file into the editor and select **Run**:
    create an account on the site with `novellow.contact@gmail.com`,
    then run this file. Optional email alerts for new notes are
    explained at the top of the file.
-8. : lets readers open their library to friends or to
+8. `sql/public.sql`: lets readers open their library to friends or to
    everyone (18+), visit each other's rooms, report a library, and block
    readers; the Novellow account can hide a reported library. Run it
-   after . It's safe to run again.
+   after `notes-inbox.sql`. It's safe to run again.
 
 Each should finish with "Success. No rows returned". If one shows an
 error, stop there and send me the message.
