@@ -84,6 +84,11 @@
             sign-in key; clearing your browser's site data removes the rest.
         </p>
 
+        <p>
+            If you scan a book's barcode, the camera picture is read on your device and never saved or sent anywhere. Only the
+            ISBN it finds is used, to look the book up. Novellow asks for the camera only when you tap Scan barcode.
+        </p>
+
         <h2 id="use">3. How it's used</h2>
 
         <ul>
@@ -118,7 +123,7 @@
             <li><strong>Supabase</strong> stores the database, your cover pictures and your sign-in, and sends account emails. Like most services, it keeps short-lived technical logs, including IP addresses, for security.</li>
             <li><strong>GitHub Pages</strong> hosts the website itself, and may log visitors' IP addresses for security.</li>
             <li><strong>jsDelivr</strong> supplies the code library that connects to Supabase, and sees your IP address when your browser fetches it.</li>
-            <li><strong>Open Library</strong> (the Internet Archive) supplies book covers and search results. When you search for a book, your search words are sent to it.</li>
+            <li><strong>Open Library</strong> (the Internet Archive) supplies book covers and search results. When you search for a book or scan its barcode, your search words or the book's ISBN are sent to it.</li>
         </ul>
 
         <p>These services may process information in the United States and other countries.</p>
