@@ -304,3 +304,26 @@
     }
 
 }
+
+.visit-bar__avatar {
+    width: 58px;
+    height: 58px;
+
+    flex: 0 0 58px;
+
+    border: 2px solid rgba(255, 240, 214, 0.75);
+    border-radius: 50%;
+
+    box-shadow: 0 2px 6px rgba(10, 4, 2, 0.35);
+}
+
+@media (max-width: 640px) {
+
+    .visit-bar__avatar {
+        width: 44px;
+        height: 44px;
+
+        flex-basis: 44px;
+    }
+
+}

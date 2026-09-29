@@ -16,6 +16,7 @@ import {
     getShelves,
     booksOnShelf,
     getSettings,
+    getProfile,
     listQuotes,
     listRecentEntries,
     events
@@ -33,6 +34,8 @@ import { createBookcase } from "../books/bookcase.js?v=__VERSION__";
 import { playReveal, playReturn } from "../books/book-reveal.js?v=__VERSION__";
 import { coverMarkup } from "../books/cover.js?v=__VERSION__";
 import { createJournal } from "../journal/journal.js?v=__VERSION__";
+import { sitReader } from "../avatar/avatar-room.js?v=__VERSION__";
+import { normalizeAvatar } from "../avatar/avatar.js?v=__VERSION__";
 
 
 // Phones (upright or sideways): books open on their own page.
@@ -411,6 +414,23 @@ async function start() {
     renderDeskNotes();
 
     startDecorations(document.querySelector(".library-room"), settings.theme);
+
+    // If they like, the reader sits in their own armchair too.
+    const seatReader = () => {
+
+        const profile =
+            getProfile();
+
+        sitReader(document.querySelector(".library-room"), profile?.avatar, {
+            seed: profile?.id,
+            show: normalizeAvatar(profile?.avatar, profile?.id).inChair
+        });
+
+    };
+
+    seatReader();
+
+    events.addEventListener("profile-changed", seatReader);
 
 
     /* Re-draw whenever the library changes anywhere. */
