@@ -665,7 +665,15 @@
             <path d="M9 52C13 52 15 49 14.5 46C11 46.5 9.5 49 9 52ZM7 42C3 42 1 39 1.5 36C5 36.5 6.5 39 7 42ZM9 30C13 30 15 27 14.5 24C11 24.5 9.5 27 9 30ZM7 19C3 19 1 16 1.5 13C5 13.5 6.5 16 7 19ZM9 9C12.5 9 14 6.5 13.5 4C10.5 4.5 9.5 6.5 9 9Z" fill="currentColor"/>
         </symbol>
 
-        <symbol id="ui-search" viewBox="0 0 32 32">
+        <symbol id="ui-scan" viewBox="0 0 32 32">
+        <rect x="5" y="6" width="22" height="20" rx="2.2" fill="#f6ead2" stroke="#2a1a1f" stroke-width="1.2"/>
+        <rect x="9" y="10" width="1.2" height="11" fill="#2a1a1f"/><rect x="11" y="10" width="0.7" height="11" fill="#2a1a1f"/><rect x="12.5" y="10" width="1.6" height="11" fill="#2a1a1f"/><rect x="15" y="10" width="0.7" height="11" fill="#2a1a1f"/><rect x="16.4" y="10" width="1.2" height="11" fill="#2a1a1f"/><rect x="18.4" y="10" width="0.7" height="11" fill="#2a1a1f"/><rect x="19.8" y="10" width="1.6" height="11" fill="#2a1a1f"/><rect x="22.2" y="10" width="0.8" height="11" fill="#2a1a1f"/>
+        <path d="M9 23.5H23" fill="none" stroke="#6b4a2c" stroke-width="0.9" stroke-dasharray="1 1"/>
+        <path d="M3 10V5.5A2.5 2.5 0 0 1 5.5 3H10M22 3H26.5A2.5 2.5 0 0 1 29 5.5V10M29 22V26.5A2.5 2.5 0 0 1 26.5 29H22M10 29H5.5A2.5 2.5 0 0 1 3 26.5V22" fill="none" stroke="#b8862e" stroke-width="2" stroke-linecap="round"/>
+        <path d="M6.5 15.5H25.5" fill="none" stroke="#c0405a" stroke-width="1.3" stroke-linecap="round"/>
+    </symbol>
+
+    <symbol id="ui-search" viewBox="0 0 32 32">
         <path d="M19.5 21.5L26 28A2.1 2.1 0 0 0 29 25L22.5 18.5Z" fill="#8a5636" stroke="#2a1a1f" stroke-width="1.3" stroke-linejoin="round"/>
         <circle cx="13" cy="13" r="10" fill="url(#brassBody)" stroke="#2a1a1f" stroke-width="1.3"/>
         <circle cx="13" cy="13" r="7" fill="#d6e8ec" stroke="#2a1a1f" stroke-width="1"/>

@@ -210,6 +210,10 @@ export async function openBookEditor({ bookId = null, shelfId = null, prefill = 
 
         let result = null;
 
+        // A scanned book reopens the editor filled in; whoever
+        // opened this one gets that editor's result instead.
+        let handoff = null;
+
         render(dialog, editorMarkup(book, shelves, Boolean(existing)));
 
         const form =
@@ -221,9 +225,90 @@ export async function openBookEditor({ bookId = null, shelfId = null, prefill = 
             result = saved;
         }, offeredCover);
 
+        form.querySelector("[data-scan]")?.addEventListener("click", async (event) => {
+
+            const button =
+                event.currentTarget;
+
+            try {
+
+                const { scanIsbn, lookupIsbn } =
+                    await import("./isbn-scanner.js?v=__VERSION__");
+
+                const isbn =
+                    await scanIsbn();
+
+                if (!isbn) {
+                    return;
+                }
+
+                let found = null;
+
+                await withBusy(button, "Looking it up…", async () => {
+
+                    try {
+                        found = await lookupIsbn(isbn);
+                    }
+
+                    catch (error) {
+                        console.error(error);
+                    }
+
+                });
+
+                if (!found) {
+
+                    form.elements.isbn.value = isbn;
+                    form.dataset.dirty = "true";
+
+                    toast("That book isn't in the Open Library catalogue, so its ISBN is filled in and the rest is up to you.", { timeout: 6000 });
+
+                    form.elements.title.focus();
+
+                    return;
+
+                }
+
+                if (form.dataset.dirty === "true") {
+
+                    const replace =
+                        await confirmDialog({
+                            title: `Fill in “${found.prefill.title}”?`,
+                            message: "This replaces what you've typed so far with the scanned book.",
+                            confirmLabel: "Fill it in",
+                            cancelLabel: "Keep mine"
+                        });
+
+                    if (!replace) {
+                        return;
+                    }
+
+                }
+
+                const shelfChoice =
+                    form.elements.shelf_id.value;
+
+                handoff =
+                    openBookEditor({
+                        shelfId: shelfChoice === NEW_SHELF ? shelfId : shelfChoice,
+                        prefill: { ...found.prefill, status: form.elements.status.value },
+                        coverUrl: found.coverUrl
+                    });
+
+                dialog.close();
+
+            }
+
+            catch (error) {
+                console.error(error);
+                toast("The scanner couldn't be opened just now.", { tone: "error" });
+            }
+
+        });
+
         dialog.addEventListener("close", () => {
 
-            resolve(result);
+            resolve(handoff || result);
 
             window.setTimeout(() => dialog.remove(), 50);
 
@@ -277,6 +362,12 @@ function editorMarkup(book, shelves, editing) {
                     <p class="dialog-eyebrow">${editing ? "Edit book" : "Add a book"}</p>
                     <h2 class="dialog-title" id="bookEditorTitle">${editing ? book.title : "A new story for your shelves"}</h2>
                 </div>
+
+                ${editing ? "" : html`
+                    <button class="button button--brass button--small book-editor__scan" type="button" data-scan>
+                        ${art("ui-scan")} Scan barcode
+                    </button>
+                `}
 
                 <button class="dialog-close" type="button" data-close aria-label="Close without saving">
                     ${art("ui-close", "dialog-close__art")}

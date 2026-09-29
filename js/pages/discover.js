@@ -150,6 +150,7 @@ function renderPage() {
                         <input class="field__input" type="search" name="term" required placeholder="The Night Circus" autocomplete="off">
                     </label>
                     <button class="button button--primary" type="submit">${art("ui-search")} Search</button>
+                    <button class="button button--brass" type="button" data-scan>${art("ui-scan")} Scan barcode</button>
                 </form>
 
                 <p class="muted" style="margin-top: 8px; color: #f0dcc0">Book details and covers come from Open Library, a free public catalogue.</p>
@@ -271,6 +272,34 @@ async function start() {
             }
 
         });
+
+    });
+
+    content.addEventListener("click", async (event) => {
+
+        if (!event.target.closest("[data-scan]")) {
+            return;
+        }
+
+        try {
+
+            const { scanIsbn } =
+                await import("../books/isbn-scanner.js?v=__VERSION__");
+
+            const isbn =
+                await scanIsbn();
+
+            if (isbn) {
+                const form = document.getElementById("discoverSearch");
+                form.elements.term.value = isbn;
+                form.requestSubmit();
+            }
+
+        }
+
+        catch (error) {
+            toastError(error);
+        }
 
     });
 
