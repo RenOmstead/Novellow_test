@@ -1758,3 +1758,82 @@
     }
 
 }
+
+/* The Novellow account's Notes inbox */
+.notes-inbox {
+    margin-bottom: 20px;
+
+    scroll-margin-top: 90px;
+}
+
+.notes-inbox__head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    gap: 10px 16px;
+}
+
+.note-filter {
+    min-height: 36px;
+
+    padding: 4px 16px;
+
+    border: 1px solid #b89a76;
+    border-radius: 999px;
+
+    color: #3b2418;
+    background: rgba(255, 250, 238, 0.85);
+
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.note-filter.is-on {
+    border-color: #5c2f47;
+
+    color: #fff8ec;
+    background: #6e3b58;
+}
+
+.note-item.is-new {
+    border-style: solid;
+    border-color: rgba(110, 59, 88, 0.55);
+
+    background: rgba(255, 250, 240, 0.9);
+}
+
+.note-item__device {
+    margin: 0;
+
+    color: var(--color-ink-soft);
+
+    font-family: var(--font-ui);
+    font-size: 13px;
+}
+
+.note-answer {
+    display: grid;
+
+    gap: 10px;
+
+    padding-top: 10px;
+
+    border-top: 1px dashed rgba(92, 55, 73, 0.25);
+}
+
+.note-answer__row {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+
+    gap: 10px;
+}
+
+.note-answer__status {
+    flex: 0 1 200px;
+}

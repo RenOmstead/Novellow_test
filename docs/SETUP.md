@@ -36,6 +36,11 @@ whole file into the editor and select **Run**:
    → `site_updates`; read notes in `reader_notes`, where you can set a
    `status` (seen, planned, done, not_planned) and a `reply` that the
    reader sees.
+7. `sql/notes-inbox.sql`: gives the Novellow account a Notes inbox on
+   About Novellow, to read every note and reply in the app. First
+   create an account on the site with `novellow.contact@gmail.com`,
+   then run this file. Optional email alerts for new notes are
+   explained at the top of the file.
 
 Each should finish with "Success. No rows returned". If one shows an
 error, stop there and send me the message.
