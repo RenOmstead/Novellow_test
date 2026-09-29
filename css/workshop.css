@@ -1,0 +1,407 @@
+/* =========================================================
+   NOVELLOW
+   THE WORKSHOP (workshop.html)
+========================================================= */
+
+.workshop-tabs {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-bottom: 18px;
+}
+
+.workshop-tab {
+    min-height: 42px;
+
+    padding: 6px 18px;
+
+    border: 1px solid rgba(246, 234, 212, 0.4);
+    border-radius: 999px;
+
+    color: #f6ead4;
+    background: rgba(43, 22, 32, 0.35);
+
+    font-family: var(--font-ui);
+    font-size: 15px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.workshop-tab.is-on {
+    border-color: #c9974f;
+
+    color: #2b1d24;
+    background: linear-gradient(180deg, #f6d99a, #e0b262);
+}
+
+.workshop-filters {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-bottom: 16px;
+}
+
+.workshop-search {
+    flex: 0 1 260px;
+}
+
+.workshop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+
+    gap: 16px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.workshop-card {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+
+    gap: 10px;
+
+    padding: 14px;
+}
+
+/* Pieces sit on a little patch of wall and floor, like in a room. */
+.workshop-card__art {
+    display: grid;
+    place-items: center;
+
+    height: 190px;
+
+    padding: 14px;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(180deg, transparent 72%, rgba(60, 30, 16, 0.35) 72%),
+        repeating-linear-gradient(90deg, rgba(10, 6, 4, 0.08) 0 2px, transparent 2px 40px),
+        linear-gradient(180deg, #a9765a, #8a5a42);
+}
+
+.workshop-card__art--large {
+    height: 260px;
+}
+
+.workshop-card__art--large img,
+.workshop-card__art--large svg {
+    max-height: 232px;
+}
+
+.workshop-card__art img,
+.workshop-card__art svg {
+    max-width: 100%;
+    max-height: 162px;
+
+    object-fit: contain;
+
+    filter: drop-shadow(0 6px 6px rgba(20, 8, 6, 0.35));
+}
+
+.workshop-card__art svg {
+    width: 100%;
+    height: 100%;
+}
+
+.workshop-card__body h3 {
+    color: var(--color-plum-deep);
+
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.workshop-card__meta {
+    margin: 2px 0 0;
+
+    color: var(--color-ink-soft);
+
+    font-family: var(--font-ui);
+    font-size: 13px;
+}
+
+.workshop-card__meta a {
+    color: var(--color-berry);
+}
+
+.workshop-card__text {
+    margin: 6px 0 0;
+
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.workshop-card__actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 8px 12px;
+}
+
+/* Guidelines */
+.workshop-guide {
+    display: grid;
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+    padding: 22px 24px;
+
+    line-height: 1.5;
+}
+
+.workshop-guide h3 {
+    margin: 8px 0 2px;
+
+    color: var(--color-plum-deep);
+
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.workshop-guide__columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+
+    gap: 6px 26px;
+}
+
+.workshop-list {
+    display: grid;
+
+    gap: 6px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.workshop-list li {
+    position: relative;
+
+    padding-left: 26px;
+}
+
+.workshop-list li::before {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    font-family: var(--font-ui);
+    font-weight: 900;
+}
+
+.workshop-list--yes li::before {
+    content: "✓";
+
+    color: #3f6b4f;
+}
+
+.workshop-list--no li::before {
+    content: "✕";
+
+    color: #9b3e5a;
+}
+
+.workshop-steps {
+    display: grid;
+
+    gap: 6px;
+
+    margin: 0;
+    padding-left: 22px;
+}
+
+.workshop-guide__small {
+    margin: 8px 0 0;
+
+    color: var(--color-ink-soft);
+
+    font-size: 14px;
+}
+
+.workshop-guide__small a {
+    color: var(--color-berry);
+}
+
+/* Making a piece */
+.workshop-make-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+
+    gap: 20px;
+
+    align-items: start;
+}
+
+.workshop-make {
+    display: grid;
+
+    gap: 12px;
+
+    padding: 22px 24px;
+}
+
+.workshop-form {
+    display: grid;
+
+    gap: 12px;
+}
+
+.workshop-form__row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+
+    gap: 12px;
+}
+
+.workshop-drop {
+    position: relative;
+
+    display: grid;
+    justify-items: center;
+    align-content: center;
+
+    gap: 6px;
+
+    min-height: 200px;
+
+    padding: 16px;
+
+    border: 2px dashed rgba(92, 55, 73, 0.4);
+    border-radius: 14px;
+
+    background:
+        repeating-conic-gradient(rgba(92, 55, 73, 0.06) 0 25%, transparent 0 50%) 0 0 / 22px 22px,
+        rgba(255, 250, 240, 0.7);
+
+    text-align: center;
+
+    cursor: pointer;
+}
+
+.workshop-drop input {
+    position: absolute;
+
+    inset: 0;
+
+    opacity: 0;
+
+    cursor: pointer;
+}
+
+.workshop-drop img {
+    max-width: 100%;
+    max-height: 220px;
+}
+
+.workshop-drop__art {
+    width: 44px;
+    height: 44px;
+}
+
+.workshop-drop__hint {
+    color: var(--color-ink-soft);
+
+    font-family: var(--font-ui);
+    font-size: 13px;
+}
+
+.workshop-warning {
+    margin: 8px 0 0;
+    padding: 8px 12px;
+
+    border-radius: 10px;
+
+    background: rgba(201, 151, 63, 0.18);
+
+    font-family: var(--font-ui);
+    font-size: 14px;
+}
+
+.workshop-recolour {
+    display: grid;
+    grid-template-columns: minmax(120px, 180px) minmax(0, 1fr);
+
+    gap: 16px;
+
+    align-items: start;
+}
+
+.workshop-recolour__preview {
+    display: grid;
+    place-items: center;
+
+    aspect-ratio: 1;
+
+    padding: 12px;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(180deg, transparent 72%, rgba(60, 30, 16, 0.35) 72%),
+        linear-gradient(180deg, #a9765a, #8a5a42);
+}
+
+.workshop-recolour__preview svg {
+    width: 100%;
+    height: 100%;
+
+    filter: drop-shadow(0 6px 6px rgba(20, 8, 6, 0.35));
+}
+
+.workshop-fabrics {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+/* The review queue */
+.workshop-review {
+    display: grid;
+
+    gap: 16px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.workshop-review__item {
+    display: grid;
+    grid-template-columns: minmax(200px, 300px) minmax(0, 1fr);
+
+    gap: 18px;
+
+    padding: 16px;
+}
+
+@media (max-width: 640px) {
+
+    .workshop-recolour,
+    .workshop-review__item {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .workshop-recolour__preview {
+        max-width: 200px;
+    }
+
+}

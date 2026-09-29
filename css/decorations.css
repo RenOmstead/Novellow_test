@@ -1109,3 +1109,14 @@ html.room-compact .journal-zone > .decor-layer {
     }
 
 }
+
+/* A piece from the Workshop: a reader's own drawing. */
+.placed-decor__picture {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    pointer-events: none;
+    user-select: none;
+}

@@ -21,6 +21,7 @@
 import { listDecorations, createRow, updateRow, deleteRow } from "../core/store.js?v=__VERSION__";
 import { html, render, clamp, debounce } from "../core/helpers.js?v=__VERSION__";
 import { art, toast, toastError } from "../core/ui.js?v=__VERSION__";
+import { loadPieces, pictureUrl, WORKSHOP_PREFIX } from "../workshop/workshop-data.js?v=__VERSION__";
 import { setFixtureRows, roomPanelMarkup, onRoomPanelClick, dragWindow, builtInAt, builtInElements, toggleBuiltIn } from "./fixtures.js?v=__VERSION__";
 
 
@@ -468,8 +469,27 @@ function setTraySide(side) {
 }
 
 
+// Pieces from the Workshop (sql/workshop.sql), loaded with the
+// room: id → { name, width, picture }.
+const workshopPieces =
+    new Map();
+
 function assetFor(id) {
+
+    if (String(id).startsWith(WORKSHOP_PREFIX)) {
+
+        const piece =
+            workshopPieces.get(id.slice(WORKSHOP_PREFIX.length));
+
+        const url =
+            piece?.image_path ? pictureUrl(piece.image_path) : null;
+
+        return url ? { id, name: piece.name, width: piece.width, picture: url } : undefined;
+
+    }
+
     return DECOR_ASSETS.find((asset) => asset.id === id);
+
 }
 
 
@@ -514,7 +534,9 @@ function pieceMarkup(piece) {
             style="left: ${piece.position_x}%; top: ${topFor(piece)}; width: ${asset.width}px; z-index: ${piece.z_index}; --scale: ${piece.scale}; --rotation: ${piece.rotation}deg${fabricStyle(piece)}"
             ${arranging ? html`tabindex="0" role="button" aria-label="${asset.name}. Drag to move, or use the arrow keys."` : html`aria-hidden="true"`}
         >
-            <svg viewBox="${asset.box}" aria-hidden="true"><use href="#${asset.id}"></use></svg>
+            ${asset.picture
+                ? html`<img class="placed-decor__picture" src="${asset.picture}" alt="" draggable="false">`
+                : html`<svg viewBox="${asset.box}" aria-hidden="true"><use href="#${asset.id}"></use></svg>`}
         </div>
     `;
 
@@ -1821,6 +1843,19 @@ async function load(themeId) {
 
         const rows =
             await listDecorations(themeId);
+
+        if (token !== loadToken) {
+            return;
+        }
+
+        // Pieces from the Workshop need their pictures first.
+        const shared =
+            rows
+                .map((row) => String(row.asset_id))
+                .filter((id) => id.startsWith(WORKSHOP_PREFIX))
+                .map((id) => id.slice(WORKSHOP_PREFIX.length));
+
+        (await loadPieces([...new Set(shared)])).forEach((piece) => workshopPieces.set(piece.id, piece));
 
         if (token !== loadToken) {
             return;
