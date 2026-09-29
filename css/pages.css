@@ -1397,3 +1397,364 @@
     }
 
 }
+
+
+/* =========================================================
+   ABOUT NOVELLOW
+   The story, what's new, and notes to Novellow.
+========================================================= */
+
+.about-grid {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+
+    gap: 20px;
+
+    align-items: start;
+}
+
+.about-column {
+    display: grid;
+
+    gap: 20px;
+}
+
+.about-card {
+    display: grid;
+
+    gap: 12px;
+
+    padding: 22px 24px;
+
+    line-height: 1.55;
+}
+
+.about-card__title {
+    color: var(--color-plum-deep);
+
+    font-family: var(--font-heading);
+    font-size: 23px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.about-links {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 6px 10px;
+
+    font-family: var(--font-ui);
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.about-links a {
+    color: var(--color-berry);
+}
+
+.about-quiet {
+    color: var(--color-ink-soft);
+
+    font-style: italic;
+}
+
+/* What's new: a column of dated entries down a gilt rule. */
+.update-list {
+    display: grid;
+
+    gap: 18px;
+
+    margin: 4px 0 0;
+    padding: 0 0 0 18px;
+
+    border-left: 2px solid rgba(201, 151, 79, 0.55);
+
+    list-style: none;
+}
+
+.update-item {
+    position: relative;
+
+    display: grid;
+
+    gap: 4px;
+}
+
+.update-item::before {
+    content: "";
+
+    position: absolute;
+
+    left: -25px;
+    top: 6px;
+
+    width: 10px;
+    height: 10px;
+
+    border: 2px solid #fff6e3;
+    border-radius: 50%;
+
+    background: var(--color-brass, #c9974f);
+}
+
+.update-item__meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    color: var(--color-ink-soft);
+
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.update-item__title {
+    color: var(--color-plum-deep);
+
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+.update-item__body {
+    margin: 0;
+}
+
+.update-tag,
+.note-status {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 2px 10px;
+
+    border-radius: 999px;
+
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+
+    color: #fff8ec;
+    background: #7a4a62;
+}
+
+.update-tag--new { background: #6e3b58; }
+.update-tag--improved { background: #3f6b4f; }
+.update-tag--fixed { background: #a0612f; }
+.update-tag--news { background: #43577a; }
+
+/* Notes */
+.note-form {
+    display: grid;
+
+    gap: 14px;
+}
+
+.note-kinds {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+}
+
+.note-kinds legend {
+    width: 100%;
+
+    margin-bottom: 8px;
+}
+
+.note-kind {
+    position: relative;
+}
+
+.note-kind input {
+    position: absolute;
+
+    opacity: 0;
+}
+
+.note-kind span {
+    display: inline-flex;
+    align-items: center;
+
+    min-height: 40px;
+
+    padding: 6px 14px;
+
+    border: 1px solid #b89a76;
+    border-radius: 999px;
+
+    color: #3b2418;
+    background: rgba(255, 250, 238, 0.85);
+
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.note-kind input:checked + span {
+    border-color: #5c2f47;
+
+    color: #fff8ec;
+    background: #6e3b58;
+}
+
+.note-kind input:focus-visible + span {
+    outline: 3px solid var(--color-brass, #c9974f);
+    outline-offset: 2px;
+}
+
+.note-form textarea.field__input {
+    min-height: 140px;
+}
+
+.check-line {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 10px;
+
+    color: var(--color-ink-soft);
+
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.check-line input {
+    flex: 0 0 auto;
+
+    width: 18px;
+    height: 18px;
+
+    margin-top: 1px;
+
+    accent-color: #6e3b58;
+}
+
+.note-form__actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 10px 14px;
+}
+
+.note-form__hint {
+    color: var(--color-ink-soft);
+
+    font-family: var(--font-ui);
+    font-size: 13px;
+}
+
+.note-list {
+    display: grid;
+
+    gap: 14px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.note-item {
+    display: grid;
+
+    gap: 8px;
+
+    padding: 14px 16px;
+
+    border: 1px dashed rgba(92, 55, 73, 0.3);
+    border-radius: 12px;
+
+    background: rgba(255, 250, 240, 0.55);
+}
+
+.note-item__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    gap: 6px 10px;
+
+    color: var(--color-ink-soft);
+
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.note-item__message {
+    margin: 0;
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.note-status--new { background: #8a7a6a; }
+.note-status--seen { background: #43577a; }
+.note-status--planned { background: #a0612f; }
+.note-status--done { background: #3f6b4f; }
+.note-status--not_planned { background: #7a6a72; }
+
+.note-reply {
+    padding: 10px 14px;
+
+    border-left: 3px solid var(--color-brass, #c9974f);
+    border-radius: 0 10px 10px 0;
+
+    background: rgba(240, 207, 138, 0.2);
+}
+
+.note-reply p {
+    margin: 0;
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.note-reply__from {
+    margin-bottom: 4px !important;
+
+    color: var(--color-plum);
+
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.note-item__remove {
+    justify-self: start;
+
+    font-size: 13px;
+}
+
+@media (max-width: 900px) {
+
+    .about-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .about-card {
+        padding: 18px;
+    }
+
+}
