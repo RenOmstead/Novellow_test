@@ -9,6 +9,7 @@
    [data-theme="…"]; this file holds everything else.
 ========================================================= */
 
+import { isVisiting } from "../core/visit-mode.js?v=__VERSION__";
 import { applyPreferences } from "./preferences.js?v=__VERSION__";
 import { applyFixtures } from "../room/fixtures.js?v=__VERSION__";
 
@@ -151,18 +152,23 @@ export function applyAppearance(settings) {
     );
 
     // A harmless UI cache so the right room shows before the
-    // settings arrive from Supabase on the next visit.
+    // settings arrive from Supabase on the next visit. (Not
+    // while visiting someone else's room.)
     try {
 
-        localStorage.setItem(PREFERENCE_CACHE, JSON.stringify({
-            theme: theme.id,
-            decoration_density: settings.decoration_density,
-            candle_glow: settings.candle_glow,
-            dust: settings.dust,
-            rain: settings.rain,
-            oddities: settings.oddities,
-            reduced_motion: settings.reduced_motion
-        }));
+        if (!isVisiting()) {
+
+            localStorage.setItem(PREFERENCE_CACHE, JSON.stringify({
+                theme: theme.id,
+                decoration_density: settings.decoration_density,
+                candle_glow: settings.candle_glow,
+                dust: settings.dust,
+                rain: settings.rain,
+                oddities: settings.oddities,
+                reduced_motion: settings.reduced_motion
+            }));
+
+        }
 
     }
 

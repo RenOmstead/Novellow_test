@@ -34,7 +34,8 @@ const OWN_TABLES = [
     ["reading_groups", "owner_id"],
     ["group_members", "user_id"],
     ["group_posts", "user_id"],
-    ["reader_notes", "user_id"]
+    ["reader_notes", "user_id"],
+    ["reader_blocks", "blocker_id"]
 ];
 
 const COVERS = "book-covers";

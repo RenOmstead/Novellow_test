@@ -204,6 +204,18 @@ async function loadInbox() {
 }
 
 
+async function setPageHidden(userId, hidden) {
+
+    const { error } =
+        await supabase.rpc("set_page_hidden", { p_user: userId, p_hidden: hidden });
+
+    if (error) {
+        throw new NovellowError(error.code === "P0001" ? error.message : "That page couldn't be changed just now.", error);
+    }
+
+}
+
+
 async function answerNote(id, { status, reply }) {
 
     const { error } =
@@ -252,11 +264,17 @@ function inboxSection() {
                     ${inbox.map((note) => html`
                         <li class="note-item ${note.status === "new" ? "is-new" : ""}">
                             <div class="note-item__meta">
-                                <span>${note.reader_name} · ${KINDS[note.kind] || "Note"} · ${formatDate(note.created_at)}</span>
+                                <span>${note.reader_name} · ${note.kind === "report" ? "A report" : KINDS[note.kind] || "Note"} · ${formatDate(note.created_at)}</span>
                                 <span class="note-status note-status--${note.status}">${STATUS[note.status] || "Sent"}</span>
                             </div>
                             <p class="note-item__message">${note.message}</p>
                             ${note.device ? html`<p class="note-item__device">${note.device}</p>` : ""}
+                            ${note.kind === "report" && note.reported_id ? html`
+                                <div class="note-report">
+                                    <span>About ${note.reported_username ? html`<a href="visit.html?u=${note.reported_username}">@${note.reported_username}’s library</a>` : "a reader’s library"}${note.reported_hidden ? html` · <strong>hidden</strong>` : ""}</span>
+                                    <button class="button button--ghost button--small" type="button" data-action="${note.reported_hidden ? "show-page" : "hide-page"}" data-user="${note.reported_id}">${note.reported_hidden ? "Show the page again" : "Hide this page"}</button>
+                                </div>
+                            ` : ""}
                             <form class="note-answer" data-answer="${note.id}" novalidate>
                                 <label class="field">
                                     <span class="field__label">Your reply (the reader sees this in Novellow)</span>
@@ -366,7 +384,7 @@ function noteList() {
                 ${notes.map((note) => html`
                     <li class="note-item">
                         <div class="note-item__meta">
-                            <span>${KINDS[note.kind] || "Note"} · ${formatDate(note.created_at)}</span>
+                            <span>${note.kind === "report" ? "A report" : KINDS[note.kind] || "Note"} · ${formatDate(note.created_at)}</span>
                             <span class="note-status note-status--${note.status}">${STATUS[note.status] || "Sent"}</span>
                         </div>
                         <p class="note-item__message">${note.message}</p>
@@ -599,6 +617,44 @@ async function start() {
     });
 
     content.addEventListener("click", async (event) => {
+
+        const pageToggle =
+            event.target.closest("[data-action='hide-page'], [data-action='show-page']");
+
+        if (pageToggle) {
+
+            const hide =
+                pageToggle.dataset.action === "hide-page";
+
+            if (hide) {
+
+                const sure =
+                    await confirmDialog({
+                        title: "Hide this library?",
+                        message: "Nobody but its owner will be able to visit it until you show it again. Their friends still can, if they share with friends.",
+                        confirmLabel: "Hide it",
+                        tone: "danger"
+                    });
+
+                if (!sure) {
+                    return;
+                }
+
+            }
+
+            try {
+                await setPageHidden(pageToggle.dataset.user, hide);
+                toast(hide ? "The page is hidden." : "The page is visible again.", { tone: "success" });
+                await refresh();
+            }
+
+            catch (error) {
+                toastError(error);
+            }
+
+            return;
+
+        }
 
         const filter =
             event.target.closest("[data-action='inbox-open'], [data-action='inbox-all']");

@@ -27,6 +27,7 @@ import {
 import { html, render, formatDateTime, intOrNull, plural } from "../core/helpers.js?v=__VERSION__";
 import { art, loader, toast, toastError, confirmDialog, formDialog, withBusy } from "../core/ui.js?v=__VERSION__";
 import { NovellowError } from "../core/errors.js?v=__VERSION__";
+import { supabase } from "../core/supabase.js?v=__VERSION__";
 import { SHELF_SORTS } from "../config.js?v=__VERSION__";
 import { exportLibrary, checkImport, importLibrary } from "../data/transfer.js?v=__VERSION__";
 import { exportPersonalData, deleteAccount } from "../data/account.js?v=__VERSION__";
@@ -355,6 +356,9 @@ function renderPage() {
                     </label>
                 </div>
 
+                <h3 class="settings-subheading">Blocked readers</h3>
+                <div id="blocked"><p class="muted">Looking…</p></div>
+
                 <div class="danger-zone paper" style="padding: 16px 18px; border-width: 1.5px; border-style: dashed">
                     <p><strong>Start over.</strong> Empties every shelf and journal. Your account, settings and sign-in history stay. This can't be undone, so download your library first.</p>
                     <div style="margin-top: 10px">
@@ -369,7 +373,7 @@ function renderPage() {
                 <h2 id="privacyHeading">${art("ui-lock")} Privacy and your account</h2>
 
                 <p>
-                    Your library is private unless you choose to share your shelves with friends. Read how Novellow
+                    Your library is private unless you choose to share it (Community → Who can visit my library). Read how Novellow
                     looks after your information in the <a href="privacy.html">Privacy Policy</a>, and the
                     <a href="terms.html">Terms of Use</a>.
                 </p>
@@ -395,7 +399,36 @@ function renderPage() {
 
     loadSignIns();
 
+    loadBlocked();
+
     mountMixer(content.querySelector("[data-settings-mixer]"));
+
+}
+
+
+async function loadBlocked() {
+
+    const holder =
+        document.getElementById("blocked");
+
+    const { data, error } =
+        await supabase.rpc("my_blocked_readers");
+
+    if (error || !data?.length) {
+        render(holder, html`<p class="muted">You haven't blocked anyone. Blocked readers can't visit your library or send you friend requests.</p>`);
+        return;
+    }
+
+    render(holder, html`
+        <ul class="signin-list">
+            ${data.map((row) => html`
+                <li>
+                    <span>${row.display_name}${row.username ? html` <small>@${row.username}</small>` : ""}</span>
+                    <button class="button button--ghost button--small" type="button" data-action="unblock" data-id="${row.blocked_id}" data-name="${row.display_name}">Unblock</button>
+                </li>
+            `)}
+        </ul>
+    `);
 
 }
 
@@ -936,6 +969,27 @@ async function start() {
 
         if (trigger.dataset.action === "export-all") {
             runExportAll(trigger);
+        }
+
+        if (trigger.dataset.action === "unblock") {
+
+            supabase
+                .from("reader_blocks")
+                .delete()
+                .eq("blocked_id", trigger.dataset.id)
+                .then(({ error }) => {
+
+                    if (error) {
+                        toastError(new NovellowError("They couldn't be unblocked just now.", error));
+                        return;
+                    }
+
+                    toast(`${trigger.dataset.name} is unblocked.`, { tone: "success" });
+
+                    loadBlocked();
+
+                });
+
         }
 
         if (trigger.dataset.action === "delete-account") {

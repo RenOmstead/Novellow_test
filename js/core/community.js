@@ -17,6 +17,29 @@ const PROFILE_FIELDS =
     "id, display_name, username, bio, library_visibility";
 
 
+// Friends can visit a library shared with friends or with
+// everyone.
+export function sharesLibrary(person) {
+    return ["friends", "public"].includes(person?.library_visibility);
+}
+
+
+// Open libraries anyone can visit (sql/public.sql).
+export async function loadPublicLibraries(search = null) {
+
+    const { data, error } =
+        await supabase.rpc("public_libraries", { p_search: search || null });
+
+    // Before public.sql has been run there are none.
+    if (error) {
+        return [];
+    }
+
+    return data;
+
+}
+
+
 function unwrap({ data, error }) {
 
     if (error) {
@@ -100,7 +123,7 @@ export async function loadFriends() {
 
     const sharing =
         friends
-            .filter((entry) => entry.person.library_visibility === "friends")
+            .filter((entry) => sharesLibrary(entry.person))
             .map((entry) => entry.person.id);
 
     if (sharing.length) {
@@ -161,7 +184,7 @@ export async function loadFriendLibrary(friendId) {
     const person =
         (await profilesById([friendId])).get(friendId) || null;
 
-    if (!person || person.library_visibility !== "friends") {
+    if (!person || !sharesLibrary(person)) {
         return { person, shelves: [], books: [] };
     }
 

@@ -15,6 +15,7 @@
    wall before the database answers.
 ========================================================= */
 
+import { isVisiting } from "../core/visit-mode.js?v=__VERSION__";
 import { createRow, updateRow } from "../core/store.js?v=__VERSION__";
 import { html } from "../core/helpers.js?v=__VERSION__";
 import { toastError } from "../core/ui.js?v=__VERSION__";
@@ -338,6 +339,11 @@ function readCache() {
 
 
 function writeCache(theme, values) {
+
+    // Someone else's room isn't remembered.
+    if (isVisiting()) {
+        return;
+    }
 
     try {
 

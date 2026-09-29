@@ -164,6 +164,13 @@ export function getSettings() {
 }
 
 
+// Visiting (visit.html): the owner's shelf order and room
+// choices, from reader_page(); their other settings stay theirs.
+export function useVisitedSettings(room) {
+    state.settings = { ...DEFAULT_SETTINGS, ...room };
+}
+
+
 export async function updateSettings(patch) {
 
     const saved =
