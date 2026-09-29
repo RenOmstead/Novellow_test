@@ -8,6 +8,7 @@
    downward instead of scrolling sideways.
 ========================================================= */
 
+import { isVisiting } from "../core/visit-mode.js?v=__VERSION__";
 import {
     getShelves,
     booksOnShelf,
@@ -420,7 +421,8 @@ function wireDragging(body, redraw) {
     let marker = null;
 
     const canDrag = () =>
-        (getSettings().default_shelf_sort || "manual") === "manual"
+        !isVisiting()
+        && (getSettings().default_shelf_sort || "manual") === "manual"
         && window.matchMedia("(pointer: fine)").matches;
 
     body.addEventListener("pointerover", (event) => {

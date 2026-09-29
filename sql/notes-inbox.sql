@@ -97,9 +97,20 @@ create policy "The team answers notes"
 grant update (status, reply) on public.reader_notes to authenticated;
 
 
+-- Reports about a reader's library (sql/public.sql) name it.
+alter table public.reader_notes
+    add column if not exists reported_user_id uuid
+        references auth.users (id) on delete cascade;
+
+-- Whether the Novellow account has hidden that library.
+alter table public.profiles
+    add column if not exists public_hidden boolean not null default false;
+
 -- Every note with who sent it, for the inbox. Returns nothing to
 -- any other account.
-create or replace function public.team_notes(only_open boolean default true)
+drop function if exists public.team_notes(boolean);
+
+create function public.team_notes(only_open boolean default true)
 returns table (
     id uuid,
     kind text,
@@ -110,7 +121,10 @@ returns table (
     created_at timestamptz,
     updated_at timestamptz,
     reader_name text,
-    reader_email text
+    reader_email text,
+    reported_id uuid,
+    reported_username text,
+    reported_hidden boolean
 )
 language sql
 stable
@@ -121,20 +135,24 @@ as $$
         n.id, n.kind, n.message, n.device, n.status, n.reply,
         n.created_at, n.updated_at,
         coalesce(nullif(p.display_name, ''), 'A reader'),
-        u.email
+        u.email,
+        r.id, r.username, r.public_hidden
     from public.reader_notes n
     join auth.users u on u.id = n.user_id
     left join public.profiles p on p.id = n.user_id
+    left join public.profiles r on r.id = n.reported_user_id
     where (select public.is_novellow_team())
       and (not only_open or n.status in ('new', 'seen', 'planned'))
     order by
         (n.status = 'new') desc,
+        (n.kind = 'report') desc,
         n.created_at desc
     limit 300;
 $$;
 
 revoke all on function public.team_notes(boolean) from public, anon;
 grant execute on function public.team_notes(boolean) to authenticated;
+
 
 
 -- ---------------------------------------------------------
@@ -183,6 +201,7 @@ begin
         case new.kind
             when 'problem' then 'Something''s not working'
             when 'idea' then 'An idea or wish'
+            when 'report' then 'A report about a library'
             else 'Something else'
         end;
 

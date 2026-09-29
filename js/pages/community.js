@@ -18,6 +18,8 @@ import { startApp, showCommunityBadge } from "../shell/app-shell.js?v=__VERSION_
 import { loadLibrary, getBooks, getProfile, updateProfile } from "../core/store.js?v=__VERSION__";
 
 import {
+    sharesLibrary,
+    loadPublicLibraries,
     loadFriends,
     sendFriendRequest,
     acceptFriendRequest,
@@ -58,6 +60,7 @@ const AVATAR_COLORS =
 
 let friends = { friends: [], incoming: [], outgoing: [] };
 let groups = [];
+let openLibraries = [];
 
 
 /* =========================================================
@@ -198,8 +201,8 @@ async function start() {
 
 async function refreshHub() {
 
-    [friends, groups] =
-        await Promise.all([loadFriends(), loadGroups()]);
+    [friends, groups, openLibraries] =
+        await Promise.all([loadFriends(), loadGroups(), loadPublicLibraries()]);
 
     const covers =
         friends.friends.flatMap((entry) => (entry.reading || []).map((book) => book.cover_path));
@@ -345,13 +348,16 @@ function renderHub() {
             <aside class="stack">
                 ${readerCard(me)}
                 <section class="community-card paper community-privacy">
-                    <h2 class="section-title">What friends can see</h2>
+                    <h2 class="section-title">What visitors can see</h2>
                     <ul class="stat-list">
-                        <li><span>Your shelves, books and ratings</span><span>${me?.library_visibility === "friends" ? "Friends" : "Only you"}</span></li>
-                        <li><span>Your reviews</span><span>${me?.library_visibility === "friends" ? "Friends" : "Only you"}</span></li>
-                        <li><span>Journals, notes, quotes and words</span><span>Only you, always</span></li>
+                        <li><span>Your room, shelves, books and ratings</span><span>${audience(me)}</span></li>
+                        <li><span>Your reviews</span><span>${me?.share_reviews === false ? "Only you" : audience(me)}</span></li>
+                        <li><span>Your saved quotes</span><span>${me?.share_quotes ? audience(me) : "Only you"}</span></li>
+                        <li><span>Your journal notes</span><span>${me?.share_journal ? audience(me) : "Only you"}</span></li>
+                        <li><span>Words, questions, challenges and settings</span><span>Only you, always</span></li>
                     </ul>
                 </section>
+                ${openLibrariesCard()}
             </aside>
 
         </div>
@@ -361,10 +367,90 @@ function renderHub() {
 }
 
 
+function audience(me) {
+
+    return {
+        friends: "Friends",
+        public: "Everyone"
+    }[me?.library_visibility] || "Only you";
+
+}
+
+
+function openLibrariesCard() {
+
+    if (!openLibraries.length) {
+        return "";
+    }
+
+    return html`
+        <section class="community-card paper open-libraries" aria-labelledby="openTitle">
+            <h2 class="section-title" id="openTitle">Open libraries</h2>
+            <p class="muted">Readers who've opened their rooms to everyone. Pop in and look around.</p>
+            <ul class="open-libraries__list">
+                ${openLibraries.slice(0, 12).map((reader) => html`
+                    <li>
+                        <a class="open-library" href="visit.html?u=${reader.username}">
+                            <strong>${reader.display_name}</strong>
+                            <span class="muted">@${reader.username} · ${plural(Number(reader.book_count) || 0, "book")}</span>
+                            ${reader.bio ? html`<span class="open-library__bio">${reader.bio}</span>` : ""}
+                        </a>
+                    </li>
+                `)}
+            </ul>
+        </section>
+    `;
+
+}
+
+
+// Opening a library to everyone: a clear warning, and a
+// confirmation that the reader is 18 or older.
+async function confirmEveryone() {
+
+    if (getProfile()?.adult_confirmed_at) {
+
+        return confirmDialog({
+            title: "Open your library to everyone?",
+            message: "Anyone with your link will be able to visit your room and shelves, and whatever else you choose to share, without signing in.",
+            confirmLabel: "Open it to everyone"
+        });
+
+    }
+
+    return formDialog({
+        eyebrow: "Sharing with everyone",
+        title: "Open your library to everyone?",
+        submitLabel: "Open it to everyone",
+        body: html`
+            <p>Anyone with your link will be able to visit your room and shelves, and whatever else you choose to share, even without a Novellow account. Please don't share anything you'd want to keep private, like your full name, where you live or your school.</p>
+            <p>Sharing with everyone is for readers aged 18 or older. If you're younger, you can still share with friends.</p>
+            <label class="check-line">
+                <input type="checkbox" name="adult" required>
+                <span>I'm 18 or older</span>
+            </label>
+        `,
+        onSubmit: (values) => {
+
+            if (!values.get("adult")) {
+                throw Object.assign(new Error("age"), { userMessage: "Please confirm you're 18 or older, or share with friends instead." });
+            }
+
+            return true;
+
+        }
+    });
+
+}
+
+
 function readerCard(me) {
 
-    const sharing =
-        me?.library_visibility === "friends";
+    const visibility =
+        me?.library_visibility || "private";
+
+    const link =
+        me?.username ? new URL(`visit.html?u=${me.username}`, window.location.href).href : "";
 
     return html`
         <section class="community-card paper reader-card" aria-labelledby="meTitle">
@@ -383,13 +469,42 @@ function readerCard(me) {
                 <p class="reader-card__nudge">Choose a username so friends can find you.</p>
             `}
 
-            <label class="toggle reader-card__share">
-                <span class="toggle__text">
-                    <strong>Share my shelves with friends</strong>
-                    <small>${sharing ? "Friends can visit your bookcase and read your reviews." : "Your bookcase is private."}</small>
-                </span>
-                <input type="checkbox" data-action="toggle-sharing" ${sharing ? html`checked` : ""}>
-            </label>
+            <fieldset class="share-choice">
+                <legend class="field__label">Who can visit my library</legend>
+                ${[
+                    ["private", "Only me", "Your room and shelves are private."],
+                    ["friends", "Friends", "Your friends can visit your room and shelves."],
+                    ["public", "Everyone", "Anyone with your link can visit, even without an account."]
+                ].map(([id, label, text]) => html`
+                    <label class="share-choice__option">
+                        <input type="radio" name="visibility" value="${id}" data-action="visibility" ${visibility === id ? "checked" : ""}>
+                        <span><strong>${label}</strong><small>${text}</small></span>
+                    </label>
+                `)}
+            </fieldset>
+
+            ${visibility === "private" ? "" : html`
+                <div class="share-parts">
+                    <p class="field__label">Also share</p>
+                    ${[
+                        ["share_reviews", "My reviews"],
+                        ["share_quotes", "My saved quotes"],
+                        ["share_journal", "My journal notes"]
+                    ].map(([id, label]) => html`
+                        <label class="check-line">
+                            <input type="checkbox" data-action="share-part" name="${id}" ${(id === "share_reviews" ? me?.[id] !== false : me?.[id]) ? "checked" : ""}>
+                            <span>${label}</span>
+                        </label>
+                    `)}
+                </div>
+
+                ${link ? html`
+                    <div class="share-link">
+                        <a class="button button--brass button--small" href="${link}">Visit my room as a guest</a>
+                        <button class="button button--ghost button--small" type="button" data-action="copy-link" data-link="${link}">Copy my link</button>
+                    </div>
+                ` : ""}
+            `}
 
             <button class="button button--ghost button--small" type="button" data-action="edit-profile">
                 ${me?.username ? "Edit my reader card" : "Choose a username"}
@@ -407,7 +522,7 @@ function friendCard(entry) {
         entry.person;
 
     const sharing =
-        person.library_visibility === "friends";
+        sharesLibrary(person);
 
     const reading =
         entry.reading || [];
@@ -440,7 +555,10 @@ function friendCard(entry) {
                         `)}
                     </div>
                 ` : html`<p class="muted friend-card__quiet">Between books right now.</p>`}
-                <a class="button button--brass button--small" href="community.html?friend=${person.id}">Visit their shelves</a>
+                <div class="friend-card__visit">
+                    ${person.username ? html`<a class="button button--brass button--small" href="visit.html?u=${person.username}">Visit their room</a>` : ""}
+                    <a class="button button--ghost button--small" href="community.html?friend=${person.id}">See their shelves</a>
+                </div>
             ` : html`
                 <p class="muted friend-card__quiet">Keeps their shelves private.</p>
             `}
@@ -523,8 +641,24 @@ function wireHub() {
         const id =
             target.dataset.id;
 
-        if (action === "toggle-sharing") {
+        // Radio buttons and checkboxes are handled on "change".
+        if (["visibility", "share-part"].includes(action)) {
             return;
+        }
+
+        if (action === "copy-link") {
+
+            try {
+                await navigator.clipboard.writeText(target.dataset.link);
+                toast("Link copied. Share it anywhere.", { tone: "success" });
+            }
+
+            catch {
+                window.prompt("Copy your library's link:", target.dataset.link);
+            }
+
+            return;
+
         }
 
         try {
@@ -599,26 +733,63 @@ function wireHub() {
 
     content.addEventListener("change", async (event) => {
 
-        const toggle =
-            event.target.closest("[data-action=toggle-sharing]");
+        const choice =
+            event.target.closest("[data-action=visibility]");
 
-        if (!toggle) {
+        const part =
+            event.target.closest("[data-action=share-part]");
+
+        if (!choice && !part) {
             return;
         }
 
         try {
 
-            await updateProfile({ library_visibility: toggle.checked ? "friends" : "private" });
+            if (part) {
+                await updateProfile({ [part.name]: part.checked });
+                renderHub();
+                return;
+            }
 
-            toast(toggle.checked ? "Friends can now visit your shelves." : "Your shelves are private again.", { tone: "success" });
+            const chosen =
+                choice.value;
+
+            if (chosen === "public") {
+
+                if (!getProfile()?.username) {
+                    toast("Choose a username first: it becomes your library's link.", { tone: "error" });
+                    renderHub();
+                    return;
+                }
+
+                const agreed =
+                    await confirmEveryone();
+
+                if (!agreed) {
+                    renderHub();
+                    return;
+                }
+
+            }
+
+            await updateProfile({
+                library_visibility: chosen,
+                ...(chosen === "public" && !getProfile()?.adult_confirmed_at ? { adult_confirmed_at: new Date().toISOString() } : {})
+            });
+
+            toast({
+                private: "Your library is private again.",
+                friends: "Friends can now visit your room and shelves.",
+                public: "Your library is open to everyone with your link."
+            }[chosen], { tone: "success" });
 
             renderHub();
 
         }
 
         catch (error) {
-            toggle.checked = !toggle.checked;
             toastError(error);
+            renderHub();
         }
 
     });
@@ -979,7 +1150,7 @@ async function showFriend(friendId) {
 
             ${person.bio ? html`<p class="friend-bio paper">${person.bio}</p>` : ""}
 
-            ${person.library_visibility !== "friends" ? emptyState({
+            ${!sharesLibrary(person) ? emptyState({
                 symbol: "art-community",
                 title: `${person.display_name} keeps their shelves private`,
                 text: "If they turn on sharing, their bookcase will appear here."

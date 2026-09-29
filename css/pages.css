@@ -1837,3 +1837,31 @@
 .note-answer__status {
     flex: 0 1 200px;
 }
+
+.settings-subheading {
+    margin: 12px 0 0;
+
+    color: var(--color-plum-deep);
+
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.note-report {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    padding: 8px 12px;
+
+    border-radius: 10px;
+
+    background: rgba(160, 97, 47, 0.12);
+
+    font-family: var(--font-ui);
+    font-size: 14px;
+}

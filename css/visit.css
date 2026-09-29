@@ -1,0 +1,306 @@
+/* =========================================================
+   NOVELLOW
+   VISITING A READER'S LIBRARY (visit.html)
+
+   The reader's own room, with a bar across the top saying
+   whose it is, and nothing that edits it.
+========================================================= */
+
+.visit-stage {
+    padding-left: 0;
+}
+
+.visit-bar {
+    position: sticky;
+    top: 0;
+
+    z-index: 20;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 8px 22px;
+
+    padding:
+        max(10px, env(safe-area-inset-top, 0px))
+        max(20px, env(safe-area-inset-right, 0px))
+        10px
+        max(20px, env(safe-area-inset-left, 0px));
+
+    color: #f6ead4;
+
+    background:
+        linear-gradient(180deg, rgba(43, 22, 32, 0.97), rgba(59, 34, 49, 0.94));
+
+    box-shadow: 0 6px 20px rgba(10, 4, 2, 0.35);
+}
+
+.visit-bar__logo img {
+    display: block;
+
+    width: 150px;
+    height: auto;
+}
+
+.visit-bar__who {
+    flex: 1 1 260px;
+
+    min-width: 0;
+}
+
+.visit-bar__eyebrow {
+    margin: 0;
+
+    color: #e8c98e;
+
+    font-family: var(--font-engraved);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.visit-bar__name {
+    margin: 0;
+
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.visit-bar__handle {
+    color: #d9c3a4;
+
+    font-family: var(--font-ui);
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.visit-bar__bio {
+    margin: 2px 0 0;
+
+    color: #e3d3bd;
+
+    font-size: 15px;
+    line-height: 1.35;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.visit-bar__actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.visit-bar__actions .button--ghost {
+    color: #f6ead4;
+
+    border-color: rgba(246, 234, 212, 0.45);
+    background: transparent;
+}
+
+.visit-bar__note {
+    color: #e3d3bd;
+
+    font-size: 14px;
+    font-style: italic;
+}
+
+/* Nothing that edits the room shows while visiting. */
+.is-visiting [data-action="add-book"],
+.is-visiting [data-action="add-shelf"],
+.is-visiting [data-action="edit-shelf"],
+.is-visiting .shelf-edit,
+.is-visiting .shelf-add,
+.is-visiting .add-shelf-button,
+.is-visiting .turn-sideways__links,
+.is-visiting #deskNotes,
+.is-visiting #journalStage {
+    display: none !important;
+}
+
+/* A book taken off the shelf. */
+.visit-book {
+    width: min(620px, calc(100vw - 24px));
+}
+
+.visit-book__inner {
+    position: relative;
+
+    display: grid;
+
+    gap: 16px;
+
+    padding: 24px 24px 22px;
+}
+
+.visit-book__inner > .dialog-close {
+    position: absolute;
+
+    top: 14px;
+    right: 14px;
+}
+
+.visit-book__head {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+
+    gap: 18px;
+
+    padding-right: 36px;
+}
+
+.visit-book__facts {
+    display: grid;
+
+    gap: 4px;
+}
+
+.visit-book__author {
+    margin: 0;
+
+    color: var(--color-plum);
+
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.visit-book__details,
+.visit-book__status {
+    margin: 0;
+
+    color: var(--color-ink-soft);
+
+    font-family: var(--font-ui);
+    font-size: 14px;
+}
+
+.visit-book__section {
+    display: grid;
+
+    gap: 8px;
+
+    padding-top: 14px;
+
+    border-top: 1px dashed rgba(92, 55, 73, 0.3);
+}
+
+.visit-book__section h3 {
+    color: var(--color-plum-deep);
+
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.visit-book__section h4 {
+    margin: 0;
+
+    font-family: var(--font-heading);
+    font-size: 16px;
+}
+
+.visit-book__text {
+    margin: 0;
+
+    line-height: 1.55;
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.visit-book__text--soft {
+    color: var(--color-ink-soft);
+
+    font-style: italic;
+}
+
+.visit-book__quote {
+    margin: 0;
+    padding: 8px 14px;
+
+    border-left: 3px solid var(--color-brass, #c9974f);
+
+    background: rgba(240, 207, 138, 0.16);
+
+    font-size: 19px;
+    line-height: 1.4;
+}
+
+.visit-book__quote cite {
+    display: block;
+
+    margin-top: 2px;
+
+    color: var(--color-ink-soft);
+
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-style: normal;
+}
+
+.visit-book__note {
+    display: grid;
+
+    gap: 4px;
+}
+
+/* The door is closed. */
+.visit-closed {
+    display: grid;
+    justify-items: center;
+
+    gap: 12px;
+
+    width: min(520px, calc(100vw - 32px));
+
+    margin: 12vh auto;
+    padding: 34px 28px;
+
+    text-align: center;
+}
+
+.visit-closed h1 {
+    color: var(--color-plum-deep);
+
+    font-family: var(--font-heading);
+    font-size: 28px;
+}
+
+.visit-closed__art {
+    width: 72px;
+    height: 72px;
+}
+
+@media (max-width: 640px) {
+
+    .visit-bar__logo img {
+        width: 118px;
+    }
+
+    .visit-bar__name {
+        font-size: 19px;
+    }
+
+    .visit-bar__bio {
+        white-space: normal;
+    }
+
+    .visit-book__head {
+        grid-template-columns: minmax(0, 1fr);
+        justify-items: center;
+
+        padding-right: 0;
+
+        text-align: center;
+    }
+
+}

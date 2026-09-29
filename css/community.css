@@ -1064,3 +1064,121 @@
     }
 
 }
+
+
+/* =========================================================
+   WHO CAN VISIT, AND OPEN LIBRARIES (sql/public.sql)
+========================================================= */
+
+.share-choice {
+    display: grid;
+
+    gap: 8px;
+
+    margin: 4px 0 0;
+    padding: 0;
+
+    border: 0;
+}
+
+.share-choice legend {
+    margin-bottom: 6px;
+}
+
+.share-choice__option {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 10px;
+
+    padding: 8px 12px;
+
+    border: 1px solid rgba(92, 55, 73, 0.2);
+    border-radius: 12px;
+
+    background: rgba(255, 250, 240, 0.55);
+
+    cursor: pointer;
+}
+
+.share-choice__option:has(input:checked) {
+    border-color: #6e3b58;
+
+    background: rgba(255, 250, 240, 0.95);
+}
+
+.share-choice__option input {
+    margin-top: 4px;
+
+    accent-color: #6e3b58;
+}
+
+.share-choice__option span {
+    display: grid;
+
+    gap: 1px;
+}
+
+.share-choice__option small {
+    color: var(--color-ink-soft);
+
+    font-size: 14px;
+    line-height: 1.35;
+}
+
+.share-parts {
+    display: grid;
+
+    gap: 6px;
+}
+
+.share-parts .field__label {
+    margin: 4px 0 0;
+}
+
+.share-link,
+.friend-card__visit {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.open-libraries__list {
+    display: grid;
+
+    gap: 8px;
+
+    margin: 10px 0 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.open-library {
+    display: grid;
+
+    gap: 2px;
+
+    padding: 10px 14px;
+
+    border: 1px solid rgba(92, 55, 73, 0.2);
+    border-radius: 12px;
+
+    color: inherit;
+    background: rgba(255, 250, 240, 0.6);
+
+    text-decoration: none;
+
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.open-library:hover {
+    background: #fffaf0;
+
+    transform: translateY(-1px);
+}
+
+.open-library__bio {
+    font-size: 15px;
+}
