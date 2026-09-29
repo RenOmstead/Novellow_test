@@ -31,7 +31,7 @@ import { applyAppearance } from "../shell/themes.js?v=__VERSION__";
 import { growIvy } from "../room/ivy.js?v=__VERSION__";
 import { renderCrown } from "../room/crown.js?v=__VERSION__";
 import { startAmbience } from "../room/ambience.js?v=__VERSION__";
-import { startDecorations } from "../room/decorations.js?v=__VERSION__";
+import { startDecorations, setRoomReader } from "../room/decorations.js?v=__VERSION__";
 import { startRoomFit } from "../room/fit-room.js?v=__VERSION__";
 import { createBookcase } from "../books/bookcase.js?v=__VERSION__";
 import { coverMarkup } from "../books/cover.js?v=__VERSION__";
@@ -455,6 +455,9 @@ async function start() {
     await coverUrls(getBooks().map((book) => book.cover_path));
 
     bookcase.render();
+
+    // The owner stands wherever they put themselves.
+    setRoomReader(page.avatar, page.id, page.display_name);
 
     startDecorations(room, page.room.theme);
 

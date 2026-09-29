@@ -19,9 +19,11 @@
 ========================================================= */
 
 import { listDecorations, createRow, updateRow, deleteRow } from "../core/store.js?v=__VERSION__";
-import { html, render, clamp, debounce } from "../core/helpers.js?v=__VERSION__";
+import { html, raw, render, clamp, debounce } from "../core/helpers.js?v=__VERSION__";
 import { art, toast, toastError } from "../core/ui.js?v=__VERSION__";
 import { loadPieces, pictureUrl, WORKSHOP_PREFIX } from "../workshop/workshop-data.js?v=__VERSION__";
+import { avatarFigure, avatarPortrait } from "../avatar/avatar.js?v=__VERSION__";
+import { isVisiting } from "../core/visit-mode.js?v=__VERSION__";
 import { setFixtureRows, roomPanelMarkup, onRoomPanelClick, dragWindow, builtInAt, builtInElements, toggleBuiltIn } from "./fixtures.js?v=__VERSION__";
 
 
@@ -474,7 +476,40 @@ function setTraySide(side) {
 const workshopPieces =
     new Map();
 
+/*
+    The reader themselves: their avatar, standing wherever they
+    put it (asset "reader", one per room). It shows while they
+    arrange the room and when someone visits, never while
+    they're simply reading in their own library.
+*/
+const READER = "reader";
+
+let reader = { avatar: null, seed: "reader", name: "" };
+
+export function setRoomReader(avatar, seed, name = "") {
+
+    reader = { avatar, seed, name };
+
+    if (room) {
+        draw();
+    }
+
+}
+
+function readerPlaced() {
+    return pieces.some((piece) => piece.asset_id === READER);
+}
+
 function assetFor(id) {
+
+    if (id === READER) {
+        return {
+            id,
+            name: isVisiting() && reader.name ? reader.name : "You",
+            width: 104,
+            markup: avatarFigure(reader.avatar, { seed: reader.seed })
+        };
+    }
 
     if (String(id).startsWith(WORKSHOP_PREFIX)) {
 
@@ -523,18 +558,18 @@ function pieceMarkup(piece) {
     const asset =
         assetFor(piece.asset_id);
 
-    if (!asset) {
+    if (!asset || (asset.id === READER && !arranging && !isVisiting())) {
         return "";
     }
 
     return html`
         <div
-            class="placed-decor ${piece.id === selectedId ? "is-selected" : ""} ${asset.plain ? "placed-decor--plain" : ""}"
+            class="placed-decor ${piece.id === selectedId ? "is-selected" : ""} ${asset.plain ? "placed-decor--plain" : ""} ${asset.markup ? "placed-decor--reader" : ""}"
             data-decor-id="${piece.id}"
             style="left: ${piece.position_x}%; top: ${topFor(piece)}; width: ${asset.width}px; z-index: ${piece.z_index}; --scale: ${piece.scale}; --rotation: ${piece.rotation}deg${fabricStyle(piece)}"
             ${arranging ? html`tabindex="0" role="button" aria-label="${asset.name}. Drag to move, or use the arrow keys."` : html`aria-hidden="true"`}
         >
-            ${asset.picture
+            ${asset.markup ? raw(asset.markup) : asset.picture
                 ? html`<img class="placed-decor__picture" src="${asset.picture}" alt="" draggable="false">`
                 : html`<svg viewBox="${asset.box}" aria-hidden="true"><use href="#${asset.id}"></use></svg>`}
         </div>
@@ -629,6 +664,14 @@ function drawBarNow() {
         <p class="arrange-bar__hint" ${selectedBuiltIn ? html`hidden` : ""}>${paletteGroup === "room"
             ? "Choose the wallpaper, floor, window, curtains and rug for this room."
             : "Tap a piece to add it to the part of the room you can see, or drag it straight to its spot. Drag pieces to move them."}</p>
+
+        <div class="arrange-bar__reader">
+            <span class="arrange-bar__reader-art" aria-hidden="true">${raw(avatarPortrait(reader.avatar, { seed: reader.seed }))}</span>
+            <p>${readerPlaced()
+                ? "You're standing in the room. Drag yourself anywhere; visitors will find you there."
+                : "Stand yourself in the room for visitors to find. You only show while you arrange and when someone visits."}</p>
+            ${readerPlaced() ? "" : html`<button class="button button--small" type="button" data-add-reader>Stand me in the room</button>`}
+        </div>
 
         <div class="arrange-bar__tabs" role="tablist" aria-label="Kinds of decoration">
             <button class="arrange-bar__tab arrange-bar__tab--room ${paletteGroup === "room" ? "is-current" : ""}" type="button" role="tab" aria-selected="${String(paletteGroup === "room")}" data-decor-group="room">Room</button>
@@ -940,6 +983,11 @@ function positionIn(area, pointX, pointY) {
 
 async function addPiece(assetId, spot = spotInView()) {
 
+    if (assetId === READER && readerPlaced()) {
+        select(pieces.find((piece) => piece.asset_id === READER).id);
+        return;
+    }
+
     if (pieces.length >= LIMIT) {
         toast(`The room can hold ${LIMIT} decorations. Remove one to add another.`);
         return;
@@ -955,7 +1003,7 @@ async function addPiece(assetId, spot = spotInView()) {
         const saved =
             await createRow("decorations", {
                 asset_id: assetId,
-                decoration_type: assetId.startsWith("frame-") ? "frame" : "ornament",
+                decoration_type: assetId === READER ? "reader" : assetId.startsWith("frame-") ? "frame" : "ornament",
                 room_area: spot.area,
                 theme,
                 ...positionIn(spot.area, spot.x, spot.y),
@@ -1081,6 +1129,11 @@ function onBarClick(event) {
     // A drag out of the tray ends in a click; it isn't a tap.
     if (skipNextClick) {
         skipNextClick = false;
+        return;
+    }
+
+    if (event.target.closest("[data-add-reader]")) {
+        addPiece(READER);
         return;
     }
 

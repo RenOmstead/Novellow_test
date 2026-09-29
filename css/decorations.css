@@ -220,6 +220,54 @@ html.room-compact .journal-zone > .decor-layer {
     line-height: 1.35;
 }
 
+/* Standing yourself in the room (js/room/decorations.js). */
+.arrange-bar__reader {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 8px 10px;
+
+    border: 1px solid rgba(160, 120, 100, 0.3);
+    border-radius: 12px;
+
+    background: rgba(255, 250, 240, 0.7);
+}
+
+.arrange-bar__reader p {
+    flex: 1;
+
+    margin: 0;
+
+    color: var(--color-ink-soft);
+
+    font-size: 13.5px;
+    line-height: 1.3;
+}
+
+.arrange-bar__reader-art {
+    flex: none;
+
+    width: 40px;
+    height: 40px;
+}
+
+.arrange-bar__reader-art svg {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+}
+
+.arrange-bar__reader .button {
+    flex: none;
+}
+
+.placed-decor--reader svg {
+    filter: drop-shadow(0 4px 5px rgba(20, 8, 4, 0.28));
+}
+
 .arrange-bar__tabs {
     display: flex;
     flex-wrap: wrap;

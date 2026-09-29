@@ -10,12 +10,13 @@
 import { getProfile, updateProfile } from "../core/store.js?v=__VERSION__";
 import { html, raw, render } from "../core/helpers.js?v=__VERSION__";
 import { art, toast, toastError, withBusy } from "../core/ui.js?v=__VERSION__";
-import { AVATAR_PARTS, AVATAR_TOUCHES, normalizeAvatar, avatarPortrait, avatarSeated } from "./avatar.js?v=__VERSION__";
+import { AVATAR_PARTS, AVATAR_TOUCHES, PORTRAIT_PARTS, FIGURE_PARTS, normalizeAvatar, avatarPortrait, avatarFigure } from "./avatar.js?v=__VERSION__";
 
 
-// These choices show as little portraits, the rest as words
-// or colour swatches.
-const PICTURED = ["hair", "top", "extra", "glasses", "eyes", "facialHair"];
+// These choices show as little pictures (a portrait, or the
+// whole reader for clothes below the shoulders), the rest as
+// words or colour swatches.
+const PICTURED = [...PORTRAIT_PARTS, ...FIGURE_PARTS];
 
 
 function optionMarkup(part, option, avatar, seed) {
@@ -31,9 +32,11 @@ function optionMarkup(part, option, avatar, seed) {
     }
 
     if (PICTURED.includes(part.key)) {
+        const whole = FIGURE_PARTS.includes(part.key);
+        const draw = whole ? avatarFigure : avatarPortrait;
         return html`
-            <button class="avatar-choice avatar-choice--pictured ${chosen ? "is-chosen" : ""}" ${raw(attributes)}>
-                ${raw(avatarPortrait({ ...avatar, [part.key]: option.id }, { seed }))}
+            <button class="avatar-choice avatar-choice--pictured ${whole ? "avatar-choice--whole" : ""} ${chosen ? "is-chosen" : ""}" ${raw(attributes)}>
+                ${raw(draw({ ...avatar, [part.key]: option.id }, { seed }))}
                 <span>${option.label}</span>
             </button>
         `;
@@ -56,9 +59,9 @@ function makerMarkup(avatar, seed, openPart) {
             <div class="avatar-maker__preview">
                 <p class="dialog-eyebrow">Your reader</p>
                 <h2 class="dialog-title">Make your avatar</h2>
+                <div class="avatar-maker__figure">${raw(avatarFigure(avatar, { seed }))}</div>
                 <div class="avatar-maker__portrait">${raw(avatarPortrait(avatar, { seed }))}</div>
-                <div class="avatar-maker__seated">${raw(avatarSeated(avatar, { seed }))}</div>
-                <p class="muted">This is how you'll look on your reader card, in book clubs, and curled up in your armchair when someone visits your room.</p>
+                <p class="muted">Your portrait shows on your reader card and in book clubs. You can stand the whole of you somewhere in your room (Arrange the room), for visitors to find.</p>
                 <button class="button button--ghost button--small" type="button" data-surprise>${art("ui-sparkle")} Surprise me</button>
             </div>
 
@@ -186,6 +189,8 @@ export function openAvatarMaker() {
                 surprise.facialHair = Math.random() < 0.8 ? "none" : surprise.facialHair;
                 surprise.glasses = Math.random() < 0.6 ? "none" : surprise.glasses;
                 surprise.extra = Math.random() < 0.5 ? "none" : surprise.extra;
+                surprise.wrap = Math.random() < 0.6 ? "none" : surprise.wrap;
+                surprise.companion = Math.random() < 0.5 ? "none" : surprise.companion;
 
                 avatar = normalizeAvatar({ ...avatar, ...surprise, blush: Math.random() < 0.6, freckles: Math.random() < 0.3 }, seed);
 
