@@ -37,6 +37,7 @@
     display: grid;
     align-content: start;
     justify-items: center;
+    grid-auto-rows: max-content;
 
     gap: 10px;
 
@@ -48,7 +49,7 @@
 }
 
 .avatar-maker__portrait {
-    width: min(200px, 60vw);
+    width: 96px;
 
     aspect-ratio: 1;
 
@@ -60,17 +61,19 @@
     box-shadow: 0 8px 20px rgba(40, 16, 10, 0.25);
 }
 
-.avatar-maker__seated {
-    width: 150px;
+.avatar-maker__figure {
+    width: min(190px, 60vw);
 
-    padding: 6px 6px 0;
+    padding: 10px 6px 4px;
 
-    border-radius: 14px;
+    border-radius: 16px;
 
-    background: linear-gradient(180deg, #8a4a5a, #6b3747);
+    background: radial-gradient(ellipse at 50% 40%, #fbf1de, #ecd9b8);
+
+    box-shadow: inset 0 0 0 1px rgba(160, 120, 100, 0.25);
 }
 
-.avatar-maker__seated svg,
+.avatar-maker__figure svg,
 .avatar-maker__portrait svg {
     display: block;
 
@@ -185,6 +188,13 @@
     border-radius: 50%;
 }
 
+.avatar-choice--whole svg {
+    height: 118px;
+    width: auto;
+
+    border-radius: 0;
+}
+
 .avatar-swatch {
     width: 36px;
     height: 36px;
@@ -237,12 +247,12 @@
         grid-column: 1 / -1;
     }
 
-    .avatar-maker__portrait {
-        width: 130px;
+    .avatar-maker__figure {
+        width: 120px;
     }
 
-    .avatar-maker__seated {
-        width: 110px;
+    .avatar-maker__portrait {
+        width: 84px;
     }
 
     .avatar-part__options--pictured {
@@ -258,39 +268,15 @@
         height: 48px;
     }
 
+    .avatar-choice--whole svg {
+        height: 96px;
+        width: auto;
+    }
+
     .avatar-maker__choices {
         padding-top: 14px;
 
         overflow: visible;
     }
 
-}
-
-
-/* A reader in their armchair: over the seat, with the blanket
-   across their lap (js/avatar/avatar-room.js). */
-.corner-scene {
-    position: relative;
-}
-
-.chair-reader {
-    position: absolute;
-
-    left: calc(var(--chair-width) * 0.19);
-    bottom: calc(var(--chair-width) * 0.25);
-
-    z-index: 1;
-
-    width: calc(var(--chair-width) * 0.62);
-
-    pointer-events: none;
-}
-
-.chair-reader svg {
-    display: block;
-
-    width: 100%;
-    height: auto;
-
-    filter: drop-shadow(0 4px 4px rgba(20, 8, 4, 0.3));
 }
