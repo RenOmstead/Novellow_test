@@ -329,7 +329,7 @@ function renderPage() {
                     <p class="eyebrow">Write to us</p>
                     <h2 id="noteTitle" class="about-card__title">Report a problem or share an idea</h2>
 
-                    <p>Found something that isn't working, or wishing Novellow could do something new? Every note is read.</p>
+                    <p>Found something that isn't working, or wishing Novellow could do something new? Every note is read. You can also email <a href="mailto:novellow.contact@gmail.com">novellow.contact@gmail.com</a>.</p>
 
                     ${ready ? noteForm() : html`<p class="about-quiet">Notes will open here very soon.</p>`}
 
