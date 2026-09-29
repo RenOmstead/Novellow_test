@@ -45,9 +45,14 @@ jobs:
 
       - uses: actions/configure-pages@v5
 
+      # A new name on every attempt, so "Re-run jobs" doesn't find
+      # two copies of the site and refuse to publish.
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
+          name: github-pages-${{ github.run_attempt }}
 
       - id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages-${{ github.run_attempt }}
