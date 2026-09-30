@@ -102,7 +102,21 @@ export const WALLPAPERS = [
         wall: ["#24222a", "#2e2b34", "#38343f"],
         pattern: svg("<g fill='#f2e6c4' fill-opacity='0.1'><path d='M20 10a9 9 0 1 0 8 13a7 7 0 0 1-8-13z'/><path d='M54 46a6 6 0 1 0 5 9a4.6 4.6 0 0 1-5-9z'/><circle cx='50' cy='16' r='1.2'/><circle cx='14' cy='52' r='1'/></g>", 70, 70),
         size: "70px 70px"
-    }
+    },
+
+    // Painted wallpapers (pictures, not drawings).
+    { id: "plum-stripe", name: "Plum stripes", wall: ["#4f3439", "#5d3d43", "#624047"], src: "assets/wallpapers/plum_stripe.webp", pattern: `url("../assets/wallpapers/plum_stripe.webp?v=__VERSION__")`, size: "114px 109px" },
+    { id: "pumpkin-patch", name: "Pumpkin patch", wall: ["#c4b196", "#e5ceaf", "#f2dab9"], src: "assets/wallpapers/pumpkin_patch.webp", pattern: `url("../assets/wallpapers/pumpkin_patch.webp?v=__VERSION__")`, size: "292px 291px", light: true },
+    { id: "fern-sage", name: "Sage ferns", wall: ["#6e6d58", "#817f67", "#88866d"], src: "assets/wallpapers/fern_sage.webp", pattern: `url("../assets/wallpapers/fern_sage.webp?v=__VERSION__")`, size: "289px 291px" },
+    { id: "rose-flowers", name: "Rose and blossom", wall: ["#835752", "#996660", "#a26c65"], src: "assets/wallpapers/rose_flowers.webp", pattern: `url("../assets/wallpapers/rose_flowers.webp?v=__VERSION__")`, size: "291px 291px" },
+    { id: "moon-stars", name: "Moons and stars", wall: ["#38282c", "#422f34", "#453137"], src: "assets/wallpapers/moon_stars.webp", pattern: `url("../assets/wallpapers/moon_stars.webp?v=__VERSION__")`, size: "291px 289px" },
+    { id: "fleur-trellis", name: "Fleur trellis", wall: ["#332e2b", "#3c3633", "#3f3936"], src: "assets/wallpapers/fleur_trellis.webp", pattern: `url("../assets/wallpapers/fleur_trellis.webp?v=__VERSION__")`, size: "209px 274px" },
+    { id: "moth-lilac", name: "Lilac moths", wall: ["#6c5c59", "#7e6b68", "#85716e"], src: "assets/wallpapers/moth_lilac.webp", pattern: `url("../assets/wallpapers/moth_lilac.webp?v=__VERSION__")`, size: "289px 289px" },
+    { id: "gothic-arches", name: "Gothic arches", wall: ["#4f4e3d", "#5c5b47", "#61604b"], src: "assets/wallpapers/gothic_arches.webp", pattern: `url("../assets/wallpapers/gothic_arches.webp?v=__VERSION__")`, size: "257px 277px" },
+    { id: "wine-damask", name: "Worn wine damask", wall: ["#5b3132", "#6a3a3b", "#703d3e"], src: "assets/wallpapers/wine_damask.webp", pattern: `url("../assets/wallpapers/wine_damask.webp?v=__VERSION__")`, size: "581px 595px" },
+    { id: "cobweb-grey", name: "Cobwebs", wall: ["#746461", "#887571", "#907c77"], src: "assets/wallpapers/cobweb_grey.webp", pattern: `url("../assets/wallpapers/cobweb_grey.webp?v=__VERSION__")`, size: "292px 298px" },
+    { id: "bat-stripe", name: "Bat stripes", wall: ["#302b27", "#38322e", "#3b3530"], src: "assets/wallpapers/bat_stripe.webp", pattern: `url("../assets/wallpapers/bat_stripe.webp?v=__VERSION__")`, size: "178px 240px" },
+    { id: "climbing-roses", name: "Climbing roses", wall: ["#bca78d", "#dbc3a5", "#e8ceae"], src: "assets/wallpapers/climbing_roses.webp", pattern: `url("../assets/wallpapers/climbing_roses.webp?v=__VERSION__")`, size: "581px 595px", light: true }
 ];
 
 
@@ -431,6 +445,9 @@ export function applyFixtures(theme = document.documentElement.dataset.theme) {
         WALLPAPERS.find((item) => item.id === fixtures.wallpaper);
 
     WALL_VARS.forEach((name) => root.style.removeProperty(name));
+
+    // A light painted wallpaper needs darker lettering around it.
+    root.dataset.wallTone = paper?.light ? "light" : "dark";
 
     if (paper?.wall) {
         root.style.setProperty("--wall-left", paper.wall[0]);
@@ -941,6 +958,11 @@ export function dragWindow(event) {
 function swatchStyle(kind, choice) {
 
     if (kind === "wallpaper") {
+        // A painted wallpaper: its own picture, a little smaller.
+        if (choice.src) {
+            return `background: url("${choice.src}?v=__VERSION__") center / 90px auto`;
+        }
+
         return choice.wall
             ? `background: ${choice.pattern}, linear-gradient(90deg, ${choice.wall[0]}, ${choice.wall[2]})`
             : "";
