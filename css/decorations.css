@@ -1622,3 +1622,78 @@ html.is-arranging-room[data-site-label]::after {
         margin: 0 2px 0 6px;
     }
 }
+
+/* The docked editor on a short screen: one slim row. */
+.piece-editor--docked {
+    width: auto;
+    max-width: calc(100vw - 16px);
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 5px 6px;
+
+    border-radius: 16px;
+}
+
+.piece-editor--docked .arrange-bar__tools {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.piece-editor--docked .arrange-bar__selected {
+    max-width: 90px;
+
+    padding: 0 2px;
+
+    overflow: hidden;
+
+    font-size: 12px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.piece-editor--docked .piece-editor__grid,
+.piece-editor--docked .piece-editor__row,
+.piece-editor--docked .piece-editor__nudge {
+    display: flex;
+    gap: 4px;
+
+    margin: 0;
+}
+
+.piece-editor--docked :is(.piece-editor__button, .piece-editor__arrow) {
+    width: 34px;
+    min-height: 34px;
+    height: 34px;
+
+    padding: 0;
+
+    border-radius: 9px;
+}
+
+.piece-editor--docked .piece-editor__button b {
+    font-size: 17px;
+}
+
+.piece-editor--docked .piece-editor__button svg {
+    width: 16px;
+    height: 16px;
+}
+
+.piece-editor--docked :is(.piece-editor__button small, .piece-editor__tip, .arrange-bar__fabrics) {
+    display: none !important;
+}
+
+.piece-editor--docked .piece-editor__close {
+    position: static;
+
+    flex: none;
+
+    order: 2;
+
+    width: 30px;
+    height: 30px;
+}
