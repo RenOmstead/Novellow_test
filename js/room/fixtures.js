@@ -475,6 +475,8 @@ export function applyFixtures(theme = document.documentElement.dataset.theme) {
         CURTAIN_VARS.forEach((name, index) => root.style.setProperty(name, curtainColour.colours[index]));
     }
 
+    root.dataset.curtainTint = curtainColour?.colours ? "on" : "off";
+
     placeWindow(fixtures);
 
     placeRug(fixtures);

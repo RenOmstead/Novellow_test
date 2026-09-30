@@ -246,8 +246,32 @@
 [data-curtains="pinch"] .window-curtains--pinch,
 [data-curtains="ruffle"] .window-curtains--ruffle,
 [data-curtains="roman"] .window-curtains--roman,
-[data-curtains="stars"] .window-curtains--stars {
+[data-curtains="stars"] .window-curtains--stars,
+[data-curtains="tasselled"] .window-curtains--tasselled,
+[data-curtains="ivy"] .window-curtains--ivy,
+[data-curtains="pumpkin"] .window-curtains--pumpkin,
+[data-curtains="tattered"] .window-curtains--tattered,
+[data-curtains="lined"] .window-curtains--lined,
+[data-curtains="theatre"] .window-curtains--theatre {
     display: block;
+}
+
+/* The painted curtains keep their own colours until a curtain
+   colour is chosen; then their fabric takes it, folds and all. */
+.curtain-tint {
+    display: none;
+
+    isolation: isolate;
+}
+
+[data-curtain-tint="on"] .curtain-tint {
+    display: inline;
+}
+
+.curtain-tint rect {
+    fill: var(--curtain);
+
+    mix-blend-mode: multiply;
 }
 
 /* Candles at each end of the sill. */

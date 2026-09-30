@@ -576,6 +576,20 @@
 [data-window="gothic"] { --window-arched: none; --window-gothic: inline; }
 [data-window="stone"] { --window-arched: none; --window-stone: inline; }
 
+/* The painted windows (their pictures are in sprite.svg). */
+[data-window="six-pane"] { --window-arched: none; --window-six-pane: inline; --glazing: none; }
+[data-window="tracery"] { --window-arched: none; --window-tracery: inline; --glazing: none; }
+[data-window="lancet"] { --window-arched: none; --window-lancet: inline; --glazing: none; }
+[data-window="double-arch"] { --window-arched: none; --window-double-arch: inline; --glazing: none; }
+[data-window="moon-arch"] { --window-arched: none; --window-moon-arch: inline; --glazing: none; }
+[data-window="round"] { --window-arched: none; --window-round: inline; --glazing: none; }
+[data-window="porthole"] { --window-arched: none; --window-porthole: inline; --glazing: none; }
+[data-window="timber"] { --window-arched: none; --window-timber: inline; --glazing: none; }
+[data-window="casement"] { --window-arched: none; --window-casement: inline; --glazing: none; }
+[data-window="shutters"] { --window-arched: none; --window-shutters: inline; --glazing: none; }
+[data-window="boarded"] { --window-arched: none; --window-boarded: inline; --glazing: none; }
+[data-window="boarded-arch"] { --window-arched: none; --window-boarded-arch: inline; --glazing: none; }
+
 [data-wood="walnut"] { --frame-dark: #3a2116; --frame-wood: #6e4029; --frame-light: #9a6440; --frame-line: #2a160e; --frame-shine: #c9905e; }
 [data-wood="oak"] { --frame-dark: #6e4a2a; --frame-wood: #a8773f; --frame-light: #c9995a; --frame-line: #3e2a14; --frame-shine: #e2bd84; }
 [data-wood="mahogany"] { --frame-dark: #3a1410; --frame-wood: #7a2e22; --frame-light: #a0463a; --frame-line: #24100c; --frame-shine: #c9705e; }
