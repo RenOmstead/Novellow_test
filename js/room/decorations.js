@@ -1241,7 +1241,40 @@ function placeEditor() {
             ? room.querySelector(`[data-decor-id="${selectedId}"]`)
             : selectedBuiltIn ? room.querySelector(".is-built-in-selected") : null;
 
-    if (target) {
+    // A short screen (a phone held sideways): a slim bar docked at
+    // the top, or at the bottom when the piece is up high, beside
+    // the panel, so the piece and the floor under it stay in view.
+    const docked =
+        window.innerHeight <= 540;
+
+    editor.classList.toggle("piece-editor--docked", docked);
+
+    if (target && docked) {
+
+        const box =
+            target.getBoundingClientRect();
+
+        const panel =
+            bar && bar.dataset.folded !== "true" ? bar.getBoundingClientRect() : null;
+
+        const from =
+            panel && panel.left < window.innerWidth / 2 ? panel.right + 8 : 8;
+
+        const to =
+            panel && panel.left >= window.innerWidth / 2 ? panel.left - 8 : window.innerWidth - 8;
+
+        const width =
+            Math.min(editor.offsetWidth, to - from);
+
+        const high =
+            box.top + box.height / 2 < window.innerHeight * 0.45;
+
+        editor.style.left = `${Math.round(from + (to - from - width) / 2)}px`;
+        editor.style.top = high ? `${Math.round(window.innerHeight - editor.offsetHeight - 8)}px` : "8px";
+
+    }
+
+    else if (target) {
 
         const box =
             target.getBoundingClientRect();
@@ -1440,6 +1473,24 @@ function spotInView() {
     right to the edge of the room, under a phone's rounded
     corners too.
 */
+// A spot moved down onto the floor (for rugs): the floor's
+// middle, or lower if it was dropped lower.
+function onFloor(spot) {
+
+    const floor =
+        room.querySelector(".room-floorboards, .room-floor")?.getBoundingClientRect();
+
+    if (!floor) {
+        return spot;
+    }
+
+    const lowest =
+        Math.min(window.innerHeight - 12, floor.bottom - 10);
+
+    return { ...spot, area: "wall", y: clamp(spot.y, floor.top + Math.min(40, floor.height / 2), lowest) };
+
+}
+
 // How much deeper than usual the floor runs (the room view).
 function floorLift() {
     const box = room.getBoundingClientRect();
@@ -1524,6 +1575,11 @@ async function addPiece(assetId, spot = spotInView()) {
     if (!spot) {
         toast("Scroll to the part of the room where it should go, then try again.");
         return;
+    }
+
+    // A rug lies on the floor, wherever it was dropped.
+    if (assetFor(assetId)?.floor) {
+        spot = onFloor(spot);
     }
 
     try {
@@ -2336,8 +2392,9 @@ function onPointerDown(event) {
         const x =
             pointer.x - grip.x;
 
+        // A rug stays down on the floor.
         const y =
-            pointer.y - grip.y;
+            assetFor(piece.asset_id)?.floor ? onFloor({ y: pointer.y - grip.y }).y : pointer.y - grip.y;
 
         const area =
             areaAt(x, y) || piece.room_area;
