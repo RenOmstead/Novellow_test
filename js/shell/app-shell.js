@@ -337,6 +337,10 @@ function headerMarkup(eyebrow) {
 
             <div class="header-tools">
 
+                <button class="icon-button room-view-button" type="button" data-room-view="enter" aria-label="Room view: just the room" title="Room view: just the room">
+                    <svg aria-hidden="true"><use href="#ui-expand"></use></svg>
+                </button>
+
                 <button class="button button--brass header-add" id="headerAddBook" type="button" aria-label="Add a book">
                     <svg aria-hidden="true"><use href="#ui-add"></use></svg>
                     <span>Add Book</span>

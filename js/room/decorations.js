@@ -655,7 +655,8 @@ function heightRange(area) {
         return [0, 100];
     }
 
-    return area === "bookcase_top" ? [0, 400] : [-300, 100];
+    // Past 100 is out across a deep floor (the room view).
+    return area === "bookcase_top" ? [0, 400] : [-300, 200];
 
 }
 
@@ -670,8 +671,14 @@ function topFor(piece) {
         return `${(-piece.position_y * TOP_SPAN) / 100}px`;
     }
 
-    return piece.room_area === "shelf"
-        ? `${(piece.position_y * SHELF_SPAN) / 100}px`
+    if (piece.room_area === "shelf") {
+        return `${(piece.position_y * SHELF_SPAN) / 100}px`;
+    }
+
+    // Out on a deep floor: past 100 is a share of the floor's
+    // extra depth, so with a shallow floor it stays at the back.
+    return piece.position_y > 100
+        ? `calc(100% + ${(piece.position_y - 100) / 100} * var(--floor-lift, 0px))`
         : `${piece.position_y}%`;
 
 }
@@ -1409,6 +1416,13 @@ function spotInView() {
     right to the edge of the room, under a phone's rounded
     corners too.
 */
+// How much deeper than usual the floor runs (the room view).
+function floorLift() {
+    const box = room.getBoundingClientRect();
+    const zone = room.querySelector(".journal-zone")?.getBoundingClientRect();
+    return zone ? Math.max(0, box.bottom - zone.bottom) : 0;
+}
+
 function areaBox(area) {
 
     const zone =
@@ -1422,7 +1436,7 @@ function areaBox(area) {
     }
 
     if (area === "wall") {
-        return { left: zone.left, right: room.getBoundingClientRect().right, top: zone.top, bottom: zone.bottom };
+        return { left: zone.left, right: room.getBoundingClientRect().right, top: zone.top, bottom: zone.bottom + floorLift() };
     }
 
     return { left: zone.left, right: zone.right, top: zone.top, bottom: zone.bottom };
@@ -1456,6 +1470,17 @@ function positionIn(area, pointX, pointY) {
     // On the bookcase, pixels on screen are scaled pixels.
     const height =
         area === "shelf" ? SHELF_SPAN * caseZoom() : box.height;
+
+    // Below the wall, out on a deep floor.
+    const lift =
+        area === "wall" ? floorLift() : 0;
+
+    if (lift > 0 && y > box.bottom) {
+        return {
+            position_x: Number(clamp(((x - box.left) / box.width) * 100, 0, 100).toFixed(2)),
+            position_y: Number(clamp(100 + ((y - box.bottom) / lift) * 100, ...heightRange(area)).toFixed(2))
+        };
+    }
 
     return {
         position_x: Number(clamp(((x - box.left) / box.width) * 100, 0, 100).toFixed(2)),
