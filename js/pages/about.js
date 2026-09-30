@@ -15,6 +15,7 @@ import { currentUserId } from "../core/store.js?v=__VERSION__";
 
 import { html, render, formatDate, plural } from "../core/helpers.js?v=__VERSION__";
 import { art, loader, toast, toastError, confirmDialog, withBusy } from "../core/ui.js?v=__VERSION__";
+import { helpSection, wireHelp } from "./about-help.js?v=__VERSION__";
 
 
 const content =
@@ -412,7 +413,7 @@ function renderPage() {
         <div class="page-heading">
             <div>
                 <h1 class="page-heading__title">About Novellow</h1>
-                <p class="page-heading__subtitle">News from the library, and a way to reach us.</p>
+                <p class="page-heading__subtitle">News from the library, help finding your way, and a way to reach us. <a href="#help">Questions and answers</a></p>
             </div>
         </div>
 
@@ -471,6 +472,8 @@ function renderPage() {
 
         </div>
 
+        ${helpSection()}
+
     `);
 
 }
@@ -522,9 +525,10 @@ async function start() {
 
         await refresh();
 
-        // The link in a note's email goes straight to the inbox.
-        if (location.hash === "#inbox") {
-            document.getElementById("inbox")?.scrollIntoView({ block: "start" });
+        // The link in a note's email goes straight to the inbox;
+        // #help goes to the questions and answers.
+        if (location.hash === "#inbox" || location.hash === "#help") {
+            document.getElementById(location.hash.slice(1))?.scrollIntoView({ block: "start" });
         }
 
     }
@@ -534,6 +538,8 @@ async function start() {
         ready = false;
         renderPage();
     }
+
+    wireHelp(content);
 
     content.addEventListener("submit", async (event) => {
 
