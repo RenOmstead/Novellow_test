@@ -219,6 +219,8 @@
    the curtains hang out past a narrow one (css/themes.css). */
 /* The sill is always in front of the curtains. */
 .window-sill {
+    display: var(--own-sill, block);
+
     z-index: 3;
 
     /* Measured in the window's own units (its width / 440):
@@ -258,7 +260,8 @@
 [data-curtains="pumpkin"] .window-curtains--pumpkin,
 [data-curtains="tattered"] .window-curtains--tattered,
 [data-curtains="lined"] .window-curtains--lined,
-[data-curtains="theatre"] .window-curtains--theatre {
+[data-curtains="theatre"] .window-curtains--theatre,
+[data-curtains="roses"] .window-curtains--roses {
     display: block;
 }
 
