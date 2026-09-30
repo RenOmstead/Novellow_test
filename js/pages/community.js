@@ -41,8 +41,7 @@ import {
     deletePost
 } from "../core/community.js?v=__VERSION__";
 
-import { avatarPortrait } from "../avatar/avatar.js?v=__VERSION__";
-import { html, raw, render, on, plural, formatDate, formatDateTime, queryParam, textOrNull, intOrNull, debounce } from "../core/helpers.js?v=__VERSION__";
+import { html, render, on, plural, initials, formatDate, formatDateTime, queryParam, seededRandom, textOrNull, intOrNull, debounce } from "../core/helpers.js?v=__VERSION__";
 import { art, loader, emptyState, toast, toastError, confirmDialog, formDialog, withBusy } from "../core/ui.js?v=__VERSION__";
 import { friendlyDataError } from "../core/errors.js?v=__VERSION__";
 import { ratingMarkup } from "../core/rating.js?v=__VERSION__";
@@ -56,6 +55,9 @@ import { READING_STATUSES } from "../config.js?v=__VERSION__";
 const content =
     document.getElementById("pageContent");
 
+const AVATAR_COLORS =
+    ["#74485c", "#5d6f4e", "#8a5a3c", "#4f6278", "#7a4b6e", "#6b5a3a", "#8b4a4a", "#3f6660"];
+
 let friends = { friends: [], incoming: [], outgoing: [] };
 let groups = [];
 let openLibraries = [];
@@ -65,10 +67,16 @@ let openLibraries = [];
    SMALL PIECES
 ========================================================= */
 
-// Every reader has a drawn avatar: the one they made, or a
-// gentle one of their own until they do (js/avatar/avatar.js).
 function avatar(person, size = "medium") {
-    return html`<span class="reader-avatar reader-avatar--${size}" aria-hidden="true">${raw(avatarPortrait(person?.avatar, { seed: person?.id || "reader" }))}</span>`;
+
+    const random =
+        seededRandom(person?.id || "reader");
+
+    const color =
+        AVATAR_COLORS[Math.floor(random() * AVATAR_COLORS.length)];
+
+    return html`<span class="reader-avatar reader-avatar--${size}" style="--avatar: ${color}" aria-hidden="true">${initials(person?.display_name || "Reader")}</span>`;
+
 }
 
 
@@ -498,10 +506,6 @@ function readerCard(me) {
                 ` : ""}
             `}
 
-            <button class="button button--brass button--small" type="button" data-action="avatar">
-                ${art("ui-user")} ${me?.avatar ? "Change my avatar" : "Make my avatar"}
-            </button>
-
             <button class="button button--ghost button--small" type="button" data-action="edit-profile">
                 ${me?.username ? "Edit my reader card" : "Choose a username"}
             </button>
@@ -665,17 +669,6 @@ function wireHub() {
 
             if (action === "edit-profile") {
                 await profileDialog();
-            }
-
-            if (action === "avatar") {
-
-                const { openAvatarMaker } =
-                    await import("../avatar/avatar-maker.js?v=__VERSION__");
-
-                if (await openAvatarMaker()) {
-                    renderHub();
-                }
-
             }
 
             if (action === "new-club" || action === "new-buddy") {

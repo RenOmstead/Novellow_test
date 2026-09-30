@@ -35,8 +35,7 @@ const OWN_TABLES = [
     ["group_members", "user_id"],
     ["group_posts", "user_id"],
     ["reader_notes", "user_id"],
-    ["reader_blocks", "blocker_id"],
-    ["workshop_items", "maker_id"]
+    ["reader_blocks", "blocker_id"]
 ];
 
 const COVERS = "book-covers";
@@ -203,16 +202,8 @@ export async function deleteAccount(password) {
         throw new NovellowError("That password isn't right.", passwordError);
     }
 
-    // Workshop pictures, then cover pictures: files can only be
-    // deleted through Storage, and the database takes care of
-    // everything else.
-    const { data: workshopFiles } =
-        await supabase.storage.from("workshop").list(user.id, { limit: 1000 });
-
-    if (workshopFiles?.length) {
-        await supabase.storage.from("workshop").remove(workshopFiles.map((file) => `${user.id}/${file.name}`));
-    }
-
+    // Cover pictures first: files can only be deleted through
+    // Storage, and the database takes care of everything else.
     const files =
         await coverFiles(user.id);
 

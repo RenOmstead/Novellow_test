@@ -1321,22 +1321,3 @@ html[data-site-label]::after {
 
     pointer-events: none;
 }
-
-
-/* =========================================================
-   DRAWN AVATARS (js/avatar/avatar.js) fill their circle.
-========================================================= */
-
-.avatar,
-.reader-avatar {
-    overflow: hidden;
-
-    padding: 0;
-}
-
-.avatar-art {
-    display: block;
-
-    width: 100%;
-    height: 100%;
-}
