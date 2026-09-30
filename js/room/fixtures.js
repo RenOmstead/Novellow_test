@@ -144,7 +144,21 @@ export const FLOORS = [
         id: "stone", name: "Grey flagstones", top: "#5a5856", bottom: "#44423f", planks: "transparent",
         pattern: svg("<path d='M0 2H38V30H0M42 2H78V30H42M0 34H20V62H0M24 34H62V62H24M66 34H80V62H66' fill='none' stroke='#1c1b1a' stroke-opacity='0.4' stroke-width='2.5'/>", 80, 64),
         size: "80px 64px"
-    }
+    },
+
+    // Painted floors (pictures, not drawings).
+    { id: "walnut-planks", name: "Walnut planks", top: "#65432d", bottom: "#4f3424", planks: "transparent", src: "assets/floors/walnut_planks.webp", pattern: `url("../assets/floors/walnut_planks.webp?v=__VERSION__")`, size: "172px 82px" },
+    { id: "dark-planks", name: "Dark planks", top: "#3c2a23", bottom: "#30211b", planks: "transparent", src: "assets/floors/dark_planks.webp", pattern: `url("../assets/floors/dark_planks.webp?v=__VERSION__")`, size: "95px 63px" },
+    { id: "honey-boards", name: "Honey boards", top: "#956c49", bottom: "#76553a", planks: "transparent", src: "assets/floors/honey_boards.webp", pattern: `url("../assets/floors/honey_boards.webp?v=__VERSION__")`, size: "88px 63px" },
+    { id: "weathered-grey", name: "Weathered grey boards", top: "#675345", bottom: "#514137", planks: "transparent", src: "assets/floors/weathered_grey.webp", pattern: `url("../assets/floors/weathered_grey.webp?v=__VERSION__")`, size: "92px 75px" },
+    { id: "herringbone", name: "Herringbone", top: "#603f2c", bottom: "#4c3223", planks: "transparent", src: "assets/floors/herringbone.webp", pattern: `url("../assets/floors/herringbone.webp?v=__VERSION__")`, size: "166px 76px" },
+    { id: "basketweave", name: "Basketweave parquet", top: "#3e2b23", bottom: "#31221b", planks: "transparent", src: "assets/floors/basketweave.webp", pattern: `url("../assets/floors/basketweave.webp?v=__VERSION__")`, size: "134px 68px" },
+    { id: "whitewashed", name: "Whitewashed boards", top: "#b39c85", bottom: "#8d7b69", planks: "transparent", src: "assets/floors/whitewashed.webp", pattern: `url("../assets/floors/whitewashed.webp?v=__VERSION__")`, size: "90px 66px" },
+    { id: "plum-boards", name: "Worn plum boards", top: "#3f2b2c", bottom: "#322223", planks: "transparent", src: "assets/floors/plum_boards.webp", pattern: `url("../assets/floors/plum_boards.webp?v=__VERSION__")`, size: "163px 73px" },
+    { id: "checker-marble", name: "Marble checkerboard", top: "#817568", bottom: "#665c52", planks: "transparent", src: "assets/floors/checker_marble.webp", pattern: `url("../assets/floors/checker_marble.webp?v=__VERSION__")`, size: "146px 82px" },
+    { id: "slate-flags", name: "Slate flagstones", top: "#5f5d52", bottom: "#4b4940", planks: "transparent", src: "assets/floors/slate_flags.webp", pattern: `url("../assets/floors/slate_flags.webp?v=__VERSION__")`, size: "158px 96px" },
+    { id: "cobblestone", name: "Cobblestones", top: "#7d6854", bottom: "#635242", planks: "transparent", src: "assets/floors/cobblestone.webp", pattern: `url("../assets/floors/cobblestone.webp?v=__VERSION__")`, size: "169px 91px" },
+    { id: "wine-diamond", name: "Wine and cream tiles", top: "#947764", bottom: "#755e4f", planks: "transparent", src: "assets/floors/wine_diamond.webp", pattern: `url("../assets/floors/wine_diamond.webp?v=__VERSION__")`, size: "92px 76px" }
 ];
 
 
@@ -966,6 +980,10 @@ function swatchStyle(kind, choice) {
         return choice.wall
             ? `background: ${choice.pattern}, linear-gradient(90deg, ${choice.wall[0]}, ${choice.wall[2]})`
             : "";
+    }
+
+    if (kind === "floor" && choice.src) {
+        return `background: url("${choice.src}?v=__VERSION__") center / 80px auto`;
     }
 
     if (kind === "floor") {
