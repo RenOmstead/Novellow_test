@@ -1759,6 +1759,138 @@
 
 }
 
+/* Help: home screen steps, and questions and answers (js/pages/about-help.js) */
+.help-card {
+    margin-top: 20px;
+}
+
+.help-card__subtitle {
+    margin-top: 6px;
+
+    color: var(--color-plum);
+
+    font-family: var(--font-heading);
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.home-screen {
+    display: grid;
+
+    gap: 10px;
+}
+
+.home-screen__tabs {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.home-screen__tab {
+    min-height: 40px;
+
+    padding: 6px 16px;
+
+    border: 1px solid var(--color-paper-edge);
+    border-radius: 999px;
+
+    color: var(--color-plum);
+    background: var(--color-paper-light);
+
+    font-family: var(--font-ui);
+    font-size: 15px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.home-screen__tab.is-current {
+    border-color: var(--color-plum);
+
+    color: #fff8ec;
+    background: var(--color-plum);
+}
+
+.home-screen__panel {
+    display: grid;
+
+    gap: 8px;
+
+    padding: 14px 16px;
+
+    border: 1px solid rgba(160, 120, 100, 0.3);
+    border-radius: 14px;
+
+    background: rgba(255, 250, 240, 0.6);
+}
+
+.home-screen__intro,
+.home-screen__note,
+.home-screen__done {
+    color: var(--color-ink-soft);
+}
+
+.home-screen__note {
+    font-size: 14px;
+}
+
+.home-screen__steps {
+    display: grid;
+
+    gap: 8px;
+
+    margin: 0;
+    padding-left: 22px;
+}
+
+.home-screen__steps li::marker {
+    color: var(--color-berry);
+
+    font-weight: 800;
+}
+
+.faq {
+    display: grid;
+
+    gap: 8px;
+}
+
+.faq__item {
+    border: 1px solid rgba(160, 120, 100, 0.3);
+    border-radius: 12px;
+
+    background: rgba(255, 250, 240, 0.55);
+}
+
+.faq__item[open] {
+    background: rgba(255, 250, 240, 0.92);
+}
+
+.faq__item summary {
+    padding: 12px 16px;
+
+    color: var(--color-plum-deep);
+
+    font-family: var(--font-ui);
+    font-size: 16px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.faq__answer {
+    display: grid;
+
+    gap: 8px;
+
+    padding: 0 16px 14px;
+}
+
+.faq__answer a {
+    color: var(--color-berry);
+}
+
 /* The Novellow account's Notes inbox */
 .notes-inbox {
     margin-bottom: 20px;
