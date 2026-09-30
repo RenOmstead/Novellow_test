@@ -39,6 +39,12 @@ export const CURTAINS = [
     { id: "ruffle", name: "Ruffled tie-ups" },
     { id: "roman", name: "Roman blind" },
     { id: "stars", name: "Starry sheers" },
+    { id: "tasselled", name: "Velvet with tassels" },
+    { id: "ivy", name: "Trailing ivy" },
+    { id: "pumpkin", name: "Hanging panels" },
+    { id: "tattered", name: "Tattered, tied back" },
+    { id: "lined", name: "Lined with cream" },
+    { id: "theatre", name: "Theatre swags" },
     { id: "none", name: "No curtains" }
 ];
 
@@ -72,8 +78,27 @@ export const WINDOW_SHAPES = [
     { id: "arched", name: "Arched" },
     { id: "square", name: "Square" },
     { id: "gothic", name: "Gothic, pointed" },
-    { id: "stone", name: "Stone arch with ivy" }
+    { id: "stone", name: "Stone arch with ivy" },
+    { id: "six-pane", name: "Six panes" },
+    { id: "tracery", name: "Gothic tracery" },
+    { id: "lancet", name: "Narrow lancet" },
+    { id: "double-arch", name: "Double arch" },
+    { id: "moon-arch", name: "Arch with a moon" },
+    { id: "round", name: "Round, with a cross" },
+    { id: "porthole", name: "Porthole" },
+    { id: "timber", name: "Wide timber" },
+    { id: "casement", name: "Open casement" },
+    { id: "shutters", name: "With shutters" },
+    { id: "boarded", name: "Boarded up" },
+    { id: "boarded-arch", name: "Boarded arch" }
 ];
+
+// The painted windows and curtains (pictures, not drawings).
+export const PAINTED_WINDOWS =
+    ["six-pane", "tracery", "lancet", "double-arch", "moon-arch", "round", "porthole", "timber", "casement", "shutters", "boarded", "boarded-arch"];
+
+export const PAINTED_CURTAINS =
+    ["tasselled", "ivy", "pumpkin", "tattered", "lined", "theatre"];
 
 export const WOODS = [
     { id: "walnut", name: "Walnut" },

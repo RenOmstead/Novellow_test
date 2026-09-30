@@ -211,6 +211,25 @@ html:not(.candle-glow) {
     clip-path: inset(14% 9% 0 9%);
 }
 
+/* The painted windows: lightning and shooting stars only on their glass. */
+[data-window="six-pane"] .window-weather { --pane: url("../assets/decor/windows/six-pane-glass.webp?v=__VERSION__"); }
+[data-window="tracery"] .window-weather { --pane: url("../assets/decor/windows/tracery-glass.webp?v=__VERSION__"); }
+[data-window="lancet"] .window-weather { --pane: url("../assets/decor/windows/lancet-glass.webp?v=__VERSION__"); }
+[data-window="double-arch"] .window-weather { --pane: url("../assets/decor/windows/double-arch-glass.webp?v=__VERSION__"); }
+[data-window="moon-arch"] .window-weather { --pane: url("../assets/decor/windows/moon-arch-glass.webp?v=__VERSION__"); }
+[data-window="round"] .window-weather { --pane: url("../assets/decor/windows/round-glass.webp?v=__VERSION__"); }
+[data-window="porthole"] .window-weather { --pane: url("../assets/decor/windows/porthole-glass.webp?v=__VERSION__"); }
+[data-window="timber"] .window-weather { --pane: url("../assets/decor/windows/timber-glass.webp?v=__VERSION__"); }
+[data-window="casement"] .window-weather { --pane: url("../assets/decor/windows/casement-glass.webp?v=__VERSION__"); }
+[data-window="shutters"] .window-weather { --pane: url("../assets/decor/windows/shutters-glass.webp?v=__VERSION__"); }
+[data-window="boarded"] .window-weather { --pane: url("../assets/decor/windows/boarded-glass.webp?v=__VERSION__"); }
+[data-window="boarded-arch"] .window-weather { --pane: url("../assets/decor/windows/boarded-arch-glass.webp?v=__VERSION__"); }
+
+.window-weather {
+    -webkit-mask: var(--pane, none) 0 0 / 100% 100% no-repeat;
+    mask: var(--pane, none) 0 0 / 100% 100% no-repeat;
+}
+
 .window-weather__rain {
     position: absolute;
 
