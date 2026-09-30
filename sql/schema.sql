@@ -11,7 +11,6 @@
 --   6. notes.sql
 --   7. notes-inbox.sql
 --   8. public.sql
---   9. workshop.sql
 --
 -- Files 1-3 are run ONCE, when a project is first set up.
 -- Running this file again stops with "relation ... already

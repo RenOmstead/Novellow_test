@@ -22,7 +22,7 @@ import { NovellowError } from "../core/errors.js?v=__VERSION__";
 
 import { setUser, useVisitedSettings, loadLibrary, getBooks, getBook, getShelf } from "../core/store.js?v=__VERSION__";
 import { coverUrls } from "../core/covers.js?v=__VERSION__";
-import { html, raw, render, queryParam, formatDate } from "../core/helpers.js?v=__VERSION__";
+import { html, render, queryParam, formatDate } from "../core/helpers.js?v=__VERSION__";
 import { art, loader, toast, toastError, confirmDialog, formDialog } from "../core/ui.js?v=__VERSION__";
 import { ratingMarkup } from "../core/rating.js?v=__VERSION__";
 import { READING_STATUSES } from "../config.js?v=__VERSION__";
@@ -31,11 +31,10 @@ import { applyAppearance } from "../shell/themes.js?v=__VERSION__";
 import { growIvy } from "../room/ivy.js?v=__VERSION__";
 import { renderCrown } from "../room/crown.js?v=__VERSION__";
 import { startAmbience } from "../room/ambience.js?v=__VERSION__";
-import { startDecorations, setRoomReader } from "../room/decorations.js?v=__VERSION__";
+import { startDecorations } from "../room/decorations.js?v=__VERSION__";
 import { startRoomFit } from "../room/fit-room.js?v=__VERSION__";
 import { createBookcase } from "../books/bookcase.js?v=__VERSION__";
 import { coverMarkup } from "../books/cover.js?v=__VERSION__";
-import { avatarPortrait } from "../avatar/avatar.js?v=__VERSION__";
 
 
 let page = null;
@@ -88,8 +87,6 @@ function renderBar() {
         <a class="visit-bar__logo" href="${signedIn ? "dashboard.html" : "index.html"}" aria-label="${signedIn ? "Back to my library" : "Novellow"}">
             <img src="assets/brand/wordmark-light.png?v=__VERSION__" width="490" height="149" alt="Novellow">
         </a>
-
-        <span class="reader-avatar reader-avatar--large visit-bar__avatar" aria-hidden="true">${raw(avatarPortrait(page.avatar, { seed: page.id }))}</span>
 
         <div class="visit-bar__who">
             <p class="visit-bar__eyebrow">${page.visibility === "public" ? "An open library" : "A friend’s library"}</p>
@@ -455,9 +452,6 @@ async function start() {
     await coverUrls(getBooks().map((book) => book.cover_path));
 
     bookcase.render();
-
-    // The owner stands wherever they put themselves.
-    setRoomReader(page.avatar, page.id, page.display_name);
 
     startDecorations(room, page.room.theme);
 

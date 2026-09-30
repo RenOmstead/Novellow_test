@@ -16,7 +16,6 @@ import {
     getShelves,
     booksOnShelf,
     getSettings,
-    getProfile,
     listQuotes,
     listRecentEntries,
     events
@@ -28,7 +27,7 @@ import { art, loader, toastError } from "../core/ui.js?v=__VERSION__";
 import { growIvy } from "../room/ivy.js?v=__VERSION__";
 import { renderCrown } from "../room/crown.js?v=__VERSION__";
 import { startAmbience } from "../room/ambience.js?v=__VERSION__";
-import { startDecorations, setRoomReader } from "../room/decorations.js?v=__VERSION__";
+import { startDecorations } from "../room/decorations.js?v=__VERSION__";
 import { startRoomFit, COMPACT_QUERY } from "../room/fit-room.js?v=__VERSION__";
 import { createBookcase } from "../books/bookcase.js?v=__VERSION__";
 import { playReveal, playReturn } from "../books/book-reveal.js?v=__VERSION__";
@@ -410,17 +409,6 @@ async function start() {
     bookcase.render();
 
     renderDeskNotes();
-
-    // The reader's avatar, for standing in the room while they
-    // arrange it (visitors find it there).
-    const placeReader = () => {
-        const profile = getProfile();
-        setRoomReader(profile?.avatar, profile?.id || "reader", profile?.display_name || "");
-    };
-
-    placeReader();
-
-    events.addEventListener("profile-changed", placeReader);
 
     startDecorations(document.querySelector(".library-room"), settings.theme);
 

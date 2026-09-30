@@ -69,10 +69,8 @@ as $$
     );
 $$;
 
-revoke all on function public.is_novellow_team() from public;
--- Signed-out visitors ask too (the Workshop's rules); it's
--- always "no" for them.
-grant execute on function public.is_novellow_team() to anon, authenticated;
+revoke all on function public.is_novellow_team() from public, anon;
+grant execute on function public.is_novellow_team() to authenticated;
 
 
 -- ---------------------------------------------------------

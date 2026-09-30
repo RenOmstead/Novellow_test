@@ -14,7 +14,7 @@ import { currentUserId } from "./store.js?v=__VERSION__";
 
 
 const PROFILE_FIELDS =
-    "id, display_name, username, bio, library_visibility, avatar";
+    "id, display_name, username, bio, library_visibility";
 
 
 // Friends can visit a library shared with friends or with

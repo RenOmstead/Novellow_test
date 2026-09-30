@@ -45,11 +45,6 @@ whole file into the editor and select **Run**:
    everyone (18+), visit each other's rooms, report a library, and block
    readers; the Novellow account can hide a reported library. Run it
    after `notes-inbox.sql`. It's safe to run again.
-9. `sql/workshop.sql`: the Workshop, where readers share furniture and
-   decor. Uploaded drawings wait in the Novellow account's Review tab
-   until approved; recolours are shared straight away. Creates the
-   private `workshop` picture bucket. Run it after `public.sql`. It's
-   safe to run again.
 
 Each should finish with "Success. No rows returned". If one shows an
 error, stop there and send me the message.
