@@ -211,7 +211,12 @@
 }
 
 /* The sill under the window, and curtains over it: the
-   curtains share the window's box, with room for the rod. */
+   curtains share the window's box, with room for the rod.
+   Both fit the window itself: a painted window that is
+   narrower or shorter than its box says so with --win-x
+   (where it starts), --win-w (its width) and --win-top (the
+   space above it), as shares of the box, and --win-pad lets
+   the curtains hang out past a narrow one (css/themes.css). */
 /* The sill is always in front of the curtains. */
 .window-sill {
     z-index: 3;
@@ -219,21 +224,22 @@
     /* Measured in the window's own units (its width / 440):
        the ledge's top is at the foot of the glass, and its
        front board hides the curtains' hems. */
-    left: calc(var(--window-left) - var(--window-width) * 20 / 440);
-    bottom: calc(var(--window-bottom) - var(--window-width) * 28 / 440);
+    left: calc(var(--window-left) + var(--window-width) * var(--win-x, 0) - var(--window-width) * var(--win-w, 1) * 20 / 440);
+    bottom: calc(var(--window-bottom) - var(--window-width) * var(--win-w, 1) * 28 / 440);
 
-    width: calc(var(--window-width) * 480 / 440);
+    width: calc(var(--window-width) * var(--win-w, 1) * 480 / 440);
 }
 
-.window-curtains {
+.wall-art > .window-curtains {
     display: none;
 
     z-index: 2;
 
-    left: calc(var(--window-left) - var(--window-width) * 20 / 440);
-    bottom: calc(var(--window-bottom) - var(--window-width) * 10 / 440);
+    left: calc(var(--window-left) + var(--window-width) * var(--win-x, 0) - var(--window-width) * var(--win-w, 1) * 20 / 440 - var(--window-width) * var(--win-pad, 0));
+    bottom: calc(var(--window-bottom) - var(--window-width) * var(--win-w, 1) * 10 / 440);
 
-    width: calc(var(--window-width) * 480 / 440);
+    width: calc(var(--window-width) * var(--win-w, 1) * 480 / 440 + var(--window-width) * var(--win-pad, 0) * 2);
+    height: calc((var(--window-width) * 0.75 * (1 - var(--win-top, 0))) * 380 / 330);
 
     filter: drop-shadow(0 8px 10px rgba(20, 8, 4, 0.35));
 }
@@ -279,17 +285,17 @@
 .sill-candle--right {
     z-index: 4;
 
-    bottom: calc(var(--window-bottom) + var(--window-width) * 3 / 440);
+    bottom: calc(var(--window-bottom) + var(--window-width) * var(--win-w, 1) * 3 / 440);
 
     width: calc(var(--window-width) * 0.06);
 }
 
 .sill-candle--left {
-    left: calc(var(--window-left) + var(--window-width) * 0.06);
+    left: calc(var(--window-left) + var(--window-width) * var(--win-x, 0) + var(--window-width) * var(--win-w, 1) * 0.06);
 }
 
 .sill-candle--right {
-    left: calc(var(--window-left) + var(--window-width) * 0.88);
+    left: calc(var(--window-left) + var(--window-width) * var(--win-x, 0) + var(--window-width) * var(--win-w, 1) * 0.88);
 }
 
 

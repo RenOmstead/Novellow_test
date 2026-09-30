@@ -577,18 +577,18 @@
 [data-window="stone"] { --window-arched: none; --window-stone: inline; }
 
 /* The painted windows (their pictures are in sprite.svg). */
-[data-window="six-pane"] { --window-arched: none; --window-six-pane: inline; --glazing: none; }
-[data-window="tracery"] { --window-arched: none; --window-tracery: inline; --glazing: none; }
-[data-window="lancet"] { --window-arched: none; --window-lancet: inline; --glazing: none; }
-[data-window="double-arch"] { --window-arched: none; --window-double-arch: inline; --glazing: none; }
-[data-window="moon-arch"] { --window-arched: none; --window-moon-arch: inline; --glazing: none; }
-[data-window="round"] { --window-arched: none; --window-round: inline; --glazing: none; }
-[data-window="porthole"] { --window-arched: none; --window-porthole: inline; --glazing: none; }
-[data-window="timber"] { --window-arched: none; --window-timber: inline; --glazing: none; }
-[data-window="casement"] { --window-arched: none; --window-casement: inline; --glazing: none; }
-[data-window="shutters"] { --window-arched: none; --window-shutters: inline; --glazing: none; }
-[data-window="boarded"] { --window-arched: none; --window-boarded: inline; --glazing: none; }
-[data-window="boarded-arch"] { --window-arched: none; --window-boarded-arch: inline; --glazing: none; }
+[data-window="six-pane"] { --window-arched: none; --window-six-pane: inline; --glazing: none; --win-x: 0.145; --win-w: 0.709; --win-top: 0; --win-pad: 0.05; }
+[data-window="tracery"] { --window-arched: none; --window-tracery: inline; --glazing: none; --win-x: 0.215; --win-w: 0.57; --win-top: 0; --win-pad: 0.08; }
+[data-window="lancet"] { --window-arched: none; --window-lancet: inline; --glazing: none; --win-x: 0.248; --win-w: 0.498; --win-top: 0; --win-pad: 0.11; }
+[data-window="double-arch"] { --window-arched: none; --window-double-arch: inline; --glazing: none; --win-x: 0.032; --win-w: 0.935; --win-top: 0; }
+[data-window="moon-arch"] { --window-arched: none; --window-moon-arch: inline; --glazing: none; --win-x: 0.2; --win-w: 0.6; --win-top: 0; --win-pad: 0.09; }
+[data-window="round"] { --window-arched: none; --window-round: inline; --glazing: none; --win-x: 0.123; --win-w: 0.755; --win-top: 0; }
+[data-window="porthole"] { --window-arched: none; --window-porthole: inline; --glazing: none; --win-x: 0.12; --win-w: 0.759; --win-top: 0; }
+[data-window="timber"] { --window-arched: none; --window-timber: inline; --glazing: none; --win-x: 0; --win-w: 1; --win-top: 0.083; }
+[data-window="casement"] { --window-arched: none; --window-casement: inline; --glazing: none; --win-x: 0.235; --win-w: 0.53; --win-top: 0; --win-pad: 0.07; }
+[data-window="shutters"] { --window-arched: none; --window-shutters: inline; --glazing: none; --win-x: 0.27; --win-w: 0.46; --win-top: 0.055; --win-pad: 0.08; }
+[data-window="boarded"] { --window-arched: none; --window-boarded: inline; --glazing: none; --win-x: 0.188; --win-w: 0.626; --win-top: 0; --win-pad: 0.06; }
+[data-window="boarded-arch"] { --window-arched: none; --window-boarded-arch: inline; --glazing: none; --win-x: 0.195; --win-w: 0.608; --win-top: 0; --win-pad: 0.08; }
 
 [data-wood="walnut"] { --frame-dark: #3a2116; --frame-wood: #6e4029; --frame-light: #9a6440; --frame-line: #2a160e; --frame-shine: #c9905e; }
 [data-wood="oak"] { --frame-dark: #6e4a2a; --frame-wood: #a8773f; --frame-light: #c9995a; --frame-line: #3e2a14; --frame-shine: #e2bd84; }
