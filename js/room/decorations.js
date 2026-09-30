@@ -72,6 +72,12 @@ const isRoomTab = (id) => id.startsWith("room-");
 export const DECOR_ASSETS = [
     // Hand-painted pieces (pictures, not drawings): each shows first in its tab.
     { id: "art-armchair-plum", src: "assets/decor/painted/armchair_plum.webp", size: [420, 382], width: 190, name: "Plum tufted armchair", group: "seating" },
+    { id: "art-charcoal-wingback", src: "assets/decor/painted/charcoal_wingback.webp", size: [359, 420], width: 190, name: "Charcoal wingback", group: "seating" },
+    { id: "art-wine-sofa", src: "assets/decor/painted/wine_sofa.webp", size: [420, 216], width: 290, name: "Wine camelback sofa", group: "seating" },
+    { id: "art-walnut-bookcase", src: "assets/decor/painted/walnut_bookcase.webp", size: [326, 420], width: 160, name: "Walnut bookcase", group: "storage" },
+    { id: "art-walnut-desk", src: "assets/decor/painted/walnut_desk.webp", size: [420, 292], width: 210, name: "Walnut writing desk", group: "tables" },
+    { id: "art-walnut-pedestal-table", src: "assets/decor/painted/walnut_pedestal_table.webp", size: [371, 420], width: 120, name: "Walnut pedestal table", group: "tables" },
+    { id: "art-grey-fireplace", src: "assets/decor/painted/grey_fireplace.webp", size: [420, 328], width: 250, name: "Grey stone fireplace", group: "storage" },
     { id: "art-sofa-pumpkin", src: "assets/decor/painted/sofa_pumpkin.webp", size: [420, 258], width: 300, name: "Pumpkin scalloped sofa", group: "seating" },
     { id: "art-moon-pillow", src: "assets/decor/painted/moon_pillow.webp", size: [198, 157], width: 90, name: "Plaid moon pillow", group: "seating" },
     { id: "art-side-table", src: "assets/decor/painted/side_table.webp", size: [214, 230], width: 120, name: "Carved cabinet table", group: "tables" },

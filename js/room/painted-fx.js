@@ -188,7 +188,9 @@ const FX = {
     pumpkin_trio: "sheen",
     wall_shelf: "motes",
     tea_tin: "sheen",
-    milk_jug: "sheen"
+    milk_jug: "sheen",
+    grey_fireplace: "fire 50 64 22; embers 50 56 18; glow 50 56 4",
+    charcoal_wingback: "motes"
 
 };
 
