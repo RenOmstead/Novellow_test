@@ -11,6 +11,7 @@
 --   6. notes.sql
 --   7. notes-inbox.sql
 --   8. public.sql
+--   9. wall.sql
 --
 -- Files 1-3 are run ONCE, when a project is first set up.
 -- Running this file again stops with "relation ... already
@@ -679,8 +680,10 @@ create table public.decorations (
     position_x numeric(5, 2) not null default 50
         check (position_x between 0 and 100),
 
+    -- Up to three wall-heights above the floor's mark (and four
+    -- above the bookcase), for tall screens: see wall.sql.
     position_y numeric(5, 2) not null default 50
-        check (position_y between 0 and 100),
+        check (position_y between -300 and 400),
 
     scale numeric(4, 2) not null default 1
         check (scale between 0.25 and 3),
