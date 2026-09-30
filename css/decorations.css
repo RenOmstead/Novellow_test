@@ -1221,3 +1221,87 @@ html.room-compact .journal-zone > .decor-layer {
 .arrange-bar__head > .button {
     flex: none;
 }
+
+
+/* ---------------------------------------------------------
+   DECORATING: JUST THE ROOM
+   While arranging on a computer or tablet, the menu and the
+   top bar step aside: only the room and the Decorate panel
+   are left, and the room grows into the space beside the
+   panel (on whichever side the panel is).
+--------------------------------------------------------- */
+
+html.is-arranging-room:not(.room-compact) {
+    --header-h: 0px !important;
+    --sidebar-space: 304px;
+    --sidebar-collapsed-space: 304px;
+}
+
+html.is-arranging-room:not(.room-compact) :is(.library-sidebar, .sidebar-collapse) {
+    transform: translateX(-110%);
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+html.is-arranging-room:not(.room-compact) .scene-header {
+    display: none;
+}
+
+html.is-arranging-room:not(.room-compact) body .app-stage {
+    padding-left: 304px;
+}
+
+html.is-arranging-room:not(.room-compact):has(.arrange-bar[data-side="right"]) body .app-stage {
+    padding-left: 0;
+    padding-right: 304px;
+}
+
+html.is-arranging-room:not(.room-compact):has(.arrange-bar[data-side="right"]) {
+    --sidebar-space: 0px;
+    --sidebar-collapsed-space: 0px;
+}
+
+.library-sidebar,
+.sidebar-collapse {
+    transition: transform 0.35s ease, opacity 0.3s ease;
+}
+
+
+/* ---------------------------------------------------------
+   TAKING A PICTURE OF THE ROOM
+   Everything that is a button or a handle rather than part
+   of the room is left out of the picture.
+--------------------------------------------------------- */
+
+html.is-capturing :is(.bookcase-actions, .shelf-edit, .shelf-add, .piece-editor, .arrange-bar, .toast-region) {
+    visibility: hidden !important;
+}
+
+html.is-capturing .placed-decor::after,
+html.is-capturing .placed-decor::before {
+    display: none !important;
+}
+
+/* The paper grain and the moving light (flames, glows, steam)
+   are drawn with masks and light blending that a picture can't
+   keep; the pieces themselves come out clean without them. */
+html.is-capturing .decor-fx,
+html.is-capturing .decor-art::after {
+    display: none !important;
+}
+
+/* A sideways phone's panel header has room for its buttons,
+   not the title too (the tabs say what the panel is). */
+@media (orientation: landscape) and (max-height: 540px) {
+
+    .arrange-bar__title {
+        display: none;
+    }
+
+    .arrange-bar__head {
+        justify-content: space-between;
+    }
+
+}

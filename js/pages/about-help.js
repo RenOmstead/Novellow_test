@@ -87,7 +87,8 @@ const QUESTIONS = [
 
     {
         q: "How do I decorate my room?",
-        a: html`<p>Tap the <strong>moon</strong> button at the top of the page. Choose a room to change the whole look, or tap <strong>Edit the room</strong> to add furniture and decorations. Drag pieces where you'd like them, tap one to resize, tilt or remove it, and tap <strong>Done</strong> when you're finished.</p>
+        a: html`<p>Tap the <strong>moon</strong> button at the top of the page. Choose a room to change the whole look, or tap <strong>Edit the room</strong> to add furniture and decorations. Drag pieces where you'd like them, tap one to resize, tilt or remove it, and tap <strong>Done</strong> when you're finished. Pieces can go anywhere on the wall, right up to the ceiling.</p>
+            <p>To save a picture of your bookcase and room, tap the <strong>camera</strong> at the top of the decorating panel. On a phone you can save it to your photos or share it straight away.</p>
             <p>On a phone, turn it sideways on Home to step into the whole room.</p>`
     },
 

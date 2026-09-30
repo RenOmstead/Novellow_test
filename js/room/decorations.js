@@ -21,6 +21,7 @@
 import { listDecorations, createRow, updateRow, deleteRow } from "../core/store.js?v=__VERSION__";
 import { html, raw, render, clamp, debounce } from "../core/helpers.js?v=__VERSION__";
 import { art, toast, toastError } from "../core/ui.js?v=__VERSION__";
+import { takeRoomPicture } from "./capture.js?v=__VERSION__";
 import { paintedFx } from "./painted-fx.js?v=__VERSION__";
 import { setFixtureRows, roomPanelMarkup, rugPanelMarkup, onRoomPanelClick, dragWindow, dragRug, builtInAt, builtInElements, toggleBuiltIn } from "./fixtures.js?v=__VERSION__";
 
@@ -638,6 +639,31 @@ function caseZoom() {
 // edge (0) to TOP_SPAN pixels above it (100).
 const TOP_SPAN = 400;
 
+/*
+    How far a piece's height can go. The wall is measured up
+    from the floor across 820px, so a piece above that (on a
+    tall screen, up to the ceiling) is below 0; a piece above
+    the bookcase is measured up from its top across TOP_SPAN,
+    so one higher than that is past 100. Until the database
+    takes those heights (sql/wall.sql), they stop at 0 and 100.
+*/
+let wholeWall = true;
+
+function heightRange(area) {
+
+    if (!wholeWall || area === "shelf") {
+        return [0, 100];
+    }
+
+    return area === "bookcase_top" ? [0, 400] : [-300, 100];
+
+}
+
+// The database hasn't taken the new heights yet (sql/wall.sql).
+function isHeightRefused(error) {
+    return error?.code === "23514" && /position_y/.test(error.message || "");
+}
+
 function topFor(piece) {
 
     if (piece.room_area === "bookcase_top") {
@@ -886,6 +912,9 @@ function drawBarNow() {
             <button class="icon-button arrange-bar__side" type="button" data-arrange="side" aria-label="${bar.dataset.side === "left" ? "Move this panel to the right" : "Move this panel to the left"}" title="${bar.dataset.side === "left" ? "Move this panel to the right" : "Move this panel to the left"}">
                 ${art(bar.dataset.side === "left" ? "ui-chevron-right" : "ui-chevron-left")}
             </button>
+            <button class="icon-button arrange-bar__picture" type="button" data-arrange="picture" aria-label="Take a picture of your room" title="Take a picture of your room">
+                ${art("ui-camera")}
+            </button>
             <button class="icon-button arrange-bar__fold" type="button" data-arrange="fold" aria-expanded="${String(!trayFolded)}" aria-label="${trayFolded ? "Show the panel" : "Hide the panel"}" title="${trayFolded ? "Show the panel" : "Hide the panel"}">
                 ${art("ui-chevron-down")}
             </button>
@@ -1054,22 +1083,41 @@ function saveSoon(piece) {
 
         pendingSaves.set(piece.id, debounce(async (latest) => {
 
+            const values = () => ({
+                decoration_type: latest.decoration_type,
+                room_area: latest.room_area,
+                position_x: latest.position_x,
+                position_y: latest.position_y,
+                scale: latest.scale,
+                rotation: latest.rotation,
+                z_index: latest.z_index
+            });
+
             try {
 
-                await updateRow("decorations", latest.id, {
-                    decoration_type: latest.decoration_type,
-                    room_area: latest.room_area,
-                    position_x: latest.position_x,
-                    position_y: latest.position_y,
-                    scale: latest.scale,
-                    rotation: latest.rotation,
-                    z_index: latest.z_index
-                });
+                await updateRow("decorations", latest.id, values());
 
             }
 
             catch (error) {
-                toastError(error, "That decoration didn't save. Please try again.");
+
+                if (!isHeightRefused(error)) {
+                    toastError(error, "That decoration didn't save. Please try again.");
+                    return;
+                }
+
+                // Save it as high as the database allows for now.
+                wholeWall = false;
+                adjust(latest, {});
+
+                try {
+                    await updateRow("decorations", latest.id, values());
+                }
+
+                catch (again) {
+                    toastError(again, "That decoration didn't save. Please try again.");
+                }
+
             }
 
         }, 500));
@@ -1190,7 +1238,9 @@ function areaBox(area) {
         room.querySelector(AREAS[area]).getBoundingClientRect();
 
     if (area === "bookcase_top") {
-        const reach = TOP_SPAN * caseZoom();
+        // Up to the ceiling (at least TOP_SPAN).
+        const ceiling = room.getBoundingClientRect().top;
+        const reach = Math.max(TOP_SPAN * caseZoom(), wholeWall ? zone.top - ceiling : 0);
         return { left: zone.left, right: zone.right, top: zone.top - reach, bottom: zone.top + 6 * caseZoom() };
     }
 
@@ -1222,7 +1272,7 @@ function positionIn(area, pointX, pointY) {
     if (area === "bookcase_top") {
         return {
             position_x: Number(clamp(((x - box.left) / box.width) * 100, 0, 100).toFixed(2)),
-            position_y: Number(clamp(((box.top - y) / (TOP_SPAN * caseZoom())) * 100, 0, 100).toFixed(2))
+            position_y: Number(clamp(((box.top - y) / (TOP_SPAN * caseZoom())) * 100, ...heightRange(area)).toFixed(2))
         };
     }
 
@@ -1232,7 +1282,7 @@ function positionIn(area, pointX, pointY) {
 
     return {
         position_x: Number(clamp(((x - box.left) / box.width) * 100, 0, 100).toFixed(2)),
-        position_y: Number(clamp(((y - box.top) / height) * 100, 0, 100).toFixed(2))
+        position_y: Number(clamp(((y - box.top) / height) * 100, ...heightRange(area)).toFixed(2))
     };
 
 }
@@ -1252,16 +1302,23 @@ async function addPiece(assetId, spot = spotInView()) {
 
     try {
 
+        const row = () => ({
+            asset_id: assetId,
+            decoration_type: assetId.startsWith("frame-") ? "frame" : "ornament",
+            room_area: spot.area,
+            theme,
+            ...positionIn(spot.area, spot.x, spot.y),
+            scale: 1,
+            rotation: 0,
+            z_index: assetFor(assetId)?.floor ? 0 : Math.min(50, pieces.reduce((top, piece) => Math.max(top, piece.z_index), 0) + 1)
+        });
+
         const saved =
-            await createRow("decorations", {
-                asset_id: assetId,
-                decoration_type: assetId.startsWith("frame-") ? "frame" : "ornament",
-                room_area: spot.area,
-                theme,
-                ...positionIn(spot.area, spot.x, spot.y),
-                scale: 1,
-                rotation: 0,
-                z_index: assetFor(assetId)?.floor ? 0 : Math.min(50, pieces.reduce((top, piece) => Math.max(top, piece.z_index), 0) + 1)
+            await createRow("decorations", row()).catch((error) => {
+                if (!isHeightRefused(error)) throw error;
+                // As high as the database allows for now (sql/wall.sql).
+                wholeWall = false;
+                return createRow("decorations", row());
             });
 
         pieces.push({
@@ -1321,7 +1378,7 @@ function adjust(piece, change) {
     piece.rotation = Number(clamp(piece.rotation, -180, 180).toFixed(1));
     piece.z_index = clamp(Math.round(piece.z_index), 0, 50);
     piece.position_x = Number(clamp(piece.position_x, 0, 100).toFixed(2));
-    piece.position_y = Number(clamp(piece.position_y, 0, 100).toFixed(2));
+    piece.position_y = Number(clamp(piece.position_y, ...heightRange(piece.room_area)).toFixed(2));
 
     const element =
         room.querySelector(`[data-decor-id="${piece.id}"]`);
@@ -1382,7 +1439,7 @@ function settle(piece) {
 
     // The nearest surface just below (or a touch above) the piece.
     const target = tops
-        .filter((top) => piece.room_area === "bookcase_top" || (top - bottom <= SETTLE_REACH && bottom - top <= 10))
+        .filter((top) => top - bottom <= (piece.room_area === "bookcase_top" ? SETTLE_REACH * 2.5 : SETTLE_REACH) && bottom - top <= 10)
         .sort((a, b) => Math.abs(a - bottom) - Math.abs(b - bottom))[0];
 
     if (target === undefined) {
@@ -1519,6 +1576,13 @@ function onBarClick(event) {
 
     if (action === "done") {
         setArranging(false);
+        return;
+    }
+
+    if (action === "picture") {
+        select(null);
+        selectBuiltIn(null);
+        takeRoomPicture();
         return;
     }
 
