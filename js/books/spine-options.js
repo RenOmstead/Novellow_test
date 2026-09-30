@@ -44,8 +44,66 @@ export const SPINE_STYLES = [
     { id: "constellation", label: "Constellation" },
     { id: "filigree", label: "Gilded filigree" },
     { id: "garden", label: "Painted garden" },
-    { id: "strawberries", label: "Strawberry patch" }
+    { id: "strawberries", label: "Strawberry patch" },
+    { id: "painted-moon", label: "Painted: Crescent moon" },
+    { id: "painted-maple", label: "Painted: Maple leaf" },
+    { id: "painted-mushroom", label: "Painted: Toadstools" },
+    { id: "painted-ghost", label: "Painted: Little ghosts" },
+    { id: "painted-bat", label: "Painted: Bat and star" },
+    { id: "painted-starlight", label: "Painted: Starlight" },
+    { id: "painted-damask", label: "Painted: Damask" },
+    { id: "painted-fern", label: "Painted: Fern" },
+    { id: "painted-potion", label: "Painted: Potion bottles" },
+    { id: "painted-compass-star", label: "Painted: Compass star" },
+    { id: "painted-moth", label: "Painted: Moon moth" },
+    { id: "painted-antique", label: "Painted: Antique leather" },
+    { id: "painted-slasher", label: "Painted: Slasher stripes" },
+    { id: "painted-film-reel", label: "Painted: Film reel" },
+    { id: "painted-blood-moon", label: "Painted: Blood moon" },
+    { id: "painted-plaid", label: "Painted: Red plaid" },
+    { id: "painted-pine-forest", label: "Painted: Pine forest" },
+    { id: "painted-eye", label: "Painted: All-seeing eye" },
+    { id: "painted-cathedral", label: "Painted: Cathedral window" },
+    { id: "painted-lightning", label: "Painted: Violet lightning" },
+    { id: "painted-sunburst", label: "Painted: Sunburst" },
+    { id: "painted-treasure-map", label: "Painted: Treasure map" },
+    { id: "painted-gothic-arch", label: "Painted: Gothic arch" },
+    { id: "painted-claw-marks", label: "Painted: Claw marks" }
 ];
+
+
+/*
+    Hand-painted spines: a picture the length of the book, with
+    the title in its panel. Their colours come from the picture,
+    so each sets its own title colour.
+*/
+
+export const SPINE_PAINTED = {
+    "painted-moon": { src: "assets/spines/painted/moon.webp", text: "#f3dca6" },
+    "painted-maple": { src: "assets/spines/painted/maple.webp", text: "#fff1d8" },
+    "painted-mushroom": { src: "assets/spines/painted/mushroom.webp", text: "#fff4dc" },
+    "painted-ghost": { src: "assets/spines/painted/ghost.webp", text: "#3b2a2a" },
+    "painted-bat": { src: "assets/spines/painted/bat.webp", text: "#f3dca6" },
+    "painted-starlight": { src: "assets/spines/painted/starlight.webp", text: "#fff1e4" },
+    "painted-damask": { src: "assets/spines/painted/damask.webp", text: "#fbe6d6" },
+    "painted-fern": { src: "assets/spines/painted/fern.webp", text: "#f7f0d8" },
+    "painted-potion": { src: "assets/spines/painted/potion.webp", text: "#fff1dc" },
+    "painted-compass-star": { src: "assets/spines/painted/compass_star.webp", text: "#3b2a1e" },
+    "painted-moth": { src: "assets/spines/painted/moth.webp", text: "#3b2336" },
+    "painted-antique": { src: "assets/spines/painted/antique.webp", text: "#f3dca6" },
+    "painted-slasher": { src: "assets/spines/painted/slasher.webp", text: "#f2e4d6" },
+    "painted-film-reel": { src: "assets/spines/painted/film_reel.webp", text: "#fff1ff" },
+    "painted-blood-moon": { src: "assets/spines/painted/blood_moon.webp", text: "#f2d0b8" },
+    "painted-plaid": { src: "assets/spines/painted/plaid.webp", text: "#fff0e4" },
+    "painted-pine-forest": { src: "assets/spines/painted/pine_forest.webp", text: "#2c2c3a" },
+    "painted-eye": { src: "assets/spines/painted/eye.webp", text: "#2e2a14" },
+    "painted-cathedral": { src: "assets/spines/painted/cathedral.webp", text: "#3b2a2a" },
+    "painted-lightning": { src: "assets/spines/painted/lightning.webp", text: "#fbe8ff" },
+    "painted-sunburst": { src: "assets/spines/painted/sunburst.webp", text: "#3a1c0c" },
+    "painted-treasure-map": { src: "assets/spines/painted/treasure_map.webp", text: "#3b2a1e" },
+    "painted-gothic-arch": { src: "assets/spines/painted/gothic_arch.webp", text: "#f5e2ec" },
+    "painted-claw-marks": { src: "assets/spines/painted/claw_marks.webp", text: "#f7e2dc" }
+};
 
 
 /*

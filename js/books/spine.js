@@ -18,7 +18,8 @@ import {
     FONT_WEIGHTS,
     LETTER_SPACING,
     MOTIF_VIEWBOX,
-    SPINE_ART
+    SPINE_ART,
+    SPINE_PAINTED
 } from "./spine-options.js?v=__VERSION__";
 
 
@@ -85,7 +86,7 @@ function fitTitle(title, spine, baseSize, height, width) {
         spine.panel === "none" || spine.panel === "ribbon" ? 0 : 14;
 
     const withOrnament =
-        !SPINE_ART[spine.style] && spine.ornament !== "none";
+        !SPINE_ART[spine.style] && !SPINE_PAINTED[spine.style] && spine.ornament !== "none";
 
     const attempts = [];
 
@@ -157,10 +158,15 @@ export function spineMarkup(book, { tag = "button", extra = "" } = {}) {
     const fit =
         fitTitle(title, spine, baseSize, height, width);
 
+    const painted =
+        SPINE_PAINTED[spine.style];
+
     const style = [
         `--book-color: ${spine.color}`,
         `--book-accent: ${spine.accent}`,
-        `--book-text: ${spine.text}`,
+        `--book-text: ${painted ? painted.text : spine.text}`,
+        // Read by css/books.css, so the path starts from css/.
+        painted ? `--spine-paint: url("../${painted.src}?v=__VERSION__")` : "",
         `--w: ${width}px`,
         `--h: ${height}px`,
         `--spine-font: ${spineFont(spine)}`,
@@ -169,11 +175,12 @@ export function spineMarkup(book, { tag = "button", extra = "" } = {}) {
         `--spine-weight: ${FONT_WEIGHTS.find((item) => item.id === spine.weight)?.value || 400}`,
         `--spine-spacing: ${LETTER_SPACING.find((item) => item.id === spine.spacing)?.value || "0.04em"}`,
         `--spine-style: ${spine.fontStyle === "italic" ? "italic" : "normal"}`
-    ].join("; ");
+    ].filter(Boolean).join("; ");
 
     const classes = [
         "book-spine",
         `spine--${spine.style}`,
+        painted ? "spine--painted" : "",
         `spine-panel--${spine.panel}`,
         `spine-case--${spine.textCase}`,
         `spine-align--${spine.align}`,
@@ -188,7 +195,7 @@ export function spineMarkup(book, { tag = "button", extra = "" } = {}) {
     const inner = html`
         <span class="spine-band spine-band--top" aria-hidden="true"></span>
 
-        ${SPINE_ART[spine.style]
+        ${painted ? "" : SPINE_ART[spine.style]
             ? motif(SPINE_ART[spine.style], `spine-vine spine-art--${spine.style}`)
             : fit.ornament ? motif(spine.ornament, "spine-ornament spine-ornament--top") : ""}
 

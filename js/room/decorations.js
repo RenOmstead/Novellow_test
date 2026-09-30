@@ -19,9 +19,9 @@
 ========================================================= */
 
 import { listDecorations, createRow, updateRow, deleteRow } from "../core/store.js?v=__VERSION__";
-import { html, render, clamp, debounce } from "../core/helpers.js?v=__VERSION__";
+import { html, raw, render, clamp, debounce } from "../core/helpers.js?v=__VERSION__";
 import { art, toast, toastError } from "../core/ui.js?v=__VERSION__";
-import { setFixtureRows, roomPanelMarkup, onRoomPanelClick, dragWindow, builtInAt, builtInElements, toggleBuiltIn } from "./fixtures.js?v=__VERSION__";
+import { setFixtureRows, roomPanelMarkup, onRoomPanelClick, dragWindow, dragRug, builtInAt, builtInElements, toggleBuiltIn } from "./fixtures.js?v=__VERSION__";
 
 
 /*
@@ -42,10 +42,42 @@ export const DECOR_GROUPS = [
     { id: "autumn", name: "Autumn" },
     { id: "plants", name: "Plants" },
     { id: "witchy", name: "Witchy" },
-    { id: "spooky", name: "Spooky" }
+    { id: "spooky", name: "Spooky" },
+    { id: "rugs", name: "Rugs" }
 ];
 
 export const DECOR_ASSETS = [
+    // Hand-painted pieces (pictures, not drawings): each shows first in its tab.
+    { id: "art-armchair-plum", src: "assets/decor/painted/armchair_plum.webp", size: [218, 231], width: 190, name: "Plum tufted armchair", group: "seating" },
+    { id: "art-sofa-pumpkin", src: "assets/decor/painted/sofa_pumpkin.webp", size: [345, 193], width: 300, name: "Pumpkin scalloped sofa", group: "seating" },
+    { id: "art-moon-pillow", src: "assets/decor/painted/moon_pillow.webp", size: [198, 157], width: 90, name: "Plaid moon pillow", group: "seating" },
+    { id: "art-side-table", src: "assets/decor/painted/side_table.webp", size: [157, 183], width: 120, name: "Carved side table", group: "tables" },
+    { id: "art-gothic-bookcase", src: "assets/decor/painted/gothic_bookcase.webp", size: [162, 257], width: 150, name: "Gothic bookcase", group: "storage" },
+    { id: "art-apothecary-cabinet", src: "assets/decor/painted/apothecary_cabinet.webp", size: [237, 253], width: 200, name: "Apothecary cabinet", group: "storage" },
+    { id: "art-stone-fireplace", src: "assets/decor/painted/stone_fireplace.webp", size: [251, 213], width: 250, name: "Stone fireplace", group: "storage" },
+    { id: "art-fringed-lamp", src: "assets/decor/painted/fringed_lamp.webp", size: [118, 217], width: 100, name: "Fringed floor lamp", group: "lighting" },
+    { id: "art-candelabra", src: "assets/decor/painted/candelabra.webp", size: [171, 205], width: 100, name: "Brass candelabra", group: "lighting" },
+    { id: "art-hanging-lantern", src: "assets/decor/painted/hanging_lantern.webp", size: [97, 228], width: 60, name: "Hanging lantern", group: "lighting" },
+    { id: "art-pumpkin-lantern", src: "assets/decor/painted/pumpkin_lantern.webp", size: [146, 195], width: 80, name: "Pumpkin lantern", group: "lighting" },
+    { id: "art-moon-lamp", src: "assets/decor/painted/moon_lamp.webp", size: [138, 190], width: 90, name: "Crescent moon lamp", group: "lighting" },
+    { id: "art-star-garland", src: "assets/decor/painted/star_garland.webp", size: [358, 139], width: 240, name: "Moon and star garland", group: "cozy" },
+    { id: "art-retro-tv", src: "assets/decor/painted/retro_tv.webp", size: [228, 172], width: 150, name: "Retro television", group: "cozy" },
+    { id: "art-vhs-stack", src: "assets/decor/painted/vhs_stack.webp", size: [228, 156], width: 100, name: "Stack of tapes", group: "cozy" },
+    { id: "art-rotary-phone", src: "assets/decor/painted/rotary_phone.webp", size: [216, 150], width: 100, name: "Rotary telephone", group: "cozy" },
+    { id: "art-camp-sign", src: "assets/decor/painted/camp_sign.webp", size: [294, 162], width: 150, name: "Forest trail sign", group: "cozy" },
+    { id: "art-flashlight", src: "assets/decor/painted/flashlight.webp", size: [196, 121], width: 80, name: "Flashlight", group: "cozy" },
+    { id: "art-jack-o-lantern", src: "assets/decor/painted/jack_o_lantern.webp", size: [180, 169], width: 100, name: "Jack-o'-lantern", group: "autumn" },
+    { id: "art-autumn-wreath", src: "assets/decor/painted/autumn_wreath.webp", size: [211, 226], width: 130, name: "Autumn leaf wreath", group: "autumn" },
+    { id: "art-bubbling-cauldron", src: "assets/decor/painted/bubbling_cauldron.webp", size: [190, 189], width: 120, name: "Bubbling cauldron", group: "witchy" },
+    { id: "art-potion-trio", src: "assets/decor/painted/potion_trio.webp", size: [238, 180], width: 110, name: "Three potions", group: "witchy" },
+    { id: "art-witch-hat", src: "assets/decor/painted/witch_hat.webp", size: [245, 189], width: 130, name: "Witch's hat", group: "witchy" },
+    { id: "art-ghost", src: "assets/decor/painted/ghost.webp", size: [206, 191], width: 110, name: "Friendly ghost", group: "spooky" },
+    { id: "art-ghost-friend", src: "assets/decor/painted/ghost_friend.webp", size: [209, 181], width: 100, name: "Little ghost", group: "spooky" },
+    { id: "art-bat", src: "assets/decor/painted/bat.webp", size: [260, 122], width: 130, name: "Paper bat", group: "spooky" },
+    { id: "art-rug-night-sky", src: "assets/decor/painted/rug_night_sky.webp", size: [253, 154], width: 280, name: "Night sky rug", group: "rugs", floor: true },
+    { id: "art-rug-mushroom", src: "assets/decor/painted/rug_mushroom.webp", size: [276, 139], width: 280, name: "Mushroom rug", group: "rugs", floor: true },
+    { id: "art-rug-pumpkin", src: "assets/decor/painted/rug_pumpkin.webp", size: [249, 154], width: 260, name: "Pumpkin rug", group: "rugs", floor: true },
+    { id: "art-rug-crescent", src: "assets/decor/painted/rug_crescent.webp", size: [223, 173], width: 260, name: "Crescent moon rug", group: "rugs", floor: true },
     // Furniture: seating, tables, lamps, storage and fireplaces
     { id: "furn-wingback-floral", box: "0 0 220 236", width: 200, name: "Floral wingback chair", group: "seating" },
     { id: "furn-wingback-rust", box: "0 0 220 236", width: 200, name: "Velvet wingback chair", group: "seating", tint: true },
@@ -473,6 +505,15 @@ function assetFor(id) {
 }
 
 
+// A piece's picture: hand-painted pieces are images, the rest
+// are drawings in the sprite.
+function artMarkup(asset) {
+    return asset.src
+        ? `<img class="decor-picture" src="${asset.src}?v=__VERSION__" width="${asset.size[0]}" height="${asset.size[1]}" alt="" draggable="false" loading="lazy">`
+        : `<svg viewBox="${asset.box}" aria-hidden="true"><use href="#${asset.id}"></use></svg>`;
+}
+
+
 function layerFor(area) {
 
     const zone =
@@ -514,7 +555,7 @@ function pieceMarkup(piece) {
             style="left: ${piece.position_x}%; top: ${topFor(piece)}; width: ${asset.width}px; z-index: ${piece.z_index}; --scale: ${piece.scale}; --rotation: ${piece.rotation}deg${fabricStyle(piece)}"
             ${arranging ? html`tabindex="0" role="button" aria-label="${asset.name}. Drag to move, or use the arrow keys."` : html`aria-hidden="true"`}
         >
-            <svg viewBox="${asset.box}" aria-hidden="true"><use href="#${asset.id}"></use></svg>
+            ${raw(artMarkup(asset))}
         </div>
     `;
 
@@ -619,7 +660,7 @@ function drawBarNow() {
             ${DECOR_ASSETS.filter((asset) => asset.group === paletteGroup).map((asset) => html`
                 <li>
                     <button class="arrange-bar__asset ${asset.dark ? "arrange-bar__asset--dark" : ""} ${asset.plain ? "arrange-bar__asset--plain" : ""}" type="button" data-add-decor="${asset.id}" title="${asset.name}" aria-label="Add ${asset.name}">
-                        <svg viewBox="${asset.box}" aria-hidden="true"><use href="#${asset.id}"></use></svg>
+                        ${raw(artMarkup(asset))}
                         <span class="arrange-bar__label" aria-hidden="true">${asset.name}</span>
                     </button>
                 </li>
@@ -939,7 +980,7 @@ async function addPiece(assetId, spot = spotInView()) {
                 ...positionIn(spot.area, spot.x, spot.y),
                 scale: 1,
                 rotation: 0,
-                z_index: Math.min(50, pieces.reduce((top, piece) => Math.max(top, piece.z_index), 0) + 1)
+                z_index: assetFor(assetId)?.floor ? 0 : Math.min(50, pieces.reduce((top, piece) => Math.max(top, piece.z_index), 0) + 1)
             });
 
         pieces.push({
@@ -1290,6 +1331,19 @@ function onPointerDown(event) {
         return;
     }
 
+    // While arranging, the rug can be dragged across the floor.
+    if (arranging && event.button <= 0 && event.target.closest(".room-rug") && !event.target.closest(".placed-decor")) {
+
+        if (selectedId) {
+            select(null);
+        }
+
+        dragRug(event);
+
+        return;
+
+    }
+
     // While arranging, the window can be dragged along the wall.
     if (arranging && event.button <= 0 && event.target.closest(".moon-window") && !event.target.closest(".placed-decor")) {
 
@@ -1555,7 +1609,7 @@ function onPalettePointerDown(event) {
         ghost = document.createElement("div");
         ghost.className = "decor-ghost";
         ghost.style.width = `${asset.width}px`;
-        ghost.innerHTML = `<svg viewBox="${asset.box}" aria-hidden="true"><use href="#${asset.id}"></use></svg>`;
+        ghost.innerHTML = artMarkup(asset);
         document.body.appendChild(ghost);
 
         bar.classList.add("is-dragging");
