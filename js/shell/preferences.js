@@ -45,6 +45,7 @@ export const CURTAINS = [
     { id: "tattered", name: "Tattered, tied back" },
     { id: "lined", name: "Lined with cream" },
     { id: "theatre", name: "Theatre swags" },
+    { id: "roses", name: "Pink with roses" },
     { id: "none", name: "No curtains" }
 ];
 
@@ -98,7 +99,7 @@ export const PAINTED_WINDOWS =
     ["six-pane", "tracery", "lancet", "double-arch", "moon-arch", "round", "porthole", "timber", "casement", "shutters", "boarded", "boarded-arch"];
 
 export const PAINTED_CURTAINS =
-    ["tasselled", "ivy", "pumpkin", "tattered", "lined", "theatre"];
+    ["tasselled", "ivy", "pumpkin", "tattered", "lined", "theatre", "roses"];
 
 export const WOODS = [
     { id: "walnut", name: "Walnut" },
