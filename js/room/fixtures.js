@@ -1057,7 +1057,7 @@ function chips(kind, label, current) {
 }
 
 
-export function roomPanelMarkup() {
+export function roomPanelMarkup(section = "room-walls") {
 
     const fixtures =
         getFixtures();
@@ -1074,39 +1074,21 @@ export function roomPanelMarkup() {
     const builtIn =
         BUILT_IN.filter((part) => part.rooms.includes(theme));
 
-    return html`
-        <div class="arrange-bar__room">
+    const sections = {
 
-            ${chips("time", "Outside the window", fixtures.time)}
-
-            ${chips("light", "Light in the room", fixtures.light)}
-
-            ${chips("tree", "Tree outside", fixtures.tree)}
-
-            ${chips("season", "Season", fixtures.season)}
-
-            ${builtIn.length ? html`
-                <fieldset class="room-choices">
-                    <legend class="room-choices__label">Built into this room</legend>
-                    <p class="room-choices__note">Tap a piece here, or tap it in the room, to take it away. Tap it here again to put it back.</p>
-                    <div class="room-choices__chips">
-                        ${builtIn.map((part) => html`
-                            <button class="room-chip room-chip--toggle ${hidden.has(part.id) ? "" : "is-current"}" type="button" data-built-in="${part.id}" aria-pressed="${String(!hidden.has(part.id))}">${hidden.has(part.id) ? "＋ " : "✓ "}${part.name}</button>
-                        `)}
-                    </div>
-                </fieldset>
-            ` : ""}
-
+        "room-walls": html`
+            ${swatches("wallpaper", "Wallpaper", fixtures.wallpaper)}
             ${sandbox ? "" : html`
                 <p class="room-choices__note">Each room keeps its own choices. For a room that starts empty, choose <strong>Sandbox</strong> from the moon menu.</p>
             `}
+        `,
 
-            ${swatches("wallpaper", "Wallpaper", fixtures.wallpaper)}
-
+        "room-floor": html`
             ${swatches("floor", "Floor", fixtures.floor)}
+        `,
 
+        "room-window": html`
             ${chips("window", "Window", fixtures.window)}
-
             ${fixtures.window === "none" ? "" : html`
                 <p class="room-choices__note">Drag the window to move it around the wall.</p>
                 ${fixtures.windowX === null || fixtures.windowX === undefined ? "" : html`
@@ -1116,7 +1098,32 @@ export function roomPanelMarkup() {
                 ${chips("curtains", "Curtains", fixtures.curtains)}
                 ${fixtures.curtains === "none" || fixtures.curtains === "lace" ? "" : swatches("curtainColour", "Curtain colours", fixtures.curtainColour)}
             `}
+        `,
 
+        "room-light": html`
+            ${chips("time", "Outside the window", fixtures.time)}
+            ${chips("light", "Light in the room", fixtures.light)}
+            ${chips("tree", "Tree outside", fixtures.tree)}
+            ${chips("season", "Season", fixtures.season)}
+        `,
+
+        "room-pieces": builtIn.length ? html`
+            <fieldset class="room-choices">
+                <legend class="room-choices__label">Built into this room</legend>
+                <p class="room-choices__note">Tap a piece here, or tap it in the room, to take it away. Tap it here again to put it back.</p>
+                <div class="room-choices__chips">
+                    ${builtIn.map((part) => html`
+                        <button class="room-chip room-chip--toggle ${hidden.has(part.id) ? "" : "is-current"}" type="button" data-built-in="${part.id}" aria-pressed="${String(!hidden.has(part.id))}">${hidden.has(part.id) ? "＋ " : "✓ "}${part.name}</button>
+                    `)}
+                </div>
+            </fieldset>
+        ` : html`<p class="room-choices__note">This room has no pieces of its own; everything in it is yours.</p>`
+
+    };
+
+    return html`
+        <div class="arrange-bar__room">
+            ${sections[section] || sections["room-walls"]}
         </div>
     `;
 

@@ -1282,6 +1282,13 @@
             </mask>
             <use href="#window-view" mask="url(#windowGlass-six-pane)"/>
             <image href="assets/decor/windows/six-pane.webp?v=__VERSION__" width="440" height="330"/>
+            <g class="window-tint" style="display: var(--window-tint, none); isolation: isolate">
+                <mask id="windowWood-six-pane" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
+                    <image href="assets/decor/windows/six-pane-wood.webp?v=__VERSION__" width="440" height="330"/>
+                </mask>
+                <image href="assets/decor/windows/six-pane-wood.webp?v=__VERSION__" width="440" height="330"/>
+                <rect width="440" height="330" mask="url(#windowWood-six-pane)" style="fill: var(--frame-wood, #6e4029); mix-blend-mode: multiply"/>
+            </g>
         </g>
         <g style="display: var(--window-tracery, none)">
             <mask id="windowGlass-tracery" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
@@ -1289,6 +1296,13 @@
             </mask>
             <use href="#window-view" mask="url(#windowGlass-tracery)"/>
             <image href="assets/decor/windows/tracery.webp?v=__VERSION__" width="440" height="330"/>
+            <g class="window-tint" style="display: var(--window-tint, none); isolation: isolate">
+                <mask id="windowWood-tracery" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
+                    <image href="assets/decor/windows/tracery-wood.webp?v=__VERSION__" width="440" height="330"/>
+                </mask>
+                <image href="assets/decor/windows/tracery-wood.webp?v=__VERSION__" width="440" height="330"/>
+                <rect width="440" height="330" mask="url(#windowWood-tracery)" style="fill: var(--frame-wood, #6e4029); mix-blend-mode: multiply"/>
+            </g>
         </g>
         <g style="display: var(--window-lancet, none)">
             <mask id="windowGlass-lancet" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
@@ -1296,6 +1310,13 @@
             </mask>
             <use href="#window-view" mask="url(#windowGlass-lancet)"/>
             <image href="assets/decor/windows/lancet.webp?v=__VERSION__" width="440" height="330"/>
+            <g class="window-tint" style="display: var(--window-tint, none); isolation: isolate">
+                <mask id="windowWood-lancet" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
+                    <image href="assets/decor/windows/lancet-wood.webp?v=__VERSION__" width="440" height="330"/>
+                </mask>
+                <image href="assets/decor/windows/lancet-wood.webp?v=__VERSION__" width="440" height="330"/>
+                <rect width="440" height="330" mask="url(#windowWood-lancet)" style="fill: var(--frame-wood, #6e4029); mix-blend-mode: multiply"/>
+            </g>
         </g>
         <g style="display: var(--window-double-arch, none)">
             <mask id="windowGlass-double-arch" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
@@ -1303,6 +1324,13 @@
             </mask>
             <use href="#window-view" mask="url(#windowGlass-double-arch)"/>
             <image href="assets/decor/windows/double-arch.webp?v=__VERSION__" width="440" height="330"/>
+            <g class="window-tint" style="display: var(--window-tint, none); isolation: isolate">
+                <mask id="windowWood-double-arch" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
+                    <image href="assets/decor/windows/double-arch-wood.webp?v=__VERSION__" width="440" height="330"/>
+                </mask>
+                <image href="assets/decor/windows/double-arch-wood.webp?v=__VERSION__" width="440" height="330"/>
+                <rect width="440" height="330" mask="url(#windowWood-double-arch)" style="fill: var(--frame-wood, #6e4029); mix-blend-mode: multiply"/>
+            </g>
         </g>
         <g style="display: var(--window-moon-arch, none)">
             <mask id="windowGlass-moon-arch" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
@@ -1310,6 +1338,13 @@
             </mask>
             <use href="#window-view" mask="url(#windowGlass-moon-arch)"/>
             <image href="assets/decor/windows/moon-arch.webp?v=__VERSION__" width="440" height="330"/>
+            <g class="window-tint" style="display: var(--window-tint, none); isolation: isolate">
+                <mask id="windowWood-moon-arch" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
+                    <image href="assets/decor/windows/moon-arch-wood.webp?v=__VERSION__" width="440" height="330"/>
+                </mask>
+                <image href="assets/decor/windows/moon-arch-wood.webp?v=__VERSION__" width="440" height="330"/>
+                <rect width="440" height="330" mask="url(#windowWood-moon-arch)" style="fill: var(--frame-wood, #6e4029); mix-blend-mode: multiply"/>
+            </g>
         </g>
         <g style="display: var(--window-round, none)">
             <mask id="windowGlass-round" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
@@ -1317,6 +1352,13 @@
             </mask>
             <use href="#window-view" mask="url(#windowGlass-round)"/>
             <image href="assets/decor/windows/round.webp?v=__VERSION__" width="440" height="330"/>
+            <g class="window-tint" style="display: var(--window-tint, none); isolation: isolate">
+                <mask id="windowWood-round" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
+                    <image href="assets/decor/windows/round-wood.webp?v=__VERSION__" width="440" height="330"/>
+                </mask>
+                <image href="assets/decor/windows/round-wood.webp?v=__VERSION__" width="440" height="330"/>
+                <rect width="440" height="330" mask="url(#windowWood-round)" style="fill: var(--frame-wood, #6e4029); mix-blend-mode: multiply"/>
+            </g>
         </g>
         <g style="display: var(--window-porthole, none)">
             <mask id="windowGlass-porthole" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
@@ -1324,6 +1366,13 @@
             </mask>
             <use href="#window-view" mask="url(#windowGlass-porthole)"/>
             <image href="assets/decor/windows/porthole.webp?v=__VERSION__" width="440" height="330"/>
+            <g class="window-tint" style="display: var(--window-tint, none); isolation: isolate">
+                <mask id="windowWood-porthole" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
+                    <image href="assets/decor/windows/porthole-wood.webp?v=__VERSION__" width="440" height="330"/>
+                </mask>
+                <image href="assets/decor/windows/porthole-wood.webp?v=__VERSION__" width="440" height="330"/>
+                <rect width="440" height="330" mask="url(#windowWood-porthole)" style="fill: var(--frame-wood, #6e4029); mix-blend-mode: multiply"/>
+            </g>
         </g>
         <g style="display: var(--window-timber, none)">
             <mask id="windowGlass-timber" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
@@ -1331,6 +1380,13 @@
             </mask>
             <use href="#window-view" mask="url(#windowGlass-timber)"/>
             <image href="assets/decor/windows/timber.webp?v=__VERSION__" width="440" height="330"/>
+            <g class="window-tint" style="display: var(--window-tint, none); isolation: isolate">
+                <mask id="windowWood-timber" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
+                    <image href="assets/decor/windows/timber-wood.webp?v=__VERSION__" width="440" height="330"/>
+                </mask>
+                <image href="assets/decor/windows/timber-wood.webp?v=__VERSION__" width="440" height="330"/>
+                <rect width="440" height="330" mask="url(#windowWood-timber)" style="fill: var(--frame-wood, #6e4029); mix-blend-mode: multiply"/>
+            </g>
         </g>
         <g style="display: var(--window-casement, none)">
             <mask id="windowGlass-casement" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
@@ -1338,6 +1394,13 @@
             </mask>
             <use href="#window-view" mask="url(#windowGlass-casement)"/>
             <image href="assets/decor/windows/casement.webp?v=__VERSION__" width="440" height="330"/>
+            <g class="window-tint" style="display: var(--window-tint, none); isolation: isolate">
+                <mask id="windowWood-casement" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
+                    <image href="assets/decor/windows/casement-wood.webp?v=__VERSION__" width="440" height="330"/>
+                </mask>
+                <image href="assets/decor/windows/casement-wood.webp?v=__VERSION__" width="440" height="330"/>
+                <rect width="440" height="330" mask="url(#windowWood-casement)" style="fill: var(--frame-wood, #6e4029); mix-blend-mode: multiply"/>
+            </g>
         </g>
         <g style="display: var(--window-shutters, none)">
             <mask id="windowGlass-shutters" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
@@ -1345,6 +1408,13 @@
             </mask>
             <use href="#window-view" mask="url(#windowGlass-shutters)"/>
             <image href="assets/decor/windows/shutters.webp?v=__VERSION__" width="440" height="330"/>
+            <g class="window-tint" style="display: var(--window-tint, none); isolation: isolate">
+                <mask id="windowWood-shutters" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
+                    <image href="assets/decor/windows/shutters-wood.webp?v=__VERSION__" width="440" height="330"/>
+                </mask>
+                <image href="assets/decor/windows/shutters-wood.webp?v=__VERSION__" width="440" height="330"/>
+                <rect width="440" height="330" mask="url(#windowWood-shutters)" style="fill: var(--frame-wood, #6e4029); mix-blend-mode: multiply"/>
+            </g>
         </g>
         <g style="display: var(--window-boarded, none)">
             <mask id="windowGlass-boarded" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
@@ -1352,6 +1422,13 @@
             </mask>
             <use href="#window-view" mask="url(#windowGlass-boarded)"/>
             <image href="assets/decor/windows/boarded.webp?v=__VERSION__" width="440" height="330"/>
+            <g class="window-tint" style="display: var(--window-tint, none); isolation: isolate">
+                <mask id="windowWood-boarded" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
+                    <image href="assets/decor/windows/boarded-wood.webp?v=__VERSION__" width="440" height="330"/>
+                </mask>
+                <image href="assets/decor/windows/boarded-wood.webp?v=__VERSION__" width="440" height="330"/>
+                <rect width="440" height="330" mask="url(#windowWood-boarded)" style="fill: var(--frame-wood, #6e4029); mix-blend-mode: multiply"/>
+            </g>
         </g>
         <g style="display: var(--window-boarded-arch, none)">
             <mask id="windowGlass-boarded-arch" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
@@ -1359,6 +1436,13 @@
             </mask>
             <use href="#window-view" mask="url(#windowGlass-boarded-arch)"/>
             <image href="assets/decor/windows/boarded-arch.webp?v=__VERSION__" width="440" height="330"/>
+            <g class="window-tint" style="display: var(--window-tint, none); isolation: isolate">
+                <mask id="windowWood-boarded-arch" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="330" style="mask-type: alpha">
+                    <image href="assets/decor/windows/boarded-arch-wood.webp?v=__VERSION__" width="440" height="330"/>
+                </mask>
+                <image href="assets/decor/windows/boarded-arch-wood.webp?v=__VERSION__" width="440" height="330"/>
+                <rect width="440" height="330" mask="url(#windowWood-boarded-arch)" style="fill: var(--frame-wood, #6e4029); mix-blend-mode: multiply"/>
+            </g>
         </g>
     </symbol>
 

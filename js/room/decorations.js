@@ -54,13 +54,20 @@ export const DECOR_GROUPS = [
 // The panel's tabs: a few broad kinds, each gathering some of
 // the groups above (shown as headings inside the tab).
 export const DECOR_TABS = [
-    { id: "furniture", name: "Furniture", groups: ["seating", "tables", "storage"] },
-    { id: "lamps", name: "Lamps", groups: ["lighting"] },
-    { id: "wall", name: "Wall", groups: ["pictures", "garlands", "vines"] },
-    { id: "rugs", name: "Rugs", groups: ["rugs"] },
-    { id: "little", name: "Little things", groups: ["tabletop", "bookish", "cozy", "treats", "plants"] },
-    { id: "spooky", name: "Spooky & seasonal", groups: ["witchy", "spooky", "haunted", "autumn"] }
+    "seating", "tables", "storage", "lighting", "pictures", "garlands", "vines", "rugs",
+    "tabletop", "bookish", "cozy", "treats", "plants", "witchy", "spooky", "haunted", "autumn"
+].map((id) => ({ id, name: DECOR_GROUPS.find((group) => group.id === id).name, groups: [id] }));
+
+// The room's own choices, each in its own tab too.
+export const ROOM_TABS = [
+    { id: "room-walls", name: "Wallpaper" },
+    { id: "room-floor", name: "Floor" },
+    { id: "room-window", name: "Window" },
+    { id: "room-light", name: "Light & outside" },
+    { id: "room-pieces", name: "Room's pieces" }
 ];
+
+const isRoomTab = (id) => id.startsWith("room-");
 
 export const DECOR_ASSETS = [
     // Hand-painted pieces (pictures, not drawings): each shows first in its tab.
@@ -700,7 +707,7 @@ let selectedId = null;
 let selectedBuiltIn = null;
 let bar = null;
 let loadToken = 0;
-let paletteGroup = "room";
+let paletteGroup = "room-walls";
 
 // The tray: which side it sits on (computers) and whether it
 // is folded down (phones).
@@ -929,25 +936,29 @@ function drawBarNow() {
             <button class="button button--primary button--small" type="button" data-arrange="done">Done</button>
         </div>
 
-        <p class="arrange-bar__hint" ${selectedBuiltIn ? html`hidden` : ""}>${paletteGroup === "room"
+        <p class="arrange-bar__hint" ${selectedBuiltIn ? html`hidden` : ""}>${isRoomTab(paletteGroup)
             ? "Choose the wallpaper, floor, window and curtains for this room."
             : "Tap a piece to add it, or drag it into the room. Tap a piece in the room to pick it, then drag it to move it."}</p>
 
-        ${paletteGroup === "room" ? "" : html`
+        ${isRoomTab(paletteGroup) ? "" : html`
             <label class="arrange-bar__search">
                 <span class="visually-hidden">Find a piece</span>
                 <input type="search" placeholder="Find a piece…" value="${paletteQuery}" data-palette-search autocomplete="off" enterkeyhint="search">
             </label>
         `}
 
-        <div class="arrange-bar__tabs" role="tablist" aria-label="Kinds of decoration">
-            <button class="arrange-bar__tab arrange-bar__tab--room ${paletteGroup === "room" ? "is-current" : ""}" type="button" role="tab" aria-selected="${String(paletteGroup === "room")}" data-decor-group="room">Room</button>
+        <div class="arrange-bar__tabs" role="tablist" aria-label="The room and its pieces">
+            <span class="arrange-bar__tabs-label" aria-hidden="true">Room</span>
+            ${ROOM_TABS.map((tab) => html`
+                <button class="arrange-bar__tab arrange-bar__tab--room ${tab.id === paletteGroup ? "is-current" : ""}" type="button" role="tab" aria-selected="${String(tab.id === paletteGroup)}" data-decor-group="${tab.id}">${tab.name}</button>
+            `)}
+            <span class="arrange-bar__tabs-label" aria-hidden="true">Pieces</span>
             ${DECOR_TABS.map((tab) => html`
                 <button class="arrange-bar__tab ${tab.id === paletteGroup ? "is-current" : ""}" type="button" role="tab" aria-selected="${String(tab.id === paletteGroup)}" data-decor-group="${tab.id}">${tab.name}</button>
             `)}
         </div>
 
-        ${paletteGroup === "room" ? roomPanelMarkup() : html`<div class="arrange-bar__palette-holder">${paletteMarkup()}</div>`}
+        ${isRoomTab(paletteGroup) ? roomPanelMarkup(paletteGroup) : html`<div class="arrange-bar__palette-holder">${paletteMarkup()}</div>`}
 
     `);
 
@@ -1965,7 +1976,7 @@ function onBarClick(event) {
         return;
     }
 
-    if ((paletteGroup === "room" || paletteGroup === "rugs") && onRoomPanelClick(event)) {
+    if ((isRoomTab(paletteGroup) || paletteGroup === "rugs") && onRoomPanelClick(event)) {
 
         // Redraw, keeping the panel where it was scrolled to.
         const scrolled =
