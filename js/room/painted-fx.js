@@ -33,7 +33,7 @@ const FX = {
     star_lantern: "glow 49 55 3.4; sparkle 49 55 70 50 5; sway",
     lantern_garland: "glow 16.5 62 1.6; glow 50.5 70 1.6; glow 85 59 1.6; twinkle 16.5 62; twinkle 50.5 70; twinkle 85 59; sway-soft",
     string_lights: "glow 14.1 61 1.5 bulb; glow 39.9 76 1.5 bulb; glow 65.7 72 1.5 bulb; glow 89.3 53.5 1.5 bulb; twinkle 14.1 61; twinkle 39.9 76; twinkle 65.7 72; twinkle 89.3 53.5; sway-soft",
-    stone_fireplace: "fire 50.5 70 16; embers 50.5 62 14; glow 50.5 64 3.6",
+    stone_fireplace: "fire 50 64 20; embers 50 56 16; glow 50 56 4",
     cold_fireplace: "motes",
     jack_o_lantern: "glow 50 55 3; flicker",
     fringed_lamp: "glow 50 26 3.2 bulb",
@@ -177,7 +177,18 @@ const FX = {
     ivy_web_swag: "sway-soft; sheen",
     autumn_vine: "sway-soft",
     rose_vine: "sway-soft",
-    bat_branch: "sway-soft"
+    bat_branch: "sway-soft",
+    tea_trolley: "steam 15 17",
+    arched_door: "glow 50 99 1.6 window; motes",
+    wooden_door: "glow 50 99 1.6 window",
+    book_cart: "motes",
+    ivy_book_shelf: "motes; sway-soft",
+    worn_books: "motes",
+    empty_frame: "sheen",
+    pumpkin_trio: "sheen",
+    wall_shelf: "motes",
+    tea_tin: "sheen",
+    milk_jug: "sheen"
 
 };
 
