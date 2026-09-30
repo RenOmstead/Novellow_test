@@ -45,7 +45,7 @@ const FX = {
     flashlight: "beam 6 60 -1",
     crystal_ball: "glow 45 37 3 amethyst; sparkle 45 37 70 55 5; sheen",
     retro_tv: "screen 49.3 50 53.3 61.7",
-    tv_stand: "screen 43 31.4 44.1 37.7",
+    tv_stand: "screen 40 25 38 30",
     camcorder: "blink 72 20",
     gramophone: "notes 60 5",
     boombox: "notes 50 5",
