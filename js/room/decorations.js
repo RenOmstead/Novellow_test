@@ -889,6 +889,7 @@ function drawBarNow() {
 
         bar.addEventListener("click", onBarClick);
         bar.addEventListener("pointerdown", onPalettePointerDown);
+        bar.addEventListener("input", onPaletteSearch);
 
         // Leave room under the page for the tray on a phone.
         trayObserver = new ResizeObserver(() => {
@@ -923,7 +924,14 @@ function drawBarNow() {
 
         <p class="arrange-bar__hint" ${selectedBuiltIn ? html`hidden` : ""}>${paletteGroup === "room"
             ? "Choose the wallpaper, floor, window and curtains for this room."
-            : "Tap a piece to add it to the part of the room you can see, or drag it straight to its spot. Drag pieces to move them."}</p>
+            : "Tap a piece to add it, or drag it into the room. Tap a piece in the room to pick it, then drag it to move it."}</p>
+
+        ${paletteGroup === "room" ? "" : html`
+            <label class="arrange-bar__search">
+                <span class="visually-hidden">Find a piece</span>
+                <input type="search" placeholder="Find a piece…" value="${paletteQuery}" data-palette-search autocomplete="off" enterkeyhint="search">
+            </label>
+        `}
 
         <div class="arrange-bar__tabs" role="tablist" aria-label="Kinds of decoration">
             <button class="arrange-bar__tab arrange-bar__tab--room ${paletteGroup === "room" ? "is-current" : ""}" type="button" role="tab" aria-selected="${String(paletteGroup === "room")}" data-decor-group="room">Room</button>
@@ -932,22 +940,180 @@ function drawBarNow() {
             `)}
         </div>
 
-        ${paletteGroup === "room" ? roomPanelMarkup() : html`<ul class="arrange-bar__palette" aria-label="Decorations to add">
-            ${paletteGroup === "rugs" ? html`<li class="arrange-bar__room-rug">${rugPanelMarkup()}</li>` : ""}
-            ${tabGroups(paletteGroup).map((group) => html`
-                ${tabGroups(paletteGroup).length > 1 || group.id === "rugs" ? html`<li class="arrange-bar__group" aria-hidden="true">${group.id === "rugs" ? "Rugs to place" : group.name}</li>` : ""}
-                ${DECOR_ASSETS.filter((asset) => asset.group === group.id).map((asset) => html`
-                    <li>
-                        <button class="arrange-bar__asset ${asset.dark ? "arrange-bar__asset--dark" : ""} ${asset.plain ? "arrange-bar__asset--plain" : ""}" type="button" data-add-decor="${asset.id}" title="${asset.name}" aria-label="Add ${asset.name}">
-                            ${raw(artMarkup(asset))}
-                            <span class="arrange-bar__label" aria-hidden="true">${asset.name}</span>
-                        </button>
-                    </li>
-                `)}
-            `)}
-        </ul>`}
+        ${paletteGroup === "room" ? roomPanelMarkup() : html`<div class="arrange-bar__palette-holder">${paletteMarkup()}</div>`}
 
     `);
+
+}
+
+
+// What's typed in the panel's search box.
+let paletteQuery = "";
+
+function assetButton(asset) {
+    return html`
+        <li>
+            <button class="arrange-bar__asset ${asset.dark ? "arrange-bar__asset--dark" : ""} ${asset.plain ? "arrange-bar__asset--plain" : ""}" type="button" data-add-decor="${asset.id}" title="${asset.name}" aria-label="Add ${asset.name}">
+                ${raw(artMarkup(asset))}
+                <span class="arrange-bar__label" aria-hidden="true">${asset.name}</span>
+            </button>
+        </li>
+    `;
+}
+
+// Words that find a piece besides its name: its group and tab.
+function searchText(asset) {
+    const group = DECOR_GROUPS.find((item) => item.id === asset.group);
+    const tab = DECOR_TABS.find((item) => item.groups.includes(asset.group));
+    return `${asset.name} ${group?.name || ""} ${tab?.name || ""}`.toLowerCase();
+}
+
+function paletteMarkup() {
+
+    const query =
+        paletteQuery.trim().toLowerCase();
+
+    if (query) {
+
+        const words =
+            query.split(/\s+/);
+
+        const found =
+            DECOR_ASSETS.filter((asset) => asset.group !== "retired" && words.every((word) => searchText(asset).includes(word)));
+
+        return html`<ul class="arrange-bar__palette" aria-label="Pieces found">
+            <li class="arrange-bar__group" aria-hidden="true">${found.length ? `${found.length} found` : "Nothing found"}</li>
+            ${found.slice(0, 120).map(assetButton)}
+        </ul>`;
+
+    }
+
+    const recent =
+        recentlyUsed().map(assetFor).filter((asset) => asset && asset.group !== "retired");
+
+    return html`<ul class="arrange-bar__palette" aria-label="Decorations to add">
+        ${recent.length ? html`
+            <li class="arrange-bar__group" aria-hidden="true">Recently used</li>
+            ${recent.map(assetButton)}
+        ` : ""}
+        ${paletteGroup === "rugs" ? html`<li class="arrange-bar__room-rug">${rugPanelMarkup()}</li>` : ""}
+        ${tabGroups(paletteGroup).map((group) => html`
+            ${tabGroups(paletteGroup).length > 1 || group.id === "rugs" || recent.length ? html`<li class="arrange-bar__group" aria-hidden="true">${group.id === "rugs" ? "Rugs to place" : group.name}</li>` : ""}
+            ${DECOR_ASSETS.filter((asset) => asset.group === group.id).map(assetButton)}
+        `)}
+    </ul>`;
+
+}
+
+function onPaletteSearch(event) {
+
+    const input =
+        event.target.closest?.("[data-palette-search]");
+
+    if (!input || !bar) {
+        return;
+    }
+
+    paletteQuery = input.value;
+
+    const holder =
+        bar.querySelector(".arrange-bar__palette-holder");
+
+    if (holder) {
+        render(holder, paletteMarkup());
+    }
+
+}
+
+
+// The last pieces this reader added (kept on this device only).
+const RECENT = "novellow-recent-decor";
+
+function recentlyUsed() {
+    try {
+        return JSON.parse(localStorage.getItem(RECENT) || "[]").slice(0, 8);
+    }
+    catch {
+        return [];
+    }
+}
+
+function rememberUsed(assetId) {
+    try {
+        const list = [assetId, ...recentlyUsed().filter((id) => id !== assetId)].slice(0, 8);
+        localStorage.setItem(RECENT, JSON.stringify(list));
+    }
+    catch {
+        // Storage may be switched off; the row just stays empty.
+    }
+}
+
+
+// Small steps for the arrow buttons in the piece editor.
+const NUDGES = {
+    "nudge-left": [-1, 0],
+    "nudge-right": [1, 0],
+    "nudge-up": [0, -1],
+    "nudge-down": [0, 1]
+};
+
+function nudge(piece, [dx, dy]) {
+
+    // On top of the bookcase, heights count upward.
+    const up =
+        piece.room_area === "bookcase_top" ? -1 : 1;
+
+    return {
+        position_x: piece.position_x + dx * 0.6,
+        position_y: piece.position_y + dy * 0.6 * up
+    };
+
+}
+
+
+// A copy of a piece, just beside it.
+async function duplicate(piece) {
+
+    if (pieces.length >= LIMIT) {
+        toast(`The room can hold ${LIMIT} decorations. Remove one to add another.`);
+        return;
+    }
+
+    try {
+
+        const saved =
+            await createRow("decorations", {
+                asset_id: piece.asset_id,
+                decoration_type: piece.decoration_type,
+                room_area: piece.room_area,
+                theme,
+                position_x: clamp(piece.position_x + 4, 0, 100),
+                position_y: piece.position_y,
+                scale: piece.scale,
+                rotation: piece.rotation,
+                z_index: Math.min(50, piece.z_index + 1)
+            });
+
+        const copy = {
+            ...saved,
+            position_x: Number(saved.position_x),
+            position_y: Number(saved.position_y),
+            scale: Number(saved.scale),
+            rotation: Number(saved.rotation)
+        };
+
+        pieces.push(copy);
+
+        remember({ kind: "add", row: { ...copy } });
+
+        draw();
+        select(copy.id);
+
+    }
+
+    catch (error) {
+        toastError(error, "That piece couldn't be copied. Please try again.");
+    }
 
 }
 
@@ -991,16 +1157,27 @@ function drawEditor() {
 
         ${selected ? html`<div class="arrange-bar__tools">
             <span class="arrange-bar__selected">${selected ? assetFor(selected.asset_id)?.name : ""}</span>
-            <div class="arrange-bar__buttons">
-                <button class="icon-button" type="button" data-arrange="smaller" aria-label="Smaller" title="Smaller">−</button>
-                <button class="icon-button" type="button" data-arrange="bigger" aria-label="Bigger" title="Bigger">+</button>
-                <button class="icon-button" type="button" data-arrange="tilt-left" aria-label="Tilt left" title="Tilt left">↺</button>
-                <button class="icon-button" type="button" data-arrange="tilt-right" aria-label="Tilt right" title="Tilt right">↻</button>
-                <button class="icon-button" type="button" data-arrange="back" aria-label="Send behind" title="Send behind">⤓</button>
-                <button class="icon-button" type="button" data-arrange="forward" aria-label="Bring to front" title="Bring to front">⤒</button>
-                <button class="icon-button" type="button" data-arrange="remove" aria-label="Remove" title="Remove">${art("ui-trash")}</button>
+            <div class="piece-editor__grid">
+                <div class="piece-editor__row" role="group" aria-label="Size and turn">
+                    <button class="piece-editor__button" type="button" data-arrange="smaller" aria-label="Smaller" title="Smaller"><b>−</b><small>Smaller</small></button>
+                    <button class="piece-editor__button" type="button" data-arrange="bigger" aria-label="Bigger" title="Bigger"><b>+</b><small>Bigger</small></button>
+                    <button class="piece-editor__button" type="button" data-arrange="tilt-left" aria-label="Turn left" title="Turn left"><b>↺</b><small>Turn</small></button>
+                    <button class="piece-editor__button" type="button" data-arrange="tilt-right" aria-label="Turn right" title="Turn right"><b>↻</b><small>Turn</small></button>
+                </div>
+                <div class="piece-editor__row" role="group" aria-label="Layer, copy and remove">
+                    <button class="piece-editor__button" type="button" data-arrange="back" aria-label="Send behind" title="Send behind"><b>⤓</b><small>Behind</small></button>
+                    <button class="piece-editor__button" type="button" data-arrange="forward" aria-label="Bring to front" title="Bring to front"><b>⤒</b><small>Front</small></button>
+                    <button class="piece-editor__button" type="button" data-arrange="duplicate" aria-label="Make a copy" title="Make a copy"><b>⧉</b><small>Copy</small></button>
+                    <button class="piece-editor__button piece-editor__button--remove" type="button" data-arrange="remove" aria-label="Remove" title="Remove">${art("ui-trash")}<small>Remove</small></button>
+                </div>
+                <div class="piece-editor__nudge" role="group" aria-label="Move a little">
+                    <button class="piece-editor__arrow" type="button" data-arrange="nudge-up" aria-label="Move up a little">▲</button>
+                    <button class="piece-editor__arrow" type="button" data-arrange="nudge-left" aria-label="Move left a little">◀</button>
+                    <button class="piece-editor__arrow" type="button" data-arrange="nudge-right" aria-label="Move right a little">▶</button>
+                    <button class="piece-editor__arrow" type="button" data-arrange="nudge-down" aria-label="Move down a little">▼</button>
+                </div>
             </div>
-            <p class="piece-editor__tip">Hold it with one finger and pinch with another to resize or turn it.</p>
+            <p class="piece-editor__tip">Drag it to move it. With two fingers, pinch to resize or twist to turn.</p>
             ${selected && assetFor(selected.asset_id)?.tint ? html`
                 <div class="arrange-bar__fabrics" role="group" aria-label="Fabric colour">
                     <button class="arrange-bar__fabric arrange-bar__fabric--own ${fabricFor(selected) ? "" : "is-current"}" type="button" data-fabric="" title="Its own colours" aria-label="Its own colours"></button>
@@ -1329,6 +1506,9 @@ async function addPiece(assetId, spot = spotInView()) {
             rotation: Number(saved.rotation)
         });
 
+        remember({ kind: "add", row: { ...pieces[pieces.length - 1] } });
+        rememberUsed(assetId);
+
         selectedId = saved.id;
 
         draw();
@@ -1351,7 +1531,244 @@ async function addPiece(assetId, spot = spotInView()) {
 }
 
 
-async function removePiece(piece) {
+/* =========================================================
+   UNDO AND REDO
+   Each change to a piece is remembered while arranging: what
+   it was before and after. Undo puts it back; redo does it
+   again. Taking a piece out and undoing puts it back as a new
+   row, so later steps follow it by its new id.
+========================================================= */
+
+const KEPT = ["room_area", "position_x", "position_y", "scale", "rotation", "z_index", "decoration_type"];
+
+const history = { done: [], undone: [] };
+
+// A removed piece that was put back has a new id.
+const renamed = new Map();
+
+const idNow = (id) => {
+    while (renamed.has(id)) id = renamed.get(id);
+    return id;
+};
+
+const pieceById = (id) =>
+    pieces.find((item) => item.id === idNow(id));
+
+function snapshot(piece) {
+    return Object.fromEntries(KEPT.map((key) => [key, piece[key]]));
+}
+
+const same = (a, b) =>
+    KEPT.every((key) => a[key] === b[key]);
+
+let lastMark = null;
+
+/*
+    Remembers a change to a piece. Quick repeats of the same
+    kind of change (tapping + four times, holding an arrow key)
+    become one step.
+*/
+function remember(entry, mergeKey = null) {
+
+    const now = Date.now();
+
+    const top =
+        history.done[history.done.length - 1];
+
+    if (mergeKey && top && lastMark && lastMark.key === mergeKey && now - lastMark.at < 1200 && top.kind === "change" && idNow(top.id) === idNow(entry.id)) {
+        top.after = entry.after;
+    }
+
+    else {
+        history.done.push(entry);
+        if (history.done.length > 80) history.done.shift();
+    }
+
+    lastMark = mergeKey ? { key: mergeKey, at: now } : null;
+
+    history.undone.length = 0;
+
+    drawHistory();
+
+}
+
+function changePiece(piece, change, mergeKey = null) {
+
+    const before =
+        snapshot(piece);
+
+    adjust(piece, change);
+
+    const after =
+        snapshot(piece);
+
+    if (!same(before, after)) {
+        remember({ kind: "change", id: piece.id, before, after }, mergeKey);
+    }
+
+}
+
+function applyState(id, state) {
+
+    const piece =
+        pieceById(id);
+
+    if (!piece) {
+        return;
+    }
+
+    Object.assign(piece, state);
+
+    draw();
+    select(piece.id);
+    saveSoon(piece);
+
+}
+
+async function putBack(row) {
+
+    const values = {
+        asset_id: row.asset_id,
+        decoration_type: row.decoration_type,
+        room_area: row.room_area,
+        theme: row.theme,
+        position_x: row.position_x,
+        position_y: row.position_y,
+        scale: row.scale,
+        rotation: row.rotation,
+        z_index: row.z_index
+    };
+
+    const saved =
+        await createRow("decorations", values);
+
+    const piece = {
+        ...saved,
+        position_x: Number(saved.position_x),
+        position_y: Number(saved.position_y),
+        scale: Number(saved.scale),
+        rotation: Number(saved.rotation)
+    };
+
+    renamed.set(idNow(row.id), piece.id);
+
+    pieces.push(piece);
+
+    draw();
+    select(piece.id);
+
+    return piece;
+
+}
+
+let historyBusy = false;
+
+async function step(direction) {
+
+    const from =
+        direction === "undo" ? history.done : history.undone;
+
+    const to =
+        direction === "undo" ? history.undone : history.done;
+
+    const entry =
+        from.pop();
+
+    if (!entry || historyBusy) {
+        if (entry) from.push(entry);
+        return;
+    }
+
+    historyBusy = true;
+    lastMark = null;
+
+    try {
+
+        if (entry.kind === "change") {
+            applyState(entry.id, direction === "undo" ? entry.before : entry.after);
+        }
+
+        // Undoing an added piece takes it away; redoing puts it back.
+        else if ((entry.kind === "add") === (direction === "undo")) {
+            const piece = pieceById(entry.row.id);
+            if (piece) {
+                entry.row = { ...piece };
+                await removePiece(piece, { remembered: false });
+            }
+        }
+
+        else {
+            await putBack(entry.row);
+        }
+
+        to.push(entry);
+
+    }
+
+    catch (error) {
+        toastError(error, "That couldn't be undone. Please try again.");
+    }
+
+    finally {
+        historyBusy = false;
+        drawHistory();
+    }
+
+}
+
+const undo = () => step("undo");
+const redo = () => step("redo");
+
+function forgetHistory() {
+    history.done.length = 0;
+    history.undone.length = 0;
+    renamed.clear();
+    lastMark = null;
+    drawHistory();
+}
+
+
+// The Undo and Redo buttons, floating over the room while arranging.
+let historyBar = null;
+
+function drawHistory() {
+
+    if (!arranging) {
+        historyBar?.remove();
+        historyBar = null;
+        return;
+    }
+
+    if (!historyBar) {
+
+        document.body.insertAdjacentHTML("beforeend", `
+            <div class="arrange-history" role="group" aria-label="Undo and redo">
+                <button class="icon-button" type="button" data-history="undo" aria-label="Undo" title="Undo (Ctrl+Z)">↶</button>
+                <button class="icon-button" type="button" data-history="redo" aria-label="Redo" title="Redo (Ctrl+Shift+Z)">↷</button>
+            </div>
+        `);
+
+        historyBar = document.body.lastElementChild;
+
+        historyBar.addEventListener("click", (event) => {
+            const which = event.target.closest("[data-history]")?.dataset.history;
+            if (which === "undo") undo();
+            if (which === "redo") redo();
+        });
+
+    }
+
+    historyBar.querySelector("[data-history=undo]").disabled = !history.done.length;
+    historyBar.querySelector("[data-history=redo]").disabled = !history.undone.length;
+
+}
+
+
+async function removePiece(piece, { remembered = true } = {}) {
+
+    if (remembered) {
+        remember({ kind: "remove", row: { ...piece } });
+    }
 
     pieces = pieces.filter((item) => item.id !== piece.id);
 
@@ -1610,7 +2027,11 @@ function onBarClick(event) {
 
         if (tinted) {
 
+            const before = snapshot(tinted);
+
             tinted.decoration_type = fabricButton.dataset.fabric ? `tint:${fabricButton.dataset.fabric}` : "ornament";
+
+            remember({ kind: "change", id: tinted.id, before, after: snapshot(tinted) });
 
             draw();
             drawBar();
@@ -1643,7 +2064,17 @@ function onBarClick(event) {
         return;
     }
 
-    adjust(piece, changes[action]);
+    if (action === "duplicate") {
+        duplicate(piece);
+        return;
+    }
+
+    if (NUDGES[action]) {
+        changePiece(piece, nudge(piece, NUDGES[action]), `nudge:${action}`);
+        return;
+    }
+
+    changePiece(piece, changes[action], `edit:${action}`);
 
 }
 
@@ -1816,9 +2247,30 @@ function onPointerDown(event) {
 
     event.preventDefault();
 
-    select(piece.id);
+    // A piece moves only once it's been picked: the first touch
+    // just selects it, so nothing else gets bumped by accident.
+    if (selectedId !== piece.id) {
+        select(piece.id);
+        return;
+    }
 
     element.classList.remove("is-new");
+
+    const before =
+        snapshot(piece);
+
+    // Where on the piece it was taken hold of, so it doesn't jump
+    // to put its middle under the finger.
+    const box =
+        element.getBoundingClientRect();
+
+    const grip = {
+        x: event.clientX - (box.left + box.width / 2),
+        y: event.clientY - (box.top + box.height / 2)
+    };
+
+    // It only starts moving once the finger really moves.
+    let moved = false;
 
     element.setPointerCapture(event.pointerId);
     element.classList.add("is-dragging");
@@ -1832,8 +2284,14 @@ function onPointerDown(event) {
 
     const place = () => {
 
+        const x =
+            pointer.x - grip.x;
+
+        const y =
+            pointer.y - grip.y;
+
         const area =
-            areaAt(pointer.x, pointer.y) || piece.room_area;
+            areaAt(x, y) || piece.room_area;
 
         const layer =
             layerFor(area);
@@ -1859,12 +2317,13 @@ function onPointerDown(event) {
 
         }
 
-        adjust(piece, positionIn(area, pointer.x, pointer.y));
+        adjust(piece, positionIn(area, x, y));
 
     };
 
     // The second finger, while it's down.
     let pinch = null;
+    let pinched = false;
 
     const spread = () =>
         Math.hypot(pinch.x - pointer.x, pinch.y - pointer.y);
@@ -1881,6 +2340,7 @@ function onPointerDown(event) {
         downEvent.preventDefault();
 
         pinch = { id: downEvent.pointerId, x: downEvent.clientX, y: downEvent.clientY };
+        pinched = true;
         pinch.spread = Math.max(20, spread());
         pinch.angle = angle();
         pinch.scale = piece.scale;
@@ -1896,8 +2356,16 @@ function onPointerDown(event) {
         }
 
         else if (moveEvent.pointerId === event.pointerId) {
+
+            if (!moved && Math.hypot(moveEvent.clientX - event.clientX, moveEvent.clientY - event.clientY) < 5) {
+                return;
+            }
+
+            moved = true;
+
             pointer.x = moveEvent.clientX;
             pointer.y = moveEvent.clientY;
+
         }
 
         else {
@@ -1927,7 +2395,7 @@ function onPointerDown(event) {
 
     const stopScrolling =
         autoScroll(pointer, () => {
-            if (!pinch) {
+            if (!pinch && moved) {
                 place();
             }
         });
@@ -1960,7 +2428,16 @@ function onPointerDown(event) {
         window.removeEventListener("pointerup", stop);
         window.removeEventListener("pointercancel", stop);
 
-        settle(piece);
+        if (moved || pinched) {
+            settle(piece);
+        }
+
+        const after =
+            snapshot(piece);
+
+        if (!same(before, after)) {
+            remember({ kind: "change", id: piece.id, before, after });
+        }
 
         drawEditor();
 
@@ -2202,6 +2679,19 @@ function onKeyDown(event) {
         return;
     }
 
+    // Undo and redo, wherever the focus is (but not while typing).
+    if ((event.ctrlKey || event.metaKey) && !event.target.closest?.("input, textarea")) {
+
+        const key = event.key.toLowerCase();
+
+        if (key === "z" || key === "y") {
+            event.preventDefault();
+            (key === "y" || event.shiftKey) ? redo() : undo();
+            return;
+        }
+
+    }
+
     if (!element) {
         return;
     }
@@ -2234,7 +2724,7 @@ function onKeyDown(event) {
     if (moves[event.key]) {
         event.preventDefault();
         select(piece.id);
-        adjust(piece, moves[event.key]);
+        changePiece(piece, moves[event.key], `key:${event.key}`);
     }
 
 }
@@ -2252,6 +2742,7 @@ export function setArranging(on) {
         selectedId = null;
         selectedBuiltIn = null;
         trayFolded = false;
+        forgetHistory();
         room.querySelectorAll(".is-built-in-selected").forEach((element) => element.classList.remove("is-built-in-selected"));
     }
 
@@ -2272,6 +2763,8 @@ export function setArranging(on) {
     }
 
     draw();
+
+    drawHistory();
 
     if (on) {
         bar?.querySelector("[data-add-decor]")?.focus();
