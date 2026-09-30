@@ -597,6 +597,10 @@
 [data-wood="white"] { --frame-dark: #b8b2a8; --frame-wood: #efe9df; --frame-light: #fbf8f2; --frame-line: #8a8278; --frame-shine: #ffffff; }
 [data-wood="sage"] { --frame-dark: #5a6a52; --frame-wood: #8fa383; --frame-light: #aebfa2; --frame-line: #3a4634; --frame-shine: #c9d8bc; }
 
+/* The painted windows show their own walnut; any other wood
+   recolours their frames, shading and all (sprite.svg). */
+[data-wood]:not([data-wood="walnut"]) { --window-tint: inline; }
+
 /* Café curtains: a straight valance on a square window, a
    swag that covers the arch on arched and gothic ones. */
 [data-window="square"] { --valance-straight: inline; --valance-swag: none; }
