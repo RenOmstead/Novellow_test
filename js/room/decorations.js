@@ -22,7 +22,7 @@ import { listDecorations, createRow, updateRow, deleteRow } from "../core/store.
 import { html, raw, render, clamp, debounce } from "../core/helpers.js?v=__VERSION__";
 import { art, toast, toastError } from "../core/ui.js?v=__VERSION__";
 import { paintedFx } from "./painted-fx.js?v=__VERSION__";
-import { setFixtureRows, roomPanelMarkup, onRoomPanelClick, dragWindow, dragRug, builtInAt, builtInElements, toggleBuiltIn } from "./fixtures.js?v=__VERSION__";
+import { setFixtureRows, roomPanelMarkup, rugPanelMarkup, onRoomPanelClick, dragWindow, dragRug, builtInAt, builtInElements, toggleBuiltIn } from "./fixtures.js?v=__VERSION__";
 
 
 /*
@@ -46,6 +46,17 @@ export const DECOR_GROUPS = [
     { id: "spooky", name: "Spooky" },
     { id: "haunted", name: "Haunted" },
     { id: "rugs", name: "Rugs" }
+];
+
+// The panel's tabs: a few broad kinds, each gathering some of
+// the groups above (shown as headings inside the tab).
+export const DECOR_TABS = [
+    { id: "furniture", name: "Furniture", groups: ["seating", "tables", "storage"] },
+    { id: "lamps", name: "Lamps", groups: ["lighting"] },
+    { id: "wall", name: "Wall", groups: ["pictures"] },
+    { id: "rugs", name: "Rugs", groups: ["rugs"] },
+    { id: "little", name: "Little things", groups: ["tabletop", "bookish", "cozy", "treats", "plants"] },
+    { id: "spooky", name: "Spooky & seasonal", groups: ["witchy", "spooky", "haunted", "autumn"] }
 ];
 
 export const DECOR_ASSETS = [
@@ -515,7 +526,15 @@ function caseZoom() {
 }
 
 
+// On top of the bookcase, pieces are measured up from its top
+// edge (0) to TOP_SPAN pixels above it (100).
+const TOP_SPAN = 400;
+
 function topFor(piece) {
+
+    if (piece.room_area === "bookcase_top") {
+        return `${(-piece.position_y * TOP_SPAN) / 100}px`;
+    }
 
     return piece.room_area === "shelf"
         ? `${(piece.position_y * SHELF_SPAN) / 100}px`
@@ -525,6 +544,7 @@ function topFor(piece) {
 
 // room_area in the database → the part of the room it hangs on.
 const AREAS = {
+    bookcase_top: ".bookcase",
     wall: ".journal-zone",
     shelf: ".bookcase"
 };
@@ -623,17 +643,24 @@ function artMarkup(asset, { live = false } = {}) {
 }
 
 
+// The groups of pieces in one of the panel's tabs.
+function tabGroups(tabId) {
+    const tab = DECOR_TABS.find((item) => item.id === tabId);
+    return tab ? tab.groups.map((id) => DECOR_GROUPS.find((group) => group.id === id)).filter(Boolean) : [];
+}
+
+
 function layerFor(area) {
 
     const zone =
         room.querySelector(AREAS[area] || AREAS.wall);
 
     let layer =
-        zone?.querySelector(":scope > .decor-layer");
+        zone?.querySelector(`:scope > .decor-layer[data-area="${area in AREAS ? area : "wall"}"]`);
 
     if (zone && !layer) {
 
-        zone.insertAdjacentHTML("beforeend", `<div class="decor-layer" data-area="${area}"></div>`);
+        zone.insertAdjacentHTML("beforeend", `<div class="decor-layer" data-area="${area in AREAS ? area : "wall"}"></div>`);
 
         layer = zone.lastElementChild;
 
@@ -747,7 +774,10 @@ function drawBarNow() {
     render(bar, html`
 
         <div class="arrange-bar__head">
-            <p class="arrange-bar__title">Edit the room</p>
+            <p class="arrange-bar__title">Decorate</p>
+            <button class="icon-button arrange-bar__side" type="button" data-arrange="side" aria-label="${bar.dataset.side === "left" ? "Move this panel to the right" : "Move this panel to the left"}" title="${bar.dataset.side === "left" ? "Move this panel to the right" : "Move this panel to the left"}">
+                ${art(bar.dataset.side === "left" ? "ui-chevron-right" : "ui-chevron-left")}
+            </button>
             <button class="icon-button arrange-bar__fold" type="button" data-arrange="fold" aria-expanded="${String(!trayFolded)}" aria-label="${trayFolded ? "Show the panel" : "Hide the panel"}" title="${trayFolded ? "Show the panel" : "Hide the panel"}">
                 ${art("ui-chevron-down")}
             </button>
@@ -755,30 +785,30 @@ function drawBarNow() {
         </div>
 
         <p class="arrange-bar__hint" ${selectedBuiltIn ? html`hidden` : ""}>${paletteGroup === "room"
-            ? "Choose the wallpaper, floor, window, curtains and rug for this room."
+            ? "Choose the wallpaper, floor, window and curtains for this room."
             : "Tap a piece to add it to the part of the room you can see, or drag it straight to its spot. Drag pieces to move them."}</p>
 
         <div class="arrange-bar__tabs" role="tablist" aria-label="Kinds of decoration">
             <button class="arrange-bar__tab arrange-bar__tab--room ${paletteGroup === "room" ? "is-current" : ""}" type="button" role="tab" aria-selected="${String(paletteGroup === "room")}" data-decor-group="room">Room</button>
-            ${DECOR_GROUPS.map((group) => html`
-                <button class="arrange-bar__tab ${group.id === paletteGroup ? "is-current" : ""}" type="button" role="tab" aria-selected="${String(group.id === paletteGroup)}" data-decor-group="${group.id}">${group.name}</button>
+            ${DECOR_TABS.map((tab) => html`
+                <button class="arrange-bar__tab ${tab.id === paletteGroup ? "is-current" : ""}" type="button" role="tab" aria-selected="${String(tab.id === paletteGroup)}" data-decor-group="${tab.id}">${tab.name}</button>
             `)}
         </div>
 
         ${paletteGroup === "room" ? roomPanelMarkup() : html`<ul class="arrange-bar__palette" aria-label="Decorations to add">
-            ${DECOR_ASSETS.filter((asset) => asset.group === paletteGroup).map((asset) => html`
-                <li>
-                    <button class="arrange-bar__asset ${asset.dark ? "arrange-bar__asset--dark" : ""} ${asset.plain ? "arrange-bar__asset--plain" : ""}" type="button" data-add-decor="${asset.id}" title="${asset.name}" aria-label="Add ${asset.name}">
-                        ${raw(artMarkup(asset))}
-                        <span class="arrange-bar__label" aria-hidden="true">${asset.name}</span>
-                    </button>
-                </li>
+            ${paletteGroup === "rugs" ? html`<li class="arrange-bar__room-rug">${rugPanelMarkup()}</li>` : ""}
+            ${tabGroups(paletteGroup).map((group) => html`
+                ${tabGroups(paletteGroup).length > 1 || group.id === "rugs" ? html`<li class="arrange-bar__group" aria-hidden="true">${group.id === "rugs" ? "Rugs to place" : group.name}</li>` : ""}
+                ${DECOR_ASSETS.filter((asset) => asset.group === group.id).map((asset) => html`
+                    <li>
+                        <button class="arrange-bar__asset ${asset.dark ? "arrange-bar__asset--dark" : ""} ${asset.plain ? "arrange-bar__asset--plain" : ""}" type="button" data-add-decor="${asset.id}" title="${asset.name}" aria-label="Add ${asset.name}">
+                            ${raw(artMarkup(asset))}
+                            <span class="arrange-bar__label" aria-hidden="true">${asset.name}</span>
+                        </button>
+                    </li>
+                `)}
             `)}
         </ul>`}
-
-        <button class="text-button arrange-bar__side" type="button" data-arrange="side">
-            ${bar.dataset.side === "left" ? html`Move this panel to the right ${art("ui-chevron-right")}` : html`${art("ui-chevron-left")} Move this panel to the left`}
-        </button>
 
     `);
 
@@ -1007,8 +1037,8 @@ function spotInView() {
     ];
 
     const area =
-        tries.map(([x, y]) => areaAt(x, y)).find(Boolean)
-        || Object.keys(AREAS).find((name) => layerShown(name));
+        tries.map(([x, y]) => areaAt(x, y)).find((name) => name && name !== "bookcase_top")
+        || ["wall", "shelf"].find((name) => layerShown(name));
 
     if (!area) {
         return null;
@@ -1040,19 +1070,53 @@ function spotInView() {
     bookcase, say) is kept to its edge.
 */
 
-function positionIn(area, pointX, pointY) {
+/*
+    The part of the screen each area takes pieces in. The top of
+    the bookcase is the space just above it; the wall reaches
+    right to the edge of the room, under a phone's rounded
+    corners too.
+*/
+function areaBox(area) {
 
     const zone =
         room.querySelector(AREAS[area]).getBoundingClientRect();
+
+    if (area === "bookcase_top") {
+        const reach = TOP_SPAN * caseZoom();
+        return { left: zone.left, right: zone.right, top: zone.top - reach, bottom: zone.top + 6 * caseZoom() };
+    }
+
+    if (area === "wall") {
+        return { left: zone.left, right: room.getBoundingClientRect().right, top: zone.top, bottom: zone.bottom };
+    }
+
+    return { left: zone.left, right: zone.right, top: zone.top, bottom: zone.bottom };
+
+}
+
+
+function positionIn(area, pointX, pointY) {
+
+    const zone =
+        areaBox(area);
 
     const x =
         clamp(pointX, zone.left + 8, zone.right - 8);
 
     const y =
-        clamp(pointY, zone.top + 8, zone.bottom - 28);
+        area === "bookcase_top"
+            ? clamp(pointY, zone.top, zone.bottom)
+            : clamp(pointY, zone.top + 8, zone.bottom - 28);
 
     const box =
         layerFor(area).getBoundingClientRect();
+
+    if (area === "bookcase_top") {
+        return {
+            position_x: Number(clamp(((x - box.left) / box.width) * 100, 0, 100).toFixed(2)),
+            position_y: Number(clamp(((box.top - y) / (TOP_SPAN * caseZoom())) * 100, 0, 100).toFixed(2))
+        };
+    }
 
     // On the bookcase, pixels on screen are scaled pixels.
     const height =
@@ -1111,6 +1175,8 @@ async function addPiece(assetId, spot = spotInView()) {
 
         element?.classList.add("is-new");
 
+        settle(pieces[pieces.length - 1]);
+
     }
 
     catch (error) {
@@ -1161,6 +1227,76 @@ function adjust(piece, change) {
     }
 
     saveSoon(piece);
+
+}
+
+
+/*
+    Letting go of a piece just above a shelf, the top of the
+    bookcase, the window sill or the floor sets it down on it,
+    rather than leaving it hovering. Pieces on top of the
+    bookcase always rest on it. Rugs lie wherever they're put.
+*/
+
+const SETTLE_REACH = 26;
+
+function settle(piece) {
+
+    const asset =
+        assetFor(piece.asset_id);
+
+    const element =
+        room.querySelector(`[data-decor-id="${piece.id}"]`);
+
+    if (!asset || asset.floor || !element) {
+        return;
+    }
+
+    const bottom =
+        element.getBoundingClientRect().bottom;
+
+    const tops = [];
+
+    if (piece.room_area === "bookcase_top") {
+        tops.push(room.querySelector(AREAS.bookcase_top).getBoundingClientRect().top + 3);
+    }
+
+    else if (piece.room_area === "shelf") {
+        room.querySelectorAll(".bookcase .shelf-board").forEach((board) => tops.push(board.getBoundingClientRect().top + 2));
+    }
+
+    else {
+        const sill = room.querySelector(".window-sill");
+        if (sill && sill.offsetParent) tops.push(sill.getBoundingClientRect().top + 3);
+        const floor = room.querySelector(".room-floor");
+        if (floor) tops.push(floor.getBoundingClientRect().top + 8);
+    }
+
+    // The nearest surface just below (or a touch above) the piece.
+    const target = tops
+        .filter((top) => piece.room_area === "bookcase_top" || (top - bottom <= SETTLE_REACH && bottom - top <= 10))
+        .sort((a, b) => Math.abs(a - bottom) - Math.abs(b - bottom))[0];
+
+    if (target === undefined) {
+        return;
+    }
+
+    const shift =
+        target - bottom;
+
+    if (Math.abs(shift) < 0.5) {
+        return;
+    }
+
+    const span =
+        piece.room_area === "bookcase_top" ? -TOP_SPAN * caseZoom()
+            : piece.room_area === "shelf" ? SHELF_SPAN * caseZoom()
+            : layerFor(piece.room_area).getBoundingClientRect().height;
+
+    element.classList.add("is-settling");
+    window.setTimeout(() => element.classList.remove("is-settling"), 260);
+
+    adjust(piece, { position_y: piece.position_y + (shift / span) * 100 });
 
 }
 
@@ -1222,16 +1358,16 @@ function onBarClick(event) {
         return;
     }
 
-    if (paletteGroup === "room" && onRoomPanelClick(event)) {
+    if ((paletteGroup === "room" || paletteGroup === "rugs") && onRoomPanelClick(event)) {
 
         // Redraw, keeping the panel where it was scrolled to.
         const scrolled =
-            bar.querySelector(".arrange-bar__room")?.scrollTop || 0;
+            bar.querySelector(".arrange-bar__room, .arrange-bar__palette")?.scrollTop || 0;
 
         drawBar();
 
         const panel =
-            bar.querySelector(".arrange-bar__room");
+            bar.querySelector(".arrange-bar__room, .arrange-bar__palette");
 
         if (panel) {
             panel.scrollTop = scrolled;
@@ -1652,6 +1788,8 @@ function onPointerDown(event) {
         window.removeEventListener("pointerup", stop);
         window.removeEventListener("pointercancel", stop);
 
+        settle(piece);
+
         drawEditor();
 
     };
@@ -1869,7 +2007,7 @@ function areaAt(x, y) {
         }
 
         const box =
-            room.querySelector(AREAS[area]).getBoundingClientRect();
+            areaBox(area);
 
         return x >= box.left && x <= box.right && y >= box.top && y <= box.bottom;
 
@@ -1905,8 +2043,9 @@ function onKeyDown(event) {
     const moves = {
         ArrowLeft: { position_x: piece.position_x - step },
         ArrowRight: { position_x: piece.position_x + step },
-        ArrowUp: { position_y: piece.position_y - step },
-        ArrowDown: { position_y: piece.position_y + step },
+        // On top of the bookcase, up is further from its edge.
+        ArrowUp: { position_y: piece.position_y + (piece.room_area === "bookcase_top" ? step : -step) },
+        ArrowDown: { position_y: piece.position_y - (piece.room_area === "bookcase_top" ? step : -step) },
         "+": { scale: piece.scale + 0.1 },
         "=": { scale: piece.scale + 0.1 },
         "-": { scale: piece.scale - 0.1 },

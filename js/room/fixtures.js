@@ -1075,10 +1075,29 @@ export function roomPanelMarkup() {
                 ${fixtures.curtains === "none" || fixtures.curtains === "lace" ? "" : swatches("curtainColour", "Curtain colours", fixtures.curtainColour)}
             `}
 
-            ${chips("rug", "Rug", fixtures.rug)}
+        </div>
+    `;
 
-            ${fixtures.rug === "none" ? "" : swatches("rugColour", "Rug colours", fixtures.rugColour)}
+}
 
+
+/*
+    The room's own rug (the one under the window and chair), at
+    the top of the Rugs tab.
+*/
+
+export function rugPanelMarkup() {
+
+    const fixtures =
+        getFixtures();
+
+    return html`
+        <div class="arrange-bar__room-rug-choices">
+            ${chips("rug", "The room's rug", fixtures.rug)}
+            ${fixtures.rug === "none" ? "" : html`
+                ${swatches("rugColour", "Its colours", fixtures.rugColour)}
+                <p class="room-choices__note">Drag the room's rug to move it across the floor.</p>
+            `}
         </div>
     `;
 
