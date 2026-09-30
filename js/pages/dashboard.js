@@ -28,6 +28,7 @@ import { growIvy } from "../room/ivy.js?v=__VERSION__";
 import { renderCrown } from "../room/crown.js?v=__VERSION__";
 import { startAmbience } from "../room/ambience.js?v=__VERSION__";
 import { startDecorations } from "../room/decorations.js?v=__VERSION__";
+import { startRoomView } from "../room/room-view.js?v=__VERSION__";
 import { startRoomFit, COMPACT_QUERY } from "../room/fit-room.js?v=__VERSION__";
 import { createBookcase } from "../books/bookcase.js?v=__VERSION__";
 import { playReveal, playReturn } from "../books/book-reveal.js?v=__VERSION__";
@@ -411,6 +412,8 @@ async function start() {
     renderDeskNotes();
 
     startDecorations(document.querySelector(".library-room"), settings.theme);
+
+    startRoomView();
 
 
     /* Re-draw whenever the library changes anywhere. */

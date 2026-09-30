@@ -1669,3 +1669,177 @@ html.room-compact .bookcase-zone {
     -webkit-mask-image: linear-gradient(180deg, transparent, #000 50px);
     mask-image: linear-gradient(180deg, transparent, #000 50px);
 }
+
+
+/* =========================================================
+   THE ROOM VIEW (js/room/room-view.js)
+   Just the room: no menu, no top bar. On a computer or tablet
+   the floor runs deeper and a beamed ceiling crowns the wall,
+   here and while decorating, so what's arranged is what the
+   room view shows.
+========================================================= */
+
+.room-view-button {
+    display: none;
+}
+
+html[data-art="room"]:not(.room-compact) .room-view-button {
+    display: inline-grid;
+}
+
+html.room-view {
+    --header-h: 0px !important;
+    --sidebar-space: 0px;
+    --sidebar-collapsed-space: 0px;
+}
+
+html.room-view :is(.library-sidebar, .sidebar-collapse) {
+    transform: translateX(-110%);
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+html.room-view .scene-header {
+    display: none;
+}
+
+html.room-view body .app-stage {
+    padding-left: 0;
+}
+
+
+/* The little bar in the corner: menus back, decorate, picture. */
+.room-view-bar {
+    display: none;
+}
+
+html.room-view:not(.is-arranging-room) .room-view-bar {
+    position: fixed;
+
+    z-index: 1100;
+
+    top: calc(12px + env(safe-area-inset-top, 0px));
+    left: calc(12px + env(safe-area-inset-left, 0px));
+
+    display: flex;
+    gap: 6px;
+
+    padding: 5px;
+
+    border-radius: 999px;
+
+    background: rgba(40, 24, 28, 0.72);
+
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+
+    opacity: 0.55;
+
+    transition: opacity 0.25s ease;
+}
+
+html.room-view .room-view-bar:is(:hover, :focus-within) {
+    opacity: 1;
+}
+
+.room-view-bar__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 6px 12px 6px 8px;
+
+    border: 1px solid rgba(255, 236, 190, 0.25);
+    border-radius: 999px;
+
+    font-family: var(--font-ui);
+    font-size: 14px;
+
+    color: #fbeede;
+
+    background: rgba(255, 255, 255, 0.06);
+
+    cursor: pointer;
+
+    touch-action: manipulation;
+}
+
+.room-view-bar__button svg {
+    width: 20px;
+    height: 20px;
+}
+
+.room-view-bar__button:first-child svg {
+    transform: rotate(180deg);
+}
+
+
+/* The deep floor: everything that stands on the floor rises
+   with its back edge, so rooms keep their arrangement. */
+.library-room {
+    --floor-lift: 0px;
+}
+
+html:is(.room-view, .is-arranging-room):not(.room-compact) .library-room {
+    --floor-lift: clamp(0px, calc(28dvh - 112px), 190px);
+
+    padding-bottom: var(--floor-lift);
+}
+
+.room-floorboards {
+    height: calc(112px + var(--floor-lift, 0px));
+}
+
+html:is(.room-view, .is-arranging-room):not(.room-compact) .journal-zone {
+    overflow: visible;
+}
+
+html:is(.room-view, .is-arranging-room):not(.room-compact) .room-floor {
+    bottom: calc(-1 * var(--floor-lift));
+
+    height: calc(96px + var(--floor-lift));
+}
+
+/* Depth: the back of the floor in shadow, the front in the light. */
+html:is(.room-view, .is-arranging-room):not(.room-compact) .room-floorboards {
+    box-shadow:
+        inset 0 18px 24px -8px rgba(0, 0, 0, 0.6),
+        inset 0 -90px 90px -60px rgba(255, 214, 160, 0.1);
+}
+
+html:is(.room-view, .is-arranging-room):not(.room-compact) .room-floorboards::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background: linear-gradient(180deg, rgba(20, 10, 8, 0.38), rgba(20, 10, 8, 0) 45%);
+
+    pointer-events: none;
+}
+
+
+/* A beamed ceiling along the top of the room. */
+html:is(.room-view, .is-arranging-room):not(.room-compact) .library-room::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    top: 0;
+
+    z-index: 5;
+
+    height: 54px;
+
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='54' viewBox='0 0 260 54'%3E%3Cpath d='M96 0H164L156 54H104Z' fill='%236a432c'/%3E%3Cpath d='M104 54H156L158 40H102Z' fill='%234a2c1c'/%3E%3Cpath d='M96 0L104 54M164 0L156 54' stroke='%232a160e' stroke-width='2'/%3E%3Cpath d='M112 8C120 14 132 12 142 18M110 26C122 30 134 28 150 32' stroke='%23845634' stroke-width='1.4' fill='none' opacity='0.8'/%3E%3C/svg%3E") 0 0 / 260px 54px repeat-x,
+        linear-gradient(180deg, #3a2418, #2a190f 70%, #1e120b);
+
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+
+    pointer-events: none;
+}
