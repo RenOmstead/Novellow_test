@@ -21,6 +21,7 @@
 import { listDecorations, createRow, updateRow, deleteRow } from "../core/store.js?v=__VERSION__";
 import { html, raw, render, clamp, debounce } from "../core/helpers.js?v=__VERSION__";
 import { art, toast, toastError } from "../core/ui.js?v=__VERSION__";
+import { paintedFx } from "./painted-fx.js?v=__VERSION__";
 import { setFixtureRows, roomPanelMarkup, onRoomPanelClick, dragWindow, dragRug, builtInAt, builtInElements, toggleBuiltIn } from "./fixtures.js?v=__VERSION__";
 
 
@@ -598,10 +599,27 @@ function assetFor(id) {
 
 // A piece's picture: hand-painted pieces are images, the rest
 // are drawings in the sprite.
-function artMarkup(asset) {
-    return asset.src
-        ? `<img class="decor-picture" src="${asset.src}?v=__VERSION__" width="${asset.size[0]}" height="${asset.size[1]}" alt="" draggable="false" loading="lazy">`
-        : `<svg viewBox="${asset.box}" aria-hidden="true"><use href="#${asset.id}"></use></svg>`;
+function artMarkup(asset, { live = false } = {}) {
+
+    if (!asset.src) {
+        return `<svg viewBox="${asset.box}" aria-hidden="true"><use href="#${asset.id}"></use></svg>`;
+    }
+
+    const picture =
+        `<img class="decor-picture" src="${asset.src}?v=__VERSION__" width="${asset.size[0]}" height="${asset.size[1]}" alt="" draggable="false" loading="lazy">`;
+
+    if (!live) {
+        return picture;
+    }
+
+    // In the room, painted pieces get their light and movement
+    // (js/room/painted-fx.js). --art is read by css/painted-fx.css,
+    // so its path starts from css/.
+    const fx =
+        paintedFx(asset.src);
+
+    return `<span class="decor-art ${fx.motion}" style="--art: url('../${asset.src}?v=__VERSION__')">${picture}<span class="decor-fx">${fx.layers}</span></span>`;
+
 }
 
 
@@ -641,12 +659,12 @@ function pieceMarkup(piece) {
 
     return html`
         <div
-            class="placed-decor ${piece.id === selectedId ? "is-selected" : ""} ${asset.plain ? "placed-decor--plain" : ""}"
+            class="placed-decor ${piece.id === selectedId ? "is-selected" : ""} ${asset.plain ? "placed-decor--plain" : ""} ${asset.floor ? "placed-decor--floor" : ""}"
             data-decor-id="${piece.id}"
             style="left: ${piece.position_x}%; top: ${topFor(piece)}; width: ${asset.width}px; z-index: ${piece.z_index}; --scale: ${piece.scale}; --rotation: ${piece.rotation}deg${fabricStyle(piece)}"
             ${arranging ? html`tabindex="0" role="button" aria-label="${asset.name}. Drag to move, or use the arrow keys."` : html`aria-hidden="true"`}
         >
-            ${raw(artMarkup(asset))}
+            ${raw(artMarkup(asset, { live: true }))}
         </div>
     `;
 
