@@ -761,6 +761,10 @@ button.book-spine {
     width: auto;
 }
 
+.book-spine.spine--painted .spine-title {
+    color: var(--book-text);
+}
+
 .spine--painted .spine-title,
 .spine--painted .spine-title-wrap {
     border: 0;
