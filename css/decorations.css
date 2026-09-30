@@ -44,8 +44,9 @@
 html.room-compact .journal-zone > .decor-layer {
     right: auto;
 
-    /* Wide enough to reach the right edge on every phone. */
-    width: 760px;
+    /* Wide enough to reach the right edge on every phone, under
+       its rounded corners too. */
+    width: max(760px, calc(100% + 120px));
 }
 
 .placed-decor {
@@ -172,7 +173,16 @@ html.room-compact .journal-zone > .decor-layer {
 }
 
 .arrange-bar__title {
+    flex: 1 1 auto;
+
+    min-width: 0;
+
     margin: 0 auto 0 0;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
     color: var(--color-plum-deep);
 
@@ -197,19 +207,10 @@ html.room-compact .journal-zone > .decor-layer {
     display: none;
 }
 
+/* Moves the panel to the other side of the screen (in its
+   header, so it's always in reach). */
 .arrange-bar__side {
-    display: inline-flex;
-    align-items: center;
-    align-self: center;
-
-    gap: 4px;
-
-    font-size: 14px;
-}
-
-.arrange-bar__side svg {
-    width: 14px;
-    height: 14px;
+    flex: none;
 }
 
 .arrange-bar__hint {
@@ -221,11 +222,65 @@ html.room-compact .journal-zone > .decor-layer {
     line-height: 1.35;
 }
 
+/* One row of tabs, sliding sideways if they don't all fit. */
 .arrange-bar__tabs {
+    flex: none;
+
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 
     gap: 6px;
+
+    margin: 0 -4px;
+    padding: 0 4px 2px;
+
+    overflow-x: auto;
+
+    scrollbar-width: none;
+}
+
+.arrange-bar__tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.arrange-bar__tab {
+    flex: none;
+
+    white-space: nowrap;
+}
+
+/* A heading inside a tab ("Seating", "Tables"…). */
+.arrange-bar__group {
+    grid-column: 1 / -1;
+
+    margin-top: 6px;
+
+    color: var(--color-plum);
+
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.arrange-bar__group:first-child {
+    margin-top: 0;
+}
+
+/* The room's own rug, at the top of the Rugs tab. */
+.arrange-bar__room-rug {
+    grid-column: 1 / -1;
+}
+
+.arrange-bar__room-rug-choices {
+    display: grid;
+
+    gap: 8px;
+
+    padding-bottom: 6px;
+
+    border-bottom: 1px solid rgba(160, 120, 100, 0.3);
 }
 
 .arrange-bar__tab {
@@ -806,6 +861,20 @@ html.room-compact .journal-zone > .decor-layer {
         scroll-snap-align: start;
     }
 
+    .arrange-bar__group {
+        display: none;
+    }
+
+    .arrange-bar__room-rug {
+        flex: 0 0 280px;
+
+        white-space: normal;
+    }
+
+    .arrange-bar__asset img {
+        height: 50px;
+    }
+
     .arrange-bar__asset {
         width: 64px;
 
@@ -1132,4 +1201,23 @@ html.room-compact .journal-zone > .decor-layer {
 
     -webkit-user-select: none;
     user-select: none;
+}
+
+
+/* A piece settling onto a shelf, the sill or the floor. */
+.placed-decor.is-settling {
+    transition: top 0.22s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+
+/* The panel's header keeps its buttons whole on a narrow panel. */
+.arrange-bar__head > .icon-button {
+    flex: none;
+
+    width: 36px;
+    height: 36px;
+}
+
+.arrange-bar__head > .button {
+    flex: none;
 }
