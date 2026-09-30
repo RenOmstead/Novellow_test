@@ -375,10 +375,10 @@ function defaultsFor(theme) {
         getPreferences();
 
     if (theme === "sandbox") {
-        return { wallpaper: "plaster", floor: "oak", window: "none", wood: prefs.wood, curtains: "none", curtainColour: "room", rug: "none", rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", hidden: "", windowX: null, windowY: null };
+        return { wallpaper: "plaster", floor: "oak", window: "none", wood: prefs.wood, curtains: "none", curtainColour: "room", rug: "none", rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", hidden: "", windowX: null, windowY: null, rugX: null, rugY: null };
     }
 
-    return { wallpaper: "room", floor: "room", window: prefs.window, wood: prefs.wood, curtains: prefs.curtains, curtainColour: "room", rug: prefs.rug, rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", hidden: "", windowX: null, windowY: null };
+    return { wallpaper: "room", floor: "room", window: prefs.window, wood: prefs.wood, curtains: prefs.curtains, curtainColour: "room", rug: prefs.rug, rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", hidden: "", windowX: null, windowY: null, rugX: null, rugY: null };
 
 }
 
@@ -477,6 +477,8 @@ export function applyFixtures(theme = document.documentElement.dataset.theme) {
 
     placeWindow(fixtures);
 
+    placeRug(fixtures);
+
 }
 
 
@@ -503,6 +505,137 @@ function placeWindow(fixtures) {
 
     wall.style.setProperty("--window-left", `calc(${fixtures.windowX}% - var(--window-width) / 2)`);
     wall.style.setProperty("--window-bottom", `calc(${100 - fixtures.windowY}% - var(--window-width) * 0.375)`);
+
+}
+
+
+/*
+    Where the rug lies: its middle as a share of the floor's
+    width, and how far forward (0, at the wall) or back (100,
+    at the bottom edge) it sits. Unmoved, it lies under the
+    window and the chair.
+*/
+
+function placeRug(fixtures) {
+
+    const floor =
+        document.querySelector(".room-floor");
+
+    if (!floor) {
+        return;
+    }
+
+    if (fixtures.rugX === null || fixtures.rugX === undefined) {
+        floor.style.removeProperty("--rug-left");
+        floor.style.removeProperty("--rug-bottom");
+        floor.classList.remove("has-moved-rug");
+        return;
+    }
+
+    floor.classList.add("has-moved-rug");
+    floor.style.setProperty("--rug-left", `${fixtures.rugX}%`);
+    floor.style.setProperty("--rug-bottom", `${-10 - fixtures.rugY * 0.7}px`);
+
+}
+
+
+export function moveRug(x, y, { persist = true } = {}) {
+
+    const theme =
+        themeId || document.documentElement.dataset.theme;
+
+    const fixtures = {
+        ...getFixtures(theme),
+        rugX: Number(Math.min(100, Math.max(0, x)).toFixed(2)),
+        rugY: Number(Math.min(100, Math.max(0, y)).toFixed(2))
+    };
+
+    writeCache(theme, fixtures);
+
+    placeRug(fixtures);
+
+    if (persist) {
+        save("rug", fixtures.rug, { position_x: fixtures.rugX, position_y: fixtures.rugY, rotation: 1 });
+    }
+
+}
+
+
+/*
+    Dragging the rug across the floor while arranging.
+*/
+
+export function dragRug(event) {
+
+    const floor =
+        document.querySelector(".room-floor");
+
+    const rug =
+        event.target.closest(".room-rug");
+
+    if (!floor || !rug) {
+        return false;
+    }
+
+    event.preventDefault();
+
+    rug.setPointerCapture?.(event.pointerId);
+    rug.classList.add("is-dragging");
+
+    const box =
+        floor.getBoundingClientRect();
+
+    const start =
+        rug.getBoundingClientRect();
+
+    const current =
+        getFixtures();
+
+    // Start from where the rug is now, moved or not.
+    const startX = current.rugX ?? ((start.left + start.width / 2 - box.left) / box.width) * 100;
+    const startY = current.rugY ?? 48;
+
+    let last = null;
+
+    const move = (moveEvent) => {
+
+        if (moveEvent.pointerId !== event.pointerId) {
+            return;
+        }
+
+        last = {
+            x: startX + ((moveEvent.clientX - event.clientX) / box.width) * 100,
+            // Down the screen is toward the front of the room.
+            y: startY + (moveEvent.clientY - event.clientY) / 0.7
+        };
+
+        moveRug(last.x, last.y, { persist: false });
+
+    };
+
+    const finish = (upEvent) => {
+
+        if (upEvent.pointerId !== event.pointerId) {
+            return;
+        }
+
+        window.removeEventListener("pointermove", move);
+        window.removeEventListener("pointerup", finish);
+        window.removeEventListener("pointercancel", finish);
+
+        rug.classList.remove("is-dragging");
+
+        if (last) {
+            moveRug(last.x, last.y);
+        }
+
+    };
+
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", finish);
+    window.addEventListener("pointercancel", finish);
+
+    return true;
 
 }
 
@@ -544,6 +677,11 @@ export function setFixtureRows(theme, fixtureRows) {
         if (kind === "window" && row.rotation === 1) {
             values.windowX = Number(row.position_x);
             values.windowY = Number(row.position_y);
+        }
+
+        if (kind === "rug" && row.rotation === 1) {
+            values.rugX = Number(row.position_x);
+            values.rugY = Number(row.position_y);
         }
 
     });

@@ -1307,7 +1307,7 @@ html.room-compact .bookcase-zone > .bookcase {
 html.room-compact .wall-art {
     right: auto;
 
-    width: 600px;
+    width: 760px;
 }
 
 /* No window: the glass, curtains, sill, candles and rain all
@@ -1317,6 +1317,28 @@ html.room-compact .wall-art {
 }
 
 /* While arranging, the window can be picked up and moved. */
+/* A moved rug: its middle at --rug-left across the floor. */
+.room-floor.has-moved-rug .room-rug {
+    left: calc(var(--rug-left) - (var(--window-width) + var(--chair-width) * 1.3 + 60px) / 2);
+    bottom: var(--rug-bottom);
+}
+
+/* While arranging, the rug can be picked up and moved. */
+.is-arranging .room-floor .room-rug {
+    pointer-events: auto;
+
+    cursor: grab;
+
+    touch-action: none;
+}
+
+.room-rug.is-dragging {
+    cursor: grabbing;
+
+    outline: 2px dashed rgba(240, 207, 138, 0.9);
+    outline-offset: 4px;
+}
+
 .is-arranging .moon-window {
     pointer-events: auto;
 

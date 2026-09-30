@@ -44,7 +44,8 @@
 html.room-compact .journal-zone > .decor-layer {
     right: auto;
 
-    width: 600px;
+    /* Wide enough to reach the right edge on every phone. */
+    width: 760px;
 }
 
 .placed-decor {
@@ -442,6 +443,15 @@ html.room-compact .journal-zone > .decor-layer {
     -webkit-touch-callout: none;
 }
 
+.arrange-bar__asset img {
+    width: 100%;
+    height: 56px;
+
+    object-fit: contain;
+
+    pointer-events: none;
+}
+
 .arrange-bar__asset svg {
     width: 100%;
     height: 56px;
@@ -681,7 +691,7 @@ html.room-compact .journal-zone > .decor-layer {
         padding: 6px 4px 4px;
     }
 
-    .arrange-bar__asset svg {
+    .arrange-bar__asset :is(svg, img) {
         height: 46px;
     }
 
@@ -1108,4 +1118,18 @@ html.room-compact .journal-zone > .decor-layer {
         right: 4px;
     }
 
+}
+
+
+/* Hand-painted pieces (pictures rather than drawings). */
+.decor-picture {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    pointer-events: none;
+
+    -webkit-user-select: none;
+    user-select: none;
 }

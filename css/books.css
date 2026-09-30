@@ -734,3 +734,39 @@ button.book-spine {
 
     opacity: 1;
 }
+
+
+/* Hand-painted spines (js/books/spine-options.js → SPINE_PAINTED):
+   the picture is the whole spine; the title sits in its panel. */
+.book-spine.spine--painted {
+    background: var(--spine-paint) center / 100% 100% no-repeat;
+
+    box-shadow: 1px 0 2px rgba(0, 0, 0, 0.35);
+}
+
+.spine--painted::before,
+.spine--painted .spine-band,
+.spine--painted .spine-ornament {
+    display: none;
+}
+
+.spine--painted .spine-title-wrap {
+    position: absolute;
+
+    top: 25%;
+    bottom: 25%;
+    left: 16%;
+    right: 16%;
+
+    width: auto;
+}
+
+.spine--painted .spine-title,
+.spine--painted .spine-title-wrap {
+    border: 0;
+
+    background: none;
+
+    box-shadow: none;
+    text-shadow: none;
+}
