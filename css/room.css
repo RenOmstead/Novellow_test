@@ -1686,7 +1686,7 @@ html.room-compact .bookcase-zone {
     display: none;
 }
 
-html[data-art="room"]:not(.room-compact) .room-view-button {
+html[data-art="room"] .room-view-button {
     display: inline-grid;
 }
 
@@ -1845,4 +1845,17 @@ html:is(.room-view, .is-arranging-room):not(.room-compact) .library-room::after 
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 
     pointer-events: none;
+}
+
+/* On a phone the wall's pieces reach right to the screen's edge,
+   under the notch's safe area too, instead of stopping short of
+   it: the room itself trims them at the screen. */
+html.room-compact .journal-zone {
+    overflow: visible;
+}
+
+/* On a phone, the room view hides the top bar; its little corner
+   bar brings it back. */
+html.room-compact .room-view-button {
+    display: inline-grid;
 }
