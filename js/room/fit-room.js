@@ -92,24 +92,17 @@ export function startRoomFit(room) {
             return;
         }
 
-        // The bookcase is drawn 760 wide and scaled to fit its
-        // side, so decorations on it keep their places on every
-        // phone, in the browser and the installed app alike.
-        const style =
-            getComputedStyle(bookcaseZone);
-
-        const shelfWidth =
-            bookcaseZone.clientWidth
-            - Number.parseFloat(style.paddingLeft)
-            - Number.parseFloat(style.paddingRight);
-
-        root.style.setProperty("--case-zoom", Math.min(1, Math.max(0.3, shelfWidth / CASE_WIDTH)).toFixed(4));
-
         // The room's side of the screen, and the scale that fits
         // the room into it. The room grows taller (more wall) or
-        // wider to fill the space exactly.
+        // wider to fill the space exactly. It is measured inside
+        // the notch padding, so the shelves keep their share.
+        const roomStyle =
+            getComputedStyle(room);
+
         const width =
-            room.clientWidth * ROOM_SHARE;
+            (room.clientWidth
+                - Number.parseFloat(roomStyle.paddingLeft)
+                - Number.parseFloat(roomStyle.paddingRight)) * ROOM_SHARE;
 
         const height =
             room.clientHeight;
@@ -121,6 +114,21 @@ export function startRoomFit(room) {
 
         root.style.setProperty("--room-width", `${Math.floor(width / zoom)}px`);
         root.style.setProperty("--room-height", `${Math.floor(height / zoom)}px`);
+
+        // The bookcase is drawn 760 wide and scaled to fit what
+        // is left beside the room (measured after the room has
+        // its width), so decorations on it keep their places on
+        // every phone, in the browser and the installed app alike.
+        const style =
+            getComputedStyle(bookcaseZone);
+
+        const shelfWidth =
+            bookcaseZone.getBoundingClientRect().width
+            - Number.parseFloat(style.paddingLeft)
+            - Number.parseFloat(style.paddingRight)
+            - 2;
+
+        root.style.setProperty("--case-zoom", Math.min(1, Math.max(0.3, shelfWidth / CASE_WIDTH)).toFixed(4));
 
     };
 
@@ -190,7 +198,16 @@ export function startRoomFit(room) {
     window.addEventListener("resize", fitSoon);
 
     if ("ResizeObserver" in window) {
-        new ResizeObserver(fitSoon).observe(room);
+        const watchSize =
+            new ResizeObserver(fitSoon);
+
+        watchSize.observe(room);
+
+        // The shelves' side changes when the room beside it does
+        // (turning the phone, the notch moving sides).
+        if (bookcaseZone) {
+            watchSize.observe(bookcaseZone);
+        }
     }
 
 }
