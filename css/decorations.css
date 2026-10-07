@@ -1292,6 +1292,11 @@ html.is-capturing .decor-art::after {
     display: none !important;
 }
 
+/* A swinging lampshade is part of the picture again. */
+html.is-capturing .fx-move--shade > .decor-picture {
+    clip-path: none;
+}
+
 /* A sideways phone's panel header has room for its buttons,
    not the title too (the tabs say what the panel is). */
 @media (orientation: landscape) and (max-height: 540px) {
