@@ -507,6 +507,34 @@
     50% { transform: scale(0.92, 1.04) translateY(-4px); }
 }
 
+/* A lampshade that swings a little on its finial: the shade is
+   a copy of the top of the picture, the picture below keeps the
+   stand. --shade is how far down the picture the shade reaches. */
+.fx-move--shade {
+    --shade: 48%;
+}
+
+.fx-move--shade > .decor-picture {
+    clip-path: inset(var(--shade) 0 0 0);
+}
+
+.fx-shade {
+    inset: 0;
+
+    background: var(--art) center / 100% 100% no-repeat;
+
+    clip-path: inset(0 0 calc(100% - var(--shade)) 0);
+
+    transform-origin: 50% 3%;
+
+    animation: fxShade 6.5s ease-in-out infinite;
+}
+
+@keyframes fxShade {
+    0%, 100% { transform: rotate(-1.4deg); }
+    50% { transform: rotate(1.4deg); }
+}
+
 @keyframes fxSway {
     0%, 100% { transform: rotate(-2.5deg); }
     50% { transform: rotate(2.5deg); }

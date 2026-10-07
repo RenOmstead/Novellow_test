@@ -36,7 +36,7 @@ const FX = {
     stone_fireplace: "fire 50 66 22; embers 50 58 18; glow 50 58 4",
     cold_fireplace: "motes",
     jack_o_lantern: "glow 50 55 3; flicker",
-    fringed_lamp: "glow 50 24 3.2 bulb",
+    fringed_lamp: "shade; glow 50 30 7.5 bulb; glow 50 26 3 bulb",
     pink_lamp: "glow 42.5 64.4 3 bulb",
     mushroom_lamp: "glow 43.6 62.5 3.4 bulb",
     moon_lamp: "glow 39.6 38.7 3.6 moon; sparkle 39.6 38.7 70 60 4",
@@ -202,7 +202,7 @@ const FX = {
 
 
 // Pieces whose whole picture moves, and how.
-const MOTIONS = ["float", "sway", "sway-soft", "rock", "flap", "breeze", "tilt", "hop", "ring", "rattle", "tick", "flicker"];
+const MOTIONS = ["shade", "float", "sway", "sway-soft", "rock", "flap", "breeze", "tilt", "hop", "ring", "rattle", "tick", "flicker"];
 
 
 function parse(line) {
@@ -270,6 +270,11 @@ function layer(effect, index) {
 
         case "sheen":
             return `<i class="fx fx-sheen"></i>`;
+
+        // The shade (the top of the picture) swings gently on
+        // its finial, tassels and all.
+        case "shade":
+            return `<i class="fx fx-shade"></i>`;
 
         default:
             return "";
