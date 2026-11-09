@@ -4,7 +4,9 @@
 
    ratingMarkup() draws stars; with { name } it becomes an
    input: click the left half of a star for a half star, the
-   right half for a whole one, or use the arrow keys.
+   right half for a whole one, or use the arrow keys (Home
+   clears it). The stars inside are only for pointing at: the
+   widget itself is the one control screen readers see.
    wireRatings(root) makes those inputs work.
 ========================================================= */
 
@@ -66,11 +68,11 @@ export function ratingMarkup(value, { name = "", label = "Rating" } = {}) {
         >
             <input type="hidden" name="${name}" value="${rating || ""}">
             ${[1, 2, 3, 4, 5].map((index) => html`
-                <button class="star-rating__button" type="button" tabindex="-1" data-star="${index}" aria-label="${index} stars">
+                <span class="star-rating__button" data-star="${index}" aria-hidden="true">
                     <svg aria-hidden="true"><use href="#${starSymbol(rating, index)}"></use></svg>
-                </button>
+                </span>
             `)}
-            <button class="text-button star-rating__clear" type="button" tabindex="-1" data-star-clear>Clear</button>
+            <span class="text-button star-rating__clear" data-star-clear aria-hidden="true">Clear</span>
         </span>
     `;
 

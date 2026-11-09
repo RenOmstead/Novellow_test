@@ -1218,6 +1218,45 @@ body.sidebar-collapsed .app-stage {
         padding: 0;
     }
 
+}
+
+
+/* A phone held upright: the menu button and the tools share
+   one row above the search box. */
+
+@media (max-width: 430px) {
+
+    .scene-header {
+        column-gap: 8px;
+    }
+
+    .header-tools {
+        gap: 6px;
+    }
+
+    .header-tools .icon-button,
+    .header-add,
+    .mobile-menu {
+        width: 42px;
+        height: 42px;
+    }
+
+    .profile-button {
+        padding: 3px;
+    }
+
+    .profile-button .avatar {
+        width: 34px;
+        height: 34px;
+
+        flex-basis: 34px;
+    }
+
+}
+
+
+@media (max-width: 820px), (orientation: landscape) and (max-height: 540px) and (max-width: 1180px) {
+
     .page-body {
         padding: 8px 12px 50px;
     }
@@ -1345,6 +1384,17 @@ html.room-sideways .scene-header {
     padding-top: calc(6px + env(safe-area-inset-top, 0px));
     padding-left: max(12px, env(safe-area-inset-left, 0px));
     padding-right: max(12px, env(safe-area-inset-right, 0px));
+}
+
+/* Upright phones: a little less at the sides, so the menu and
+   the tools fit on one row. */
+@media (max-width: 430px) {
+
+    .scene-header {
+        padding-left: calc(12px + env(safe-area-inset-left, 0px));
+        padding-right: calc(12px + env(safe-area-inset-right, 0px));
+    }
+
 }
 
 .library-sidebar {

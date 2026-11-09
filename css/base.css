@@ -618,6 +618,12 @@ select.field__input {
     border: 0;
 
     background: none;
+
+    cursor: pointer;
+}
+
+.star-rating__clear {
+    cursor: pointer;
 }
 
 .star-rating__button svg {

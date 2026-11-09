@@ -235,6 +235,10 @@ body.entrance {
 
     min-height: 100vh;
 
+    /* The sparkles and ivy can reach past the sides of a phone;
+       trim them there so the page never slides sideways. */
+    overflow-x: clip;
+
     display: grid;
 
     grid-template-columns:

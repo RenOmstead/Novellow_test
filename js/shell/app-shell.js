@@ -329,7 +329,7 @@ function headerMarkup(eyebrow) {
                 <label class="library-search">
                     <span class="visually-hidden">Search your library</span>
                     <svg aria-hidden="true"><use href="#ui-search"></use></svg>
-                    <input id="librarySearch" type="search" placeholder="Search your library…" autocomplete="off" aria-controls="searchResults" aria-expanded="false">
+                    <input id="librarySearch" type="search" role="combobox" placeholder="Search your library…" autocomplete="off" aria-autocomplete="list" aria-controls="searchResults" aria-expanded="false">
                 </label>
 
                 <div class="search-results paper" id="searchResults" role="region" aria-label="Search results" hidden></div>
