@@ -231,6 +231,30 @@ export async function updatePassword(password) {
 }
 
 
+/*
+    A link from one of Novellow's emails (js/pages/entrance.js):
+    index.html?token_hash=…&type=signup|recovery|email_change|
+    magiclink. The link goes straight to novellow.com, and the app
+    trades the one-time code for a signed-in session here.
+*/
+
+export const EMAIL_LINK_TYPES =
+    ["signup", "recovery", "email_change", "magiclink", "invite", "email"];
+
+export async function verifyEmailLink(tokenHash, type) {
+
+    const { data, error } =
+        await supabase.auth.verifyOtp({ token_hash: tokenHash, type });
+
+    if (error) {
+        throw new NovellowError(friendlyAuthError(error), error);
+    }
+
+    return data.session;
+
+}
+
+
 export function onPasswordRecovery(callback) {
 
     supabase.auth.onAuthStateChange((event) => {

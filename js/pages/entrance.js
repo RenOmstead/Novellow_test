@@ -16,7 +16,9 @@ import {
     updatePassword,
     onPasswordRecovery,
     afterSignInUrl,
-    recordEmailLinkSignIn
+    recordEmailLinkSignIn,
+    verifyEmailLink,
+    EMAIL_LINK_TYPES
 } from "../core/auth.js?v=__VERSION__";
 
 import { loadSprite } from "../core/art.js?v=__VERSION__";
@@ -58,12 +60,20 @@ const COPY = {
     }
 };
 
-let recovering = queryParam("reset") === "1";
+// A link from one of Novellow's own emails carries a one-time
+// code (token_hash) and what it's for (type).
+const linkCode =
+    queryParam("token_hash");
+
+const linkType =
+    EMAIL_LINK_TYPES.includes(queryParam("type")) ? queryParam("type") : null;
+
+let recovering = queryParam("reset") === "1" || linkType === "recovery";
 
 // Read before Supabase tidies the address bar: did the reader
 // arrive through a confirmation / reset email link?
 const arrivedByEmailLink =
-    /access_token=/.test(window.location.hash);
+    /access_token=/.test(window.location.hash) || Boolean(linkCode && linkType);
 
 
 /* =========================================================
@@ -582,10 +592,53 @@ async function start() {
         setMode("reset");
     }
 
+    // Trade an email link's one-time code for a session, then tidy
+    // the code out of the address bar (it only works once).
+    let linkFailed = false;
+
+    if (linkCode && linkType) {
+
+        try {
+            await verifyEmailLink(linkCode, linkType);
+        }
+
+        catch (error) {
+            console.error(error);
+            linkFailed = true;
+        }
+
+        const tidy =
+            new URL(window.location.href);
+
+        ["token_hash", "type"].forEach((name) => tidy.searchParams.delete(name));
+
+        if (linkType === "signup" || linkType === "email") {
+            tidy.searchParams.set("confirmed", "1");
+        }
+
+        window.history.replaceState(null, "", tidy);
+
+    }
+
     try {
 
         const session =
             await getSession();
+
+        if (linkFailed && !session) {
+
+            if (recovering) {
+                setMode("forgot");
+                showError("That reset link has expired or was already used. Request a new one below.");
+            }
+
+            else {
+                showError("That link has expired or was already used. Sign in, or request a new link.");
+            }
+
+            return;
+
+        }
 
         if (session && arrivedByEmailLink) {
             await recordEmailLinkSignIn();
