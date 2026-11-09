@@ -129,7 +129,7 @@ function watchAuthChanges() {
 ========================================================= */
 
 // The date the Terms of Use and Privacy Policy last changed.
-export const TERMS_VERSION = "2026-09-28";
+export const TERMS_VERSION = "2026-11-09";
 
 
 export async function signUp({ displayName, email, password }) {
@@ -187,6 +187,23 @@ export async function signIn({ email, password }) {
     }
 
     await recordSignIn("password");
+
+}
+
+
+// For a reader whose confirmation email never arrived.
+export async function resendConfirmation(email) {
+
+    const { error } =
+        await supabase.auth.resend({
+            type: "signup",
+            email,
+            options: { emailRedirectTo: appUrl("index.html?confirmed=1") }
+        });
+
+    if (error) {
+        throw new NovellowError(friendlyAuthError(error), error);
+    }
 
 }
 

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="robots" content="noindex">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta name="description" content="Novellow needs the internet to open your library.">
+    <meta name="theme-color" content="#3b2231">
+
+    <title>Offline | Novellow (test)</title>
+
+    <link rel="icon" href="assets/brand/favicon-48.png?v=__VERSION__" type="image/png" sizes="48x48">
+    <link rel="icon" href="assets/brand/favicon-32.png?v=__VERSION__" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="assets/app/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="css/tokens.css?v=__VERSION__">
+    <link rel="stylesheet" href="css/base.css?v=__VERSION__">
+    <link rel="stylesheet" href="css/legal.css?v=__VERSION__">
+
+    <style>
+        .offline-page {
+            text-align: center;
+        }
+
+        .offline-page .legal-lead {
+            margin-inline: auto;
+            max-width: 34ch;
+        }
+
+        .offline-actions {
+            display: flex;
+            justify-content: center;
+
+            margin-top: 18px;
+        }
+    </style>
+</head>
+
+
+<body class="legal">
+
+    <!--
+        Shown by the offline helper (sw.js) in place of any page
+        that can't load because there's no internet connection.
+        Everything it needs is kept on the device in advance.
+    -->
+
+    <header class="legal-top">
+        <span class="legal-logo"><img src="assets/brand/logo-light.png?v=__VERSION__" width="800" height="250" alt="Novellow"></span>
+    </header>
+
+    <main class="legal-page paper offline-page">
+
+        <h1>You're offline</h1>
+
+        <p class="legal-lead">Your library lives safely online, so Novellow needs an internet connection to open it.</p>
+
+        <p>Check your Wi-Fi or mobile data, then try again. This page will also try again by itself as soon as you're back online.</p>
+
+        <div class="offline-actions">
+            <button class="button button--primary" type="button" id="tryAgain">Try again</button>
+        </div>
+
+    </main>
+
+    <script>
+        document.getElementById("tryAgain").addEventListener("click", () => window.location.reload());
+        window.addEventListener("online", () => window.location.reload());
+    </script>
+
+</body>
+
+</html>

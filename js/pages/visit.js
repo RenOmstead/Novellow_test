@@ -14,16 +14,17 @@
    database (sql/public.sql) decides what can be read.
 ========================================================= */
 
+import "../core/offline.js?v=__VERSION__";
 import { supabase } from "../core/supabase.js?v=__VERSION__";
 import { getSession } from "../core/auth.js?v=__VERSION__";
 import { setVisiting } from "../core/visit-mode.js?v=__VERSION__";
 import { loadSprite } from "../core/art.js?v=__VERSION__";
-import { NovellowError } from "../core/errors.js?v=__VERSION__";
+import { reportReader, blockReader } from "../core/moderation.js?v=__VERSION__";
 
 import { setUser, useVisitedSettings, loadLibrary, getBooks, getBook, getShelf } from "../core/store.js?v=__VERSION__";
 import { coverUrls } from "../core/covers.js?v=__VERSION__";
 import { html, render, queryParam, formatDate } from "../core/helpers.js?v=__VERSION__";
-import { art, loader, toast, toastError, confirmDialog, formDialog } from "../core/ui.js?v=__VERSION__";
+import { art, loader, toastError } from "../core/ui.js?v=__VERSION__";
 import { ratingMarkup } from "../core/rating.js?v=__VERSION__";
 import { READING_STATUSES } from "../config.js?v=__VERSION__";
 
@@ -268,80 +269,15 @@ async function openBook(bookId) {
 ========================================================= */
 
 async function report() {
-
-    const sent =
-        await formDialog({
-            eyebrow: `@${page.username}`,
-            title: `Report ${whose()} library`,
-            submitLabel: "Send report",
-            body: html`
-                <p>Tell Novellow what's wrong: something unkind, unsafe, or not suitable for everyone. Only Novellow sees reports, and ${page.display_name} won't know who sent it.</p>
-                <label class="field">
-                    <span class="field__label">What's the problem?</span>
-                    <textarea class="field__input" name="message" rows="5" maxlength="2000" required></textarea>
-                </label>
-            `,
-            onSubmit: async (values) => {
-
-                const message =
-                    String(values.get("message") || "").trim();
-
-                if (!message) {
-                    throw Object.assign(new Error("empty"), { userMessage: "Write a few words about the problem." });
-                }
-
-                const { error } =
-                    await supabase
-                        .from("reader_notes")
-                        .insert({ kind: "report", message, reported_user_id: page.id });
-
-                if (error) {
-                    throw new NovellowError(error.code === "P0001" ? error.message : "The report couldn't be sent just now.", error);
-                }
-
-                return true;
-
-            }
-        });
-
-    if (sent) {
-        toast("Thank you. Novellow will look at it.", { tone: "success" });
-    }
-
+    await reportReader(page, { what: `${whose()} library` });
 }
 
 
 async function block() {
 
-    const sure =
-        await confirmDialog({
-            title: `Block ${page.display_name}?`,
-            message: `They won't be able to visit your library or send you friend requests, and if you're friends, that ends. They aren't told. You can unblock them in Settings.`,
-            confirmLabel: "Block",
-            tone: "danger"
-        });
-
-    if (!sure) {
-        return;
-    }
-
-    try {
-
-        const { error } =
-            await supabase
-                .from("reader_blocks")
-                .insert({ blocked_id: page.id });
-
-        if (error && error.code !== "23505") {
-            throw new NovellowError("They couldn't be blocked just now.", error);
-        }
-
-        toast(`${page.display_name} is blocked.`, { tone: "success" });
-
-    }
-
-    catch (error) {
-        toastError(error);
+    if (await blockReader(page)) {
+        // Their room isn't somewhere you visit any more.
+        setTimeout(() => { window.location.href = "dashboard.html"; }, 1200);
     }
 
 }

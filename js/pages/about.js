@@ -9,6 +9,7 @@
 ========================================================= */
 
 import { startApp } from "../shell/app-shell.js?v=__VERSION__";
+import { storeApp } from "../core/offline.js?v=__VERSION__";
 import { supabase } from "../core/supabase.js?v=__VERSION__";
 import { NovellowError } from "../core/errors.js?v=__VERSION__";
 import { currentUserId } from "../core/store.js?v=__VERSION__";
@@ -129,8 +130,14 @@ function describeDevice() {
             : /Linux/.test(agent) ? "Linux"
             : "another system";
 
+    const store =
+        storeApp();
+
     const app =
-        window.matchMedia("(display-mode: standalone)").matches || navigator.standalone ? ", home-screen app" : "";
+        store === "ios" ? ", App Store app"
+            : store === "android" ? ", Google Play app"
+            : window.matchMedia("(display-mode: standalone)").matches || navigator.standalone ? ", home-screen app"
+            : "";
 
     return `${browser} on ${system}${app}, ${window.innerWidth}×${window.innerHeight}`;
 

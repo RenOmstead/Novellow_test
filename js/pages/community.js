@@ -44,6 +44,7 @@ import {
 import { html, render, on, plural, initials, formatDate, formatDateTime, queryParam, seededRandom, textOrNull, intOrNull, debounce } from "../core/helpers.js?v=__VERSION__";
 import { art, loader, emptyState, toast, toastError, confirmDialog, formDialog, withBusy } from "../core/ui.js?v=__VERSION__";
 import { friendlyDataError } from "../core/errors.js?v=__VERSION__";
+import { reportReader, blockReader, loadBlockedIds } from "../core/moderation.js?v=__VERSION__";
 import { ratingMarkup } from "../core/rating.js?v=__VERSION__";
 import { coverUrls } from "../core/covers.js?v=__VERSION__";
 import { coverMarkup } from "../books/cover.js?v=__VERSION__";
@@ -277,6 +278,7 @@ function renderHub() {
                                     <div class="community-row__actions">
                                         <button class="button button--primary button--small" type="button" data-action="accept-friend" data-id="${entry.id}">Accept</button>
                                         <button class="button button--ghost button--small" type="button" data-action="decline-friend" data-id="${entry.id}">Decline</button>
+                                        <button class="text-button community-row__block" type="button" data-action="block-reader" data-user="${entry.person.id}">Block</button>
                                     </div>
                                 </li>
                             `)}
@@ -563,6 +565,11 @@ function friendCard(entry) {
                 <p class="muted friend-card__quiet">Keeps their shelves private.</p>
             `}
 
+            <div class="friend-card__safety">
+                <button class="text-button" type="button" data-action="report-reader" data-user="${person.id}">Report</button>
+                <button class="text-button" type="button" data-action="block-reader" data-user="${person.id}">Block</button>
+            </div>
+
         </li>
     `;
 
@@ -681,6 +688,28 @@ function wireHub() {
                 }
 
                 return;
+
+            }
+
+            if (action === "report-reader" || action === "block-reader") {
+
+                const person =
+                    [...friends.friends, ...friends.incoming]
+                        .map((entry) => entry.person)
+                        .find((reader) => reader.id === target.dataset.user);
+
+                if (!person) {
+                    return;
+                }
+
+                if (action === "report-reader") {
+                    await reportReader(person);
+                    return;
+                }
+
+                if (!(await blockReader(person))) {
+                    return;
+                }
 
             }
 
@@ -1146,6 +1175,10 @@ async function showFriend(friendId) {
                         </p>
                     </div>
                 </div>
+                <div class="friend-heading__safety">
+                    <button class="button button--ghost button--small" type="button" data-action="report-friend">Report</button>
+                    <button class="button button--ghost button--small" type="button" data-action="block-friend">Block</button>
+                </div>
             </div>
 
             ${person.bio ? html`<p class="friend-bio paper">${person.bio}</p>` : ""}
@@ -1219,6 +1252,18 @@ async function showFriend(friendId) {
 
         if (book) {
             friendBookDialog(book, person).catch(toastError);
+        }
+
+    });
+
+    on(content, "click", "[data-action=report-friend]", () => {
+        reportReader(person, { what: `${person.display_name}'s shelves` }).catch(toastError);
+    });
+
+    on(content, "click", "[data-action=block-friend]", async () => {
+
+        if (await blockReader(person)) {
+            window.location.href = "community.html";
         }
 
     });
@@ -1328,6 +1373,7 @@ async function showGroup(groupId) {
     const state = {
         group: null,
         posts: [],
+        hidden: 0,
         waiting: []
     };
 
@@ -1357,11 +1403,22 @@ async function showGroup(groupId) {
 
         if (state.group.mine?.status === "joined") {
 
-            [state.posts, state.waiting] =
+            const [posts, waiting, blocked] =
                 await Promise.all([
                     listPosts(groupId),
-                    state.group.kind === "buddy" ? waitingComments(groupId) : []
+                    state.group.kind === "buddy" ? waitingComments(groupId) : [],
+                    loadBlockedIds()
                 ]);
+
+            // Posts from readers you've blocked aren't shown to you.
+            state.posts =
+                posts.filter((post) => !blocked.has(post.user_id));
+
+            state.hidden =
+                posts.length - state.posts.length;
+
+            state.waiting =
+                waiting;
 
         }
 
@@ -1464,6 +1521,29 @@ async function showGroup(groupId) {
                 }
 
                 await removeMember(group.id, target.dataset.id);
+
+            }
+
+            if (action === "report-post" || action === "block-author") {
+
+                const post =
+                    state.posts.find((entry) => entry.id === target.dataset.id);
+
+                if (!post) {
+                    return;
+                }
+
+                const author =
+                    authorOf(post, group);
+
+                if (action === "report-post") {
+                    await reportReader(author, { what: `a post in ${group.name}`, quote: post.body });
+                    return;
+                }
+
+                if (!(await blockReader(author))) {
+                    return;
+                }
 
             }
 
@@ -1687,11 +1767,18 @@ function renderGroup(state) {
 }
 
 
+function authorOf(post, group) {
+
+    return group.members.find((member) => member.user_id === post.user_id)?.person
+        || { id: post.user_id, display_name: "A former member" };
+
+}
+
+
 function postMarkup(post, group, me) {
 
     const author =
-        group.members.find((member) => member.user_id === post.user_id)?.person
-        || { id: post.user_id, display_name: "A former member" };
+        authorOf(post, group);
 
     const mine =
         post.user_id === me;
@@ -1703,9 +1790,15 @@ function postMarkup(post, group, me) {
                 <div class="post__meta">
                     <strong>${nameOf(author, me)}</strong>
                     <time datetime="${post.created_at}">${formatDateTime(post.created_at)}</time>
-                    ${mine || group.isOwner ? html`
-                        <button class="text-button post__delete" type="button" data-action="delete-post" data-id="${post.id}">Delete</button>
-                    ` : ""}
+                    <span class="post__actions">
+                        ${mine || group.isOwner ? html`
+                            <button class="text-button" type="button" data-action="delete-post" data-id="${post.id}">Delete</button>
+                        ` : ""}
+                        ${mine ? "" : html`
+                            <button class="text-button" type="button" data-action="report-post" data-id="${post.id}" aria-label="Report this post">Report</button>
+                            <button class="text-button" type="button" data-action="block-author" data-id="${post.id}" aria-label="Block ${author.display_name}">Block</button>
+                        `}
+                    </span>
                 </div>
                 <div class="post__body">${paragraphs(post.body)}</div>
             </div>
@@ -1728,6 +1821,15 @@ function composer({ chapter = null, placeholder }) {
 }
 
 
+function hiddenNote(state, extra = "") {
+
+    return state.hidden ? html`
+        <p class="muted community-card__hint ${extra}">${plural(state.hidden, "post")} from readers you've blocked ${state.hidden === 1 ? "is" : "are"} hidden.</p>
+    ` : "";
+
+}
+
+
 function clubThread(state, me) {
 
     const group =
@@ -1741,6 +1843,7 @@ function clubThread(state, me) {
                     ${state.posts.map((post) => postMarkup(post, group, me))}
                 </ol>
             ` : html`<p class="muted community-card__hint">No posts yet. Say hello, or share your first impressions.</p>`}
+            ${hiddenNote(state)}
             ${composer({ placeholder: "Share a thought with the club…" })}
         </section>
     `;
@@ -1813,6 +1916,8 @@ function buddyChapters(state, me) {
         }) : html`
             <p class="muted community-card__hint community-card__hint--light">Finish the first chapter to start the conversation.</p>
         `}
+
+        ${hiddenNote(state, "community-card__hint--light")}
 
     `;
 

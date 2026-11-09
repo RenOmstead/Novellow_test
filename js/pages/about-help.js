@@ -8,6 +8,7 @@
 ========================================================= */
 
 import { html, render } from "../core/helpers.js?v=__VERSION__";
+import { openedAsApp } from "../core/offline.js?v=__VERSION__";
 
 
 // Which set of home-screen steps to show first.
@@ -24,10 +25,6 @@ function guessDevice() {
 }
 
 
-// Already opened from the home screen?
-function fromHomeScreen() {
-    return window.matchMedia?.("(display-mode: standalone)").matches || navigator.standalone === true;
-}
 
 
 const STEPS = {
@@ -162,10 +159,10 @@ export function helpSection(device = guessDevice()) {
 
                 <h3 class="help-card__subtitle">Put Novellow on your home screen</h3>
 
-                ${fromHomeScreen() ? html`
-                    <p class="home-screen__done">You're already using Novellow from your home screen.</p>
+                ${openedAsApp() ? html`
+                    <p class="home-screen__done">You're already using Novellow as an app, so you're all set.</p>
                 ` : html`
-                    <p>Novellow works in your phone's browser, and you can add it to your home screen so it opens full screen, like an app. Nothing to download from an app store.</p>
+                    <p>Novellow works in your phone's browser, and you can add it to your home screen so it opens full screen, like an app.</p>
 
                     <div class="home-screen__tabs" role="tablist" aria-label="Your phone">
                         ${Object.entries(STEPS).map(([id, guide]) => html`

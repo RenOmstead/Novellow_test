@@ -6,6 +6,7 @@
    email confirmation / reset links.
 ========================================================= */
 
+import "../core/offline.js?v=__VERSION__";
 import { isConfigured } from "../core/supabase.js?v=__VERSION__";
 
 import {
@@ -16,6 +17,7 @@ import {
     updatePassword,
     onPasswordRecovery,
     afterSignInUrl,
+    resendConfirmation,
     recordEmailLinkSignIn,
     verifyEmailLink,
     EMAIL_LINK_TYPES
@@ -30,6 +32,7 @@ import { growIvy } from "../room/ivy.js?v=__VERSION__";
 
 const note = $("#authNote");
 const errorLine = $("#authError");
+const resendButton = $("#resendConfirmation");
 const title = $("#authTitle");
 const subtitle = $("#authSubtitle");
 const switcher = $("#authSwitch");
@@ -100,6 +103,8 @@ function clearMessages() {
 
     showNote("");
     showError("");
+
+    resendButton.hidden = true;
 
     $all("[aria-invalid]").forEach((field) => field.removeAttribute("aria-invalid"));
 
@@ -362,6 +367,36 @@ forms["sign-in"].addEventListener("submit", async (event) => {
 
             showError(error.userMessage || friendlyAuthError(error));
 
+            // Not confirmed yet: offer to send the email again.
+            resendButton.hidden =
+                !(error.cause?.code === "email_not_confirmed" || /email not confirmed/i.test(error.cause?.message || ""));
+
+        }
+
+    });
+
+});
+
+
+resendButton.addEventListener("click", async () => {
+
+    const email =
+        forms["sign-in"].elements.email.value.trim();
+
+    await withBusy(resendButton, "Sending…", async () => {
+
+        try {
+
+            await resendConfirmation(email);
+
+            clearMessages();
+
+            showNote(`A new confirmation email is on its way to ${email}. It comes from hello@novellow.com; check your spam folder if you don't see it in a few minutes.`);
+
+        }
+
+        catch (error) {
+            showError(error.userMessage || friendlyAuthError(error));
         }
 
     });

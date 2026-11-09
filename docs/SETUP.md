@@ -12,7 +12,7 @@ You'll need the Supabase dashboard for your project
 
 ## 1. Create the tables, security rules and cover storage
 
-In Supabase, open **SQL Editor** → **New query**. Run these four
+In Supabase, open **SQL Editor** → **New query**. Run these
 files from the `sql/` folder, **in this order**. For each one, paste the
 whole file into the editor and select **Run**:
 
@@ -45,6 +45,12 @@ whole file into the editor and select **Run**:
    everyone (18+), visit each other's rooms, report a library, and block
    readers; the Novellow account can hide a reported library. Run it
    after `notes-inbox.sql`. It's safe to run again.
+9. `sql/wall.sql`: lets decorations sit anywhere on the wall, up to the
+   ceiling and out across the floor. It's safe to run again.
+10. `sql/safety.sql`: a short list of words (slurs and threats) that
+    can't be used in book club posts, club names, display names,
+    usernames or bios. Add words in **Table Editor** →
+    `moderation_words`. It's safe to run again.
 
 Each should finish with "Success. No rows returned". If one shows an
 error, stop there and send me the message.

@@ -80,7 +80,8 @@ body.legal {
     margin: 0 0 10px;
 }
 
-.legal-page ul {
+.legal-page ul,
+.legal-page ol {
     margin: 0 0 12px;
     padding-left: 22px;
 }
@@ -153,4 +154,14 @@ body.legal {
 
 .legal-foot a {
     color: #f6ead4;
+}
+
+.legal-page h3 {
+    margin: 20px 0 4px;
+
+    color: var(--color-ink);
+
+    font-family: var(--font-ui);
+    font-size: 18px;
+    line-height: 1.35;
 }

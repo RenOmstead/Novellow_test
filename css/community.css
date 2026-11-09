@@ -966,10 +966,51 @@
     font-size: 13px;
 }
 
-.post__delete {
+.post__actions {
+    display: flex;
+    gap: 10px;
+
     margin-left: auto;
+}
+
+.post__actions .text-button {
+    font-size: 13px;
+}
+
+.post:not(.post--mine) .post__actions .text-button {
+    color: var(--color-ink-faint);
+}
+
+.report-quote {
+    margin: 0;
+    padding: 8px 12px;
+
+    border-left: 3px solid var(--color-gold);
+
+    color: var(--color-ink-soft);
+
+    font-style: italic;
+}
+
+.friend-card__safety {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+
+    margin-top: auto;
+}
+
+.friend-card__safety .text-button,
+.community-row__block {
+    color: var(--color-ink-faint);
 
     font-size: 13px;
+}
+
+.friend-heading__safety {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .post__body {

@@ -1,7 +1,9 @@
 {
     "name": "Novellow",
     "short_name": "Novellow",
-    "description": "A cozy illustrated library and reading journal.",
+    "description": "A cozy illustrated library and reading journal. Build your bookcase, track what you read, keep notes, quotes and new words inside each book, decorate your reading room, and read along with friends.",
+    "lang": "en",
+    "dir": "ltr",
     "id": "./",
     "start_url": "./dashboard.html",
     "scope": "./",
@@ -9,9 +11,20 @@
     "orientation": "landscape",
     "background_color": "#2a1620",
     "theme_color": "#3b2231",
+    "categories": ["books", "lifestyle", "education"],
+    "prefer_related_applications": false,
     "icons": [
-        { "src": "assets/app/icon-192.png", "sizes": "192x192", "type": "image/png" },
-        { "src": "assets/app/icon-512.png", "sizes": "512x512", "type": "image/png" },
+        { "src": "assets/app/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+        { "src": "assets/app/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
         { "src": "assets/app/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    ],
+    "screenshots": [
+        { "src": "assets/app/screen-wide.jpg", "sizes": "1280x800", "type": "image/jpeg", "form_factor": "wide", "label": "Your reading room, with your books on the bookcase" },
+        { "src": "assets/app/screen-narrow.jpg", "sizes": "780x1688", "type": "image/jpeg", "form_factor": "narrow", "label": "A book club's discussion on a phone" }
+    ],
+    "shortcuts": [
+        { "name": "My Books", "url": "./library.html", "icons": [{ "src": "assets/app/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+        { "name": "Reading Now", "url": "./reading.html", "icons": [{ "src": "assets/app/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+        { "name": "Journal", "url": "./journal.html", "icons": [{ "src": "assets/app/icon-192.png", "sizes": "192x192", "type": "image/png" }] }
     ]
 }

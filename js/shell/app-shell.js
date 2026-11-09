@@ -8,6 +8,7 @@
    and header around the page's <main>.
 ========================================================= */
 
+import "../core/offline.js?v=__VERSION__";
 import { requireSession, signOut } from "../core/auth.js?v=__VERSION__";
 import { loadSprite } from "../core/art.js?v=__VERSION__";
 
