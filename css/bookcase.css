@@ -93,6 +93,10 @@ html.room-compact .bookcase-zone > .bookcase {
    BODY AND ROWS
 ========================================================= */
 
+/* The inside of the bookcase is the shelves' own back panel all
+   the way down, so wherever the shelves have slid to (or bounce
+   when pulled past the end), it's never the wall showing
+   through. */
 .bookcase-body {
     position: relative;
 
@@ -107,8 +111,8 @@ html.room-compact .bookcase-zone > .bookcase {
             var(--case-side-light) 5px,
             var(--case-side-mid) 13px,
             #3a2016 18px,
-            transparent 18px,
-            transparent calc(100% - 18px),
+            var(--shelf-back-bottom) 18px,
+            var(--shelf-back-bottom) calc(100% - 18px),
             #3a2016 calc(100% - 18px),
             var(--case-side-mid) calc(100% - 13px),
             var(--case-side-light) calc(100% - 5px),

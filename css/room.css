@@ -1943,6 +1943,11 @@ html.room-compact .bookcase-zone > .bookcase {
     flex: none;
 }
 
+/* No scrollbar: one would take a strip off the right of the
+   shelves, between them and the bookcase's side. The soft
+   shadows under the crown and above the base show there are
+   more shelves; a wheel, a trackpad or a finger slides them. No
+   bounce past the first or last shelf either. */
 .bookcase > .bookcase-body {
     flex: 1 1 auto;
 
@@ -1951,27 +1956,12 @@ html.room-compact .bookcase-zone > .bookcase {
     overflow-x: hidden;
     overflow-y: auto;
 
-    overscroll-behavior: contain;
+    overscroll-behavior: none;
 
-    scrollbar-width: thin;
-    scrollbar-color: rgba(216, 170, 102, 0.55) transparent;
-}
-
-.bookcase > .bookcase-body::-webkit-scrollbar {
-    width: 6px;
-}
-
-.bookcase > .bookcase-body::-webkit-scrollbar-thumb {
-    border-radius: 6px;
-
-    background: rgba(216, 170, 102, 0.55);
-}
-
-html.room-compact .bookcase > .bookcase-body {
     scrollbar-width: none;
 }
 
-html.room-compact .bookcase > .bookcase-body::-webkit-scrollbar {
+.bookcase > .bookcase-body::-webkit-scrollbar {
     display: none;
 }
 
