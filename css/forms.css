@@ -19,7 +19,9 @@
 
     margin: auto 12px auto auto;
 
-    overflow: hidden;
+    /* Never scrolled itself (only its body scrolls), even to
+       show something that has the focus. */
+    overflow: clip;
 }
 
 .parchment-dialog.book-editor[open] {
@@ -599,4 +601,443 @@
 .discover-search .button svg {
     width: 20px;
     height: 20px;
+}
+
+
+/* =========================================================
+   FONT PICKER (js/books/font-picker.js)
+   Each font as a sample written in it, in a group.
+========================================================= */
+
+.font-picker {
+    min-width: 0;
+
+    display: grid;
+
+    gap: 4px;
+
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+}
+
+.font-picker__group {
+    margin: 8px 0 2px;
+
+    color: var(--color-plum);
+
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.font-picker__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+
+    gap: 6px;
+}
+
+.font-picker__option {
+    min-width: 0;
+
+    display: grid;
+    align-content: center;
+
+    gap: 2px;
+
+    padding: 8px 8px 6px;
+
+    border: 1.5px solid var(--color-paper-edge);
+    border-radius: 12px;
+
+    background: rgba(255, 252, 244, 0.8);
+
+    color: var(--color-ink);
+
+    text-align: center;
+
+    cursor: pointer;
+}
+
+.font-picker__sample {
+    overflow: hidden;
+
+    font-size: 17px;
+    font-size-adjust: 0.5;
+    line-height: 1.25;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.font-picker__option small {
+    overflow: hidden;
+
+    color: var(--color-ink-soft);
+
+    font-family: var(--font-ui);
+    font-size: 11px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.font-picker__option:hover {
+    border-color: var(--color-mauve);
+}
+
+.font-picker__option:has(input:checked) {
+    border-color: var(--color-plum-light);
+
+    background: #fff8ee;
+
+    box-shadow: 0 0 0 2px rgba(150, 90, 130, 0.3);
+}
+
+.font-picker__option:has(input:focus-visible) {
+    box-shadow: var(--focus-ring);
+}
+
+
+/* =========================================================
+   BOOK DESIGN (js/books/book-editor.js)
+   Every choice shown as itself: the spine styles as little
+   spines, the fonts as samples, the ornaments as pictures.
+   The finer lettering settings fold away underneath.
+========================================================= */
+
+.editor-section--design {
+    min-width: 0;
+
+    grid-template-columns: minmax(0, 1fr);
+
+    gap: 6px;
+}
+
+.editor-section--design > * {
+    min-width: 0;
+}
+
+.editor-section--design .field-row:has(.field--color) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.design-step {
+    margin: 12px 0 2px;
+
+    color: var(--color-plum-deep);
+
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.design-note {
+    margin: 4px 0;
+
+    color: var(--color-ink-soft);
+
+    font-size: 14px;
+}
+
+.design-note--painted {
+    display: none;
+}
+
+/* A painted spine has its own colours, and only the simple
+   styles carry an ornament. */
+[data-painted="true"] .design-colours {
+    display: none;
+}
+
+[data-painted="true"] .design-note--painted {
+    display: block;
+}
+
+[data-ornament="false"] .design-ornament {
+    display: none;
+}
+
+.style-picker__group {
+    margin: 6px 0 4px;
+
+    color: var(--color-plum);
+
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+/* The spines stand side by side like on a shelf, sliding
+   sideways. */
+.style-picker__grid {
+    display: flex;
+
+    gap: 6px;
+
+    margin: 0 -4px;
+    padding: 4px 4px 8px;
+
+    overflow-x: auto;
+
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+}
+
+.style-picker__option {
+    flex: none;
+
+    width: 62px;
+
+    display: grid;
+    justify-items: center;
+
+    gap: 4px;
+
+    padding: 6px 4px 4px;
+
+    border: 1.5px solid transparent;
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    scroll-snap-align: start;
+}
+
+/* Drawn at full size (130 tall at most), then shrunk. */
+.style-picker__spine {
+    height: 134px;
+
+    display: grid;
+    align-items: end;
+
+    zoom: 0.68;
+
+    pointer-events: none;
+}
+
+.style-picker__spine .book-spine {
+    width: var(--w);
+    height: var(--h);
+}
+
+.style-picker__option small {
+    max-width: 100%;
+
+    overflow: hidden;
+
+    color: var(--color-ink-soft);
+
+    font-family: var(--font-ui);
+    font-size: 10.5px;
+    line-height: 1.15;
+
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.style-picker__option:hover {
+    border-color: var(--color-paper-edge);
+}
+
+.style-picker__option:has(input:checked) {
+    border-color: var(--color-plum-light);
+
+    background: #fff8ee;
+
+    box-shadow: 0 0 0 2px rgba(150, 90, 130, 0.3);
+}
+
+.style-picker__option:has(input:focus-visible) {
+    box-shadow: var(--focus-ring);
+}
+
+/* The title panel: small chips. */
+.chip-picker {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 6px;
+}
+
+.chip-picker__option span {
+    display: inline-block;
+
+    padding: 5px 11px;
+
+    border: 1.5px solid var(--color-paper-edge);
+    border-radius: 999px;
+
+    background: rgba(255, 252, 244, 0.8);
+
+    color: var(--color-ink-soft);
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+.chip-picker__option:has(input:checked) span {
+    border-color: var(--color-plum-light);
+
+    background: var(--color-plum-light);
+
+    color: #fff3e2;
+}
+
+.chip-picker__option:has(input:focus-visible) span {
+    box-shadow: var(--focus-ring);
+}
+
+/* The ornaments, drawn. */
+.ornament-picker {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+
+    gap: 6px;
+}
+
+.ornament-picker__option {
+    aspect-ratio: 1;
+
+    display: grid;
+    place-items: center;
+
+    padding: 6px;
+
+    border: 1.5px solid var(--color-paper-edge);
+    border-radius: 10px;
+
+    background: rgba(255, 252, 244, 0.8);
+
+    color: var(--color-plum-deep);
+
+    --book-accent: var(--color-plum-deep);
+
+    cursor: pointer;
+}
+
+.ornament-picker__art {
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+}
+
+.ornament-picker__none {
+    font-size: 11px;
+}
+
+.ornament-picker__option:has(input:checked) {
+    border-color: var(--color-plum-light);
+
+    background: #fff8ee;
+
+    box-shadow: 0 0 0 2px rgba(150, 90, 130, 0.3);
+}
+
+.ornament-picker__option:has(input:focus-visible) {
+    box-shadow: var(--focus-ring);
+}
+
+/* The finer lettering settings, folded away. */
+.design-more {
+    margin-top: 10px;
+
+    border-top: 1px solid rgba(160, 120, 100, 0.3);
+}
+
+.design-more summary {
+    padding: 10px 0 6px;
+
+    color: var(--color-plum-deep);
+
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.design-more[open] {
+    display: grid;
+
+    gap: 12px;
+}
+
+/* The book itself, lying on its side, pinned to the top while
+   designing: shown where the preview isn't beside the choices
+   (phones and small tablets). */
+.design-peek {
+    display: none;
+}
+
+@media (max-width: 860px) {
+
+    .design-peek {
+        position: sticky;
+        top: 0;
+
+        z-index: 3;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 10px;
+
+        margin: 0 -16px;
+        padding: 8px 16px;
+
+        border-bottom: 1px solid rgba(160, 120, 100, 0.3);
+
+        background: rgb(250, 240, 224);
+
+        box-shadow: 0 6px 10px -8px rgba(60, 30, 20, 0.4);
+    }
+
+    .design-peek__spine {
+        position: relative;
+
+        width: 150px;
+        height: 58px;
+
+        flex: none;
+    }
+
+    .design-peek__spine .book-spine {
+        position: absolute;
+
+        top: 50%;
+        left: 50%;
+
+        width: var(--w);
+        height: var(--h);
+
+        transform: translate(-50%, -50%) rotate(-90deg);
+        transform-origin: 50% 50%;
+    }
+
+    /* The aside's own preview, further up, keeps its Surprise
+       button; this one has its own. */
+    .book-editor__preview [data-surprise] {
+        display: none;
+    }
+
+}
+
+/* The hidden radio buttons stay inside their options, so
+   choosing one never scrolls the editor to look for it. */
+.font-picker__option,
+.style-picker__option,
+.chip-picker__option,
+.ornament-picker__option {
+    position: relative;
 }

@@ -1682,11 +1682,12 @@ html.room-compact .bookcase-zone {
    room view shows.
 ========================================================= */
 
-.room-view-button {
+.room-view-button,
+.decorate-button {
     display: none;
 }
 
-html[data-art="room"] .room-view-button {
+html[data-art="room"] :is(.room-view-button, .decorate-button) {
     display: inline-grid;
 }
 
@@ -1824,29 +1825,6 @@ html:is(.room-view, .is-arranging-room):not(.room-compact) .room-floorboards::af
 }
 
 
-/* A beamed ceiling along the top of the room. */
-html:is(.room-view, .is-arranging-room):not(.room-compact) .library-room::after {
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-    right: 0;
-    top: 0;
-
-    z-index: 5;
-
-    height: 54px;
-
-    background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='54' viewBox='0 0 260 54'%3E%3Cpath d='M96 0H164L156 54H104Z' fill='%236a432c'/%3E%3Cpath d='M104 54H156L158 40H102Z' fill='%234a2c1c'/%3E%3Cpath d='M96 0L104 54M164 0L156 54' stroke='%232a160e' stroke-width='2'/%3E%3Cpath d='M112 8C120 14 132 12 142 18M110 26C122 30 134 28 150 32' stroke='%23845634' stroke-width='1.4' fill='none' opacity='0.8'/%3E%3C/svg%3E") 0 0 / 260px 54px repeat-x,
-        linear-gradient(180deg, #3a2418, #2a190f 70%, #1e120b);
-
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-
-    pointer-events: none;
-}
-
 /* On a phone the wall's pieces reach right to the screen's edge,
    under the notch's safe area too, instead of stopping short of
    it: the room itself trims them at the screen. */
@@ -1856,6 +1834,289 @@ html.room-compact .journal-zone {
 
 /* On a phone, the room view hides the top bar; its little corner
    bar brings it back. */
-html.room-compact .room-view-button {
+html.room-compact :is(.room-view-button, .decorate-button) {
     display: inline-grid;
+}
+
+
+/* =========================================================
+   THE BOOKCASE AS A PIECE OF FURNITURE
+   The room is the bigger part of the screen, with a beamed
+   ceiling the lights hang from, and the bookcase stands on
+   its floor against the wall, shorter than the room, with
+   wall showing above it. With more shelves than fit, the
+   shelves slide up and down inside the bookcase: its carved
+   crown and its base stay where they are.
+========================================================= */
+
+.library-room {
+    /* The ceiling's depth; lamps hang from below it. */
+    --ceiling-h: 54px;
+}
+
+html.room-compact .library-room {
+    --ceiling-h: 26px;
+}
+
+/* The beamed ceiling, always: the lights hang from it. */
+.room-ceiling {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    top: 0;
+
+    /* Behind the bookcase and the wall's pieces, so anything
+       hung high (a lantern, a garland) hangs from it. */
+    z-index: 1;
+
+    height: var(--ceiling-h);
+
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='54' viewBox='0 0 260 54'%3E%3Cpath d='M96 0H164L156 54H104Z' fill='%236a432c'/%3E%3Cpath d='M104 54H156L158 40H102Z' fill='%234a2c1c'/%3E%3Cpath d='M96 0L104 54M164 0L156 54' stroke='%232a160e' stroke-width='2'/%3E%3Cpath d='M112 8C120 14 132 12 142 18M110 26C122 30 134 28 150 32' stroke='%23845634' stroke-width='1.4' fill='none' opacity='0.8'/%3E%3C/svg%3E") 0 0 / auto 100% repeat-x,
+        linear-gradient(180deg, #3a2418, #2a190f 70%, #1e120b);
+
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+
+    pointer-events: none;
+}
+
+/* The ceiling lamp hangs from the ceiling, not behind it. */
+.ceiling-lamp {
+    top: var(--ceiling-h);
+}
+
+/* On a computer the bookcase is a piece of furniture against
+   the wall: narrower than its side of the room, with wall
+   around it and above it, under the ceiling. (The room keeps
+   its measurements, so the window and every piece on the wall
+   stay where they were arranged.) */
+@media (min-width: 1181px) {
+
+    html:not(.room-compact) .bookcase-zone {
+        padding-top: calc(var(--ceiling-h) + clamp(36px, 11dvh, 120px));
+        padding-bottom: 14px;
+    }
+
+    html:not(.room-compact) .bookcase-zone > .bookcase {
+        width: min(100%, 78%, 560px);
+    }
+
+}
+
+/* The bookcase stands at the foot of its side of the room, as
+   tall as its shelves need, up to the room's height. Beyond
+   that its shelves slide up and down inside it, between the
+   carved crown and the base, which stay where they are. */
+.bookcase-zone {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+html:not(.room-compact) .bookcase-zone,
+html.room-compact .bookcase-zone {
+    overflow: visible;
+
+    -webkit-mask-image: none;
+    mask-image: none;
+}
+
+.bookcase-zone > .bookcase {
+    flex: 0 1 auto;
+
+    display: flex;
+    flex-direction: column;
+
+    min-height: 0;
+    max-height: 100%;
+}
+
+/* On a phone the bookcase is drawn larger and shrunk to fit
+   (zoom), so its height limit is worked out in its own size
+   (js/room/fit-room.js). */
+html.room-compact .bookcase-zone > .bookcase {
+    max-height: var(--case-max-h, none);
+}
+
+.bookcase > :is(.bookcase-top, .bookcase-base) {
+    flex: none;
+}
+
+.bookcase > .bookcase-body {
+    flex: 1 1 auto;
+
+    min-height: 0;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    overscroll-behavior: contain;
+
+    scrollbar-width: thin;
+    scrollbar-color: rgba(216, 170, 102, 0.55) transparent;
+}
+
+.bookcase > .bookcase-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.bookcase > .bookcase-body::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+
+    background: rgba(216, 170, 102, 0.55);
+}
+
+html.room-compact .bookcase > .bookcase-body {
+    scrollbar-width: none;
+}
+
+html.room-compact .bookcase > .bookcase-body::-webkit-scrollbar {
+    display: none;
+}
+
+/* A soft shadow where shelves slide under the crown and into
+   the base, when there are more to see. */
+.bookcase-top,
+.bookcase-base {
+    position: relative;
+
+    z-index: 3;
+}
+
+.bookcase-top::after,
+.bookcase-base::before {
+    content: "";
+
+    position: absolute;
+
+    left: 12px;
+    right: 12px;
+
+    height: 26px;
+
+    opacity: 0;
+
+    transition: opacity 0.25s ease;
+
+    pointer-events: none;
+}
+
+.bookcase-top::after {
+    top: 100%;
+
+    background: linear-gradient(180deg, rgba(10, 4, 2, 0.65), transparent);
+}
+
+.bookcase-base::before {
+    bottom: 100%;
+
+    left: 8px;
+    right: 8px;
+
+    background: linear-gradient(0deg, rgba(10, 4, 2, 0.65), transparent);
+}
+
+.bookcase-zone.has-more-above .bookcase-top::after,
+.bookcase-zone.has-more-below .bookcase-base::before {
+    opacity: 1;
+}
+
+/* The magnifier on the bookcase's base (js/room/case-zoom.js),
+   and the room moving in close to the bookcase. */
+.library-room {
+    transition: transform 0.55s cubic-bezier(.3, .7, .2, 1);
+}
+
+.case-zoom {
+    position: absolute;
+
+    right: 6px;
+    bottom: 4px;
+
+    z-index: 9;
+
+    width: 30px;
+    height: 30px;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0;
+
+    border: 1px solid rgba(255, 230, 180, 0.55);
+    border-radius: 50%;
+
+    background: radial-gradient(circle at 35% 30%, #f3d595, #c69a4a 60%, #8a6430);
+
+    color: #3a2416;
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);
+
+    cursor: zoom-in;
+}
+
+.case-zoom svg {
+    width: 16px;
+    height: 16px;
+}
+
+html.case-close .case-zoom {
+    cursor: zoom-out;
+}
+
+.case-zoom:focus-visible {
+    box-shadow: var(--focus-ring);
+    outline: none;
+}
+
+/* Not while decorating, and not in a picture of the room. */
+html:is(.is-arranging-room, .is-capturing) .case-zoom {
+    display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .library-room {
+        transition: none;
+    }
+}
+
+.case-zoom-back {
+    position: fixed;
+
+    left: calc(14px + env(safe-area-inset-left, 0px));
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+
+    z-index: 1200;
+
+    display: none;
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 8px 16px 8px 12px;
+
+    border: 1px solid rgba(255, 230, 180, 0.5);
+    border-radius: 999px;
+
+    background: rgba(40, 22, 16, 0.85);
+
+    color: #f6e6c8;
+
+    font-family: var(--font-ui);
+    font-size: 15px;
+    font-weight: 700;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+
+    cursor: zoom-out;
+}
+
+.case-zoom-back svg {
+    width: 14px;
+    height: 14px;
+}
+
+html.case-close .case-zoom-back {
+    display: inline-flex;
 }

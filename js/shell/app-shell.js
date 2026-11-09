@@ -341,6 +341,10 @@ function headerMarkup(eyebrow) {
                     <svg aria-hidden="true"><use href="#ui-expand"></use></svg>
                 </button>
 
+                <button class="icon-button decorate-button" type="button" data-decorate aria-label="Decorate the room" title="Decorate the room">
+                    <svg aria-hidden="true"><use href="#ui-brush"></use></svg>
+                </button>
+
                 <button class="button button--brass header-add" id="headerAddBook" type="button" aria-label="Add a book">
                     <svg aria-hidden="true"><use href="#ui-add"></use></svg>
                     <span>Add Book</span>
@@ -634,6 +638,19 @@ function wirePopovers() {
     });
 
     $("[data-sign-out]").addEventListener("click", () => signOut());
+
+    // Straight into decorating, from the top bar of the room.
+    $("[data-decorate]").addEventListener("click", () => {
+
+        if (document.body.dataset.page === "home" || document.querySelector(".library-room")) {
+            document.dispatchEvent(new CustomEvent("novellow:arrange"));
+        }
+
+        else {
+            window.location.href = "dashboard.html?arrange=1";
+        }
+
+    });
 
     // Decorations are arranged on the library room (dashboard).
     $("[data-arrange-room]").addEventListener("click", () => {

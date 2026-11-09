@@ -753,8 +753,8 @@ button.book-spine {
 .spine--painted .spine-title-wrap {
     position: absolute;
 
-    top: 25%;
-    bottom: 25%;
+    top: var(--paint-top, 25%);
+    bottom: var(--paint-bottom, 25%);
     left: 16%;
     right: 16%;
 
@@ -773,4 +773,19 @@ button.book-spine {
 
     box-shadow: none;
     text-shadow: none;
+}
+
+
+/* A blank spine with no empty panel: the title is written on a
+   little paper label laid over the picture. */
+.book-spine.spine--painted-bare .spine-title-wrap {
+    left: 14%;
+    right: 14%;
+
+    border: 1px solid rgba(120, 80, 50, 0.55);
+    border-radius: 3px;
+
+    background: rgba(250, 238, 214, 0.92);
+
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }

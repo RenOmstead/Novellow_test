@@ -86,8 +86,14 @@ const QUESTIONS = [
     },
 
     {
+        q: "My bookcase has more shelves than fit. How do I see them all?",
+        a: html`<p>The bookcase stands in your room like a piece of furniture. When it has more shelves than fit, scroll or swipe on it and the shelves slide up and down inside it, with the pieces on them. To look closer, tap the little gold <strong>magnifier</strong> on the bookcase's base; tap <strong>Step back</strong> (or anywhere in the room) to see the whole room again.</p>
+            <p>To change the bookcase's wood or paint, tap the <strong>paintbrush</strong> and open the <strong>Furniture</strong> tab. Each shelf can also have a style of its own in its shelf settings.</p>`
+    },
+
+    {
         q: "How do I decorate my room?",
-        a: html`<p>Tap the <strong>moon</strong> button at the top of the page. Choose a room to change the whole look, or tap <strong>Edit the room</strong> to add furniture and decorations. Drag pieces where you'd like them, tap one to resize, tilt or remove it, and tap <strong>Done</strong> when you're finished. Pieces can go anywhere on the wall, right up to the ceiling, and out across the floor.</p>
+        a: html`<p>Tap the <strong>paintbrush</strong> at the top of your home page. The panel has a tab for each part of the room (Walls, Window, Floor, Lights, Furniture, Tabletop, Cozy and Spooky), and each tab holds everything for that part: the wallpaper and pictures, the window, curtains and the view outside, the floor and rugs, and so on. Tap a piece to add it, drag it where you'd like it, tap it to resize, tilt or remove it, and tap <strong>Done</strong> when you're finished. Pieces can go anywhere on the wall, right up to the ceiling, and out across the floor. To change the whole look at once, choose a different room from the <strong>moon</strong> button.</p>
             <p>For just the room, tap the <strong>frame</strong> button at the top of the page: the menus step aside and the floor runs deeper. The little bar in the corner brings the menus back.</p>
             <p>To save a picture of your bookcase and room, tap the <strong>camera</strong> at the top of the decorating panel. On a phone you can save it to your photos or share it straight away.</p>
             <p>On a phone, turn it sideways on Home to step into the whole room.</p>`

@@ -30,6 +30,7 @@ import { startAmbience } from "../room/ambience.js?v=__VERSION__";
 import { startDecorations } from "../room/decorations.js?v=__VERSION__";
 import { startRoomView } from "../room/room-view.js?v=__VERSION__";
 import { startRoomFit, COMPACT_QUERY } from "../room/fit-room.js?v=__VERSION__";
+import { startCaseZoom } from "../room/case-zoom.js?v=__VERSION__";
 import { createBookcase } from "../books/bookcase.js?v=__VERSION__";
 import { playReveal, playReturn } from "../books/book-reveal.js?v=__VERSION__";
 import { coverMarkup } from "../books/cover.js?v=__VERSION__";
@@ -371,6 +372,8 @@ async function start() {
     render(body, loader("Dusting the shelves…"));
 
     startRoomFit(document.querySelector(".library-room"));
+
+    startCaseZoom(document.querySelector(".library-room"));
 
     renderCrown(document.querySelector("[data-crown-decor]"), settings.theme);
 

@@ -23,7 +23,7 @@ import {
 } from "./spine-options.js?v=__VERSION__";
 
 
-function motif(name, className) {
+export function motif(name, className) {
 
     if (!name || name === "none" || !MOTIF_VIEWBOX[name]) {
         return "";
@@ -155,11 +155,15 @@ export function spineMarkup(book, { tag = "button", extra = "" } = {}) {
     const title =
         (book.title || "Untitled").trim();
 
-    const fit =
-        fitTitle(title, spine, baseSize, height, width);
-
     const painted =
         SPINE_PAINTED[spine.style];
+
+    // A blank spine's title has only its panel's length.
+    const titleHeight =
+        painted?.panel ? Math.round(height * (100 - painted.panel[0] - painted.panel[1]) / 100) + 26 : height;
+
+    const fit =
+        fitTitle(title, spine, baseSize, titleHeight, width);
 
     const style = [
         `--book-color: ${spine.color}`,
@@ -167,6 +171,8 @@ export function spineMarkup(book, { tag = "button", extra = "" } = {}) {
         `--book-text: ${painted ? painted.text : spine.text}`,
         // Read by css/books.css, so the path starts from css/.
         painted ? `--spine-paint: url("../${painted.src}?v=__VERSION__")` : "",
+        // A blank spine's own title panel.
+        painted?.panel ? `--paint-top: ${painted.panel[0]}%; --paint-bottom: ${painted.panel[1]}%` : "",
         `--w: ${width}px`,
         `--h: ${height}px`,
         `--spine-font: ${spineFont(spine)}`,
@@ -181,6 +187,7 @@ export function spineMarkup(book, { tag = "button", extra = "" } = {}) {
         "book-spine",
         `spine--${spine.style}`,
         painted ? "spine--painted" : "",
+        painted?.bare ? "spine--painted-bare" : "",
         `spine-panel--${spine.panel}`,
         `spine-case--${spine.textCase}`,
         `spine-align--${spine.align}`,

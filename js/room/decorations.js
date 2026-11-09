@@ -23,7 +23,7 @@ import { html, raw, render, clamp, debounce } from "../core/helpers.js?v=__VERSI
 import { art, toast, toastError } from "../core/ui.js?v=__VERSION__";
 import { takeRoomPicture } from "./capture.js?v=__VERSION__";
 import { paintedFx } from "./painted-fx.js?v=__VERSION__";
-import { setFixtureRows, roomPanelMarkup, rugPanelMarkup, onRoomPanelClick, dragWindow, dragRug, builtInAt, builtInElements, toggleBuiltIn } from "./fixtures.js?v=__VERSION__";
+import { setFixtureRows, roomSectionMarkup, onRoomPanelClick, dragWindow, dragRug, builtInAt, builtInElements, toggleBuiltIn } from "./fixtures.js?v=__VERSION__";
 
 
 /*
@@ -51,23 +51,22 @@ export const DECOR_GROUPS = [
     { id: "rugs", name: "Rugs" }
 ];
 
-// The panel's tabs: a few broad kinds, each gathering some of
-// the groups above (shown as headings inside the tab).
+// The panel's tabs: one for each part of the room. Each opens
+// straight onto everything for that part: the room's own
+// choices (wallpaper, window, curtains…) first, then the pieces
+// that belong there. "icon" is the painted piece on the tab.
 export const DECOR_TABS = [
-    "seating", "tables", "storage", "lighting", "pictures", "garlands", "vines", "rugs",
-    "tabletop", "bookish", "cozy", "treats", "plants", "witchy", "spooky", "haunted", "autumn"
-].map((id) => ({ id, name: DECOR_GROUPS.find((group) => group.id === id).name, groups: [id] }));
-
-// The room's own choices, each in its own tab too.
-export const ROOM_TABS = [
-    { id: "room-walls", name: "Wallpaper" },
-    { id: "room-floor", name: "Floor" },
-    { id: "room-window", name: "Window" },
-    { id: "room-light", name: "Light & outside" },
-    { id: "room-pieces", name: "Room's pieces" }
+    { id: "walls", name: "Walls", icon: "ghost_moon_portrait", room: ["wallpaper"], groups: ["pictures", "garlands"], hint: "Wallpaper, pictures and garlands. Each room keeps its own choices." },
+    { id: "window", name: "Window", icon: "ivy_arch", room: ["window", "outside"], groups: ["vines", "plants"], hint: "The window, its curtains, the view outside, and ivy and plants." },
+    { id: "floor", name: "Floor", icon: "rug_night_sky", room: ["floor", "rug"], groups: ["rugs"], hint: "The floor and its rugs." },
+    { id: "lights", name: "Lights", icon: "fringed_lamp", room: ["light"], groups: ["lighting"], hint: "How bright the room is, and lamps and candles." },
+    { id: "furniture", name: "Furniture", icon: "armchair_plum", room: ["bookcase", "built-in"], groups: ["seating", "tables", "storage"], hint: "The bookcase's wood, then chairs, sofas, tables, cabinets and fireplaces." },
+    { id: "tabletop", name: "Tabletop", icon: "pink_teacup", room: [], groups: ["tabletop", "bookish", "treats"], hint: "Cups, teapots, books and treats to set on tables and shelves." },
+    { id: "cozy", name: "Cozy", icon: "pumpkin_lantern", room: [], groups: ["cozy", "autumn"], hint: "Cozy touches and autumn things." },
+    { id: "spooky", name: "Spooky", icon: "ghost_candle", room: [], groups: ["witchy", "spooky", "haunted"], hint: "Witchy, spooky and haunted things." }
 ];
 
-const isRoomTab = (id) => id.startsWith("room-");
+const tabFor = (id) => DECOR_TABS.find((tab) => tab.id === id);
 
 export const DECOR_ASSETS = [
     // Hand-painted pieces (pictures, not drawings): each shows first in its tab.
@@ -720,7 +719,7 @@ let selectedId = null;
 let selectedBuiltIn = null;
 let bar = null;
 let loadToken = 0;
-let paletteGroup = "room-walls";
+let paletteGroup = "walls";
 
 // The tray: which side it sits on (computers) and whether it
 // is folded down (phones).
@@ -832,6 +831,73 @@ function layerFor(area) {
 }
 
 
+// How far down the bookcase its shelves begin (below the crown).
+function crownHeight() {
+    return room?.querySelector(".bookcase-body")?.offsetTop || 0;
+}
+
+// The pieces up on the crown, which stay put while the shelves
+// slide (measured from the top of the bookcase, like the rest).
+function crownLayer() {
+
+    const bookcase =
+        room?.querySelector(".bookcase");
+
+    if (!bookcase) {
+        return null;
+    }
+
+    let layer =
+        bookcase.querySelector(":scope > .decor-layer[data-area=crown]");
+
+    if (!layer) {
+        bookcase.insertAdjacentHTML("beforeend", `<div class="decor-layer" data-area="crown"></div>`);
+        layer = bookcase.lastElementChild;
+    }
+
+    return layer;
+
+}
+
+// The shelves' pieces slide with the shelves, and are hidden
+// where the shelves go under the crown or into the base.
+function followShelves() {
+
+    const body =
+        room?.querySelector(".bookcase-body");
+
+    const layer =
+        room?.querySelector(".bookcase > .decor-layer[data-area=shelf]");
+
+    if (!body || !layer) {
+        return;
+    }
+
+    const scrolled =
+        body.scrollTop;
+
+    const sliding =
+        body.scrollHeight > body.clientHeight + 1;
+
+    layer.style.transform = scrolled ? `translateY(${-scrolled}px)` : "";
+
+    if (!sliding) {
+        layer.style.clipPath = "";
+        return;
+    }
+
+    const top =
+        body.offsetTop + scrolled;
+
+    const bottom =
+        body.offsetTop + scrolled + body.clientHeight;
+
+    // The layer has no height, so its clip is measured from its
+    // top: above the shelves (if scrolled) and below them.
+    layer.style.clipPath = `inset(${scrolled ? top : -2000}px -400px ${-bottom}px -400px)`;
+
+}
+
 /* =========================================================
    DRAWING
 ========================================================= */
@@ -870,11 +936,38 @@ function draw() {
         const layer =
             layerFor(area);
 
-        if (layer) {
-            render(layer, pieces.filter((piece) => piece.room_area === area).map(pieceMarkup));
+        if (!layer) {
+            return;
         }
 
+        let list =
+            pieces.filter((piece) => piece.room_area === area);
+
+        // The shelves slide inside the bookcase, and their pieces
+        // with them; a piece up on the crown stays with the crown.
+        if (area === "shelf") {
+
+            const crown =
+                crownHeight();
+
+            const onCrown =
+                list.filter((piece) => (piece.position_y * SHELF_SPAN) / 100 < crown);
+
+            const still =
+                crownLayer();
+
+            if (still) {
+                render(still, onCrown.map(pieceMarkup));
+                list = list.filter((piece) => !onCrown.includes(piece));
+            }
+
+        }
+
+        render(layer, list.map(pieceMarkup));
+
     });
+
+    followShelves();
 
     room.classList.toggle("is-arranging", arranging);
 
@@ -949,29 +1042,21 @@ function drawBarNow() {
             <button class="button button--primary button--small" type="button" data-arrange="done">Done</button>
         </div>
 
-        <p class="arrange-bar__hint" ${selectedBuiltIn ? html`hidden` : ""}>${isRoomTab(paletteGroup)
-            ? "Choose the wallpaper, floor, window and curtains for this room."
-            : "Tap a piece to add it, or drag it into the room. Tap a piece in the room to pick it, then drag it to move it."}</p>
-
-        ${isRoomTab(paletteGroup) ? "" : html`
-            <label class="arrange-bar__search">
-                <span class="visually-hidden">Find a piece</span>
-                <input type="search" placeholder="Find a piece…" value="${paletteQuery}" data-palette-search autocomplete="off" enterkeyhint="search">
-            </label>
-        `}
-
-        <div class="arrange-bar__tabs" role="tablist" aria-label="The room and its pieces">
-            <span class="arrange-bar__tabs-label" aria-hidden="true">Room</span>
-            ${ROOM_TABS.map((tab) => html`
-                <button class="arrange-bar__tab arrange-bar__tab--room ${tab.id === paletteGroup ? "is-current" : ""}" type="button" role="tab" aria-selected="${String(tab.id === paletteGroup)}" data-decor-group="${tab.id}">${tab.name}</button>
-            `)}
-            <span class="arrange-bar__tabs-label" aria-hidden="true">Pieces</span>
+        <div class="arrange-bar__tabs" role="tablist" aria-label="Parts of the room">
             ${DECOR_TABS.map((tab) => html`
-                <button class="arrange-bar__tab ${tab.id === paletteGroup ? "is-current" : ""}" type="button" role="tab" aria-selected="${String(tab.id === paletteGroup)}" data-decor-group="${tab.id}">${tab.name}</button>
+                <button class="arrange-bar__tab ${tab.id === paletteGroup ? "is-current" : ""}" type="button" role="tab" aria-selected="${String(tab.id === paletteGroup)}" data-decor-group="${tab.id}">
+                    <img src="assets/decor/painted/${tab.icon}.webp?v=__VERSION__" alt="" draggable="false">
+                    <span>${tab.name}</span>
+                </button>
             `)}
         </div>
 
-        ${isRoomTab(paletteGroup) ? roomPanelMarkup(paletteGroup) : html`<div class="arrange-bar__palette-holder">${paletteMarkup()}</div>`}
+        <label class="arrange-bar__search">
+            <span class="visually-hidden">Find a piece</span>
+            <input type="search" placeholder="Find a piece…" value="${paletteQuery}" data-palette-search autocomplete="off" enterkeyhint="search">
+        </label>
+
+        <div class="arrange-bar__palette-holder">${paletteMarkup()}</div>
 
     `);
 
@@ -1012,27 +1097,35 @@ function paletteMarkup() {
         const found =
             DECOR_ASSETS.filter((asset) => asset.group !== "retired" && words.every((word) => searchText(asset).includes(word)));
 
-        return html`<ul class="arrange-bar__palette" aria-label="Pieces found">
-            <li class="arrange-bar__group" aria-hidden="true">${found.length ? `${found.length} found` : "Nothing found"}</li>
-            ${found.slice(0, 120).map(assetButton)}
-        </ul>`;
+        return html`<div class="arrange-bar__palette" aria-label="Pieces found">
+            <p class="arrange-bar__group">${found.length ? `${found.length} found` : "Nothing found"}</p>
+            <ul class="arrange-bar__assets">${found.slice(0, 120).map(assetButton)}</ul>
+        </div>`;
 
     }
 
-    const recent =
-        recentlyUsed().map(assetFor).filter((asset) => asset && asset.group !== "retired");
+    const tab =
+        tabFor(paletteGroup) || DECOR_TABS[0];
 
-    return html`<ul class="arrange-bar__palette" aria-label="Decorations to add">
-        ${recent.length ? html`
-            <li class="arrange-bar__group" aria-hidden="true">Recently used</li>
-            ${recent.map(assetButton)}
+    const recent =
+        recentlyUsed().map(assetFor).filter((asset) => asset && asset.group !== "retired" && tab.groups.includes(asset.group));
+
+    const groups =
+        tabGroups(tab.id);
+
+    return html`<div class="arrange-bar__palette" aria-label="${tab.name}">
+        <p class="arrange-bar__heading">${tab.name}</p>
+        <p class="arrange-bar__hint">${tab.hint} Tap a piece to add it, or drag it into the room.</p>
+        ${tab.room.map((section) => html`<div class="arrange-bar__room">${roomSectionMarkup(section)}</div>`)}
+        ${recent.length > 1 ? html`
+            <p class="arrange-bar__group">Recently used</p>
+            <ul class="arrange-bar__assets">${recent.map(assetButton)}</ul>
         ` : ""}
-        ${paletteGroup === "rugs" ? html`<li class="arrange-bar__room-rug">${rugPanelMarkup()}</li>` : ""}
-        ${tabGroups(paletteGroup).map((group) => html`
-            ${tabGroups(paletteGroup).length > 1 || group.id === "rugs" || recent.length ? html`<li class="arrange-bar__group" aria-hidden="true">${group.id === "rugs" ? "Rugs to place" : group.name}</li>` : ""}
-            ${DECOR_ASSETS.filter((asset) => asset.group === group.id).map(assetButton)}
+        ${groups.map((group) => html`
+            <p class="arrange-bar__group">${group.id === "rugs" ? "Rugs to place" : group.name}</p>
+            <ul class="arrange-bar__assets">${DECOR_ASSETS.filter((asset) => asset.group === group.id).map(assetButton)}</ul>
         `)}
-    </ul>`;
+    </div>`;
 
 }
 
@@ -1181,7 +1274,7 @@ function drawEditor() {
         ${selectedBuiltIn ? html`
             <div class="arrange-bar__tools arrange-bar__tools--built-in">
                 <span class="arrange-bar__selected">${selectedBuiltIn.name}</span>
-                <p class="arrange-bar__built-in-note">This came with the room. Take it out to make space for your own pieces; you can put it back in the Room tab.</p>
+                <p class="arrange-bar__built-in-note">This came with the room. Take it out to make space for your own pieces; you can put it back from the Furniture tab.</p>
                 <button class="button button--small arrange-bar__remove-built-in" type="button" data-arrange="remove-built-in">${art("ui-trash")} Take it out of the room</button>
             </div>
         ` : ""}
@@ -1532,8 +1625,21 @@ function positionIn(area, pointX, pointY) {
             ? clamp(pointY, zone.top, zone.bottom)
             : clamp(pointY, zone.top + 8, zone.bottom - 28);
 
-    const box =
+    let box =
         layerFor(area).getBoundingClientRect();
+
+    // Over the crown, a piece stays with the crown however far the
+    // shelves have slid, so it's measured from the bookcase's top.
+    if (area === "shelf") {
+
+        const still =
+            crownLayer()?.getBoundingClientRect();
+
+        if (still && y - still.top < crownHeight() * caseZoom()) {
+            box = still;
+        }
+
+    }
 
     if (area === "bookcase_top") {
         return {
@@ -2040,21 +2146,22 @@ function onBarClick(event) {
 
     if (tab) {
         paletteGroup = tab.dataset.decorGroup;
+        paletteQuery = "";
         drawBar();
         bar.querySelector(`[data-decor-group="${paletteGroup}"]`)?.focus();
         return;
     }
 
-    if ((isRoomTab(paletteGroup) || paletteGroup === "rugs") && onRoomPanelClick(event)) {
+    if (onRoomPanelClick(event)) {
 
         // Redraw, keeping the panel where it was scrolled to.
         const scrolled =
-            bar.querySelector(".arrange-bar__room, .arrange-bar__palette")?.scrollTop || 0;
+            bar.querySelector(".arrange-bar__palette-holder")?.scrollTop || 0;
 
         drawBar();
 
         const panel =
-            bar.querySelector(".arrange-bar__room, .arrange-bar__palette");
+            bar.querySelector(".arrange-bar__palette-holder");
 
         if (panel) {
             panel.scrollTop = scrolled;
@@ -2208,14 +2315,15 @@ function autoScroll(pointer, follow, ready = () => true) {
             return;
         }
 
-        // The room stays one screen tall and a tall bookcase
-        // scrolls by itself; near its top or bottom, scroll it.
-        const caseZone =
-            room.querySelector(".bookcase-zone");
+        // The room stays one screen tall and a tall bookcase's
+        // shelves slide inside it; near their top or bottom,
+        // slide them.
+        const caseShelves =
+            room.querySelector(".bookcase-body");
 
         const shelves =
-            caseZone && caseZone.scrollHeight > caseZone.clientHeight + 1
-                ? caseZone
+            caseShelves && caseShelves.scrollHeight > caseShelves.clientHeight + 1
+                ? caseShelves
                 : null;
 
         let scroller = null;
@@ -2872,8 +2980,9 @@ export function setArranging(on) {
 
     drawHistory();
 
+    // Start at the open tab, at the top of its choices.
     if (on) {
-        bar?.querySelector("[data-add-decor]")?.focus();
+        bar?.querySelector(".arrange-bar__tab.is-current")?.focus({ preventScroll: true });
     }
 
 }
@@ -2952,6 +3061,17 @@ export async function startDecorations(container, themeId) {
     });
 
     document.addEventListener("novellow:arrange", () => setArranging(!arranging));
+
+    // The shelves slide inside the bookcase; their pieces follow.
+    let following = 0;
+
+    const follow = () => {
+        cancelAnimationFrame(following);
+        following = requestAnimationFrame(followShelves);
+    };
+
+    room.querySelector(".bookcase-body")?.addEventListener("scroll", follow, { passive: true });
+    window.addEventListener("resize", follow);
 
     document.addEventListener("novellow:appearance", (event) => {
 

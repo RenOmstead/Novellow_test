@@ -1997,3 +1997,55 @@
     font-family: var(--font-ui);
     font-size: 14px;
 }
+
+/* Which catalogue a result came from. */
+.discover-card__source {
+    color: var(--color-ink-soft);
+
+    font-style: italic;
+}
+
+/* Can't find it? Add it by hand. */
+.discover-by-hand {
+    margin-top: 12px;
+
+    color: #f0dcc0;
+
+    text-align: center;
+}
+
+.discover-by-hand .text-button {
+    color: #ffe2b8;
+}
+
+/* Search by title or author, or by what a book is about. */
+.discover-search__by {
+    flex: 1 1 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 6px;
+}
+
+.discover-topics {
+    flex: 1 1 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    gap: 6px;
+}
+
+.discover-topics[hidden] {
+    display: none;
+}
+
+.discover-topics .chip {
+    cursor: pointer;
+}
+
+.prompt-card .text-button {
+    margin-top: 6px;
+}

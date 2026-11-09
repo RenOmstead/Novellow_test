@@ -19,7 +19,7 @@ import { isVisiting } from "../core/visit-mode.js?v=__VERSION__";
 import { createRow, updateRow } from "../core/store.js?v=__VERSION__";
 import { html } from "../core/helpers.js?v=__VERSION__";
 import { toastError } from "../core/ui.js?v=__VERSION__";
-import { getPreferences, CURTAINS, RUGS, WINDOW_SHAPES, WOODS } from "../shell/preferences.js?v=__VERSION__";
+import { getPreferences, CURTAINS, RUGS, WINDOW_SHAPES, WOODS, PAINTED_WINDOWS, PAINTED_CURTAINS } from "../shell/preferences.js?v=__VERSION__";
 
 
 const CACHE =
@@ -314,13 +314,43 @@ export const LIGHTS = [
 ];
 
 
+/*
+    The bookcase's wood or paint: its sides, crown and base, and
+    the shelves left as "Classic wood" (a shelf with its own
+    style keeps it).
+      side: dark, light, middle   crown: top, middle, bottom
+      frieze: top, bottom          back: top, bottom
+      board: top, middle, bottom
+*/
+export const CASE_FINISHES = [
+    { id: "room", name: "The room's own" },
+    { id: "walnut", name: "Walnut", side: ["#2b170e", "#7a4a30", "#5a3322"], crown: ["#8a5636", "#5f3624", "#43261a"], frieze: ["#5a3322", "#3e2317"], back: ["#28150e", "#3b2117"], board: ["#9a6440", "#6e4029", "#4a2a1c"] },
+    { id: "honey-oak", name: "Honey oak", side: ["#4a2e16", "#b07c44", "#8a5a2e"], crown: ["#c08a50", "#94622e", "#6e4620"], frieze: ["#8a5a2e", "#6a4220"], back: ["#3a2412", "#4e321a"], board: ["#c4904e", "#9a6a34", "#6e4822"] },
+    { id: "mahogany", name: "Mahogany", side: ["#2a0e0a", "#8a3a28", "#6a2618"], crown: ["#9a4630", "#6e2a1a", "#4e1c12"], frieze: ["#6a2618", "#481810"], back: ["#26100c", "#3a1810"], board: ["#a44e34", "#7a3420", "#521f14"] },
+    { id: "ebony", name: "Ebony", side: ["#0e0a0a", "#3a302c", "#22201e"], crown: ["#3e3430", "#26201e", "#161212"], frieze: ["#2a2422", "#181414"], back: ["#100c0c", "#1c1716"], board: ["#4a3e38", "#2e2622", "#1a1614"] },
+    { id: "grey-wash", name: "Grey-washed", side: ["#2e2a28", "#8a8078", "#6a625c"], crown: ["#968c84", "#726a62", "#56504a"], frieze: ["#6a625c", "#4e4844"], back: ["#2a2624", "#3a3532"], board: ["#a0968c", "#7a7068", "#5a524c"] },
+    { id: "painted-cream", name: "Painted cream", side: ["#6a5a48", "#f2e6cc", "#d8c8a8"], crown: ["#f6ecd6", "#e0d0b2", "#c4b090"], frieze: ["#d8c8a8", "#bca888"], back: ["#3a2e26", "#4c3e32"], board: ["#f2e6cc", "#d8c8a8", "#b8a482"] },
+    { id: "painted-sage", name: "Painted sage", side: ["#2e3a2a", "#a4b48a", "#7e906a"], crown: ["#aebe94", "#86986e", "#66764e"], frieze: ["#7e906a", "#5e6e4c"], back: ["#1e2a1e", "#2c3a2a"], board: ["#b0c094", "#8a9c70", "#64744e"] },
+    { id: "painted-plum", name: "Painted plum", side: ["#24101e", "#8a5478", "#6a3a5a"], crown: ["#96607e", "#6e3e5c", "#4e2a42"], frieze: ["#6a3a5a", "#4a2840"], back: ["#1e1018", "#2e1a26"], board: ["#9a6484", "#74425e", "#502c42"] },
+    { id: "painted-navy", name: "Painted navy", side: ["#0e1424", "#4a5a84", "#323e62"], crown: ["#526290", "#384670", "#262f4e"], frieze: ["#323e62", "#222a46"], back: ["#0e1220", "#1a2034"], board: ["#5a6a98", "#3e4c78", "#2a3454"] },
+    { id: "painted-black", name: "Black and gold", side: ["#050404", "#3a3226", "#1e1a16"], crown: ["#2e2820", "#1c1814", "#0e0c0a"], frieze: ["#241e18", "#120e0c"], back: ["#0c0a08", "#18140f"], board: ["#3a3226", "#24201a", "#14110e"] }
+];
+
+const CASE_VARS = [
+    "--case-side-dark", "--case-side-light", "--case-side-mid",
+    "--crown-top", "--crown-middle", "--crown-bottom",
+    "--crown-frieze-top", "--crown-frieze-bottom",
+    "--shelf-back-top", "--shelf-back-bottom",
+    "--shelf-board-top", "--shelf-board-middle", "--shelf-board-bottom"
+];
+
 export const WINDOW_CHOICES = [
     ...WINDOW_SHAPES,
     { id: "none", name: "No window" }
 ];
 
 const KINDS =
-    ["wallpaper", "floor", "window", "wood", "curtains", "curtainColour", "rug", "rugColour", "time", "light", "tree", "season"];
+    ["wallpaper", "floor", "window", "wood", "curtains", "curtainColour", "rug", "rugColour", "time", "light", "tree", "season", "case"];
 
 const CHOICES = {
     wallpaper: WALLPAPERS,
@@ -334,7 +364,8 @@ const CHOICES = {
     time: TIMES,
     light: LIGHTS,
     tree: TREES,
-    season: SEASONS
+    season: SEASONS,
+    case: CASE_FINISHES
 };
 
 const WALL_VARS =
@@ -403,10 +434,10 @@ function defaultsFor(theme) {
         getPreferences();
 
     if (theme === "sandbox") {
-        return { wallpaper: "plaster", floor: "oak", window: "none", wood: prefs.wood, curtains: "none", curtainColour: "room", rug: "none", rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", hidden: "", windowX: null, windowY: null, rugX: null, rugY: null };
+        return { wallpaper: "plaster", floor: "oak", window: "none", wood: prefs.wood, curtains: "none", curtainColour: "room", rug: "none", rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", case: "walnut", hidden: "", windowX: null, windowY: null, rugX: null, rugY: null };
     }
 
-    return { wallpaper: "room", floor: "room", window: prefs.window, wood: prefs.wood, curtains: prefs.curtains, curtainColour: "room", rug: prefs.rug, rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", hidden: "", windowX: null, windowY: null, rugX: null, rugY: null };
+    return { wallpaper: "room", floor: "room", window: prefs.window, wood: prefs.wood, curtains: prefs.curtains, curtainColour: "room", rug: prefs.rug, rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", case: "room", hidden: "", windowX: null, windowY: null, rugX: null, rugY: null };
 
 }
 
@@ -453,6 +484,19 @@ export function applyFixtures(theme = document.documentElement.dataset.theme) {
     root.dataset.season = fixtures.season === "auto" ? seasonNow() : fixtures.season;
     root.style.setProperty("--room-dim", String(LIGHTS.find((item) => item.id === fixtures.light)?.dim || 0));
     root.dataset.hidden = String(fixtures.hidden || "").split(",").filter(Boolean).join(" ");
+
+    // The bookcase's wood or paint, over the room's own.
+    const finish =
+        CASE_FINISHES.find((item) => item.id === fixtures.case);
+
+    CASE_VARS.forEach((name) => root.style.removeProperty(name));
+
+    if (finish?.side) {
+        [...finish.side, ...finish.crown, ...finish.frieze, ...finish.back, ...finish.board]
+            .forEach((value, index) => root.style.setProperty(CASE_VARS[index], value));
+    }
+
+    root.dataset.caseFinish = fixtures.case;
 
     // The wallpaper and floor, over the room's own.
     const paper =
@@ -992,6 +1036,12 @@ function swatchStyle(kind, choice) {
             : "";
     }
 
+    if (kind === "case") {
+        return choice.side
+            ? `background: linear-gradient(90deg, ${choice.side[0]} 0 10%, ${choice.side[1]} 10% 18%, ${choice.back[0]} 18% 82%, ${choice.side[1]} 82% 90%, ${choice.side[0]} 90%), linear-gradient(${choice.board[0]}, ${choice.board[2]})`
+            : "";
+    }
+
     if (kind === "curtainColour") {
         return choice.colours
             ? `background: linear-gradient(90deg, ${choice.colours[1]} 0 18%, ${choice.colours[0]} 18% 42%, ${choice.colours[2]} 42% 58%, ${choice.colours[0]} 58% 82%, ${choice.colours[1]} 82%)`
@@ -1057,13 +1107,44 @@ function chips(kind, label, current) {
 }
 
 
-export function roomPanelMarkup(section = "room-walls") {
+// Window shapes and curtains that are pictures show as small
+// pictures; the drawn ones by name.
+function pictureTiles(kind, label, current, folder, painted) {
+
+    return html`
+        <fieldset class="room-choices">
+            <legend class="room-choices__label">${label}</legend>
+            <div class="room-choices__tiles">
+                ${CHOICES[kind].map((choice) => html`
+                    <button
+                        class="room-tile ${choice.id === current ? "is-current" : ""} ${painted.includes(choice.id) ? "" : "room-tile--named"}"
+                        type="button"
+                        data-fixture="${kind}"
+                        data-choice="${choice.id}"
+                        aria-pressed="${String(choice.id === current)}"
+                        title="${choice.name}"
+                    >
+                        ${painted.includes(choice.id) ? html`<img src="${folder}${choice.id}.webp?v=__VERSION__" alt="" loading="lazy" draggable="false">` : ""}
+                        <span>${choice.name}</span>
+                    </button>
+                `)}
+            </div>
+        </fieldset>
+    `;
+
+}
+
+
+/*
+    One part of the room's own choices, shown in the decorating
+    panel's tab for that part of the room (js/room/decorations.js):
+    wallpaper, floor, rug, window, outside, light, built-in.
+*/
+
+export function roomSectionMarkup(section) {
 
     const fixtures =
         getFixtures();
-
-    const sandbox =
-        document.documentElement.dataset.theme === "sandbox";
 
     const theme =
         document.documentElement.dataset.theme;
@@ -1074,88 +1155,78 @@ export function roomPanelMarkup(section = "room-walls") {
     const builtIn =
         BUILT_IN.filter((part) => part.rooms.includes(theme));
 
-    const sections = {
+    switch (section) {
 
-        "room-walls": html`
-            ${swatches("wallpaper", "Wallpaper", fixtures.wallpaper)}
-            ${sandbox ? "" : html`
-                <p class="room-choices__note">Each room keeps its own choices. For a room that starts empty, choose <strong>Sandbox</strong> from the moon menu.</p>
-            `}
-        `,
+        case "wallpaper":
+            return swatches("wallpaper", "Wallpaper", fixtures.wallpaper);
 
-        "room-floor": html`
-            ${swatches("floor", "Floor", fixtures.floor)}
-        `,
+        case "floor":
+            return swatches("floor", "Floor", fixtures.floor);
 
-        "room-window": html`
-            ${chips("window", "Window", fixtures.window)}
-            ${fixtures.window === "none" ? "" : html`
-                <p class="room-choices__note">Drag the window to move it around the wall.</p>
-                ${fixtures.windowX === null || fixtures.windowX === undefined ? "" : html`
-                    <button class="text-button room-choices__reset" type="button" data-fixture-action="reset-window">Put the window back in its usual place</button>
+        case "rug":
+            return html`
+                ${chips("rug", "The room's own rug", fixtures.rug)}
+                ${fixtures.rug === "none" ? "" : html`
+                    ${swatches("rugColour", "Its colours", fixtures.rugColour)}
+                    <p class="room-choices__note">Drag the rug in the room to move it.</p>
                 `}
-                ${chips("wood", "Window frame", fixtures.wood)}
-                ${chips("curtains", "Curtains", fixtures.curtains)}
-                ${fixtures.curtains === "none" || fixtures.curtains === "lace" ? "" : swatches("curtainColour", "Curtain colours", fixtures.curtainColour)}
-            `}
-        `,
+            `;
 
-        "room-light": html`
-            ${chips("time", "Outside the window", fixtures.time)}
-            ${chips("light", "Light in the room", fixtures.light)}
-            ${chips("tree", "Tree outside", fixtures.tree)}
-            ${chips("season", "Season", fixtures.season)}
-        `,
+        case "window":
+            return html`
+                ${pictureTiles("window", "Window", fixtures.window, "assets/decor/windows/", PAINTED_WINDOWS)}
+                ${fixtures.window === "none" ? "" : html`
+                    <p class="room-choices__note">Drag the window in the room to move it.</p>
+                    ${fixtures.windowX === null || fixtures.windowX === undefined ? "" : html`
+                        <button class="text-button room-choices__reset" type="button" data-fixture-action="reset-window">Put the window back in its usual place</button>
+                    `}
+                    ${chips("wood", "Window frame", fixtures.wood)}
+                    ${pictureTiles("curtains", "Curtains", fixtures.curtains, "assets/decor/curtains/", PAINTED_CURTAINS)}
+                    ${fixtures.curtains === "none" || fixtures.curtains === "lace" ? "" : swatches("curtainColour", "Curtain colours", fixtures.curtainColour)}
+                `}
+            `;
 
-        "room-pieces": builtIn.length ? html`
-            <fieldset class="room-choices">
-                <legend class="room-choices__label">Built into this room</legend>
-                <p class="room-choices__note">Tap a piece here, or tap it in the room, to take it away. Tap it here again to put it back.</p>
-                <div class="room-choices__chips">
-                    ${builtIn.map((part) => html`
-                        <button class="room-chip room-chip--toggle ${hidden.has(part.id) ? "" : "is-current"}" type="button" data-built-in="${part.id}" aria-pressed="${String(!hidden.has(part.id))}">${hidden.has(part.id) ? "＋ " : "✓ "}${part.name}</button>
-                    `)}
-                </div>
-            </fieldset>
-        ` : html`<p class="room-choices__note">This room has no pieces of its own; everything in it is yours.</p>`
+        case "outside":
+            return html`
+                ${chips("time", "Outside the window", fixtures.time)}
+                ${chips("tree", "Tree outside", fixtures.tree)}
+                ${chips("season", "Season", fixtures.season)}
+            `;
 
-    };
+        case "light":
+            return chips("light", "Light in the room", fixtures.light);
 
-    return html`
-        <div class="arrange-bar__room">
-            ${sections[section] || sections["room-walls"]}
-        </div>
-    `;
+        case "bookcase":
+            return html`
+                ${swatches("case", "The bookcase", fixtures.case)}
+                <p class="room-choices__note">Its wood or paint. A shelf with a style of its own (in its shelf settings) keeps it.</p>
+            `;
 
-}
+        case "built-in":
+            return builtIn.length ? html`
+                <fieldset class="room-choices">
+                    <legend class="room-choices__label">Built into this room</legend>
+                    <p class="room-choices__note">Tap to take one away, or to put it back.</p>
+                    <div class="room-choices__chips">
+                        ${builtIn.map((part) => html`
+                            <button class="room-chip room-chip--toggle ${hidden.has(part.id) ? "" : "is-current"}" type="button" data-built-in="${part.id}" aria-pressed="${String(!hidden.has(part.id))}">${hidden.has(part.id) ? "＋ " : "✓ "}${part.name}</button>
+                        `)}
+                    </div>
+                </fieldset>
+            ` : "";
 
+        default:
+            return "";
 
-/*
-    The room's own rug (the one under the window and chair), at
-    the top of the Rugs tab.
-*/
-
-export function rugPanelMarkup() {
-
-    const fixtures =
-        getFixtures();
-
-    return html`
-        <div class="arrange-bar__room-rug-choices">
-            ${chips("rug", "The room's rug", fixtures.rug)}
-            ${fixtures.rug === "none" ? "" : html`
-                ${swatches("rugColour", "Its colours", fixtures.rugColour)}
-                <p class="room-choices__note">Drag the room's rug to move it across the floor.</p>
-            `}
-        </div>
-    `;
+    }
 
 }
 
 
 /*
-    A click inside the Room tab. Returns true when it was
-    one of ours, so the panel can redraw.
+    A click on one of the room's own choices in the panel.
+    Returns true when it was one of ours, so the panel can
+    redraw.
 */
 
 export function onRoomPanelClick(event) {

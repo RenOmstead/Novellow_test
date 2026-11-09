@@ -90,6 +90,9 @@
                  on it as well as the chair (css/room.css). -->
             <div class="room-floorboards" aria-hidden="true"></div>
 
+            <!-- The beamed ceiling the lights hang from (css/room.css). -->
+            <div class="room-ceiling" aria-hidden="true"></div>
+
             <!-- Warm light pooling in the room, and soft shadow in its
                  corners (css/room.css). -->
             <div class="room-glow" aria-hidden="true"></div>
@@ -157,8 +160,8 @@
                             </linearGradient>
 
                             <linearGradient id="crownFrieze" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#5a3322" />
-                                <stop offset="100%" stop-color="#3e2317" />
+                                <stop offset="0%" style="stop-color: var(--crown-frieze-top, #5a3322)" />
+                                <stop offset="100%" style="stop-color: var(--crown-frieze-bottom, #3e2317)" />
                             </linearGradient>
 
                             <linearGradient id="plaqueFace" x1="0" y1="0" x2="0" y2="1">

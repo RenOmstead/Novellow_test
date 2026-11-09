@@ -170,8 +170,14 @@ button:disabled {
 }
 
 .handwritten {
-    font-family: var(--font-hand);
+    font-family: var(--font-writing, var(--font-hand));
     font-weight: 400;
+}
+
+/* A chosen writing font: its small letters made the size of the
+   usual handwriting, so a fine script stays easy to read. */
+:root[data-writing-font] .handwritten {
+    font-size-adjust: 0.5;
 }
 
 .muted {

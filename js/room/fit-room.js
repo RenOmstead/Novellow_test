@@ -21,6 +21,9 @@ const ROOM_MIN_HEIGHT = 620;
 // The bookcase's own width, before it is scaled to fit.
 const CASE_WIDTH = 760;
 
+// How much of its side of the room the bookcase takes.
+const CASE_SHARE = 0.84;
+
 // How much of the width the room takes.
 const ROOM_SHARE = 0.46;
 
@@ -122,13 +125,27 @@ export function startRoomFit(room) {
         const style =
             getComputedStyle(bookcaseZone);
 
+        // It stands a little narrower than its side of the room,
+        // like a piece of furniture against the wall.
         const shelfWidth =
-            bookcaseZone.getBoundingClientRect().width
-            - Number.parseFloat(style.paddingLeft)
-            - Number.parseFloat(style.paddingRight)
+            (bookcaseZone.getBoundingClientRect().width
+                - Number.parseFloat(style.paddingLeft)
+                - Number.parseFloat(style.paddingRight)) * CASE_SHARE
             - 2;
 
-        root.style.setProperty("--case-zoom", Math.min(1, Math.max(0.3, shelfWidth / CASE_WIDTH)).toFixed(4));
+        const caseZoom =
+            Math.min(1, Math.max(0.3, shelfWidth / CASE_WIDTH));
+
+        root.style.setProperty("--case-zoom", caseZoom.toFixed(4));
+
+        // As tall as the room allows, in the bookcase's own
+        // (unshrunk) size; beyond that its shelves slide inside.
+        const shelfHeight =
+            bookcaseZone.clientHeight
+            - Number.parseFloat(style.paddingTop)
+            - Number.parseFloat(style.paddingBottom);
+
+        root.style.setProperty("--case-max-h", `${Math.floor(shelfHeight / caseZoom)}px`);
 
     };
 
@@ -157,37 +174,37 @@ export function startRoomFit(room) {
         </section>
     `);
 
-    // A bookcase taller than the room scrolls by itself; a soft
-    // fade at its foot (or top) says there are more shelves.
+    // A bookcase taller than the room keeps its crown and base
+    // where they are and its shelves slide inside it; a soft
+    // shadow under the crown (or above the base) says there are
+    // more shelves.
     const caseZone =
         room.querySelector(".bookcase-zone");
 
+    const shelves =
+        caseZone?.querySelector(".bookcase-body");
+
     const markShelves = () => {
 
-        if (!caseZone) {
+        if (!caseZone || !shelves) {
             return;
         }
 
-        caseZone.classList.toggle("has-more-below", caseZone.scrollHeight - caseZone.clientHeight - caseZone.scrollTop > 4);
-        caseZone.classList.toggle("has-more-above", caseZone.scrollTop > 4);
+        caseZone.classList.toggle("has-more-below", shelves.scrollHeight - shelves.clientHeight - shelves.scrollTop > 4);
+        caseZone.classList.toggle("has-more-above", shelves.scrollTop > 4);
 
     };
 
-    caseZone?.addEventListener("scroll", markShelves, { passive: true });
+    shelves?.addEventListener("scroll", markShelves, { passive: true });
 
-    if (caseZone && "ResizeObserver" in window) {
+    if (shelves && "ResizeObserver" in window) {
 
         const watch =
             new ResizeObserver(markShelves);
 
-        watch.observe(caseZone);
+        watch.observe(shelves);
 
-        const bookcase =
-            caseZone.querySelector(".bookcase");
-
-        if (bookcase) {
-            watch.observe(bookcase);
-        }
+        new MutationObserver(markShelves).observe(shelves, { childList: true });
 
     }
 

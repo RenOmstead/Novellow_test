@@ -2,8 +2,9 @@
    NOVELLOW
    DISCOVER (discover.html)
 
-   Find a book through Open Library (a free public catalogue)
-   and add it with one click, pick something from your own
+   Find a book through Open Library and Google Books (free
+   public catalogues, js/books/catalogue.js) and add it with
+   one click, pick something from your own
    To Be Read pile, or borrow a reading prompt.
 ========================================================= */
 
@@ -13,58 +14,31 @@ import { html, render, seededRandom, todayIso } from "../core/helpers.js?v=__VER
 import { art, loader, emptyState, toastError, withBusy } from "../core/ui.js?v=__VERSION__";
 import { coverUrls } from "../core/covers.js?v=__VERSION__";
 import { coverMarkup } from "../books/cover.js?v=__VERSION__";
+import { searchBooks, searchTopic } from "../books/catalogue.js?v=__VERSION__";
 
 
 const content =
     document.getElementById("pageContent");
 
-const OPEN_LIBRARY =
-    "https://openlibrary.org/search.json";
-
 const PROMPTS = [
-    { art: "motif-moon", title: "A moon on the cover", text: "Judge a book by its cover, just this once." },
+    { art: "motif-moon", title: "A moon on the cover", text: "Judge a book by its cover, just this once.", topic: "moon" },
     { art: "decor-teacup", title: "Under 200 pages", text: "Something you could finish in one long, rainy afternoon." },
-    { art: "scene-window", title: "Somewhere it rains", text: "A story where the weather is practically a character." },
+    { art: "scene-window", title: "Somewhere it rains", text: "A story where the weather is practically a character.", topic: "rain" },
     { art: "tab-characters", title: "A new author", text: "Someone you've never read before." },
-    { art: "decor-crystal", title: "A little magic", text: "Witches, familiars, spells, or an odd little shop." },
+    { art: "decor-crystal", title: "A little magic", text: "Witches, familiars, spells, or an odd little shop.", topic: "witches" },
     { art: "tab-review", title: "An old favourite", text: "Reread a book you loved and see what's changed." }
 ];
 
 let results = [];
 
+// Ideas for searching by topic.
+const TOPICS = [
+    "Haunted house", "Witches", "Ghosts", "Cozy mystery", "Gothic", "Dark academia",
+    "Fairy tales", "Vampires", "Time travel", "Small town", "Dragons", "Found family"
+];
 
-/* =========================================================
-   OPEN LIBRARY
-========================================================= */
-
-async function searchCatalogue(term) {
-
-    const url =
-        `${OPEN_LIBRARY}?q=${encodeURIComponent(term)}&limit=12&fields=key,title,author_name,first_publish_year,number_of_pages_median,isbn,cover_i,subject`;
-
-    const response =
-        await fetch(url);
-
-    if (!response.ok) {
-        throw new Error(`Open Library ${response.status}`);
-    }
-
-    const data =
-        await response.json();
-
-    return (data.docs || []).map((doc) => ({
-        key: doc.key,
-        title: doc.title,
-        author: doc.author_name?.[0] || null,
-        year: doc.first_publish_year || null,
-        pages: doc.number_of_pages_median || null,
-        isbn: doc.isbn?.find((isbn) => isbn.length === 13) || doc.isbn?.[0] || null,
-        genre: doc.subject?.find((subject) => subject.length < 24) || null,
-        cover: doc.cover_i ? `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg` : null,
-        coverLarge: doc.cover_i ? `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg` : null
-    }));
-
-}
+// What was searched for, to offer adding it by hand.
+let searched = "";
 
 
 function alreadyShelved(result) {
@@ -98,6 +72,7 @@ function renderResults() {
                             <strong>${result.title}</strong>
                             ${result.author ? html`<small>${result.author}</small>` : ""}
                             <small>${[result.year, result.pages ? `${result.pages} pages` : ""].filter(Boolean).join(" · ")}</small>
+                            <small class="discover-card__source">${result.source}</small>
                             ${alreadyShelved(result)
                                 ? html`<p class="muted" style="margin-top: 8px">Already on your shelves</p>`
                                 : html`<button class="button button--brass button--small" type="button" data-add="${index}">${art("ui-add")} Add to my library</button>`}
@@ -106,7 +81,29 @@ function renderResults() {
                 </li>
             `)}
         </ul>
-    ` : emptyState({ symbol: "ui-search", title: "No books found", text: "Try a different title, author or ISBN." }));
+        <p class="discover-by-hand">Not the one? <button class="text-button" type="button" data-add-by-hand>Add “${searched}” by hand</button></p>
+    ` : html`
+        ${emptyState({ symbol: "ui-search", title: "No books found", text: "Neither catalogue knows that one yet. Try the title and author together, or an ISBN, or add it yourself." })}
+        <p class="discover-by-hand"><button class="button button--brass button--small" type="button" data-add-by-hand>${art("ui-add")} Add “${searched}” by hand</button></p>
+    `);
+
+
+    // A cover that won't load shows the plain moon instead.
+    holder.querySelectorAll(".discover-card img").forEach((img) => {
+
+        const blank = () => {
+            img.outerHTML = `<span class="discover-card__blank">${art("motif-moon")}</span>`;
+        };
+
+        if (img.complete && !img.naturalWidth) {
+            blank();
+        }
+
+        else {
+            img.addEventListener("error", blank, { once: true });
+        }
+
+    });
 
 }
 
@@ -145,15 +142,29 @@ function renderPage() {
                 <h2 class="section-title section-title--light" id="findHeading">Find a book</h2>
 
                 <form class="discover-search paper" id="discoverSearch" role="search">
+                    <div class="discover-search__by" role="radiogroup" aria-label="Search by">
+                        <label class="chip-picker__option">
+                            <input class="visually-hidden" type="radio" name="by" value="title" checked>
+                            <span>Title or author</span>
+                        </label>
+                        <label class="chip-picker__option">
+                            <input class="visually-hidden" type="radio" name="by" value="topic">
+                            <span>Topic, keyword or genre</span>
+                        </label>
+                    </div>
                     <label class="field">
-                        <span class="field__label">Title, author or ISBN</span>
+                        <span class="field__label" data-search-label>Title, author or ISBN</span>
                         <input class="field__input" type="search" name="term" required placeholder="The Night Circus" autocomplete="off">
                     </label>
                     <button class="button button--primary" type="submit">${art("ui-search")} Search</button>
                     <button class="button button--brass" type="button" data-scan>${art("ui-scan")} Scan barcode</button>
+                    <div class="discover-topics" data-topics hidden>
+                        <span class="muted">Try:</span>
+                        ${TOPICS.map((topic) => html`<button class="chip" type="button" data-topic="${topic}">${topic}</button>`)}
+                    </div>
                 </form>
 
-                <p class="muted" style="margin-top: 8px; color: #f0dcc0">Book details and covers come from Open Library, a free public catalogue.</p>
+                <p class="muted" style="margin-top: 8px; color: #f0dcc0">Book details and covers come from Open Library and Google Books, free public catalogues.</p>
 
                 <div id="results"></div>
 
@@ -192,6 +203,7 @@ function renderPage() {
                                 ${art(prompt.art)}
                                 <h3>${prompt.title}</h3>
                                 <p>${prompt.text}</p>
+                                ${prompt.topic ? html`<button class="text-button" type="button" data-topic="${prompt.topic}">Find one</button>` : ""}
                             </article>
                         </li>
                     `)}
@@ -229,6 +241,65 @@ async function start() {
 
     renderPage();
 
+    const searchForm = () =>
+        document.getElementById("discoverSearch");
+
+    // Searching by title or author, or by what a book is about.
+    const showMode = () => {
+
+        const form = searchForm();
+
+        const topic =
+            form.elements.by.value === "topic";
+
+        form.querySelector("[data-search-label]").textContent = topic ? "What it's about" : "Title, author or ISBN";
+        form.elements.term.placeholder = topic ? "Haunted house, witches, cozy mystery…" : "The Night Circus";
+        form.querySelector("[data-topics]").hidden = !topic;
+
+    };
+
+    const searchTopicFor = (topic) => {
+
+        const form = searchForm();
+
+        form.elements.by.value = "topic";
+        form.elements.term.value = topic;
+
+        showMode();
+
+        form.requestSubmit();
+
+        form.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    };
+
+    content.addEventListener("change", (event) => {
+        if (event.target.name === "by") {
+            showMode();
+            searchForm().elements.term.focus();
+        }
+    });
+
+    content.addEventListener("click", (event) => {
+
+        const topic =
+            event.target.closest("[data-topic]");
+
+        if (topic) {
+            searchTopicFor(topic.dataset.topic);
+        }
+
+    });
+
+    // discover.html?topic=… (from elsewhere in the app) searches
+    // straight away.
+    const asked =
+        new URL(window.location.href).searchParams.get("topic");
+
+    if (asked) {
+        window.setTimeout(() => searchTopicFor(asked), 0);
+    }
+
     content.addEventListener("submit", async (event) => {
 
         if (event.target.id !== "discoverSearch") {
@@ -253,7 +324,11 @@ async function start() {
 
             try {
 
-                results = await searchCatalogue(term);
+                searched = term;
+
+                results = event.target.elements.by.value === "topic"
+                    ? await searchTopic(term)
+                    : await searchBooks(term);
 
                 renderResults();
 
@@ -266,7 +341,7 @@ async function start() {
                 render(holder, emptyState({
                     symbol: "ui-alert",
                     title: "The catalogue didn't answer",
-                    text: "Open Library couldn't be reached just now. You can still add the book by hand."
+                    text: "Neither catalogue could be reached just now. You can still add the book by hand."
                 }));
 
             }
@@ -300,6 +375,19 @@ async function start() {
         catch (error) {
             toastError(error);
         }
+
+    });
+
+    content.addEventListener("click", async (event) => {
+
+        if (!event.target.closest("[data-add-by-hand]")) {
+            return;
+        }
+
+        const { openBookEditor } =
+            await import("../books/book-editor.js?v=__VERSION__");
+
+        await openBookEditor({ prefill: { title: searched } });
 
     });
 

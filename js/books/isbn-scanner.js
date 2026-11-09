@@ -5,7 +5,8 @@
    scanIsbn() opens the camera and reads the barcode on the back
    of a book (an ISBN is printed as an EAN-13 barcode starting
    978 or 979), or lets the reader type the number instead.
-   lookupIsbn() then asks Open Library for the book's details.
+   lookupIsbn() then asks the catalogues (js/books/catalogue.js)
+   for the book's details.
 
    The browser's own barcode reader is used where there is one
    (Chrome on Android, for example); elsewhere (Safari on iPhone
@@ -15,13 +16,11 @@
 
 import { html, render } from "../core/helpers.js?v=__VERSION__";
 import { art } from "../core/ui.js?v=__VERSION__";
+import { findIsbn } from "./catalogue.js?v=__VERSION__";
 
 
 const ZXING_SRC =
     "js/vendor/zxing-library-0.23.0.min.js?v=__VERSION__";
-
-const OPEN_LIBRARY =
-    "https://openlibrary.org/search.json";
 
 
 /* =========================================================
@@ -78,33 +77,23 @@ export function cleanIsbn(value) {
 
 export async function lookupIsbn(isbn) {
 
-    const url =
-        `${OPEN_LIBRARY}?isbn=${encodeURIComponent(isbn)}&limit=1&fields=key,title,author_name,first_publish_year,number_of_pages_median,isbn,cover_i,subject`;
+    const found =
+        await findIsbn(isbn);
 
-    const response =
-        await fetch(url);
-
-    if (!response.ok) {
-        throw new Error(`Open Library ${response.status}`);
-    }
-
-    const doc =
-        (await response.json()).docs?.[0];
-
-    if (!doc) {
+    if (!found) {
         return null;
     }
 
     return {
         prefill: {
-            title: doc.title,
-            author: doc.author_name?.[0] || null,
-            publication_year: doc.first_publish_year || null,
-            page_count: doc.number_of_pages_median || null,
+            title: found.title,
+            author: found.author,
+            publication_year: found.year,
+            page_count: found.pages,
             isbn,
-            genre: doc.subject?.find((subject) => subject.length < 24) || null
+            genre: found.genre
         },
-        coverUrl: doc.cover_i ? `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg` : null
+        coverUrl: found.coverLarge
     };
 
 }

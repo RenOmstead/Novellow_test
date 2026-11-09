@@ -6,9 +6,12 @@
    to follow the reader between devices: which cat lives in
    the library, where ghosts float, the curtains, the rug, the
    mug or tea set on the table, and which paper notes (if any)
-   are pinned to the wall. Kept in localStorage
-   (sound has its own, in js/sound/soundscape.js).
+   are pinned to the wall, and the font the reader's own
+   writing is shown in. Kept in localStorage (sound has its
+   own, in js/sound/soundscape.js).
 ========================================================= */
+
+import { SPINE_FONTS } from "../books/spine-options.js?v=__VERSION__";
 
 const STORE =
     "novellow-room";
@@ -145,6 +148,7 @@ const DEFAULTS = {
     mug: "plain",
     china: "rose",
     teaset: "gold",
+    writingFont: "hand",
     readingNote: "off",
     snippetNote: "off",
     bookcaseIvy: "off"
@@ -208,6 +212,21 @@ export function applyPreferences() {
 
     root.dataset.readingNote = readingNote === "on" ? "on" : "off";
     root.dataset.snippetNote = snippetNote === "on" ? "on" : "off";
+
+    // The font the reader's own writing is shown in (journal
+    // entries, notes and quotes).
+    const writing =
+        SPINE_FONTS.find((font) => font.id === getPreferences().writingFont);
+
+    if (writing && writing.id !== "hand") {
+        root.style.setProperty("--font-writing", writing.family);
+        root.dataset.writingFont = writing.id;
+    }
+
+    else {
+        root.style.removeProperty("--font-writing");
+        delete root.dataset.writingFont;
+    }
 
     // Ivy climbing the sides of the bookcase, if the reader wants it.
     root.dataset.bookcaseIvy = getPreferences().bookcaseIvy === "on" ? "on" : "off";

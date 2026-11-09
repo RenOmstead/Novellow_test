@@ -10,18 +10,41 @@
 import { seededRandom } from "../core/helpers.js?v=__VERSION__";
 
 
+export const FONT_GROUPS = [
+    { id: "classic", label: "Classic and elegant" },
+    { id: "story", label: "Whimsical and storybook" },
+    { id: "hand", label: "Handwritten and script" },
+    { id: "gothic", label: "Gothic and spooky" }
+];
+
 export const SPINE_FONTS = [
-    { id: "fell", label: "IM Fell — engraved", family: "'IM Fell English SC', Georgia, serif" },
-    { id: "fraunces", label: "Fraunces — storybook", family: "'Fraunces', Georgia, serif" },
-    { id: "cormorant", label: "Cormorant — elegant", family: "'Cormorant Garamond', Georgia, serif" },
-    { id: "averia", label: "Averia — old book", family: "'Averia Serif Libre', Georgia, serif" },
-    { id: "swash", label: "Berkshire Swash — whimsical", family: "'Berkshire Swash', Georgia, cursive" },
-    { id: "cinzel", label: "Cinzel — classical", family: "'Cinzel', Georgia, serif" },
-    { id: "almendra", label: "Almendra — fairytale", family: "'Almendra', Georgia, serif" },
-    { id: "uncial", label: "Uncial — ancient", family: "'Uncial Antiqua', Georgia, serif" },
-    { id: "gothic", label: "Grenze Gotisch — gothic", family: "'Grenze Gotisch', Georgia, serif" },
-    { id: "playfair", label: "Playfair — editorial", family: "'Playfair Display', Georgia, serif" },
-    { id: "hand", label: "Patrick Hand — handwritten", family: "'Patrick Hand', cursive" }
+    { id: "fell", label: "IM Fell — engraved", group: "classic", family: "'IM Fell English SC', Georgia, serif" },
+    { id: "cormorant", label: "Cormorant — elegant", group: "classic", family: "'Cormorant Garamond', Georgia, serif" },
+    { id: "averia", label: "Averia — old book", group: "classic", family: "'Averia Serif Libre', Georgia, serif" },
+    { id: "cinzel", label: "Cinzel — classical", group: "classic", family: "'Cinzel', Georgia, serif" },
+    { id: "playfair", label: "Playfair — editorial", group: "classic", family: "'Playfair Display', Georgia, serif" },
+    { id: "garamond", label: "Garamond — old library", group: "classic", family: "'EB Garamond', Georgia, serif" },
+    { id: "baskerville", label: "Baskerville — timeless", group: "classic", family: "'Libre Baskerville', Georgia, serif" },
+    { id: "marcellus", label: "Marcellus — carved in stone", group: "classic", family: "'Marcellus SC', Georgia, serif" },
+    { id: "poiret", label: "Poiret — art deco", group: "classic", family: "'Poiret One', Georgia, sans-serif" },
+    { id: "fraunces", label: "Fraunces — storybook", group: "story", family: "'Fraunces', Georgia, serif" },
+    { id: "swash", label: "Berkshire Swash — whimsical", group: "story", family: "'Berkshire Swash', Georgia, cursive" },
+    { id: "almendra", label: "Almendra — fairytale", group: "story", family: "'Almendra', Georgia, serif" },
+    { id: "mystery", label: "Mystery Quest — witchy", group: "story", family: "'Mystery Quest', Georgia, cursive" },
+    { id: "henny", label: "Henny Penny — playful", group: "story", family: "'Henny Penny', Georgia, cursive" },
+    { id: "sofia", label: "Princess Sofia — once upon a time", group: "story", family: "'Princess Sofia', Georgia, cursive" },
+    { id: "eagle", label: "Eagle Lake — illuminated", group: "story", family: "'Eagle Lake', Georgia, cursive" },
+    { id: "hand", label: "Patrick Hand — handwritten", group: "hand", family: "'Patrick Hand', cursive" },
+    { id: "caveat", label: "Caveat — notebook", group: "hand", family: "'Caveat', 'Patrick Hand', cursive" },
+    { id: "dancing", label: "Dancing Script — flowing", group: "hand", family: "'Dancing Script', cursive" },
+    { id: "vibes", label: "Great Vibes — romantic script", group: "hand", family: "'Great Vibes', cursive" },
+    { id: "pinyon", label: "Pinyon Script — calligraphy", group: "hand", family: "'Pinyon Script', cursive" },
+    { id: "uncial", label: "Uncial — ancient", group: "gothic", family: "'Uncial Antiqua', Georgia, serif" },
+    { id: "gothic", label: "Grenze Gotisch — gothic", group: "gothic", family: "'Grenze Gotisch', Georgia, serif" },
+    { id: "fraktur", label: "Fraktur — blackletter", group: "gothic", family: "'UnifrakturMaguntia', Georgia, serif" },
+    { id: "pirata", label: "Pirata — dark tales", group: "gothic", family: "'Pirata One', Georgia, serif" },
+    { id: "rocker", label: "New Rocker — dark carnival", group: "gothic", family: "'New Rocker', Georgia, serif" },
+    { id: "creepster", label: "Creepster — horror", group: "gothic", family: "'Creepster', Georgia, cursive" }
 ];
 
 
@@ -104,7 +127,58 @@ export const SPINE_STYLES = [
     { id: "painted-cabin-woods", label: "Painted: Cabin in the woods" },
     { id: "painted-bloody-hand", label: "Painted: Bloody hand" },
     { id: "painted-red-lightning", label: "Painted: Red lightning" },
-    { id: "painted-eye-lock", label: "Painted: Eye and lock" }
+    { id: "painted-eye-lock", label: "Painted: Eye and lock" },
+    { id: "painted-crimson-crescent", label: "Painted: Crimson crescent" },
+    { id: "painted-clover", label: "Painted: Green clover" },
+    { id: "painted-navy-sun", label: "Painted: Navy sun" },
+    { id: "painted-tooled-leather", label: "Painted: Tooled leather" },
+    { id: "painted-violets", label: "Painted: Cream violets" },
+    { id: "painted-wisteria", label: "Painted: Wisteria" },
+    { id: "painted-two-toadstools", label: "Painted: Two toadstools" },
+    { id: "painted-starry-navy", label: "Painted: Starry navy" },
+    { id: "painted-crimson-rose", label: "Painted: Crimson rose" },
+    { id: "painted-three-moons", label: "Painted: Three moons" },
+    { id: "painted-moss-butterfly", label: "Painted: Moss butterfly" },
+    { id: "painted-lavender-bouquet", label: "Painted: Lavender bouquet" },
+    { id: "painted-shadow-cat", label: "Painted: Shadow cat" },
+    { id: "painted-tan-moon-phases", label: "Painted: Tan moon phases" },
+    { id: "painted-teal-star", label: "Painted: Teal star" },
+    { id: "painted-snowy-peak", label: "Painted: Snowy peak" },
+    { id: "painted-golden-tree", label: "Painted: Golden tree" },
+    { id: "painted-cream-daisies", label: "Painted: Cream daisies" },
+    { id: "painted-skull-blossoms", label: "Painted: Skull and blossoms" },
+    { id: "painted-crimson-sword", label: "Painted: Crimson sword" },
+    { id: "painted-night-clouds", label: "Painted: Night clouds" },
+    { id: "painted-lily-of-the-valley", label: "Painted: Lily of the valley" },
+    { id: "painted-pink-bow", label: "Painted: Pink bow" },
+    { id: "painted-navy-compass", label: "Painted: Navy compass" },
+    { id: "painted-keyhole", label: "Painted: Keyhole" },
+    { id: "painted-sage-butterfly", label: "Painted: Sage butterfly" },
+    { id: "painted-violet-potion", label: "Painted: Violet potion" },
+    { id: "painted-autumn-sprig", label: "Painted: Autumn sprig" },
+    { id: "painted-black-toadstools", label: "Painted: Black toadstools" },
+    { id: "painted-blue-mountains", label: "Painted: Blue mountains" },
+    { id: "painted-crimson-sun", label: "Painted: Crimson sun" },
+    { id: "painted-teal-waves", label: "Painted: Teal waves" },
+    { id: "painted-plum-star", label: "Painted: Plum star" },
+    { id: "painted-pink-hearts", label: "Painted: Pink hearts" },
+    { id: "painted-purple-cat", label: "Painted: Purple cat" },
+    { id: "painted-green-dragon", label: "Painted: Green dragon" },
+    { id: "painted-cloud-castle", label: "Painted: Cloud castle" },
+    { id: "painted-coffee-and-books", label: "Painted: Coffee and books" },
+    { id: "painted-lanterns", label: "Painted: Lanterns" },
+    { id: "painted-strawberries-cream", label: "Painted: Strawberries" },
+    { id: "painted-sea-moons", label: "Painted: Sea moons" },
+    { id: "painted-red-maple", label: "Painted: Red maple" },
+    { id: "painted-grey-ghost", label: "Painted: Grey ghost" },
+    { id: "painted-green-sprig", label: "Painted: Green sprig" },
+    { id: "painted-bow-and-hearts", label: "Painted: Bow and hearts" },
+    { id: "painted-golden-deer", label: "Painted: Golden deer" },
+    { id: "painted-sage-daisies", label: "Painted: Sage daisies" },
+    { id: "painted-cat-on-books", label: "Painted: Cat on books" },
+    { id: "painted-amethyst-crystals", label: "Painted: Amethyst crystals" },
+    { id: "painted-black-filigree", label: "Painted: Black filigree" },
+    { id: "painted-teal-roses", label: "Painted: Teal roses" }
 ];
 
 
@@ -174,7 +248,62 @@ export const SPINE_PAINTED = {
     "painted-cabin-woods": { src: "assets/spines/painted/cabin_woods.webp", text: "#fbeedd" },
     "painted-bloody-hand": { src: "assets/spines/painted/bloody_hand.webp", text: "#fbeedd" },
     "painted-red-lightning": { src: "assets/spines/painted/red_lightning.webp", text: "#fbeedd" },
-    "painted-eye-lock": { src: "assets/spines/painted/eye_lock.webp", text: "#fbeedd" }
+    "painted-eye-lock": { src: "assets/spines/painted/eye_lock.webp", text: "#fbeedd" },
+
+    // Blank spines: the title is written in each one's own
+    // panel (panel: [inset from the top, inset from the bottom],
+    // in %), or on a little paper label over the picture (bare).
+    "painted-crimson-crescent": { src: "assets/spines/painted/crimson-crescent.webp", text: "#f6e6c8", panel: [24, 40] },
+    "painted-clover": { src: "assets/spines/painted/clover.webp", text: "#f6e6c8", panel: [28, 33] },
+    "painted-navy-sun": { src: "assets/spines/painted/navy-sun.webp", text: "#f6e6c8", panel: [28, 33] },
+    "painted-tooled-leather": { src: "assets/spines/painted/tooled-leather.webp", text: "#f6e6c8", panel: [31, 34] },
+    "painted-violets": { src: "assets/spines/painted/violets.webp", text: "#3b2a2a", panel: [29, 33] },
+    "painted-wisteria": { src: "assets/spines/painted/wisteria.webp", text: "#f6e6c8", panel: [30, 31] },
+    "painted-two-toadstools": { src: "assets/spines/painted/two-toadstools.webp", text: "#f6e6c8", panel: [33, 30] },
+    "painted-starry-navy": { src: "assets/spines/painted/starry-navy.webp", text: "#f6e6c8", panel: [24, 35] },
+    "painted-crimson-rose": { src: "assets/spines/painted/crimson-rose.webp", text: "#f6e6c8", panel: [28, 32] },
+    "painted-three-moons": { src: "assets/spines/painted/three-moons.webp", text: "#f6e6c8", panel: [28, 32] },
+    "painted-moss-butterfly": { src: "assets/spines/painted/moss-butterfly.webp", text: "#f6e6c8", panel: [46, 27] },
+    "painted-lavender-bouquet": { src: "assets/spines/painted/lavender-bouquet.webp", text: "#3b2a2a", panel: [18, 42] },
+    "painted-shadow-cat": { src: "assets/spines/painted/shadow-cat.webp", text: "#f6e6c8", panel: [31, 33] },
+    "painted-tan-moon-phases": { src: "assets/spines/painted/tan-moon-phases.webp", text: "#3b2a2a", panel: [22, 18], bare: true },
+    "painted-teal-star": { src: "assets/spines/painted/teal-star.webp", text: "#f6e6c8", panel: [35, 33] },
+    "painted-snowy-peak": { src: "assets/spines/painted/snowy-peak.webp", text: "#f6e6c8", panel: [21, 31] },
+    "painted-golden-tree": { src: "assets/spines/painted/golden-tree.webp", text: "#f6e6c8", panel: [32, 34] },
+    "painted-cream-daisies": { src: "assets/spines/painted/cream-daisies.webp", text: "#3b2a2a", panel: [28, 35] },
+    "painted-skull-blossoms": { src: "assets/spines/painted/skull-blossoms.webp", text: "#f6e6c8", panel: [25, 52] },
+    "painted-crimson-sword": { src: "assets/spines/painted/crimson-sword.webp", text: "#f6e6c8", panel: [25, 38] },
+    "painted-night-clouds": { src: "assets/spines/painted/night-clouds.webp", text: "#f6e6c8", panel: [27, 40] },
+    "painted-lily-of-the-valley": { src: "assets/spines/painted/lily-of-the-valley.webp", text: "#f6e6c8", panel: [26, 37] },
+    "painted-pink-bow": { src: "assets/spines/painted/pink-bow.webp", text: "#3b2a2a", panel: [30, 34] },
+    "painted-navy-compass": { src: "assets/spines/painted/navy-compass.webp", text: "#f6e6c8", panel: [27, 38] },
+    "painted-keyhole": { src: "assets/spines/painted/keyhole.webp", text: "#f6e6c8", panel: [27, 37] },
+    "painted-sage-butterfly": { src: "assets/spines/painted/sage-butterfly.webp", text: "#3b2a2a", panel: [26, 35] },
+    "painted-violet-potion": { src: "assets/spines/painted/violet-potion.webp", text: "#f6e6c8", panel: [25, 42] },
+    "painted-autumn-sprig": { src: "assets/spines/painted/autumn-sprig.webp", text: "#3b2a2a", panel: [27, 35] },
+    "painted-black-toadstools": { src: "assets/spines/painted/black-toadstools.webp", text: "#f6e6c8", panel: [26, 36] },
+    "painted-blue-mountains": { src: "assets/spines/painted/blue-mountains.webp", text: "#3b2a2a", panel: [28, 40] },
+    "painted-crimson-sun": { src: "assets/spines/painted/crimson-sun.webp", text: "#f6e6c8", panel: [26, 41] },
+    "painted-teal-waves": { src: "assets/spines/painted/teal-waves.webp", text: "#f6e6c8", panel: [25, 40] },
+    "painted-plum-star": { src: "assets/spines/painted/plum-star.webp", text: "#f6e6c8", panel: [26, 36] },
+    "painted-pink-hearts": { src: "assets/spines/painted/pink-hearts.webp", text: "#3b2a2a", panel: [25, 36] },
+    "painted-purple-cat": { src: "assets/spines/painted/purple-cat.webp", text: "#f6e6c8", panel: [26, 41] },
+    "painted-green-dragon": { src: "assets/spines/painted/green-dragon.webp", text: "#f6e6c8", panel: [28, 41] },
+    "painted-cloud-castle": { src: "assets/spines/painted/cloud-castle.webp", text: "#3b2a2a", panel: [52, 14], bare: true },
+    "painted-coffee-and-books": { src: "assets/spines/painted/coffee-and-books.webp", text: "#3b2a2a", panel: [42, 26], bare: true },
+    "painted-lanterns": { src: "assets/spines/painted/lanterns.webp", text: "#3b2a2a", panel: [16, 54], bare: true },
+    "painted-strawberries-cream": { src: "assets/spines/painted/strawberries-cream.webp", text: "#3b2a2a", panel: [29, 37] },
+    "painted-sea-moons": { src: "assets/spines/painted/sea-moons.webp", text: "#f6e6c8", panel: [30, 40] },
+    "painted-red-maple": { src: "assets/spines/painted/red-maple.webp", text: "#f6e6c8", panel: [26, 43] },
+    "painted-grey-ghost": { src: "assets/spines/painted/grey-ghost.webp", text: "#3b2a2a", panel: [63, 12], bare: true },
+    "painted-green-sprig": { src: "assets/spines/painted/green-sprig.webp", text: "#f6e6c8", panel: [29, 41] },
+    "painted-bow-and-hearts": { src: "assets/spines/painted/bow-and-hearts.webp", text: "#3b2a2a", panel: [32, 43] },
+    "painted-golden-deer": { src: "assets/spines/painted/golden-deer.webp", text: "#f6e6c8", panel: [25, 45] },
+    "painted-sage-daisies": { src: "assets/spines/painted/sage-daisies.webp", text: "#3b2a2a", panel: [30, 35], bare: true },
+    "painted-cat-on-books": { src: "assets/spines/painted/cat-on-books.webp", text: "#3b2a2a", panel: [52, 12], bare: true },
+    "painted-amethyst-crystals": { src: "assets/spines/painted/amethyst-crystals.webp", text: "#f6e6c8", panel: [26, 43] },
+    "painted-black-filigree": { src: "assets/spines/painted/black-filigree.webp", text: "#f6e6c8", panel: [27, 39] },
+    "painted-teal-roses": { src: "assets/spines/painted/teal-roses.webp", text: "#f6e6c8", panel: [29, 39] }
 };
 
 
@@ -432,6 +561,44 @@ export function suggestedSpine(seedText = "") {
         height: pick(["medium", "tall", "tall", "grand"], random),
         thickness: pick(["slim", "medium", "medium", "chunky"], random)
     };
+
+}
+
+
+/*
+    A design for "Surprise me" and for a newly added book: the
+    suggested design, and often one of the hand-painted spines
+    instead of a drawn style. (suggestedSpine itself stays as it
+    is, since books saved without a design are drawn from it.)
+*/
+
+const PAINTED_STYLES =
+    SPINE_STYLES.map((item) => item.id).filter((id) => id.startsWith("painted-"));
+
+export function surpriseSpine(seedText = "") {
+
+    const seed =
+        seedText || String(Math.random());
+
+    const spine =
+        suggestedSpine(seed);
+
+    const random =
+        seededRandom(`painted:${seed}`);
+
+    // The first few numbers from similar seeds are alike; skip them.
+    random(); random(); random();
+
+    if (random() < 0.5) {
+
+        spine.style = pick(PAINTED_STYLES, random);
+
+        // The picture has its own colours; the title matches it.
+        spine.text = SPINE_PAINTED[spine.style]?.text || spine.text;
+
+    }
+
+    return spine;
 
 }
 

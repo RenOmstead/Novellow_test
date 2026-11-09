@@ -24,6 +24,18 @@ export const COVER_BUCKET = "book-covers";
 
 
 /* ---------------------------------------------------------
+   BOOK CATALOGUES
+   Finding a book asks Open Library and Google Books together.
+   Google Books works without a key; a browser key (made in the
+   Google Cloud console and restricted to this site's address)
+   only raises how many searches a day are allowed. It is not
+   a secret. Leave empty to search without one.
+--------------------------------------------------------- */
+
+export const GOOGLE_BOOKS_KEY = "";
+
+
+/* ---------------------------------------------------------
    WHICH COPY OF NOVELLOW THIS IS
    Leave empty on the real site. Any text here (for example
    "Test copy") shows as a ribbon on every page.

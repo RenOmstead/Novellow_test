@@ -25,12 +25,12 @@ import { friendlyDataError, NovellowError } from "../core/errors.js?v=__VERSION_
 import { art, toast, confirmDialog, withBusy } from "../core/ui.js?v=__VERSION__";
 import { ratingMarkup, wireRatings } from "../core/rating.js?v=__VERSION__";
 import { READING_STATUSES } from "../config.js?v=__VERSION__";
-import { spineMarkup, fitSpineTitles } from "./spine.js?v=__VERSION__";
+import { spineMarkup, fitSpineTitles, motif } from "./spine.js?v=__VERSION__";
+import { fontPickerMarkup } from "./font-picker.js?v=__VERSION__";
 import { coverMarkup } from "./cover.js?v=__VERSION__";
 
 import {
     SPINE_STYLES,
-    SPINE_FONTS,
     TITLE_PANELS,
     ORNAMENTS,
     HEIGHTS,
@@ -42,8 +42,10 @@ import {
     FONT_STYLES,
     ALIGNMENTS,
     PALETTE,
+    SPINE_ART,
+    SPINE_PAINTED,
     normalizeSpine,
-    suggestedSpine
+    surpriseSpine
 } from "./spine-options.js?v=__VERSION__";
 
 
@@ -163,7 +165,7 @@ export async function openBookEditor({ bookId = null, shelfId = null, prefill = 
                 current_page: 0,
                 times_read: 0,
                 ...(prefill || {}),
-                spine: suggestedSpine(prefill?.title || String(Date.now()))
+                spine: surpriseSpine(prefill?.title || String(Date.now()))
             };
 
     if (existing?.cover_path) {
@@ -261,7 +263,7 @@ export async function openBookEditor({ bookId = null, shelfId = null, prefill = 
                     form.elements.isbn.value = isbn;
                     form.dataset.dirty = "true";
 
-                    toast("That book isn't in the Open Library catalogue, so its ISBN is filled in and the rest is up to you.", { timeout: 6000 });
+                    toast("That book isn't in the catalogues yet, so its ISBN is filled in and the rest is up to you.", { timeout: 6000 });
 
                     form.elements.title.focus();
 
@@ -344,6 +346,40 @@ export async function openBookEditor({ bookId = null, shelfId = null, prefill = 
 /* =========================================================
    MARKUP
 ========================================================= */
+
+// A short title for the little samples (fonts and spine styles).
+function sampleTitle(title) {
+    const text = String(title || "").trim() || "Once upon a time";
+    return text.length > 18 ? `${text.slice(0, 17)}…` : text;
+}
+
+const STYLE_GROUPS = [
+    { label: "Painted", test: (id) => Boolean(SPINE_PAINTED[id]) },
+    { label: "Drawn", test: (id) => Boolean(SPINE_ART[id]) },
+    { label: "Simple", test: (id) => !SPINE_PAINTED[id] && !SPINE_ART[id] }
+];
+
+// Every spine style as a little spine in this book's colours.
+function styleOptionsMarkup(bookTitle, spine) {
+
+    const title =
+        sampleTitle(bookTitle);
+
+    return STYLE_GROUPS.map((group) => html`
+        <p class="style-picker__group">${group.label}</p>
+        <div class="style-picker__grid">
+            ${SPINE_STYLES.filter((item) => group.test(item.id)).map((item) => html`
+                <label class="style-picker__option" title="${item.label.replace(/^Painted: /, "")}">
+                    <input class="visually-hidden" type="radio" name="spine_style" value="${item.id}" ${item.id === spine.style ? html`checked` : ""}>
+                    <span class="style-picker__spine">${spineMarkup({ title, spine: { ...spine, style: item.id, height: "tall", thickness: "medium", ornament: spine.ornament === "none" ? "star" : spine.ornament } }, { tag: "div" })}</span>
+                    <small>${item.label.replace(/^Painted: /, "")}</small>
+                </label>
+            `)}
+        </div>
+    `);
+
+}
+
 
 function editorMarkup(book, shelves, editing) {
 
@@ -504,45 +540,81 @@ function editorMarkup(book, shelves, editing) {
                     </fieldset>
 
 
-                    <fieldset class="editor-section editor-section--design">
+                    <fieldset class="editor-section editor-section--design" data-design data-painted="${String(Boolean(SPINE_PAINTED[spine.style]))}" data-ornament="${String(!SPINE_PAINTED[spine.style] && !SPINE_ART[spine.style])}">
 
                         <legend>${art("ui-brush", "editor-section__art")} Book design</legend>
 
-                        <div class="palette-picker" role="group" aria-label="Colour pairings">
-                            ${PALETTE.map((item, index) => html`
-                                <button class="palette-picker__swatch" type="button" data-palette="${index}" style="--c: ${item.color}; --a: ${item.accent}" aria-label="Colour pairing ${index + 1}"></button>
+                        <div class="design-peek">
+                            <div class="design-peek__spine" data-spine-peek>
+                                ${spineMarkup({ ...book, spine }, { tag: "div" })}
+                            </div>
+                            <button class="button button--ghost button--small" type="button" data-surprise>
+                                ${art("ui-sparkle")} Surprise me
+                            </button>
+                        </div>
+
+                        <p class="design-step">Spine</p>
+                        <div class="style-picker" data-style-picker>
+                            ${styleOptionsMarkup(book.title, spine)}
+                        </div>
+
+                        <div class="design-colours">
+                            <p class="design-step">Colours</p>
+                            <div class="palette-picker" role="group" aria-label="Colour pairings">
+                                ${PALETTE.map((item, index) => html`
+                                    <button class="palette-picker__swatch" type="button" data-palette="${index}" style="--c: ${item.color}; --a: ${item.accent}" aria-label="Colour pairing ${index + 1}"></button>
+                                `)}
+                            </div>
+                            <div class="field-row">
+                                ${colorField("Spine", "spine_color", spine.color)}
+                                ${colorField("Title", "spine_text", spine.text)}
+                                ${colorField("Accent", "spine_accent", spine.accent)}
+                            </div>
+                        </div>
+                        <p class="design-note design-note--painted">A painted spine brings its own colours and pictures.</p>
+
+                        ${fontPickerMarkup({ name: "spine_font", current: spine.font, sample: sampleTitle(book.title), label: "Title font" })}
+
+                        <p class="design-step">Title</p>
+                        <div class="chip-picker" role="radiogroup" aria-label="How the title sits">
+                            ${TITLE_PANELS.map((item) => html`
+                                <label class="chip-picker__option">
+                                    <input class="visually-hidden" type="radio" name="spine_panel" value="${item.id}" ${item.id === spine.panel ? html`checked` : ""}>
+                                    <span>${item.label}</span>
+                                </label>
                             `)}
                         </div>
 
-                        <div class="field-row">
-                            ${colorField("Spine colour", "spine_color", spine.color)}
-                            ${colorField("Title colour", "spine_text", spine.text)}
-                            ${colorField("Accent colour", "spine_accent", spine.accent)}
+                        <div class="design-ornament">
+                            <p class="design-step">Ornament</p>
+                            <div class="ornament-picker" role="radiogroup" aria-label="Ornament">
+                                ${ORNAMENTS.map((item) => html`
+                                    <label class="ornament-picker__option" title="${item.label}">
+                                        <input class="visually-hidden" type="radio" name="spine_ornament" value="${item.id}" ${item.id === spine.ornament ? html`checked` : ""}>
+                                        ${item.id === "none" ? html`<span class="ornament-picker__none">None</span>` : motif(item.id, "ornament-picker__art")}
+                                        <span class="visually-hidden">${item.label}</span>
+                                    </label>
+                                `)}
+                            </div>
                         </div>
 
-                        <div class="field-row">
-                            ${field("Spine style", select("spine_style", SPINE_STYLES, spine.style))}
-                            ${field("Title panel", select("spine_panel", TITLE_PANELS, spine.panel))}
-                            ${field("Ornament", select("spine_ornament", ORNAMENTS, spine.ornament))}
-                        </div>
-
-                        <div class="field-row">
-                            ${field("Spine font", select("spine_font", SPINE_FONTS, spine.font))}
-                            ${field("Font size", select("spine_size", FONT_SIZES, spine.size))}
-                            ${field("Font weight", select("spine_weight", FONT_WEIGHTS, spine.weight))}
-                        </div>
-
-                        <div class="field-row">
-                            ${field("Letter spacing", select("spine_spacing", LETTER_SPACING, spine.spacing))}
-                            ${field("Text case", select("spine_case", TEXT_CASES, spine.textCase))}
-                            ${field("Font style", select("spine_font_style", FONT_STYLES, spine.fontStyle))}
-                        </div>
-
-                        <div class="field-row">
-                            ${field("Title position", select("spine_align", ALIGNMENTS, spine.align))}
-                            ${field("Height", select("spine_height", HEIGHTS, spine.height))}
-                            ${field("Thickness", select("spine_thickness", THICKNESS, spine.thickness))}
-                        </div>
+                        <details class="design-more">
+                            <summary>Lettering and size</summary>
+                            <div class="field-row">
+                                ${field("Font size", select("spine_size", FONT_SIZES, spine.size))}
+                                ${field("Font weight", select("spine_weight", FONT_WEIGHTS, spine.weight))}
+                                ${field("Font style", select("spine_font_style", FONT_STYLES, spine.fontStyle))}
+                            </div>
+                            <div class="field-row">
+                                ${field("Letter spacing", select("spine_spacing", LETTER_SPACING, spine.spacing))}
+                                ${field("Text case", select("spine_case", TEXT_CASES, spine.textCase))}
+                                ${field("Title position", select("spine_align", ALIGNMENTS, spine.align))}
+                            </div>
+                            <div class="field-row">
+                                ${field("Height", select("spine_height", HEIGHTS, spine.height))}
+                                ${field("Thickness", select("spine_thickness", THICKNESS, spine.thickness))}
+                            </div>
+                        </details>
 
                     </fieldset>
 
@@ -651,9 +723,47 @@ function wireEditor(dialog, form, book, existing, onSaved, offeredCover = null) 
     const newShelf =
         form.querySelector("[data-new-shelf]");
 
+    const design =
+        form.querySelector("[data-design]");
+
+    const spinePeek =
+        form.querySelector("[data-spine-peek]");
+
+    const stylePicker =
+        form.querySelector("[data-style-picker]");
+
     let pendingCover = offeredCover;
     let pendingCoverUrl = offeredCover ? URL.createObjectURL(offeredCover) : null;
     let removeExistingCover = false;
+
+    // The little spines in the style picker are redrawn (a moment
+    // later) when what they show changes: colours, font, title…
+    const styleKeyOf = (title, spine) => {
+        const { style, height, thickness, align, ...shown } = spine;
+        return JSON.stringify({ ...shown, title: sampleTitle(title) });
+    };
+
+    let styleKey =
+        styleKeyOf(book.title, spineFromForm(form));
+
+    let styleTimer = 0;
+
+    const refreshStyles = (title, spine) => {
+
+        const key =
+            styleKeyOf(title, spine);
+
+        if (key === styleKey) {
+            return;
+        }
+
+        styleKey = key;
+
+        clearTimeout(styleTimer);
+
+        styleTimer = window.setTimeout(() => render(stylePicker, styleOptionsMarkup(title, spine)), 180);
+
+    };
 
 
     const refreshPreview = () => {
@@ -670,6 +780,21 @@ function wireEditor(dialog, form, book, existing, onSaved, offeredCover = null) 
         render(spinePreview, spineMarkup(previewBook, { tag: "div" }));
 
         fitSpineTitles(spinePreview);
+
+        render(spinePeek, spineMarkup(previewBook, { tag: "div" }));
+
+        fitSpineTitles(spinePeek);
+
+        // Painted spines bring their own colours; ornaments show
+        // only on the simple styles.
+        design.dataset.painted = String(Boolean(SPINE_PAINTED[previewBook.spine.style]));
+        design.dataset.ornament = String(!SPINE_PAINTED[previewBook.spine.style] && !SPINE_ART[previewBook.spine.style]);
+
+        form.querySelectorAll("[data-font-sample]").forEach((sample) => {
+            sample.textContent = sampleTitle(form.elements.title.value.trim());
+        });
+
+        refreshStyles(form.elements.title.value.trim(), previewBook.spine);
 
         if (pendingCoverUrl) {
 
@@ -849,7 +974,7 @@ function wireEditor(dialog, form, book, existing, onSaved, offeredCover = null) 
 
         if (event.target.closest("[data-surprise]")) {
 
-            applySpineToForm(form, suggestedSpine(String(Math.random())));
+            applySpineToForm(form, surpriseSpine(String(Math.random())));
 
             form.dataset.dirty = "true";
 

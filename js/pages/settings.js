@@ -33,6 +33,7 @@ import { exportLibrary, checkImport, importLibrary } from "../data/transfer.js?v
 import { exportPersonalData, deleteAccount } from "../data/account.js?v=__VERSION__";
 import { mountMixer } from "../sound/mixer.js?v=__VERSION__";
 import { CATS, GHOST_CHOICES, MUGS, CHINA_COLOURS, TEASETS, getPreferences, setPreference } from "../shell/preferences.js?v=__VERSION__";
+import { fontPickerMarkup } from "../books/font-picker.js?v=__VERSION__";
 
 
 const content =
@@ -276,7 +277,7 @@ function renderPage() {
                             </select>
                         </label>
 
-                        <p class="muted">The wallpaper, floor, window, curtains and rug are chosen for each room in <strong>Edit the room → Room</strong>, from the moon menu at the top of the page.</p>
+                        <p class="muted">The wallpaper, floor, window, curtains and rug are chosen for each room while decorating: tap the <strong>paintbrush</strong> at the top of your home page.</p>
 
                         <label class="field">
                             <span class="field__label">On the side table</span>
@@ -320,11 +321,21 @@ function renderPage() {
                             ${prefToggle("bookcaseIvy", "Ivy on the bookcase", "Vines climbing up the sides of your bookcase.", prefs.bookcaseIvy === "on")}
                         </div>
 
-                        <p class="muted">To place and move decorations, choose “Edit the room” from the moon menu at the top of the page.</p>
+                        <p class="muted">To place and move decorations, tap the <strong>paintbrush</strong> at the top of your home page.</p>
 
                     </div>
 
                 </div>
+
+            </section>
+
+            <section class="settings-section paper" aria-labelledby="writingHeading">
+
+                <h2 id="writingHeading">${art("ui-quill")} Your writing</h2>
+
+                <p class="muted">The font your journal entries, notes and quotes are shown in. Saved on this device.</p>
+
+                ${fontPickerMarkup({ name: "writingFont", current: prefs.writingFont || "hand", sample: "Dear diary…", label: "Writing font", pref: true })}
 
             </section>
 
