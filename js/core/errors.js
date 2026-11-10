@@ -16,6 +16,10 @@ const AUTH_MESSAGES = [
     [/same_password|should be different/i, "Choose a password different from your current one."],
     [/rate limit|over_email_send_rate_limit|too many requests|over_request_rate_limit/i, "Too many attempts for now. Wait a minute, then try again."],
     [/signups not allowed|signup_disabled/i, "New accounts are not being accepted right now."],
+    // Supabase couldn't send the email (for example, the email
+    // service rejected it). Not the reader's fault, and nothing
+    // to do with their library.
+    [/error sending .*email/i, "Novellow couldn't send the email just now. Please try again in a few minutes, or write to novellow.contact@gmail.com if it keeps happening."],
     [/otp_expired|token has expired|link is invalid|expired/i, "That link has expired. Request a new one and try again."]
 ];
 
