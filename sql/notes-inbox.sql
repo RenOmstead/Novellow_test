@@ -16,16 +16,22 @@
 -- b. Run this file. It makes that account the Novellow account.
 --
 -- OPTIONAL: an email for each new note
---    If you'd also like each note emailed to that Gmail (with a
---    link to the inbox), sign up at resend.com with
---    novellow.contact@gmail.com, open API Keys → Create API Key
---    (Sending access), copy the key (it starts with re_), and run
---    this line on its own with your key in its place. It's kept
---    encrypted in Supabase's Vault, never in the website's code:
+--    If you'd also like each note and report emailed to that
+--    Gmail (with a link to the inbox):
+--    1. In Resend (any account, signed up any way), verify
+--       novellow.com: docs/EMAIL.md, step 1. The emails come
+--       from notes@novellow.com, so they can't send until the
+--       domain shows as Verified.
+--    2. Open API Keys → Create API Key (Sending access) and copy
+--       the key (it starts with re_).
+--    3. Run this line on its own with your key in its place. It's
+--       kept encrypted in Supabase's Vault, never in the website's
+--       code:
 --
 --      select vault.create_secret('re_your_key_here', 'resend_api_key', 'Emails readers'' notes to Novellow');
 --
---    To stop the emails, delete the secret:
+--    To stop the emails (or before adding a new key), delete
+--    the secret:
 --      delete from vault.secrets where name = 'resend_api_key';
 -- =========================================================
 
@@ -170,9 +176,10 @@ security definer
 set search_path = ''
 as $$
 declare
-    -- Where the emails go. Resend's free plan can only send to
-    -- the address the Resend account was made with.
+    -- Where the emails go, and who they're from (an address at
+    -- the domain verified in Resend).
     inbox constant text := 'novellow.contact@gmail.com';
+    sender constant text := 'Novellow notes <notes@novellow.com>';
 
     -- Where the note is answered.
     inbox_page constant text := 'https://novellow.com/about.html#inbox';
@@ -201,7 +208,7 @@ begin
         case new.kind
             when 'problem' then 'Something''s not working'
             when 'idea' then 'An idea or wish'
-            when 'report' then 'A report about a library'
+            when 'report' then 'A report'
             else 'Something else'
         end;
 
@@ -212,7 +219,7 @@ begin
             'Content-Type', 'application/json'
         ),
         body := jsonb_build_object(
-            'from', 'Novellow notes <onboarding@resend.dev>',
+            'from', sender,
             'to', jsonb_build_array(inbox),
             'subject', 'Novellow note: ' || kind_label || ' from ' || coalesce(nullif(reader_name, ''), 'a reader'),
             'text',
