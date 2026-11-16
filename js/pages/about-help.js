@@ -83,6 +83,12 @@ const QUESTIONS = [
     },
 
     {
+        q: "How do I move books around on my shelves?",
+        a: html`<p>On a phone or tablet, <strong>press and hold</strong> a book until it lifts off the shelf, then slide it to where you'd like it, on the same shelf or another one, and let go. Hold it near the top or bottom of the bookcase to scroll to shelves out of sight. On a computer, just drag it.</p>
+            <p>Books stay where you put them when your shelves are in <strong>My own order</strong> (Settings → <strong>Arrange books on each shelf by</strong>). If they're sorted by title or author instead, Novellow will offer to switch, keeping every book where it is.</p>`
+    },
+
+    {
         q: "My bookcase has more shelves than fit. How do I see them all?",
         a: html`<p>The bookcase stands in your room like a piece of furniture. When it has more shelves than fit, scroll or swipe on it and the shelves slide up and down inside it, with the pieces on them. To look closer, tap the little gold <strong>magnifier</strong> on the bookcase's base; tap <strong>Step back</strong> (or anywhere in the room) to see the whole room again.</p>
             <p>To change the bookcase's wood or paint, tap the <strong>paintbrush</strong> and open the <strong>Furniture</strong> tab. Each shelf can also have a style of its own in its shelf settings.</p>`

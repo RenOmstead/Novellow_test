@@ -716,3 +716,36 @@ html.room-narrow .shelf-plaque__name {
     text-align: center;
     white-space: normal;
 }
+
+
+/* Moving a book by touch: press and hold it, and it lifts off
+   the shelf and follows the finger (js/books/bookcase.js). */
+
+.shelf-books .book-spine {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.book-ghost {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    z-index: 9000;
+
+    margin: 0;
+
+    pointer-events: none;
+
+    transform-origin: 0 0;
+    transition: none;
+
+    filter:
+        drop-shadow(0 0 5px rgba(255, 214, 140, 0.85))
+        drop-shadow(0 18px 16px rgba(20, 8, 4, 0.55));
+}
+
+html.is-moving-book .bookcase-body {
+    scroll-behavior: auto;
+}

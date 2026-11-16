@@ -218,7 +218,7 @@ function renderPage() {
                     </select>
                 </label>
 
-                <p class="muted">“My own order” lets you drag books around the shelves yourself.</p>
+                <p class="muted">“My own order” lets you move books around the shelves yourself: drag them on a computer, or press and hold a book on a phone or tablet, then slide it.</p>
 
             </section>
 

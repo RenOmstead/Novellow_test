@@ -583,6 +583,45 @@ export async function placeBook(bookId, shelfId, index) {
 }
 
 
+/*
+    Saves the order the shelves are shown in now (sorted by
+    title, author and so on) as the reader's own order, so
+    switching to "my own order" leaves every book where it is.
+    A few books at a time, so a big library doesn't flood the
+    connection.
+*/
+
+export async function adoptShelfOrder(sort) {
+
+    const changes = [];
+
+    getShelves().forEach((shelf) => {
+
+        booksOnShelf(shelf.id, sort).forEach((book, position) => {
+
+            if (book.shelf_position !== position) {
+                changes.push([book.id, position]);
+            }
+
+        });
+
+    });
+
+    for (let start = 0; start < changes.length; start += 8) {
+
+        await Promise.all(
+            changes
+                .slice(start, start + 8)
+                .map(([id, position]) => updateBook(id, { shelf_position: position }, { quiet: true }))
+        );
+
+    }
+
+    announce("library-changed", { reason: "order-adopted" });
+
+}
+
+
 export async function deleteBook(id) {
 
     const book =
