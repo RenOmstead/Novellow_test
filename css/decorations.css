@@ -223,12 +223,12 @@ html.room-compact .journal-zone > .decor-layer {
 }
 
 /* The tabs: one for each part of the room, each with a little
-   painted picture, all in view at once (two rows of four). */
+   painted picture, all in view at once (three rows of three). */
 .arrange-bar__tabs {
     flex: none;
 
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
 
     gap: 6px;
 }
@@ -857,6 +857,11 @@ html.room-compact .journal-zone > .decor-layer {
 
     .arrange-bar__side {
         display: none;
+    }
+
+    /* The tray is the screen's full width: two rows of tabs. */
+    .arrange-bar__tabs {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
     }
 
     .arrange-bar__fold {

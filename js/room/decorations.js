@@ -48,13 +48,23 @@ export const DECOR_GROUPS = [
     { id: "witchy", name: "Witchy" },
     { id: "spooky", name: "Spooky" },
     { id: "haunted", name: "Haunted" },
-    { id: "rugs", name: "Rugs" }
+    { id: "rugs", name: "Rugs" },
+    // The holidays, alphabetical, so none comes first by default.
+    { id: "holiday-christmas", name: "Christmas" },
+    { id: "holiday-hanukkah", name: "Hanukkah" },
+    { id: "holiday-harvest", name: "Harvest" },
+    { id: "holiday-krampus", name: "Krampus" },
+    { id: "holiday-kwanzaa", name: "Kwanzaa" },
+    { id: "holiday-new-year", name: "New Year" },
+    { id: "holiday-winter", name: "Winter" },
+    { id: "holiday-yule", name: "Yule" }
 ];
 
 // The panel's tabs: one for each part of the room. Each opens
 // straight onto everything for that part: the room's own
 // choices (wallpaper, window, curtains…) first, then the pieces
-// that belong there. "icon" is the painted piece on the tab.
+// that belong there. "icon" is the painted piece on the tab
+// (from assets/decor/painted/, or a path under assets/decor/).
 export const DECOR_TABS = [
     { id: "walls", name: "Walls", icon: "ghost_moon_portrait", room: ["wallpaper"], groups: ["pictures", "garlands"], hint: "Wallpaper, pictures and garlands. Each room keeps its own choices." },
     { id: "window", name: "Window", icon: "ivy_arch", room: ["window", "outside"], groups: ["vines", "plants"], hint: "The window, its curtains, the view outside, and ivy and plants." },
@@ -63,7 +73,8 @@ export const DECOR_TABS = [
     { id: "furniture", name: "Furniture", icon: "armchair_plum", room: ["bookcase", "built-in"], groups: ["seating", "tables", "storage"], hint: "The bookcase's wood, then chairs, sofas, tables, cabinets and fireplaces." },
     { id: "tabletop", name: "Tabletop", icon: "pink_teacup", room: [], groups: ["tabletop", "bookish", "treats"], hint: "Cups, teapots, books and treats to set on tables and shelves." },
     { id: "cozy", name: "Cozy", icon: "pumpkin_lantern", room: [], groups: ["cozy", "autumn"], hint: "Cozy touches and autumn things." },
-    { id: "spooky", name: "Spooky", icon: "ghost_candle", room: [], groups: ["witchy", "spooky", "haunted"], hint: "Witchy, spooky and haunted things." }
+    { id: "spooky", name: "Spooky", icon: "ghost_candle", room: [], groups: ["witchy", "spooky", "haunted"], hint: "Witchy, spooky and haunted things." },
+    { id: "holidays", name: "Holidays", icon: "holiday/snowflake", room: [], groups: ["holiday-christmas", "holiday-hanukkah", "holiday-harvest", "holiday-krampus", "holiday-kwanzaa", "holiday-new-year", "holiday-winter", "holiday-yule"], hint: "Pieces for the holidays, from harvest time to the new year. The holiday wallpapers are in Walls." }
 ];
 
 const tabFor = (id) => DECOR_TABS.find((tab) => tab.id === id);
@@ -584,7 +595,73 @@ export const DECOR_ASSETS = [
     // Older pieces, still shown if they were placed before.
     { id: "frame-moth", box: "0 0 80 100", width: 70, name: "Moth frame", group: "retired" },
     { id: "frame-ghost", box: "0 0 70 90", width: 62, name: "Ghost portrait", group: "retired" },
-    { id: "frame-castle", box: "0 0 130 100", width: 100, name: "Castle painting", group: "retired" }
+    { id: "frame-castle", box: "0 0 130 100", width: 100, name: "Castle painting", group: "retired" },
+
+    // Holiday pieces (assets/decor/holiday/), in the Holidays tab.
+    { id: "hol-christmas-tree", src: "assets/decor/holiday/christmas_tree.webp", size: [304, 460], width: 170, name: "Christmas tree", group: "holiday-christmas" },
+    { id: "hol-christmas-wreath", src: "assets/decor/holiday/christmas_wreath.webp", size: [424, 460], width: 120, name: "Christmas wreath", group: "holiday-christmas" },
+    { id: "hol-christmas-stocking", src: "assets/decor/holiday/christmas_stocking.webp", size: [241, 460], width: 70, name: "Christmas stocking", group: "holiday-christmas" },
+    { id: "hol-evergreen-garland", src: "assets/decor/holiday/evergreen_garland.webp", size: [560, 164], width: 260, name: "Evergreen garland", group: "holiday-christmas" },
+    { id: "hol-gingerbread-house", src: "assets/decor/holiday/gingerbread_house.webp", size: [444, 460], width: 100, name: "Gingerbread house", group: "holiday-christmas" },
+    { id: "hol-gift-stack", src: "assets/decor/holiday/gift_stack.webp", size: [286, 460], width: 80, name: "Stack of gifts", group: "holiday-christmas" },
+    { id: "hol-cookies-milk", src: "assets/decor/holiday/cookies_milk.webp", size: [460, 362], width: 100, name: "Cookies and milk", group: "holiday-christmas" },
+    { id: "hol-holiday-table-lamp", src: "assets/decor/holiday/holiday_table_lamp.webp", size: [293, 460], width: 80, name: "Holly table lamp", group: "holiday-christmas" },
+    { id: "hol-hanukkah-hanukkiah", src: "assets/decor/holiday/hanukkah_hanukkiah.webp", size: [454, 460], width: 100, name: "Hanukkiah", group: "holiday-hanukkah" },
+    { id: "hol-wooden-dreidel", src: "assets/decor/holiday/wooden_dreidel.webp", size: [317, 460], width: 45, name: "Wooden dreidel", group: "holiday-hanukkah" },
+    { id: "hol-hanukkah-star-hanging", src: "assets/decor/holiday/hanukkah_star_hanging.webp", size: [236, 460], width: 60, name: "Hanging Star of David", group: "holiday-hanukkah" },
+    { id: "hol-sufganiyot-plate", src: "assets/decor/holiday/sufganiyot_plate.webp", size: [460, 352], width: 95, name: "Plate of sufganiyot", group: "holiday-hanukkah" },
+    { id: "hol-latkes-plate", src: "assets/decor/holiday/latkes_plate.webp", size: [460, 338], width: 95, name: "Plate of latkes", group: "holiday-hanukkah" },
+    { id: "hol-gelt-bowl", src: "assets/decor/holiday/gelt_bowl.webp", size: [460, 411], width: 80, name: "Bowl of gelt", group: "holiday-hanukkah" },
+    { id: "hol-hanukkah-candle-box", src: "assets/decor/holiday/hanukkah_candle_box.webp", size: [376, 460], width: 60, name: "Hanukkah candle box", group: "holiday-hanukkah" },
+    { id: "hol-olive-branch-vase", src: "assets/decor/holiday/olive_branch_vase.webp", size: [299, 460], width: 75, name: "Olive branch vase", group: "holiday-hanukkah" },
+    { id: "hol-turkey", src: "assets/decor/holiday/turkey.webp", size: [455, 460], width: 110, name: "Turkey", group: "holiday-harvest" },
+    { id: "hol-pumpkin", src: "assets/decor/holiday/pumpkin.webp", size: [460, 408], width: 85, name: "Harvest pumpkin", group: "holiday-harvest" },
+    { id: "hol-pumpkin-pie", src: "assets/decor/holiday/pumpkin_pie.webp", size: [460, 359], width: 90, name: "Pumpkin pie", group: "holiday-harvest" },
+    { id: "hol-apple-basket", src: "assets/decor/holiday/apple_basket.webp", size: [404, 460], width: 90, name: "Apple basket", group: "holiday-harvest" },
+    { id: "hol-harvest-wreath", src: "assets/decor/holiday/harvest_wreath.webp", size: [430, 460], width: 120, name: "Harvest wreath", group: "holiday-harvest" },
+    { id: "hol-harvest-pitcher", src: "assets/decor/holiday/harvest_pitcher.webp", size: [363, 460], width: 80, name: "Wheat pitcher", group: "holiday-harvest" },
+    { id: "hol-acorn-dish", src: "assets/decor/holiday/acorn_dish.webp", size: [460, 411], width: 75, name: "Acorn dish", group: "holiday-harvest" },
+    { id: "hol-plaid-throw", src: "assets/decor/holiday/plaid_throw.webp", size: [460, 289], width: 110, name: "Plaid throw", group: "holiday-harvest" },
+    { id: "hol-krampus-figurine", src: "assets/decor/holiday/krampus_figurine.webp", size: [310, 460], width: 75, name: "Krampus figurine", group: "holiday-krampus" },
+    { id: "hol-horned-mask", src: "assets/decor/holiday/horned_mask.webp", size: [367, 460], width: 95, name: "Horned mask", group: "holiday-krampus" },
+    { id: "hol-krampus-bell", src: "assets/decor/holiday/krampus_bell.webp", size: [298, 460], width: 55, name: "Krampus bell", group: "holiday-krampus" },
+    { id: "hol-bell-wreath", src: "assets/decor/holiday/bell_wreath.webp", size: [448, 460], width: 120, name: "Bell wreath", group: "holiday-krampus" },
+    { id: "hol-krampus-boot", src: "assets/decor/holiday/krampus_boot.webp", size: [421, 460], width: 75, name: "Krampus boot", group: "holiday-krampus" },
+    { id: "hol-krampus-lantern", src: "assets/decor/holiday/krampus_lantern.webp", size: [259, 460], width: 60, name: "Krampus lantern", group: "holiday-krampus" },
+    { id: "hol-krampus-snowglobe", src: "assets/decor/holiday/krampus_snowglobe.webp", size: [337, 460], width: 70, name: "Krampus snow globe", group: "holiday-krampus" },
+    { id: "hol-goat-plush", src: "assets/decor/holiday/goat_plush.webp", size: [350, 460], width: 75, name: "Goat plush", group: "holiday-krampus" },
+    { id: "hol-kwanzaa-kinara", src: "assets/decor/holiday/kwanzaa_kinara.webp", size: [460, 325], width: 110, name: "Kinara", group: "holiday-kwanzaa" },
+    { id: "hol-unity-cup", src: "assets/decor/holiday/unity_cup.webp", size: [411, 460], width: 60, name: "Unity cup", group: "holiday-kwanzaa" },
+    { id: "hol-mkeka-mat", src: "assets/decor/holiday/mkeka_mat.webp", size: [460, 319], width: 120, name: "Mkeka mat", group: "holiday-kwanzaa" },
+    { id: "hol-kwanzaa-corn", src: "assets/decor/holiday/kwanzaa_corn.webp", size: [268, 460], width: 55, name: "Ears of corn", group: "holiday-kwanzaa" },
+    { id: "hol-harvest-basket", src: "assets/decor/holiday/harvest_basket.webp", size: [352, 460], width: 85, name: "Harvest basket", group: "holiday-kwanzaa" },
+    { id: "hol-harvest-fruit-bowl", src: "assets/decor/holiday/harvest_fruit_bowl.webp", size: [429, 460], width: 90, name: "Bowl of fruit", group: "holiday-kwanzaa" },
+    { id: "hol-kwanzaa-gift", src: "assets/decor/holiday/kwanzaa_gift.webp", size: [460, 332], width: 75, name: "Kwanzaa gift", group: "holiday-kwanzaa" },
+    { id: "hol-kwanzaa-cushion", src: "assets/decor/holiday/kwanzaa_cushion.webp", size: [460, 448], width: 90, name: "Kwanzaa cushion", group: "holiday-kwanzaa" },
+    { id: "hol-midnight-clock", src: "assets/decor/holiday/midnight_clock.webp", size: [460, 372], width: 110, name: "Midnight clock", group: "holiday-new-year" },
+    { id: "hol-new-year-star-garland", src: "assets/decor/holiday/new_year_star_garland.webp", size: [560, 159], width: 260, name: "Gold star garland", group: "holiday-new-year" },
+    { id: "hol-new-year-wreath", src: "assets/decor/holiday/new_year_wreath.webp", size: [392, 460], width: 120, name: "New Year wreath", group: "holiday-new-year" },
+    { id: "hol-pocket-watch", src: "assets/decor/holiday/pocket_watch.webp", size: [388, 460], width: 60, name: "Pocket watch", group: "holiday-new-year" },
+    { id: "hol-new-year-party-hat", src: "assets/decor/holiday/new_year_party_hat.webp", size: [308, 460], width: 50, name: "Party hat", group: "holiday-new-year" },
+    { id: "hol-new-year-gift", src: "assets/decor/holiday/new_year_gift.webp", size: [415, 460], width: 70, name: "New Year gift", group: "holiday-new-year" },
+    { id: "hol-victorian-candleholder", src: "assets/decor/holiday/victorian_candleholder.webp", size: [355, 460], width: 75, name: "Victorian candleholder", group: "holiday-new-year" },
+    { id: "hol-winter-ghost-portrait", src: "assets/decor/holiday/winter_ghost_portrait.webp", size: [344, 460], width: 110, name: "Winter ghost portrait", group: "holiday-new-year" },
+    { id: "hol-snowman", src: "assets/decor/holiday/snowman.webp", size: [333, 460], width: 120, name: "Snowman", group: "holiday-winter" },
+    { id: "hol-snowy-pine", src: "assets/decor/holiday/snowy_pine.webp", size: [294, 460], width: 120, name: "Snowy pine", group: "holiday-winter" },
+    { id: "hol-winter-sled", src: "assets/decor/holiday/winter_sled.webp", size: [460, 172], width: 150, name: "Wooden sled", group: "holiday-winter" },
+    { id: "hol-winter-armchair", src: "assets/decor/holiday/winter_armchair.webp", size: [460, 456], width: 180, name: "Winter armchair", group: "holiday-winter" },
+    { id: "hol-snowflake", src: "assets/decor/holiday/snowflake.webp", size: [303, 460], width: 80, name: "Snowflake", group: "holiday-winter" },
+    { id: "hol-mittens", src: "assets/decor/holiday/mittens.webp", size: [460, 460], width: 100, name: "Mittens", group: "holiday-winter" },
+    { id: "hol-cocoa-mug", src: "assets/decor/holiday/cocoa_mug.webp", size: [460, 425], width: 60, name: "Mug of cocoa", group: "holiday-winter" },
+    { id: "hol-snowy-cottage", src: "assets/decor/holiday/snowy_cottage.webp", size: [414, 460], width: 95, name: "Snowy cottage", group: "holiday-winter" },
+    { id: "hol-yule-log", src: "assets/decor/holiday/yule_log.webp", size: [460, 315], width: 120, name: "Yule log", group: "holiday-yule" },
+    { id: "hol-yule-wreath", src: "assets/decor/holiday/yule_wreath.webp", size: [460, 444], width: 120, name: "Yule wreath", group: "holiday-yule" },
+    { id: "hol-solstice-sun-plaque", src: "assets/decor/holiday/solstice_sun_plaque.webp", size: [405, 460], width: 110, name: "Solstice sun plaque", group: "holiday-yule" },
+    { id: "hol-solstice-lantern", src: "assets/decor/holiday/solstice_lantern.webp", size: [243, 460], width: 60, name: "Solstice lantern", group: "holiday-yule" },
+    { id: "hol-winter-herb-bundle", src: "assets/decor/holiday/winter_herb_bundle.webp", size: [228, 460], width: 70, name: "Winter herb bundle", group: "holiday-yule" },
+    { id: "hol-orange-cinnamon-bundle", src: "assets/decor/holiday/orange_cinnamon_bundle.webp", size: [460, 335], width: 85, name: "Oranges and cinnamon", group: "holiday-yule" },
+    { id: "hol-pinecone-bowl", src: "assets/decor/holiday/pinecone_bowl.webp", size: [442, 460], width: 85, name: "Bowl of pinecones", group: "holiday-yule" },
+    { id: "hol-evergreen-pitcher", src: "assets/decor/holiday/evergreen_pitcher.webp", size: [311, 460], width: 75, name: "Evergreen pitcher", group: "holiday-yule" }
 ];
 
 /*
@@ -1218,7 +1295,7 @@ function drawBarNow() {
         <div class="arrange-bar__tabs" role="tablist" aria-label="Parts of the room">
             ${DECOR_TABS.map((tab) => html`
                 <button class="arrange-bar__tab ${tab.id === paletteGroup ? "is-current" : ""}" type="button" role="tab" aria-selected="${String(tab.id === paletteGroup)}" data-decor-group="${tab.id}">
-                    <img src="assets/decor/painted/${tab.icon}.webp?v=__VERSION__" alt="" draggable="false">
+                    <img src="assets/decor/${tab.icon.includes("/") ? tab.icon : `painted/${tab.icon}`}.webp?v=__VERSION__" alt="" draggable="false">
                     <span>${tab.name}</span>
                 </button>
             `)}

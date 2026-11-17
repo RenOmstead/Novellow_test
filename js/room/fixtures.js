@@ -116,7 +116,26 @@ export const WALLPAPERS = [
     { id: "wine-damask", name: "Worn wine damask", wall: ["#5b3132", "#6a3a3b", "#703d3e"], src: "assets/wallpapers/wine_damask.webp", pattern: `url("../assets/wallpapers/wine_damask.webp?v=__VERSION__")`, size: "581px 595px" },
     { id: "cobweb-grey", name: "Cobwebs", wall: ["#746461", "#887571", "#907c77"], src: "assets/wallpapers/cobweb_grey.webp", pattern: `url("../assets/wallpapers/cobweb_grey.webp?v=__VERSION__")`, size: "292px 298px" },
     { id: "bat-stripe", name: "Bat stripes", wall: ["#302b27", "#38322e", "#3b3530"], src: "assets/wallpapers/bat_stripe.webp", pattern: `url("../assets/wallpapers/bat_stripe.webp?v=__VERSION__")`, size: "178px 240px" },
-    { id: "climbing-roses", name: "Climbing roses", wall: ["#bca78d", "#dbc3a5", "#e8ceae"], src: "assets/wallpapers/climbing_roses.webp", pattern: `url("../assets/wallpapers/climbing_roses.webp?v=__VERSION__")`, size: "581px 595px", light: true }
+    { id: "climbing-roses", name: "Climbing roses", wall: ["#bca78d", "#dbc3a5", "#e8ceae"], src: "assets/wallpapers/climbing_roses.webp", pattern: `url("../assets/wallpapers/climbing_roses.webp?v=__VERSION__")`, size: "581px 595px", light: true },
+
+    // Holiday wallpapers, in a row of their own in the panel
+    // (alphabetical, so no holiday comes first by default).
+    { id: "holiday-christmas-1", name: "Christmas holly and bows", wall: ["#d8cdbb", "#fdf0db", "#fffee7"], src: "assets/wallpapers/holiday_christmas_1.webp", pattern: `url("../assets/wallpapers/holiday_christmas_1.webp?v=__VERSION__")`, size: "150px 150px", holiday: true, light: true },
+    { id: "holiday-christmas-2", name: "Christmas stars and baubles", wall: ["#414a29", "#4c5630", "#505b33"], src: "assets/wallpapers/holiday_christmas_2.webp", pattern: `url("../assets/wallpapers/holiday_christmas_2.webp?v=__VERSION__")`, size: "150px 118px", holiday: true },
+    { id: "holiday-hanukkah-1", name: "Hanukkah dreidels and olives", wall: ["#617d8f", "#7192a7", "#779ab1"], src: "assets/wallpapers/holiday_hanukkah_1.webp", pattern: `url("../assets/wallpapers/holiday_hanukkah_1.webp?v=__VERSION__")`, size: "147px 140px", holiday: true },
+    { id: "holiday-hanukkah-2", name: "Hanukkah stars and olive sprigs", wall: ["#d7cbb5", "#fbeed4", "#fffce0"], src: "assets/wallpapers/holiday_hanukkah_2.webp", pattern: `url("../assets/wallpapers/holiday_hanukkah_2.webp?v=__VERSION__")`, size: "113px 113px", holiday: true, light: true },
+    { id: "holiday-harvest-1", name: "Harvest acorns and oak leaves", wall: ["#d8cfbb", "#fdf2db", "#ffffe7"], src: "assets/wallpapers/holiday_harvest_1.webp", pattern: `url("../assets/wallpapers/holiday_harvest_1.webp?v=__VERSION__")`, size: "145px 143px", holiday: true, light: true },
+    { id: "holiday-harvest-2", name: "Harvest pumpkins and wheat", wall: ["#66303d", "#773847", "#7e3b4b"], src: "assets/wallpapers/holiday_harvest_2.webp", pattern: `url("../assets/wallpapers/holiday_harvest_2.webp?v=__VERSION__")`, size: "195px 147px", holiday: true },
+    { id: "holiday-krampus-1", name: "Krampus bells and bows", wall: ["#5b3940", "#6b434b", "#71474f"], src: "assets/wallpapers/holiday_krampus_1.webp", pattern: `url("../assets/wallpapers/holiday_krampus_1.webp?v=__VERSION__")`, size: "150px 149px", holiday: true },
+    { id: "holiday-krampus-2", name: "Krampus horns and pine", wall: ["#d6cab6", "#faecd5", "#fff9e1"], src: "assets/wallpapers/holiday_krampus_2.webp", pattern: `url("../assets/wallpapers/holiday_krampus_2.webp?v=__VERSION__")`, size: "141px 141px", holiday: true, light: true },
+    { id: "holiday-kwanzaa-1", name: "Kwanzaa diamonds", wall: ["#d7ccb5", "#fcefd4", "#fffde0"], src: "assets/wallpapers/holiday_kwanzaa_1.webp", pattern: `url("../assets/wallpapers/holiday_kwanzaa_1.webp?v=__VERSION__")`, size: "113px 150px", holiday: true, light: true },
+    { id: "holiday-kwanzaa-2", name: "Kwanzaa corn and leaves", wall: ["#d0bca2", "#f3dcbd", "#ffe9c8"], src: "assets/wallpapers/holiday_kwanzaa_2.webp", pattern: `url("../assets/wallpapers/holiday_kwanzaa_2.webp?v=__VERSION__")`, size: "113px 150px", holiday: true, light: true },
+    { id: "holiday-new-year-1", name: "New Year bows and stars", wall: ["#263118", "#2c391c", "#2f3c1e"], src: "assets/wallpapers/holiday_new_year_1.webp", pattern: `url("../assets/wallpapers/holiday_new_year_1.webp?v=__VERSION__")`, size: "149px 140px", holiday: true },
+    { id: "holiday-new-year-2", name: "New Year pocket watches", wall: ["#d8ceba", "#fdf1da", "#ffffe6"], src: "assets/wallpapers/holiday_new_year_2.webp", pattern: `url("../assets/wallpapers/holiday_new_year_2.webp?v=__VERSION__")`, size: "169px 141px", holiday: true, light: true },
+    { id: "holiday-winter-1", name: "Winter snowflakes", wall: ["#865861", "#9d6771", "#a66d77"], src: "assets/wallpapers/holiday_winter_1.webp", pattern: `url("../assets/wallpapers/holiday_winter_1.webp?v=__VERSION__")`, size: "150px 139px", holiday: true },
+    { id: "holiday-winter-2", name: "Winter snowy pines", wall: ["#d8ccb6", "#fdefd5", "#fffde1"], src: "assets/wallpapers/holiday_winter_2.webp", pattern: `url("../assets/wallpapers/holiday_winter_2.webp?v=__VERSION__")`, size: "150px 150px", holiday: true, light: true },
+    { id: "holiday-yule-1", name: "Yule oranges and evergreen", wall: ["#d7cbb7", "#fceed6", "#fffce2"], src: "assets/wallpapers/holiday_yule_1.webp", pattern: `url("../assets/wallpapers/holiday_yule_1.webp?v=__VERSION__")`, size: "113px 150px", holiday: true, light: true },
+    { id: "holiday-yule-2", name: "Yule suns and pinecones", wall: ["#5c323d", "#6c3a47", "#723d4b"], src: "assets/wallpapers/holiday_yule_2.webp", pattern: `url("../assets/wallpapers/holiday_yule_2.webp?v=__VERSION__")`, size: "150px 150px", holiday: true }
 ];
 
 
@@ -1018,7 +1037,7 @@ function swatchStyle(kind, choice) {
     if (kind === "wallpaper") {
         // A painted wallpaper: its own picture, a little smaller.
         if (choice.src) {
-            return `background: url("${choice.src}?v=__VERSION__") center / 90px auto`;
+            return `background: url("${choice.src}?v=__VERSION__") center / ${choice.holiday ? Math.round(parseFloat(choice.size) * 0.5) : 90}px auto`;
         }
 
         return choice.wall
@@ -1059,13 +1078,13 @@ function swatchStyle(kind, choice) {
 }
 
 
-function swatches(kind, label, current) {
+function swatches(kind, label, current, only = () => true) {
 
     return html`
         <fieldset class="room-choices">
             <legend class="room-choices__label">${label}</legend>
             <div class="room-choices__swatches">
-                ${CHOICES[kind].map((choice) => html`
+                ${CHOICES[kind].filter(only).map((choice) => html`
                     <button
                         class="room-swatch ${choice.id === "room" ? "room-swatch--own" : ""} ${choice.id === current ? "is-current" : ""}"
                         type="button"
@@ -1158,7 +1177,10 @@ export function roomSectionMarkup(section) {
     switch (section) {
 
         case "wallpaper":
-            return swatches("wallpaper", "Wallpaper", fixtures.wallpaper);
+            return html`
+                ${swatches("wallpaper", "Wallpaper", fixtures.wallpaper, (choice) => !choice.holiday)}
+                ${swatches("wallpaper", "Holiday wallpaper", fixtures.wallpaper, (choice) => choice.holiday)}
+            `;
 
         case "floor":
             return swatches("floor", "Floor", fixtures.floor);
