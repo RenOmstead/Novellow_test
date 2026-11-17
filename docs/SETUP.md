@@ -51,6 +51,9 @@ whole file into the editor and select **Run**:
     can't be used in book club posts, club names, display names,
     usernames or bios. Add words in **Table Editor** →
     `moderation_words`. It's safe to run again.
+11. `sql/shelf-pieces.sql`: decorations on the shelves remember which
+    shelf and row they sit on, so they stay there when books are added
+    or moved, and on every screen. It's safe to run again.
 
 Each should finish with "Success. No rows returned". If one shows an
 error, stop there and send me the message.

@@ -679,6 +679,37 @@ function heightRange(area) {
 
 }
 
+// The database doesn't have shelf_id and shelf_row yet
+// (sql/shelf-pieces.sql).
+function isAnchorRefused(error) {
+    return /shelf_(id|row)/.test(`${error?.message || ""} ${error?.details || ""}`);
+}
+
+// Measured from the top of the bookcase again, the old way.
+function unanchor(piece) {
+
+    if (anchoredOnShelf(piece)) {
+        piece.position_y = Number(((shelfTop(piece) / SHELF_SPAN) * 100).toFixed(2));
+    }
+
+    delete piece.shelf_id;
+    delete piece.shelf_row;
+
+}
+
+// What a piece remembers about its shelf, for saving.
+function anchorValues(piece) {
+
+    if (!shelfAnchors) {
+        return {};
+    }
+
+    return anchoredOnShelf(piece)
+        ? { shelf_id: piece.shelf_id || null, shelf_row: piece.shelf_row }
+        : { shelf_id: null, shelf_row: null };
+
+}
+
 // The database hasn't taken the new heights yet (sql/wall.sql).
 function isHeightRefused(error) {
     return error?.code === "23514" && /position_y/.test(error.message || "");
@@ -691,7 +722,7 @@ function topFor(piece) {
     }
 
     if (piece.room_area === "shelf") {
-        return `${(piece.position_y * SHELF_SPAN) / 100}px`;
+        return `${shelfTop(piece)}px`;
     }
 
     // Out on a deep floor: past 100 is a share of the floor's
@@ -836,6 +867,148 @@ function crownHeight() {
     return room?.querySelector(".bookcase-body")?.offsetTop || 0;
 }
 
+
+/*
+    A piece on the shelves remembers which shelf it's on and
+    which of that shelf's rows (shelf_id, shelf_row), and its
+    height (position_y) is measured from the top of that row.
+    Books come and go, and a narrower bookcase wraps them into
+    more rows, so shelves move up and down; the piece moves with
+    its shelf instead of staying at a fixed distance from the
+    top of the bookcase. A piece saved before this (shelf_row
+    empty) is still measured from the top of the bookcase, until
+    it's moved.
+
+    Until the database has these columns (sql/shelf-pieces.sql),
+    pieces are saved the old way.
+*/
+let shelfAnchors = true;
+
+// A piece's height on its row: a little above the row's top (a
+// tall piece leaning up) to well below it.
+const ROW_RANGE = [-40, 100];
+
+const anchoredOnShelf = (piece) =>
+    piece.room_area === "shelf" && piece.shelf_row !== null && piece.shelf_row !== undefined;
+
+// The row of books level with a point on the screen.
+function shelfRowAt(y) {
+
+    const rows =
+        [...(room?.querySelectorAll(".bookcase-body .shelf-unit[data-shelf-id] > .shelf-row") || [])]
+            .map((row) => ({ row, box: row.getBoundingClientRect() }));
+
+    if (!rows.length) {
+        return null;
+    }
+
+    const found =
+        rows.find(({ box }) => y >= box.top && y < box.bottom)
+        || rows.reduce((best, item) => (Math.abs((item.box.top + item.box.bottom) / 2 - y) < Math.abs((best.box.top + best.box.bottom) / 2 - y) ? item : best));
+
+    const unit =
+        found.row.closest(".shelf-unit");
+
+    return {
+        shelfId: unit.dataset.shelfId,
+        row: [...unit.querySelectorAll(":scope > .shelf-row")].indexOf(found.row),
+        top: found.box.top
+    };
+
+}
+
+// Where a shelf's row starts, in the shelf layer's pixels (from
+// the top of the bookcase, before the shelves slide). A shelf
+// that's gone puts its pieces on the first shelf; a row that's
+// gone (a wider bookcase needs fewer) puts them on its last row.
+function rowTop(shelfId, rowIndex) {
+
+    const body =
+        room?.querySelector(".bookcase-body");
+
+    const units =
+        [...(body?.querySelectorAll(".shelf-unit[data-shelf-id]") || [])];
+
+    if (!units.length) {
+        return null;
+    }
+
+    const unit =
+        units.find((item) => item.dataset.shelfId === shelfId) || units[0];
+
+    const rows =
+        unit.querySelectorAll(":scope > .shelf-row");
+
+    const row =
+        rows[Math.min(Math.max(0, Number(rowIndex) || 0), rows.length - 1)];
+
+    return body.offsetTop + unit.offsetTop + (row ? row.offsetTop : 0);
+
+}
+
+// A piece's height in the shelf layer, in pixels.
+function shelfTop(piece) {
+
+    const base =
+        anchoredOnShelf(piece) ? rowTop(piece.shelf_id, piece.shelf_row) : 0;
+
+    return (base ?? 0) + (piece.position_y * SHELF_SPAN) / 100;
+
+}
+
+// The shelves were drawn again (books added or moved, or the
+// bookcase changed width): put their pieces back on their rows.
+function followRows() {
+
+    if (!room) {
+        return;
+    }
+
+    const crown =
+        crownHeight();
+
+    const misplaced =
+        pieces.some((piece) => {
+
+            if (!anchoredOnShelf(piece)) {
+                return false;
+            }
+
+            const element =
+                room.querySelector(`[data-decor-id="${piece.id}"]`);
+
+            const onCrown =
+                Boolean(element?.closest(".decor-layer[data-area=crown]"));
+
+            return !element || onCrown !== (shelfTop(piece) < crown);
+
+        });
+
+    // A piece that has to change layer: draw them all again.
+    if (misplaced) {
+        draw();
+        return;
+    }
+
+    pieces.forEach((piece) => {
+
+        if (anchoredOnShelf(piece)) {
+
+            const element =
+                room.querySelector(`[data-decor-id="${piece.id}"]`);
+
+            if (element) {
+                element.style.top = topFor(piece);
+            }
+
+        }
+
+    });
+
+    followShelves();
+
+}
+
 // The pieces up on the crown, which stay put while the shelves
 // slide (measured from the top of the bookcase, like the rest).
 function crownLayer() {
@@ -951,7 +1124,7 @@ function draw() {
                 crownHeight();
 
             const onCrown =
-                list.filter((piece) => (piece.position_y * SHELF_SPAN) / 100 < crown);
+                list.filter((piece) => shelfTop(piece) < crown);
 
             const still =
                 crownLayer();
@@ -1215,7 +1388,8 @@ async function duplicate(piece) {
                 position_y: piece.position_y,
                 scale: piece.scale,
                 rotation: piece.rotation,
-                z_index: Math.min(50, piece.z_index + 1)
+                z_index: Math.min(50, piece.z_index + 1),
+                ...anchorValues(piece)
             });
 
         const copy = {
@@ -1424,7 +1598,8 @@ function saveSoon(piece) {
                 position_y: latest.position_y,
                 scale: latest.scale,
                 rotation: latest.rotation,
-                z_index: latest.z_index
+                z_index: latest.z_index,
+                ...anchorValues(latest)
             });
 
             try {
@@ -1434,6 +1609,17 @@ function saveSoon(piece) {
             }
 
             catch (error) {
+
+                if (isAnchorRefused(error)) {
+
+                    // Measured the old way for now (sql/shelf-pieces.sql).
+                    shelfAnchors = false;
+                    pieces.forEach(unanchor);
+                    adjust(latest, {});
+
+                    return;
+
+                }
 
                 if (!isHeightRefused(error)) {
                     toastError(error, "That decoration didn't save. Please try again.");
@@ -1628,6 +1814,9 @@ function positionIn(area, pointX, pointY) {
     let box =
         layerFor(area).getBoundingClientRect();
 
+    let onCrown =
+        false;
+
     // Over the crown, a piece stays with the crown however far the
     // shelves have slid, so it's measured from the bookcase's top.
     if (area === "shelf") {
@@ -1637,6 +1826,7 @@ function positionIn(area, pointX, pointY) {
 
         if (still && y - still.top < crownHeight() * caseZoom()) {
             box = still;
+            onCrown = true;
         }
 
     }
@@ -1663,9 +1853,28 @@ function positionIn(area, pointX, pointY) {
         };
     }
 
+    // On the shelves (below the crown): which shelf and row, and
+    // how far down that row.
+    if (area === "shelf" && !onCrown && shelfAnchors) {
+
+        const anchor =
+            shelfRowAt(y);
+
+        if (anchor) {
+            return {
+                position_x: Number(clamp(((x - box.left) / box.width) * 100, 0, 100).toFixed(2)),
+                position_y: Number(clamp(((y - anchor.top) / height) * 100, ...ROW_RANGE).toFixed(2)),
+                shelf_id: anchor.shelfId,
+                shelf_row: anchor.row
+            };
+        }
+
+    }
+
     return {
         position_x: Number(clamp(((x - box.left) / box.width) * 100, 0, 100).toFixed(2)),
-        position_y: Number(clamp(((y - box.top) / height) * 100, ...heightRange(area)).toFixed(2))
+        position_y: Number(clamp(((y - box.top) / height) * 100, ...heightRange(area)).toFixed(2)),
+        ...(area === "shelf" && shelfAnchors ? { shelf_id: null, shelf_row: null } : {})
     };
 
 }
@@ -1703,6 +1912,11 @@ async function addPiece(assetId, spot = spotInView()) {
 
         const saved =
             await createRow("decorations", row()).catch((error) => {
+                if (isAnchorRefused(error)) {
+                    // Measured the old way for now (sql/shelf-pieces.sql).
+                    shelfAnchors = false;
+                    return createRow("decorations", row());
+                }
                 if (!isHeightRefused(error)) throw error;
                 // As high as the database allows for now (sql/wall.sql).
                 wholeWall = false;
@@ -1750,7 +1964,7 @@ async function addPiece(assetId, spot = spotInView()) {
    row, so later steps follow it by its new id.
 ========================================================= */
 
-const KEPT = ["room_area", "position_x", "position_y", "scale", "rotation", "z_index", "decoration_type"];
+const KEPT = ["room_area", "position_x", "position_y", "scale", "rotation", "z_index", "decoration_type", "shelf_id", "shelf_row"];
 
 const history = { done: [], undone: [] };
 
@@ -1847,7 +2061,8 @@ async function putBack(row) {
         position_y: row.position_y,
         scale: row.scale,
         rotation: row.rotation,
-        z_index: row.z_index
+        z_index: row.z_index,
+        ...anchorValues(row)
     };
 
     const saved =
@@ -2006,7 +2221,7 @@ function adjust(piece, change) {
     piece.rotation = Number(clamp(piece.rotation, -180, 180).toFixed(1));
     piece.z_index = clamp(Math.round(piece.z_index), 0, 50);
     piece.position_x = Number(clamp(piece.position_x, 0, 100).toFixed(2));
-    piece.position_y = Number(clamp(piece.position_y, ...heightRange(piece.room_area)).toFixed(2));
+    piece.position_y = Number(clamp(piece.position_y, ...(anchoredOnShelf(piece) ? ROW_RANGE : heightRange(piece.room_area))).toFixed(2));
 
     const element =
         room.querySelector(`[data-decor-id="${piece.id}"]`);
@@ -3072,6 +3287,22 @@ export async function startDecorations(container, themeId) {
 
     room.querySelector(".bookcase-body")?.addEventListener("scroll", follow, { passive: true });
     window.addEventListener("resize", follow);
+
+    // When the shelves are drawn again, their pieces go back on
+    // their rows.
+    const body =
+        room.querySelector(".bookcase-body");
+
+    if (body && "MutationObserver" in window) {
+
+        let reflowing = 0;
+
+        new MutationObserver(() => {
+            cancelAnimationFrame(reflowing);
+            reflowing = requestAnimationFrame(followRows);
+        }).observe(body, { childList: true });
+
+    }
 
     document.addEventListener("novellow:appearance", (event) => {
 
