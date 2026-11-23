@@ -32,7 +32,7 @@ import { SHELF_SORTS } from "../config.js?v=__VERSION__";
 import { exportLibrary, checkImport, importLibrary } from "../data/transfer.js?v=__VERSION__";
 import { exportPersonalData, deleteAccount } from "../data/account.js?v=__VERSION__";
 import { mountMixer } from "../sound/mixer.js?v=__VERSION__";
-import { CATS, GHOST_CHOICES, MUGS, CHINA_COLOURS, TEASETS, getPreferences, setPreference } from "../shell/preferences.js?v=__VERSION__";
+import { CATS, DOGS, DOG_COLOURS, GHOST_CHOICES, MUGS, CHINA_COLOURS, TEASETS, getPreferences, setPreference } from "../shell/preferences.js?v=__VERSION__";
 import { fontPickerMarkup } from "../books/font-picker.js?v=__VERSION__";
 
 
@@ -276,6 +276,26 @@ function renderPage() {
                                 `)}
                             </select>
                         </label>
+
+                        <label class="field">
+                            <span class="field__label">The library dog</span>
+                            <select class="field__input" data-pref="dog">
+                                ${DOGS.map((dog) => html`
+                                    <option value="${dog.id}" ${dog.id === prefs.dog ? html`selected` : ""}>${dog.name}</option>
+                                `)}
+                            </select>
+                        </label>
+
+                        <label class="field">
+                            <span class="field__label">The dog's colouring</span>
+                            <select class="field__input" data-pref="dogColour">
+                                ${DOG_COLOURS.map((colour) => html`
+                                    <option value="${colour.id}" ${colour.id === prefs.dogColour ? html`selected` : ""}>${colour.name}</option>
+                                `)}
+                            </select>
+                        </label>
+
+                        <p class="muted">The dog sleeps wherever you put it: add the <strong>Sleeping dog</strong> from Cozy while decorating.</p>
 
                         <p class="muted">The wallpaper, floor, window, curtains and rug are chosen for each room while decorating: tap the <strong>paintbrush</strong> at the top of your home page.</p>
 

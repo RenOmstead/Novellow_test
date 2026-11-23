@@ -3,8 +3,8 @@
    ROOM PREFERENCES
 
    Small, per-device choices about the room that don't need
-   to follow the reader between devices: which cat lives in
-   the library, where ghosts float, the curtains, the rug, the
+   to follow the reader between devices: which cat and which
+   dog live in the library, where ghosts float, the curtains, the rug, the
    mug or tea set on the table, and which paper notes (if any)
    are pinned to the wall, and the font the reader's own
    writing is shown in. Kept in localStorage (sound has its
@@ -24,6 +24,32 @@ export const CATS = [
     { id: "fluffy", name: "Fluffy grey and white" },
     { id: "white", name: "White cat" },
     { id: "tuxedo", name: "Tuxedo" }
+];
+
+// The library dog (the "Sleeping dog" piece): its breed, and
+// its colouring ("natural" keeps the breed's own).
+export const DOGS = [
+    { id: "labrador", name: "Labrador" },
+    { id: "golden", name: "Golden retriever" },
+    { id: "corgi", name: "Corgi" },
+    { id: "dachshund", name: "Dachshund" },
+    { id: "pug", name: "Pug" },
+    { id: "beagle", name: "Beagle" },
+    { id: "frenchie", name: "French bulldog" },
+    { id: "poodle", name: "Poodle" },
+    { id: "husky", name: "Husky" }
+];
+
+export const DOG_COLOURS = [
+    { id: "natural", name: "The breed's own colouring" },
+    { id: "black", name: "Black" },
+    { id: "chocolate", name: "Chocolate" },
+    { id: "golden", name: "Golden" },
+    { id: "fawn", name: "Fawn" },
+    { id: "red", name: "Red" },
+    { id: "cream", name: "Cream" },
+    { id: "white", name: "White" },
+    { id: "grey", name: "Grey" }
 ];
 
 export const GHOST_CHOICES = [
@@ -145,6 +171,8 @@ export const TEASETS = [
 
 const DEFAULTS = {
     cat: "black",
+    dog: "labrador",
+    dogColour: "natural",
     ghosts: "haunted",
     curtains: "drapes",
     rug: "oval",
@@ -197,13 +225,15 @@ export function setPreference(key, value) {
 
 export function applyPreferences() {
 
-    const { cat, mug, china, teaset } =
+    const { cat, dog, dogColour, mug, china, teaset } =
         getPreferences();
 
     const root =
         document.documentElement;
 
     root.dataset.cat = CATS.some((item) => item.id === cat) ? cat : "black";
+    root.dataset.dog = DOGS.some((item) => item.id === dog) ? dog : "labrador";
+    root.dataset.dogColour = DOG_COLOURS.some((item) => item.id === dogColour) ? dogColour : "natural";
 
     // The window, its wood, the curtains and the rug are the
     // room's own now (js/room/fixtures.js); the choices kept

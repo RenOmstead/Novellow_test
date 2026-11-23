@@ -479,6 +479,7 @@ export const DECOR_ASSETS = [
     { id: "decor-candelabra", box: "0 0 220 220", width: 110, name: "Candelabra", group: "cozy" },
     { id: "decor-lantern", box: "0 0 100 186", width: 48, name: "Lantern", group: "cozy" },
     { id: "scene-cat", box: "0 0 220 160", width: 96, name: "Sleeping cat", group: "cozy" },
+    { id: "scene-dog", box: "0 0 220 160", width: 104, name: "Sleeping dog", group: "cozy" },
     { id: "decor-cat-sitting", box: "0 0 80 104", width: 60, name: "Cat", group: "cozy" },
     { id: "decor-belljar", box: "0 0 100 150", width: 50, name: "Bell jar", group: "cozy" },
     { id: "decor-umbrella-stand", box: "0 0 160 210", width: 80, name: "Umbrella stand", group: "cozy" },

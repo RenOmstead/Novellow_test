@@ -551,6 +551,45 @@
 
 
 /* =========================================================
+   THE LIBRARY DOG
+   One drawing per breed (scene-dog, in sprite-core.svg), shown
+   by <html data-dog="…"> and coloured by these tokens; a chosen
+   colouring (<html data-dog-colour="…">) replaces the breed's
+   own. White markings, the pug's mask and the beagle's saddle
+   stay as they are. Chosen in Settings.
+========================================================= */
+
+:root:not([data-dog]) { --dog-labrador: inline; }
+[data-dog="labrador"] { --dog-labrador: inline; --dog-fur: #d9b26a; --dog-line: #5a3e22; --dog-shine: #f2d49a; --dog-ear: #c49a52; }
+[data-dog="golden"] { --dog-golden: inline; --dog-fur: #d89a4a; --dog-line: #6a3e1a; --dog-shine: #f0c27e; --dog-ear: #c4843a; }
+[data-dog="corgi"] { --dog-corgi: inline; --dog-fur: #d0803c; --dog-line: #6a3416; --dog-shine: #f2b072; --dog-ear: #b86a2c; }
+[data-dog="dachshund"] { --dog-dachshund: inline; --dog-fur: #a8562a; --dog-line: #4e2410; --dog-shine: #d48a58; --dog-ear: #8e4420; }
+[data-dog="pug"] { --dog-pug: inline; --dog-fur: #d9bf92; --dog-line: #6a5236; --dog-shine: #f1dcb8; --dog-ear: #c4a678; }
+[data-dog="beagle"] { --dog-beagle: inline; --dog-fur: #c98a4a; --dog-line: #5a3416; --dog-shine: #e8b47c; --dog-ear: #9a5a28; }
+[data-dog="frenchie"] { --dog-frenchie: inline; --dog-fur: #e3cfae; --dog-line: #6a5638; --dog-shine: #f6e8d0; --dog-ear: #d2bc98; }
+[data-dog="poodle"] { --dog-poodle: inline; --dog-fur: #e2b088; --dog-line: #6a4628; --dog-shine: #f6d4b0; --dog-ear: #cf9a72; }
+[data-dog="husky"] { --dog-husky: inline; --dog-fur: #8e939c; --dog-line: #3a3e46; --dog-shine: #c2c8d2; --dog-ear: #767b84; }
+[data-dog]:not([data-dog="labrador"]) { --dog-labrador: none; }
+[data-dog]:not([data-dog="golden"]) { --dog-golden: none; }
+[data-dog]:not([data-dog="corgi"]) { --dog-corgi: none; }
+[data-dog]:not([data-dog="dachshund"]) { --dog-dachshund: none; }
+[data-dog]:not([data-dog="pug"]) { --dog-pug: none; }
+[data-dog]:not([data-dog="beagle"]) { --dog-beagle: none; }
+[data-dog]:not([data-dog="frenchie"]) { --dog-frenchie: none; }
+[data-dog]:not([data-dog="poodle"]) { --dog-poodle: none; }
+[data-dog]:not([data-dog="husky"]) { --dog-husky: none; }
+
+[data-dog][data-dog-colour="black"] { --dog-fur: #2b2427; --dog-line: #0e0b0c; --dog-shine: #5a4c54; --dog-ear: #1e191b; }
+[data-dog][data-dog-colour="chocolate"] { --dog-fur: #5e3a26; --dog-line: #2a170c; --dog-shine: #8a5c40; --dog-ear: #4a2c1c; }
+[data-dog][data-dog-colour="golden"] { --dog-fur: #d6a252; --dog-line: #6a4218; --dog-shine: #f1c88a; --dog-ear: #bf8a3e; }
+[data-dog][data-dog-colour="fawn"] { --dog-fur: #d9bf92; --dog-line: #6a5236; --dog-shine: #f1dcb8; --dog-ear: #c4a678; }
+[data-dog][data-dog-colour="red"] { --dog-fur: #b8602c; --dog-line: #4e220c; --dog-shine: #e09060; --dog-ear: #9a4c20; }
+[data-dog][data-dog-colour="cream"] { --dog-fur: #efe2c8; --dog-line: #7a6a50; --dog-shine: #fff8ea; --dog-ear: #ddcca8; }
+[data-dog][data-dog-colour="white"] { --dog-fur: #f6f3ee; --dog-line: #8a8078; --dog-shine: #ffffff; --dog-ear: #e6e0d8; }
+[data-dog][data-dog-colour="grey"] { --dog-fur: #8e939c; --dog-line: #3a3e46; --dog-shine: #c2c8d2; --dog-ear: #767b84; }
+
+
+/* =========================================================
    THE CHINA: the mug on the side table and the café's tea
    set (Settings; <html data-china="…" data-teaset="…">).
 ========================================================= */
