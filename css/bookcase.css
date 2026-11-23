@@ -630,6 +630,144 @@ html.room-compact .bookcase-zone > .bookcase {
 
 
 /* =========================================================
+   PAINTED BOOKCASES
+   Arrange → Furniture → the bookcase's finish. Each painting is
+   cut into its crown, side posts, back panel, shelf board and
+   base (assets/bookcases/<name>/), so the bookcase still grows
+   with however many shelves the reader has. The plaque keeps
+   the library's name. Painted and floating shelves stay as
+   their reader chose them.
+========================================================= */
+
+[data-case-art="walnut-evergreen"] {
+    --art-plaque-y: 72%;
+    --art-crown: url("../assets/bookcases/walnut-evergreen/crown.webp?v=__VERSION__");
+    --art-post-left: url("../assets/bookcases/walnut-evergreen/post-left.webp?v=__VERSION__");
+    --art-post-right: url("../assets/bookcases/walnut-evergreen/post-right.webp?v=__VERSION__");
+    --art-back: url("../assets/bookcases/walnut-evergreen/back.webp?v=__VERSION__");
+    --art-rail: url("../assets/bookcases/walnut-evergreen/rail.webp?v=__VERSION__");
+    --art-base: url("../assets/bookcases/walnut-evergreen/base.webp?v=__VERSION__");
+    --art-overhang: 2.54%;
+    --art-crown-ratio: 1078 / 201;
+    --art-base-ratio: 1078 / 136;
+    --art-crown-top: 77.5%;
+}
+
+[data-case-art="plum-star"] {
+    --art-plaque-y: 83%;
+    --art-crown: url("../assets/bookcases/plum-star/crown.webp?v=__VERSION__");
+    --art-post-left: url("../assets/bookcases/plum-star/post-left.webp?v=__VERSION__");
+    --art-post-right: url("../assets/bookcases/plum-star/post-right.webp?v=__VERSION__");
+    --art-back: url("../assets/bookcases/plum-star/back.webp?v=__VERSION__");
+    --art-rail: url("../assets/bookcases/plum-star/rail.webp?v=__VERSION__");
+    --art-base: url("../assets/bookcases/plum-star/base.webp?v=__VERSION__");
+    --art-overhang: 3.66%;
+    --art-crown-ratio: 1028 / 160;
+    --art-base-ratio: 1028 / 145;
+    --art-crown-top: 53%;
+}
+
+[data-case-art="frosted-cream"] {
+    --art-plaque-y: 83%;
+    --art-crown: url("../assets/bookcases/frosted-cream/crown.webp?v=__VERSION__");
+    --art-post-left: url("../assets/bookcases/frosted-cream/post-left.webp?v=__VERSION__");
+    --art-post-right: url("../assets/bookcases/frosted-cream/post-right.webp?v=__VERSION__");
+    --art-back: url("../assets/bookcases/frosted-cream/back.webp?v=__VERSION__");
+    --art-rail: url("../assets/bookcases/frosted-cream/rail.webp?v=__VERSION__");
+    --art-base: url("../assets/bookcases/frosted-cream/base.webp?v=__VERSION__");
+    --art-overhang: 4.83%;
+    --art-crown-ratio: 910 / 192;
+    --art-base-ratio: 910 / 142;
+    --art-crown-top: 56%;
+}
+
+[data-case-art="solstice-green"] {
+    --art-plaque-y: 85%;
+    --art-crown: url("../assets/bookcases/solstice-green/crown.webp?v=__VERSION__");
+    --art-post-left: url("../assets/bookcases/solstice-green/post-left.webp?v=__VERSION__");
+    --art-post-right: url("../assets/bookcases/solstice-green/post-right.webp?v=__VERSION__");
+    --art-back: url("../assets/bookcases/solstice-green/back.webp?v=__VERSION__");
+    --art-rail: url("../assets/bookcases/solstice-green/rail.webp?v=__VERSION__");
+    --art-base: url("../assets/bookcases/solstice-green/base.webp?v=__VERSION__");
+    --art-overhang: 2.55%;
+    --art-crown-ratio: 1031 / 179;
+    --art-base-ratio: 1031 / 147;
+    --art-crown-top: 55%;
+}
+
+[data-case-art] .bookcase-top {
+    margin: 0 calc(var(--art-overhang) * -1);
+
+    aspect-ratio: var(--art-crown-ratio);
+
+    background: var(--art-crown) center / 100% 100% no-repeat;
+}
+
+/* Only the plaque is left of the carved crown, centred on the
+   painted frieze (--art-plaque-y; the plaque's middle is 101 of
+   the drawing's 140 down). */
+[data-case-art] .bookcase-crown {
+    position: absolute;
+
+    top: var(--art-plaque-y);
+    left: 8%;
+
+    width: 84%;
+
+    transform: translateY(-72.1%);
+}
+
+[data-case-art] .bookcase-crown > :not(defs, .crown-plaque) {
+    display: none;
+}
+
+[data-case-art] .crown-decor {
+    bottom: var(--art-crown-top);
+}
+
+[data-case-art] .bookcase-body {
+    background:
+        var(--art-post-left) left top / 18px auto repeat-y,
+        var(--art-post-right) right top / 18px auto repeat-y,
+        var(--art-back) center top / calc(100% - 36px) auto repeat-y,
+        var(--shelf-back-bottom);
+}
+
+[data-case-art] .shelf-unit:not(.shelf-style--painted, .shelf-style--floating) .shelf-interior {
+    background: var(--art-back) center / 100% 100% no-repeat;
+
+    box-shadow:
+        inset 0 14px 12px -10px rgba(0, 0, 0, 0.45),
+        inset 8px 0 10px -8px rgba(0, 0, 0, 0.35),
+        inset -8px 0 10px -8px rgba(0, 0, 0, 0.35);
+}
+
+[data-case-art] .shelf-unit:not(.shelf-style--painted, .shelf-style--floating) .shelf-board {
+    border-top: 0;
+
+    background:
+        var(--art-post-left) left top / 18px auto repeat-y,
+        var(--art-post-right) right top / 18px auto repeat-y,
+        var(--art-rail) center / calc(100% - 36px) 100% no-repeat;
+}
+
+[data-case-art] .bookcase-base {
+    height: auto;
+
+    aspect-ratio: var(--art-base-ratio);
+
+    margin: 0 calc(var(--art-overhang) * -1);
+
+    border: 0;
+    border-radius: 0;
+
+    background: var(--art-base) center / 100% 100% no-repeat;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
    PHONE
 ========================================================= */
 

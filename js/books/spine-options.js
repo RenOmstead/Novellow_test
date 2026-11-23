@@ -178,7 +178,30 @@ export const SPINE_STYLES = [
     { id: "painted-cat-on-books", label: "Painted: Cat on books" },
     { id: "painted-amethyst-crystals", label: "Painted: Amethyst crystals" },
     { id: "painted-black-filigree", label: "Painted: Black filigree" },
-    { id: "painted-teal-roses", label: "Painted: Teal roses" }
+    { id: "painted-teal-roses", label: "Painted: Teal roses" },
+
+    // Holiday spines (assets/spines/holiday/): their own group in
+    // the picker, and never chosen by "Surprise me".
+    { id: "holiday-holly", label: "Holiday: Holly" },
+    { id: "holiday-fir-bow", label: "Holiday: Fir and bow" },
+    { id: "holiday-dreidel", label: "Holiday: Dreidel" },
+    { id: "holiday-olive-star", label: "Holiday: Olive and star" },
+    { id: "holiday-acorn", label: "Holiday: Acorn" },
+    { id: "holiday-oak-leaf", label: "Holiday: Oak leaf" },
+    { id: "holiday-folklore-bell", label: "Holiday: Folklore bell" },
+    { id: "holiday-curled-horns", label: "Holiday: Curled horns" },
+    { id: "holiday-woven-diamonds", label: "Holiday: Woven diamonds" },
+    { id: "holiday-harvest-corn", label: "Holiday: Harvest corn" },
+    { id: "holiday-midnight", label: "Holiday: Midnight clock" },
+    { id: "holiday-starlight", label: "Holiday: Gold stars" },
+    { id: "holiday-snowflake", label: "Holiday: Snowflake" },
+    { id: "holiday-snowy-pine", label: "Holiday: Snowy pine" },
+    { id: "holiday-winter-moon", label: "Holiday: Winter moon" },
+    { id: "holiday-knitted", label: "Holiday: Knitted cable" },
+    { id: "holiday-frosted-berries", label: "Holiday: Frosted berries" },
+    { id: "holiday-candlelight", label: "Holiday: Candlelight" },
+    { id: "holiday-solstice", label: "Holiday: Solstice sun" },
+    { id: "holiday-orange-pine", label: "Holiday: Orange and pine" }
 ];
 
 
@@ -303,7 +326,29 @@ export const SPINE_PAINTED = {
     "painted-cat-on-books": { src: "assets/spines/painted/cat-on-books.webp", text: "#3b2a2a", panel: [52, 12], bare: true },
     "painted-amethyst-crystals": { src: "assets/spines/painted/amethyst-crystals.webp", text: "#f6e6c8", panel: [26, 43] },
     "painted-black-filigree": { src: "assets/spines/painted/black-filigree.webp", text: "#f6e6c8", panel: [27, 39] },
-    "painted-teal-roses": { src: "assets/spines/painted/teal-roses.webp", text: "#f6e6c8", panel: [29, 39] }
+    "painted-teal-roses": { src: "assets/spines/painted/teal-roses.webp", text: "#f6e6c8", panel: [29, 39] },
+
+    // Holiday spines, each with a cream label for the title.
+    "holiday-holly": { src: "assets/spines/holiday/holly.webp", text: "#3b2a2a", panel: [25, 23] },
+    "holiday-fir-bow": { src: "assets/spines/holiday/fir-bow.webp", text: "#3b2a2a", panel: [28, 25] },
+    "holiday-dreidel": { src: "assets/spines/holiday/dreidel.webp", text: "#3b2a2a", panel: [22, 26] },
+    "holiday-olive-star": { src: "assets/spines/holiday/olive-star.webp", text: "#3b2a2a", panel: [24, 23] },
+    "holiday-acorn": { src: "assets/spines/holiday/acorn.webp", text: "#3b2a2a", panel: [25, 25] },
+    "holiday-oak-leaf": { src: "assets/spines/holiday/oak-leaf.webp", text: "#3b2a2a", panel: [25, 25] },
+    "holiday-folklore-bell": { src: "assets/spines/holiday/folklore-bell.webp", text: "#3b2a2a", panel: [24, 25] },
+    "holiday-curled-horns": { src: "assets/spines/holiday/curled-horns.webp", text: "#3b2a2a", panel: [27, 21] },
+    "holiday-woven-diamonds": { src: "assets/spines/holiday/woven-diamonds.webp", text: "#3b2a2a", panel: [23, 15] },
+    "holiday-harvest-corn": { src: "assets/spines/holiday/harvest-corn.webp", text: "#3b2a2a", panel: [25, 25] },
+    "holiday-midnight": { src: "assets/spines/holiday/midnight.webp", text: "#3b2a2a", panel: [24, 24] },
+    "holiday-starlight": { src: "assets/spines/holiday/starlight.webp", text: "#3b2a2a", panel: [20, 21] },
+    "holiday-snowflake": { src: "assets/spines/holiday/snowflake.webp", text: "#3b2a2a", panel: [26, 23] },
+    "holiday-snowy-pine": { src: "assets/spines/holiday/snowy-pine.webp", text: "#3b2a2a", panel: [24, 25] },
+    "holiday-winter-moon": { src: "assets/spines/holiday/winter-moon.webp", text: "#3b2a2a", panel: [23, 25] },
+    "holiday-knitted": { src: "assets/spines/holiday/knitted.webp", text: "#3b2a2a", panel: [23, 17] },
+    "holiday-frosted-berries": { src: "assets/spines/holiday/frosted-berries.webp", text: "#3b2a2a", panel: [20, 23] },
+    "holiday-candlelight": { src: "assets/spines/holiday/candlelight.webp", text: "#3b2a2a", panel: [26, 25] },
+    "holiday-solstice": { src: "assets/spines/holiday/solstice.webp", text: "#3b2a2a", panel: [25, 21] },
+    "holiday-orange-pine": { src: "assets/spines/holiday/orange-pine.webp", text: "#3b2a2a", panel: [24, 22] }
 };
 
 

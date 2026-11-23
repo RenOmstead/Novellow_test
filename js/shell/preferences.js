@@ -94,12 +94,17 @@ export const WINDOW_SHAPES = [
     { id: "casement", name: "Open casement" },
     { id: "shutters", name: "With shutters" },
     { id: "boarded", name: "Boarded up" },
-    { id: "boarded-arch", name: "Boarded arch" }
+    { id: "boarded-arch", name: "Boarded arch" },
+    // Winter windows, painted with their own snowy views.
+    { id: "snowy-walnut", name: "Snowy twin arch", view: true, curtains: true },
+    { id: "solstice-round", name: "Solstice round", view: true, curtains: true },
+    { id: "frosted-cream", name: "Frosted sash", view: true },
+    { id: "gothic-moon", name: "Gothic moon", view: true, curtains: true }
 ];
 
 // The painted windows and curtains (pictures, not drawings).
 export const PAINTED_WINDOWS =
-    ["six-pane", "tracery", "lancet", "double-arch", "moon-arch", "round", "porthole", "timber", "casement", "shutters", "boarded", "boarded-arch"];
+    ["six-pane", "tracery", "lancet", "double-arch", "moon-arch", "round", "porthole", "timber", "casement", "shutters", "boarded", "boarded-arch", "snowy-walnut", "solstice-round", "frosted-cream", "gothic-moon"];
 
 export const PAINTED_CURTAINS =
     ["tasselled", "ivy", "pumpkin", "tattered", "lined", "theatre", "roses"];

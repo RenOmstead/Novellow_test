@@ -589,6 +589,18 @@
 [data-window="shutters"] { --window-arched: none; --window-shutters: inline; --glazing: none; --win-x: 0.266; --win-w: 0.454; --win-top: 0.0; --win-pad: 0.02; --own-sill: none; }
 [data-window="boarded"] { --window-arched: none; --window-boarded: inline; --glazing: none; --win-x: 0.041; --win-w: 0.917; --win-top: 0.002; --win-pad: 0.02; --own-sill: none; }
 [data-window="boarded-arch"] { --window-arched: none; --window-boarded-arch: inline; --glazing: none; --win-x: 0.218; --win-w: 0.564; --win-top: 0.0; --win-pad: 0.1; --own-sill: none; }
+/* Winter windows: painted whole, with their own snowy views, so
+   the view outside, its weather and the wood don't change them,
+   and those with their own curtains hide the room's. */
+[data-window="snowy-walnut"] { --window-arched: none; --window-snowy-walnut: inline; --glazing: none; --win-x: 0.006; --win-w: 0.988; --win-top: 0.0; --win-pad: 0.02; --own-sill: none; }
+[data-window="solstice-round"] { --window-arched: none; --window-solstice-round: inline; --glazing: none; --win-x: 0.149; --win-w: 0.701; --win-top: 0.0; --win-pad: 0.06; --own-sill: none; }
+[data-window="frosted-cream"] { --window-arched: none; --window-frosted-cream: inline; --glazing: none; --win-x: 0.007; --win-w: 0.985; --win-top: 0.0; --win-pad: 0.02; --own-sill: none; }
+[data-window="gothic-moon"] { --window-arched: none; --window-gothic-moon: inline; --glazing: none; --win-x: 0.122; --win-w: 0.756; --win-top: 0.0; --win-pad: 0.06; --own-sill: none; }
+
+:is([data-window="snowy-walnut"], [data-window="solstice-round"], [data-window="frosted-cream"], [data-window="gothic-moon"]) .window-weather,
+:is([data-window="snowy-walnut"], [data-window="solstice-round"], [data-window="gothic-moon"]) .wall-art > .window-curtains {
+    display: none;
+}
 
 [data-wood="walnut"] { --frame-dark: #3a2116; --frame-wood: #6e4029; --frame-light: #9a6440; --frame-line: #2a160e; --frame-shine: #c9905e; }
 [data-wood="oak"] { --frame-dark: #6e4a2a; --frame-wood: #a8773f; --frame-light: #c9995a; --frame-line: #3e2a14; --frame-shine: #e2bd84; }

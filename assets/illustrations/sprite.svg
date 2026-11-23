@@ -1444,6 +1444,19 @@
                 <rect width="440" height="330" mask="url(#windowWood-boarded-arch)" style="fill: var(--frame-wood, #6e4029); mix-blend-mode: multiply"/>
             </g>
         </g>
+        <!-- Winter windows: painted whole, their snowy views and all. -->
+        <g style="display: var(--window-snowy-walnut, none)">
+            <image href="assets/decor/windows/snowy-walnut.webp?v=__VERSION__" width="440" height="330"/>
+        </g>
+        <g style="display: var(--window-solstice-round, none)">
+            <image href="assets/decor/windows/solstice-round.webp?v=__VERSION__" width="440" height="330"/>
+        </g>
+        <g style="display: var(--window-frosted-cream, none)">
+            <image href="assets/decor/windows/frosted-cream.webp?v=__VERSION__" width="440" height="330"/>
+        </g>
+        <g style="display: var(--window-gothic-moon, none)">
+            <image href="assets/decor/windows/gothic-moon.webp?v=__VERSION__" width="440" height="330"/>
+        </g>
     </symbol>
 
         <symbol id="lamp-chandelier" viewBox="0 0 210 250">

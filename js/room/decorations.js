@@ -597,6 +597,12 @@ export const DECOR_ASSETS = [
     { id: "frame-ghost", box: "0 0 70 90", width: 62, name: "Ghost portrait", group: "retired" },
     { id: "frame-castle", box: "0 0 130 100", width: 100, name: "Castle painting", group: "retired" },
 
+    // Winter rugs (in Floor, with the other rugs).
+    { id: "hol-rug-burgundy-stars", src: "assets/decor/holiday/rug_burgundy_stars.webp", size: [480, 225], width: 270, name: "Burgundy star rug", group: "rugs", floor: true },
+    { id: "hol-rug-winter-plaid", src: "assets/decor/holiday/rug_winter_plaid.webp", size: [480, 164], width: 260, name: "Winter plaid rug", group: "rugs", floor: true },
+    { id: "hol-rug-frosted-snowflake", src: "assets/decor/holiday/rug_frosted_snowflake.webp", size: [480, 277], width: 240, name: "Frosted snowflake rug", group: "rugs", floor: true },
+    { id: "hol-rug-solstice-orange", src: "assets/decor/holiday/rug_solstice_orange.webp", size: [480, 232], width: 270, name: "Solstice orange rug", group: "rugs", floor: true },
+
     // Holiday pieces (assets/decor/holiday/), in the Holidays tab.
     { id: "hol-christmas-tree", src: "assets/decor/holiday/christmas_tree.webp", size: [304, 460], width: 170, name: "Christmas tree", group: "holiday-christmas" },
     { id: "hol-christmas-wreath", src: "assets/decor/holiday/christmas_wreath.webp", size: [424, 460], width: 120, name: "Christmas wreath", group: "holiday-christmas" },
