@@ -98,7 +98,27 @@ export const SOUNDS = [
         id: "whispers", group: "spooky", name: "Whispers", note: "Just at the edge of hearing", every: [45, 110],
         moments: [["whisper-1.mp3", 0, 1.6, 0.6], ["whisper-2.mp3", 0.05, 1.25, 0.6], ["whisper-3.mp3", 0.05, 2.05, 0.7], ["whisper-4.mp3", 0, 10.9, 1.8]]
     },
-    { id: "raven", group: "spooky", name: "Raven", note: "Calling from the window ledge", every: [60, 150], moments: [["raven-1.mp3", 0, 3, 0.6]] }
+    { id: "raven", group: "spooky", name: "Raven", note: "Calling from the window ledge", every: [60, 150], moments: [["raven-1.mp3", 0, 3, 0.6]] },
+
+    // Winter and the holidays.
+    { id: "logs", group: "winter", name: "Log fire", note: "A big log fire crackling close by", bed: ["fire-logs.mp3"], boost: 1.4 },
+    { id: "icywind", group: "winter", name: "Icy wind", note: "A winter storm blowing outside", bed: ["icy-wind.mp3"], boost: 0.27 },
+    { id: "hail", group: "winter", name: "Hail on the window", note: "Sleet and hail against the glass", bed: ["hail.mp3"], boost: 0.52 },
+    {
+        id: "sleighbells", group: "winter", name: "Sleigh bells", note: "Jingling past outside", every: [60, 160],
+        moments: [["sleigh-bells-1.mp3", 0.05, 6.05, 0.4], ["sleigh-bells-2.mp3", 0.05, 2.7, 0.35]]
+    },
+    {
+        id: "chimes", group: "winter", name: "Twinkling chimes", note: "A little sparkle of magic", every: [75, 180],
+        moments: [["chimes-1.mp3", 0.05, 5.1, 0.55], ["chimes-2.mp3", 0.05, 4.4, 0.32]]
+    },
+    { id: "belltower", group: "winter", name: "Distant bells", note: "A bell tower across the snow", every: [150, 320], moments: [["bell-tower-1.mp3", 0.05, 6.5, 1.4]] },
+    { id: "train", group: "winter", name: "Steam train", note: "Passing through the snow, far off", every: [180, 420], moments: [["steam-train-1.mp3", 0.05, 21.95, 0.18]] },
+    {
+        id: "christmasmusic", group: "winter", name: "Christmas music", note: "A music box, a carol or a little tune", every: [90, 240],
+        moments: [["christmas-music-1.mp3", 0.05, 62.45, 0.18], ["christmas-music-2.mp3", 0.05, 27.7, 0.27], ["christmas-music-3.mp3", 0.05, 6.1, 0.35], ["christmas-music-4.mp3", 0.05, 9.3, 0.21]]
+    },
+    { id: "krampus", group: "winter", name: "Krampus is coming", note: "A sinister jingle on a winter night", every: [180, 420], moments: [["krampus-jingle-1.mp3", 0.05, 24.45, 0.18]] }
 ];
 
 // Each room's own mix (0 = silent, 1 = full).

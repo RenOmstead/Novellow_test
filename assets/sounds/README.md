@@ -69,6 +69,15 @@ Search ideas: "werewolf howl", "wolf howl distant", "door creak",
 "creepy humming", "music box creepy", "ghost whisper", "cauldron bubbling",
 "raven caw".
 
+## Winter and holidays
+
+In the "Winter and holidays" part of the mixer. Beds: `fire-logs.mp3`
+(a big log fire), `icy-wind.mp3` (two recordings of winter wind and a
+storm, joined into one 30-second loop) and `hail.mp3`. Moments:
+`sleigh-bells-1/2`, `chimes-1/2`, `bell-tower-1`, `steam-train-1`,
+`christmas-music-1` to `-4` (a music box, "We Wish You a Merry
+Christmas" and two short tunes) and `krampus-jingle-1`.
+
 ## Trimmed to size
 
 Long recordings are cut down (on MP3 frame boundaries, so the sound
@@ -102,3 +111,17 @@ with the sounds.
 | File | Source (link) | License |
 | --- | --- | --- |
 | All current files | Pixabay Sound Effects | Pixabay Content License (no credit needed) |
+| `fire-logs.mp3` | Pixabay: "Firewood Burning Sound" by engyclick (179862), 0–90 s | Pixabay Content License |
+| `icy-wind.mp3` | Pixabay: "Freezing Winter Wind" by dragon-studio (499654) and "Winter Storm Ambience" by alex_jauk (283339), joined | Pixabay Content License |
+| `hail.mp3` | Pixabay: "Strong Hail Falling Against the Window" by saturn-3-music (116182), 6–96 s | Pixabay Content License |
+| `sleigh-bells-1.mp3` | Pixabay: "Sleigh Bells" by missywhimsyart (272151) | Pixabay Content License |
+| `sleigh-bells-2.mp3` | Pixabay: "Christmas Sleigh Bells Jingling" by dragon-studio (4518523) | Pixabay Content License |
+| `chimes-1.mp3` | Pixabay: "Christmas Chimes Transitions" by djartmusic (264369) | Pixabay Content License |
+| `chimes-2.mp3` | Pixabay: "Christmas Whoosh" by djartmusic (275403) | Pixabay Content License |
+| `bell-tower-1.mp3` | Pixabay: "Medieval Ding Dong 3" by freesound_community (97308) | Pixabay Content License |
+| `steam-train-1.mp3` | Pixabay: "Steam Train at Crossing" by freesound_community (62158) | Pixabay Content License |
+| `christmas-music-1.mp3` | Pixabay: "Christmas Miracle Alarm Clock" by lesiakower (451385) | Pixabay Content License |
+| `christmas-music-2.mp3` | Pixabay: "We Wish You a Merry Christmas" by mfcc (6329581) | Pixabay Content License |
+| `christmas-music-3.mp3` | Pixabay: "Christmas Melody V1" by brg_music (263815) | Pixabay Content License |
+| `christmas-music-4.mp3` | Pixabay: "Christmas Intro" by tunetank (483682) | Pixabay Content License |
+| `krampus-jingle-1.mp3` | Pixabay: "Evil Jingle (Christmas Horror Trailer, Short 2)" by audioatlant (6357392), 0–24.5 s | Pixabay Content License |

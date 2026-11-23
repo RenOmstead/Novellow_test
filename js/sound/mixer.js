@@ -32,7 +32,7 @@ function markup(sound) {
         <label class="toggle">
             <span class="toggle__text">
                 <strong>Room sounds</strong>
-                <small>${sound.waiting ? "Tap anywhere on the page to begin." : "Rain, a fire, teacups, and some spookier things."}</small>
+                <small>${sound.waiting ? "Tap anywhere on the page to begin." : "Rain, a fire, teacups, winter and holiday sounds, and some spookier things."}</small>
             </span>
             <input type="checkbox" data-sound="on" ${sound.on ? html`checked` : ""}>
         </label>
@@ -49,7 +49,7 @@ function markup(sound) {
                 <span>Match the room <small class="muted">(each theme has its own sounds)</small></span>
             </label>
 
-            ${[["cozy", "Cozy"], ["spooky", "Spooky"]].map(([group, title]) => html`
+            ${[["cozy", "Cozy"], ["spooky", "Spooky"], ["winter", "Winter and holidays"]].map(([group, title]) => html`
             <div class="mixer__sounds" role="group" aria-label="${title} sounds">
                 <p class="mixer__group">${title}</p>
                 ${SOUNDS.filter((item) => (item.group || "cozy") === group).map((item) => {
