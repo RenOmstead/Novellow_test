@@ -22,7 +22,7 @@ import { listDecorations, createRow, updateRow, deleteRow } from "../core/store.
 import { html, raw, render, clamp, debounce } from "../core/helpers.js?v=__VERSION__";
 import { art, toast, toastError } from "../core/ui.js?v=__VERSION__";
 import { takeRoomPicture } from "./capture.js?v=__VERSION__";
-import { paintedFx } from "./painted-fx.js?v=__VERSION__";
+import { paintedFx, isSnowGlobe } from "./painted-fx.js?v=__VERSION__";
 import { setFixtureRows, roomSectionMarkup, roomSummary, onRoomPanelClick, dragWindow, dragRug, builtInAt, builtInElements, toggleBuiltIn } from "./fixtures.js?v=__VERSION__";
 
 
@@ -57,7 +57,17 @@ export const DECOR_GROUPS = [
     { id: "holiday-kwanzaa", name: "Kwanzaa" },
     { id: "holiday-new-year", name: "New Year" },
     { id: "holiday-winter", name: "Winter" },
-    { id: "holiday-yule", name: "Yule" }
+    { id: "holiday-yule", name: "Yule" },
+    // The collections: whole rooms painted in one style each
+    // (assets/decor/sets/), alphabetical.
+    { id: "set-bookish-whimsy", name: "Bookish whimsy" },
+    { id: "set-cozy-sage", name: "Cozy sage" },
+    { id: "set-fireside-library", name: "Fireside library" },
+    { id: "set-ink-folklore", name: "Ink folklore" },
+    { id: "set-snowy-fairytale", name: "Snowy fairytale" },
+    { id: "set-sugarplum-pastel", name: "Sugarplum pastel" },
+    { id: "set-vintage-woodland", name: "Vintage woodland" },
+    { id: "set-warm-gouache", name: "Warm gouache" }
 ];
 
 
@@ -83,12 +93,17 @@ export const PIECE_STYLES = [
     { id: "everyday", name: "Everyday" },
     { id: "autumn", name: "Autumn" },
     { id: "spooky", name: "Spooky" },
-    { id: "holiday", name: "Holidays" }
+    { id: "holiday", name: "Holidays" },
+    { id: "collection", name: "Collections" }
 ];
 
-// The holidays (alphabetical, so none comes first).
+// The holidays (alphabetical, so none comes first), and the
+// collections: the choices under those two styles.
 export const PIECE_HOLIDAYS =
     DECOR_GROUPS.filter((group) => group.id.startsWith("holiday-"));
+
+export const PIECE_COLLECTIONS =
+    DECOR_GROUPS.filter((group) => group.id.startsWith("set-"));
 
 // Groups that are all one kind of thing.
 const KIND_OF_GROUP = {
@@ -142,21 +157,26 @@ export function catalogueEntry(asset) {
         asset.name.toLowerCase();
 
     const kind =
-        KIND_OF_GROUP[asset.group] || KIND_WORDS.find(([, words]) => words.test(name))?.[0] || "tabletop";
+        asset.kind || KIND_OF_GROUP[asset.group] || KIND_WORDS.find(([, words]) => words.test(name))?.[0] || "tabletop";
 
     const holiday =
         asset.group.startsWith("holiday-") ? asset.group : HOLIDAY_OF_PIECE[asset.id] || null;
 
+    const collection =
+        asset.group.startsWith("set-") ? asset.group : null;
+
     const style =
-        holiday ? "holiday"
+        collection ? "collection"
+            : holiday ? "holiday"
             : ["witchy", "spooky", "haunted"].includes(asset.group) ? "spooky"
                 : asset.group === "autumn" ? "autumn"
                     : SPOOKY_WORDS.test(name) ? "spooky"
                         : AUTUMN_WORDS.test(name) ? "autumn"
                             : "everyday";
 
+    // "sub" is the holiday or collection, for the panel's second row.
     const entry =
-        { kind, style, holiday };
+        { kind, style, holiday, collection, sub: holiday || collection };
 
     catalogue.set(asset.id, entry);
 
@@ -688,6 +708,39 @@ export const DECOR_ASSETS = [
     { id: "hol-rug-winter-plaid", src: "assets/decor/holiday/rug_winter_plaid.webp", size: [480, 164], width: 260, name: "Winter plaid rug", group: "rugs", floor: true },
     { id: "hol-rug-frosted-snowflake", src: "assets/decor/holiday/rug_frosted_snowflake.webp", size: [480, 277], width: 240, name: "Frosted snowflake rug", group: "rugs", floor: true },
     { id: "hol-rug-solstice-orange", src: "assets/decor/holiday/rug_solstice_orange.webp", size: [480, 232], width: 270, name: "Solstice orange rug", group: "rugs", floor: true },
+    // The collections' furniture and decorations (assets/decor/sets/).
+    { id: "set-folk-oval-table", src: "assets/decor/sets/folk_oval_table.webp", size: [460, 402], width: 190, name: "Folk-painted oval table", group: "set-ink-folklore", kind: "furniture" },
+    { id: "set-coral-scarf-armchair", src: "assets/decor/sets/coral_scarf_armchair.webp", size: [460, 440], width: 180, name: "Coral armchair with a scarf", group: "set-ink-folklore", kind: "furniture" },
+    { id: "set-snowflake-cocoa-mug", src: "assets/decor/sets/snowflake_cocoa_mug.webp", size: [460, 423], width: 64, name: "Snowflake cocoa mug", group: "set-ink-folklore", kind: "tabletop" },
+    { id: "set-winterberry-pot", src: "assets/decor/sets/winterberry_pot.webp", size: [368, 460], width: 74, name: "Winterberry pot", group: "set-ink-folklore", kind: "plants" },
+    { id: "set-rose-writing-desk", src: "assets/decor/sets/rose_writing_desk.webp", size: [460, 358], width: 210, name: "Rose writing desk", group: "set-bookish-whimsy", kind: "furniture" },
+    { id: "set-tufted-window-bench", src: "assets/decor/sets/tufted_window_bench.webp", size: [460, 235], width: 230, name: "Tufted window bench", group: "set-bookish-whimsy", kind: "furniture" },
+    { id: "set-bunny-gift-box", src: "assets/decor/sets/bunny_gift_box.webp", size: [335, 460], width: 80, name: "Bunny in a gift box", group: "set-bookish-whimsy", kind: "friends" },
+    { id: "set-book-tree", src: "assets/decor/sets/book_tree.webp", size: [314, 460], width: 84, name: "Book tree", group: "set-bookish-whimsy", kind: "tabletop" },
+    { id: "set-gingham-pedestal-table", src: "assets/decor/sets/gingham_pedestal_table.webp", size: [460, 442], width: 170, name: "Gingham pedestal table", group: "set-fireside-library", kind: "furniture" },
+    { id: "set-red-wingback", src: "assets/decor/sets/red_wingback.webp", size: [352, 460], width: 180, name: "Red striped wingback", group: "set-fireside-library", kind: "furniture" },
+    { id: "set-copper-lantern", src: "assets/decor/sets/copper_lantern.webp", size: [222, 460], width: 66, name: "Copper candle lantern", group: "set-fireside-library", kind: "lights" },
+    { id: "set-gingham-rocking-stool", src: "assets/decor/sets/gingham_rocking_stool.webp", size: [460, 362], width: 120, name: "Gingham rocking footstool", group: "set-fireside-library", kind: "furniture" },
+    { id: "set-gingham-tea-table", src: "assets/decor/sets/gingham_tea_table.webp", size: [460, 408], width: 170, name: "Gingham tea table", group: "set-warm-gouache", kind: "furniture" },
+    { id: "set-folk-flower-chair", src: "assets/decor/sets/folk_flower_chair.webp", size: [323, 460], width: 140, name: "Folk flower chair", group: "set-warm-gouache", kind: "furniture" },
+    { id: "set-holly-cocoa-mug", src: "assets/decor/sets/holly_cocoa_mug.webp", size: [460, 445], width: 64, name: "Holly cocoa mug", group: "set-warm-gouache", kind: "tabletop" },
+    { id: "set-gingerbread-cookie-plate", src: "assets/decor/sets/gingerbread_cookie_plate.webp", size: [460, 455], width: 84, name: "Plate of gingerbread cookies", group: "set-warm-gouache", kind: "tabletop" },
+    { id: "set-painted-side-table", src: "assets/decor/sets/painted_side_table.webp", size: [373, 460], width: 120, name: "Painted side table", group: "set-snowy-fairytale", kind: "furniture" },
+    { id: "set-lavender-armchair", src: "assets/decor/sets/lavender_armchair.webp", size: [446, 460], width: 180, name: "Lavender armchair", group: "set-snowy-fairytale", kind: "furniture" },
+    { id: "set-cottage-snowglobe", src: "assets/decor/sets/cottage_snowglobe.webp", size: [361, 460], width: 76, name: "Cottage snow globe", group: "set-snowy-fairytale", kind: "tabletop" },
+    { id: "set-pine-teapot", src: "assets/decor/sets/pine_teapot.webp", size: [460, 323], width: 80, name: "Pine teapot", group: "set-snowy-fairytale", kind: "tabletop" },
+    { id: "set-scalloped-pink-table", src: "assets/decor/sets/scalloped_pink_table.webp", size: [441, 460], width: 150, name: "Scalloped pink table", group: "set-sugarplum-pastel", kind: "furniture" },
+    { id: "set-bow-shell-chair", src: "assets/decor/sets/bow_shell_chair.webp", size: [332, 460], width: 140, name: "Velvet shell chair with a bow", group: "set-sugarplum-pastel", kind: "furniture" },
+    { id: "set-gingerbread-ornament", src: "assets/decor/sets/gingerbread_ornament.webp", size: [392, 460], width: 70, name: "Gingerbread house ornament", group: "set-sugarplum-pastel", kind: "wall" },
+    { id: "set-ribboned-gifts", src: "assets/decor/sets/ribboned_gifts.webp", size: [327, 460], width: 84, name: "Stack of ribboned gifts", group: "set-sugarplum-pastel", kind: "tabletop" },
+    { id: "set-painted-country-table", src: "assets/decor/sets/painted_country_table.webp", size: [460, 449], width: 160, name: "Painted country table", group: "set-vintage-woodland", kind: "furniture" },
+    { id: "set-rust-velvet-armchair", src: "assets/decor/sets/rust_velvet_armchair.webp", size: [439, 460], width: 180, name: "Rust velvet armchair", group: "set-vintage-woodland", kind: "furniture" },
+    { id: "set-pinecone-basket", src: "assets/decor/sets/pinecone_basket.webp", size: [396, 460], width: 80, name: "Basket of pinecones", group: "set-vintage-woodland", kind: "tabletop" },
+    { id: "set-sleeping-mouse", src: "assets/decor/sets/sleeping_mouse.webp", size: [460, 268], width: 96, name: "Sleeping mouse in a blanket", group: "set-vintage-woodland", kind: "friends" },
+    { id: "set-oval-coffee-table", src: "assets/decor/sets/oval_coffee_table.webp", size: [460, 230], width: 210, name: "Oval coffee table", group: "set-cozy-sage", kind: "furniture" },
+    { id: "set-peppermint-armchair", src: "assets/decor/sets/peppermint_armchair.webp", size: [460, 425], width: 190, name: "Peppermint armchair", group: "set-cozy-sage", kind: "furniture" },
+    { id: "set-tree-cocoa-mug", src: "assets/decor/sets/tree_cocoa_mug.webp", size: [460, 439], width: 64, name: "Tree cocoa mug", group: "set-cozy-sage", kind: "tabletop" },
+    { id: "set-gingerbread-friend", src: "assets/decor/sets/gingerbread_friend.webp", size: [306, 460], width: 60, name: "Gingerbread friend", group: "set-cozy-sage", kind: "friends" },
 
     // Holiday pieces (assets/decor/holiday/): the Holidays style in the panel.
     { id: "hol-christmas-tree", src: "assets/decor/holiday/christmas_tree.webp", size: [304, 460], width: 170, name: "Christmas tree", group: "holiday-christmas" },
@@ -971,7 +1024,7 @@ try {
     if (["room", "pieces"].includes(kept.mode)) panelMode = kept.mode;
     if (PIECE_KINDS.some((kind) => kind.id === kept.kind)) pieceKind = kept.kind;
     if (PIECE_STYLES.some((style) => style.id === kept.style)) pieceStyle = kept.style;
-    if (PIECE_HOLIDAYS.some((holiday) => holiday.id === kept.holiday)) pieceHoliday = kept.holiday;
+    if ([...PIECE_HOLIDAYS, ...PIECE_COLLECTIONS].some((group) => group.id === kept.holiday)) pieceHoliday = kept.holiday;
 }
 catch {
     // Private browsing: the panel opens on its defaults.
@@ -1547,11 +1600,11 @@ function piecesMarkup() {
                 `)}
             </div>
 
-            ${pieceStyle === "holiday" ? html`
-                <div class="piece-styles piece-styles--holidays" role="group" aria-label="Holiday">
-                    <button class="piece-style ${pieceHoliday ? "" : "is-current"}" type="button" aria-pressed="${String(!pieceHoliday)}" data-piece-holiday="">Every holiday</button>
-                    ${PIECE_HOLIDAYS.map((holiday) => html`
-                        <button class="piece-style ${holiday.id === pieceHoliday ? "is-current" : ""}" type="button" aria-pressed="${String(holiday.id === pieceHoliday)}" data-piece-holiday="${holiday.id}">${holiday.name}</button>
+            ${pieceStyle === "holiday" || pieceStyle === "collection" ? html`
+                <div class="piece-styles piece-styles--holidays" role="group" aria-label="${pieceStyle === "holiday" ? "Holiday" : "Collection"}">
+                    <button class="piece-style ${pieceHoliday ? "" : "is-current"}" type="button" aria-pressed="${String(!pieceHoliday)}" data-piece-holiday="">${pieceStyle === "holiday" ? "Every holiday" : "Every collection"}</button>
+                    ${(pieceStyle === "holiday" ? PIECE_HOLIDAYS : PIECE_COLLECTIONS).map((group) => html`
+                        <button class="piece-style ${group.id === pieceHoliday ? "is-current" : ""}" type="button" aria-pressed="${String(group.id === pieceHoliday)}" data-piece-holiday="${group.id}">${group.name}</button>
                     `)}
                 </div>
             ` : ""}
@@ -1620,7 +1673,7 @@ function listMarkup() {
         const entry = catalogueEntry(asset);
         return entry.kind === pieceKind
             && (!pieceStyle || entry.style === pieceStyle)
-            && (!pieceHoliday || entry.holiday === pieceHoliday);
+            && (!pieceHoliday || entry.sub === pieceHoliday);
     };
 
     const list =
@@ -1630,7 +1683,11 @@ function listMarkup() {
         PIECE_KINDS.find((item) => item.id === pieceKind);
 
     if (!list.length) {
-        return html`<p class="arrange-bar__empty">No ${pieceStyle === "holiday" ? (PIECE_HOLIDAYS.find((item) => item.id === pieceHoliday)?.name || "holiday") : (PIECE_STYLES.find((item) => item.id === pieceStyle)?.name || "").toLowerCase()} ${kind.name.toLowerCase()} yet. Try another style.</p>`;
+        const which =
+            [...PIECE_HOLIDAYS, ...PIECE_COLLECTIONS].find((item) => item.id === pieceHoliday)?.name
+            || (PIECE_STYLES.find((item) => item.id === pieceStyle)?.name || "").toLowerCase();
+
+        return html`<p class="arrange-bar__empty">No ${which} ${kind.name.toLowerCase()} yet. Try another style.</p>`;
     }
 
     const recent =
@@ -2013,6 +2070,7 @@ function drawEditor() {
         ${selected ? html`<div class="piece-tools">
             <p class="piece-tools__name">${asset?.name || ""}</p>
             <div class="piece-tools__row" role="group" aria-label="This piece">
+                ${isSnowGlobe(asset?.src) ? html`<button class="piece-tool" type="button" data-arrange="shake" title="Shake the snow globe"><b aria-hidden="true">❄</b><small>Shake</small></button>` : ""}
                 <button class="piece-tool" type="button" data-arrange="flip" aria-pressed="${String(isFlipped(selected))}" title="Flip it to face the other way"><b aria-hidden="true">⇋</b><small>Flip</small></button>
                 <button class="piece-tool" type="button" data-arrange="duplicate" title="Make a copy"><b aria-hidden="true">⧉</b><small>Copy</small></button>
                 <button class="piece-tool" type="button" data-arrange="forward" title="Bring it in front of other pieces"><b aria-hidden="true">⤒</b><small>Front</small></button>
@@ -3090,6 +3148,12 @@ function onBarClick(event) {
         return;
     }
 
+    if (action === "shake") {
+        shakeGlobe(room.querySelector(`[data-decor-id="${piece.id}"]`));
+        askForMotion();
+        return;
+    }
+
     if (action === "more") {
         toolsMore = !toolsMore;
         drawEditor();
@@ -3327,6 +3391,14 @@ function onPointerDown(event) {
     // It only starts moving once the finger really moves.
     let moved = false;
 
+    // A globe dragged quickly back and forth gets shaken.
+    const globe =
+        isGlobePiece(element);
+
+    let lastX = event.clientX;
+    let lastSign = 0;
+    let turns = [];
+
     element.setPointerCapture(event.pointerId);
     element.classList.add("is-dragging");
 
@@ -3421,6 +3493,30 @@ function onPointerDown(event) {
 
             pointer.x = moveEvent.clientX;
             pointer.y = moveEvent.clientY;
+
+            if (globe) {
+
+                const step = moveEvent.clientX - lastX;
+
+                if (Math.abs(step) > 3) {
+
+                    const sign = Math.sign(step);
+                    const now = performance.now();
+
+                    if (lastSign && sign !== lastSign) {
+                        turns = [...turns.filter((time) => now - time < 1200), now];
+                        if (turns.length >= 3) {
+                            shakeGlobe(element);
+                            turns = [];
+                        }
+                    }
+
+                    lastSign = sign;
+                    lastX = moveEvent.clientX;
+
+                }
+
+            }
 
         }
 
@@ -3887,6 +3983,131 @@ async function load(themeId) {
 }
 
 
+/* =========================================================
+   SNOW GLOBES
+   Shaken with a tap (whenever the room is shown), with the
+   Shake button or a quick back-and-forth while decorating, or
+   by shaking the phone itself.
+========================================================= */
+
+function isGlobePiece(element) {
+    const piece = element && pieces.find((item) => item.id === element.dataset.decorId);
+    return Boolean(piece && isSnowGlobe(assetFor(piece.asset_id)?.src));
+}
+
+function stillness() {
+    return document.documentElement.classList.contains("reduce-motion")
+        || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+export function shakeGlobe(element) {
+
+    if (!element || stillness()) {
+        return;
+    }
+
+    element.classList.remove("is-shaken");
+
+    // A fresh shake starts the flurry again.
+    void element.offsetWidth;
+
+    element.classList.add("is-shaken");
+
+    clearTimeout(element.shakeTimer);
+
+    element.shakeTimer = setTimeout(() => element.classList.remove("is-shaken"), 4200);
+
+}
+
+function shakeAllGlobes() {
+    room?.querySelectorAll(".placed-decor").forEach((element) => {
+        if (isGlobePiece(element)) {
+            shakeGlobe(element);
+        }
+    });
+}
+
+// Shaking the phone shakes every globe in the room.
+let listeningForShakes = false;
+
+function listenForShakes() {
+
+    if (listeningForShakes || !("DeviceMotionEvent" in window)) {
+        return;
+    }
+
+    listeningForShakes = true;
+
+    let last = 0;
+
+    window.addEventListener("devicemotion", (event) => {
+
+        const moved =
+            event.acceleration?.x !== null && event.acceleration?.x !== undefined
+                ? Math.hypot(event.acceleration.x, event.acceleration.y, event.acceleration.z)
+                : Math.abs(Math.hypot(event.accelerationIncludingGravity?.x || 0, event.accelerationIncludingGravity?.y || 0, event.accelerationIncludingGravity?.z || 0) - 9.81);
+
+        if (moved < 14 || Date.now() - last < 1500) {
+            return;
+        }
+
+        last = Date.now();
+
+        shakeAllGlobes();
+
+    });
+
+}
+
+// iPhones ask first, and only from a tap.
+let askedForMotion = false;
+
+function askForMotion() {
+
+    if (askedForMotion) {
+        return;
+    }
+
+    askedForMotion = true;
+
+    const ask =
+        window.DeviceMotionEvent?.requestPermission;
+
+    if (typeof ask !== "function") {
+        listenForShakes();
+        return;
+    }
+
+    ask.call(window.DeviceMotionEvent)
+        .then((answer) => {
+            if (answer === "granted") {
+                listenForShakes();
+            }
+        })
+        .catch(() => {
+            // No shaking the phone; tapping still works.
+        });
+
+}
+
+// Outside decorating, a tap on a globe shakes it.
+function onRoomClick(event) {
+
+    if (arranging) {
+        return;
+    }
+
+    const element =
+        event.target.closest(".placed-decor");
+
+    if (isGlobePiece(element)) {
+        shakeGlobe(element);
+        askForMotion();
+    }
+
+}
+
+
 export async function startDecorations(container, themeId) {
 
     room = container;
@@ -3896,7 +4117,14 @@ export async function startDecorations(container, themeId) {
     }
 
     room.addEventListener("pointerdown", onPointerDown);
+    room.addEventListener("click", onRoomClick);
     document.addEventListener("keydown", onKeyDown);
+
+    // Where no permission is needed, shaking the phone works
+    // straight away.
+    if (typeof window.DeviceMotionEvent?.requestPermission !== "function") {
+        listenForShakes();
+    }
 
     room.addEventListener("focusin", (event) => {
 

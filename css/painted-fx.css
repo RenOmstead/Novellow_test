@@ -603,6 +603,98 @@
     transform-origin: 50% 70%;
 }
 
+/* ---------------------------------------------------------
+   SNOW GLOBES
+   Snow drifts down inside the glass. A shake (a tap on the
+   globe, a quick back-and-forth while decorating, or shaking
+   the phone) rocks the globe and whirls the snow up, to settle
+   again.
+--------------------------------------------------------- */
+
+.fx-globe {
+    aspect-ratio: 1;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    container-type: size;
+}
+
+.fx-globe b {
+    position: absolute;
+
+    left: var(--x);
+    top: 0;
+
+    width: var(--s);
+    height: var(--s);
+
+    border-radius: 50%;
+
+    background: #fff;
+
+    box-shadow: 0 0 2px rgba(255, 255, 255, 0.9);
+
+    opacity: 0;
+
+    animation: globeDrift var(--t) linear infinite;
+    animation-delay: calc(var(--d) * -1);
+}
+
+@keyframes globeDrift {
+    0% { transform: translate(0, 6cqh); opacity: 0; }
+    12% { opacity: 0.95; }
+    50% { transform: translate(var(--w), 40cqh); }
+    85% { opacity: 0.9; }
+    100% { transform: translate(0, 74cqh); opacity: 0; }
+}
+
+/* Shaken: the snow flies up from the bottom and swirls down. */
+.is-shaken .fx-globe b {
+    animation: globeFlurry 4s cubic-bezier(0.2, 0.7, 0.35, 1) both;
+    animation-delay: calc(var(--d) * -0.04);
+}
+
+@keyframes globeFlurry {
+    0% { transform: translate(0, 72cqh); opacity: 0.9; }
+    10% { transform: translate(calc(var(--w) * 4), calc(var(--h) * 1cqh)); opacity: 1; }
+    30% { transform: translate(calc(var(--w) * -3), calc(var(--h) * 0.5cqh + 10cqh)); }
+    60% { transform: translate(var(--w), calc(var(--h) * 0.4cqh + 30cqh)); opacity: 1; }
+    100% { transform: translate(0, 74cqh); opacity: 0.85; }
+}
+
+.is-shaken > .decor-art {
+    transform-origin: 50% 95%;
+
+    animation: globeRock 0.7s ease-in-out;
+}
+
+@keyframes globeRock {
+    0%, 100% { rotate: 0deg; }
+    15% { rotate: -9deg; }
+    35% { rotate: 8deg; }
+    55% { rotate: -6deg; }
+    75% { rotate: 3deg; }
+}
+
+/* A snow globe can be shaken even when the room isn't being
+   decorated (the only piece that takes a tap then). */
+html:not(.is-arranging-room) .placed-decor:has(.fx-globe) {
+    pointer-events: auto;
+
+    cursor: pointer;
+}
+
+/* While decorating the others hold still; a shaken globe moves. */
+.is-arranging .is-shaken .decor-art,
+.is-arranging .is-shaken .decor-art * {
+    animation-play-state: running;
+}
+
+
 /* While arranging, pieces hold still so they're easy to place. */
 .is-arranging .decor-art,
 .is-arranging .decor-art * {
@@ -614,6 +706,24 @@
     .decor-art,
     .decor-art * {
         animation: none !important;
+    }
+
+}
+
+
+/* With less motion, the globes' snow rests where it lies. */
+.reduce-motion .fx-globe b {
+    opacity: 0.9;
+
+    transform: translate(0, calc(var(--h) * 1cqh + 8cqh));
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .fx-globe b {
+        opacity: 0.9;
+
+        transform: translate(0, calc(var(--h) * 1cqh + 8cqh));
     }
 
 }

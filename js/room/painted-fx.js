@@ -62,7 +62,7 @@ const FX = {
     midnight_clock: "tick",
     cocoa_mug: "steam 37 3",
     cookies_milk: "sheen",
-    krampus_snowglobe: "sparkle 50 32 62 46 5; sheen",
+    krampus_snowglobe: "globe 50 34 46; sheen",
     krampus_bell: "ring",
     evergreen_garland: "sway-soft",
     new_year_star_garland: "sway-soft",
@@ -209,6 +209,18 @@ const FX = {
     curio_cabinet: "sparkle 50 40 60 60 4; sheen",
     door_knocker: "glint 50 60",
     ghost_moon_portrait: "aura; sheen",
+    // The collections (assets/decor/sets/).
+    cottage_snowglobe: "globe 50 37 46; glow 52 52 1.4 window; sheen",
+    snowflake_cocoa_mug: "steam 40 4",
+    holly_cocoa_mug: "steam 40 4",
+    tree_cocoa_mug: "steam 40 4",
+    pine_teapot: "steam 4 12",
+    copper_lantern: "flame 45 64 0.7; glow 45 68 2.6",
+    book_tree: "twinkle 48 9; glow 48 9 1.4",
+    gingerbread_ornament: "glow 22 74 1.2 window; glow 84 74 1.2 window; sway",
+    gingham_rocking_stool: "rock",
+    bunny_gift_box: "tilt",
+    gingerbread_friend: "tilt",
     orb_garland: "glow 20 60 1.2; glow 50 62 1.2; glow 80 60 1.2; twinkle 20 60; twinkle 50 62; twinkle 80 60; sway-soft"
 
 };
@@ -284,6 +296,16 @@ function layer(effect, index) {
         case "sheen":
             return `<i class="fx fx-sheen"></i>`;
 
+        // Snow inside a glass globe: its middle and the glass's
+        // radius (percent of the picture's width). Flakes drift
+        // down; a shake (css .is-shaken) whirls them all up.
+        case "globe": {
+            const flakes = Array.from({ length: 24 }, (_, i) =>
+                `<b style="--x:${(i * 37 + 7) % 88 + 6}%;--s:${(i % 3) + 2}px;--d:${((i * 0.83) % 7).toFixed(2)}s;--t:${(6 + (i % 4) * 1.4).toFixed(1)}s;--w:${(i % 2 ? 1 : -1) * (3 + (i % 5) * 2)}px;--h:${(i * 29) % 60 + 6}"></b>`
+            ).join("");
+            return `<i class="fx fx-globe" style="left:${percent(a, 50)};top:${percent(b, 40)};width:${(Number(c) || 40) * 2}%">${flakes}</i>`;
+        }
+
         // The shade (the top of the picture) swings gently on
         // its finial, tassels and all.
         case "shade":
@@ -294,6 +316,13 @@ function layer(effect, index) {
 
     }
 
+}
+
+
+// Whether a painted piece is a snow globe (it can be shaken).
+export function isSnowGlobe(src) {
+    const name = String(src || "").split("/").pop().replace(/\.\w+$/, "");
+    return /(^|;)\s*globe\s/.test(FX[name] || "");
 }
 
 
