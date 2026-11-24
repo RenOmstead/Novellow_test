@@ -1849,13 +1849,21 @@ html.room-compact :is(.room-view-button, .decorate-button) {
    crown and its base stay where they are.
 ========================================================= */
 
-.library-room {
+:root {
     /* The ceiling's depth; lamps hang from below it. */
     --ceiling-h: 54px;
+
+    /* Its beams, seen from below as they run back to the wall,
+       and (for the top bar on Home) the nearer part of them, up
+       to the top of the screen. */
+    --ceiling-tile: 260px;
+    --ceiling-beams: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='54' viewBox='0 0 260 54'%3E%3Cpath d='M96 0H164L156 54H104Z' fill='%236a432c'/%3E%3Cpath d='M104 54H156L158 40H102Z' fill='%234a2c1c'/%3E%3Cpath d='M96 0L104 54M164 0L156 54' stroke='%232a160e' stroke-width='2'/%3E%3Cpath d='M112 8C120 14 132 12 142 18M110 26C122 30 134 28 150 32' stroke='%23845634' stroke-width='1.4' fill='none' opacity='0.8'/%3E%3C/svg%3E");
+    --ceiling-beams-near: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='100' viewBox='0 0 260 100' preserveAspectRatio='none'%3E%3Cpath d='M84 0H176L164 100H96Z' fill='%236a432c'/%3E%3Cpath d='M84 0L96 100M176 0L164 100' stroke='%232a160e' stroke-width='2' vector-effect='non-scaling-stroke'/%3E%3Cpath d='M106 12C118 22 132 20 148 30M110 46C122 52 136 50 152 58M104 78C116 84 130 82 146 90' stroke='%23845634' stroke-width='1.4' fill='none' opacity='0.8' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
 }
 
-html.room-compact .library-room {
+html.room-compact {
     --ceiling-h: 26px;
+    --ceiling-tile: calc(260px * 26 / 54);
 }
 
 /* The beamed ceiling, always: the lights hang from it. */
@@ -1873,7 +1881,7 @@ html.room-compact .library-room {
     height: var(--ceiling-h);
 
     background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='54' viewBox='0 0 260 54'%3E%3Cpath d='M96 0H164L156 54H104Z' fill='%236a432c'/%3E%3Cpath d='M104 54H156L158 40H102Z' fill='%234a2c1c'/%3E%3Cpath d='M96 0L104 54M164 0L156 54' stroke='%232a160e' stroke-width='2'/%3E%3Cpath d='M112 8C120 14 132 12 142 18M110 26C122 30 134 28 150 32' stroke='%23845634' stroke-width='1.4' fill='none' opacity='0.8'/%3E%3C/svg%3E") 0 0 / auto 100% repeat-x,
+        var(--ceiling-beams) 0 0 / auto 100% repeat-x,
         linear-gradient(180deg, #3a2418, #2a190f 70%, #1e120b);
 
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
@@ -1884,6 +1892,78 @@ html.room-compact .library-room {
 /* The ceiling lamp hangs from the ceiling, not behind it. */
 .ceiling-lamp {
     top: var(--ceiling-h);
+}
+
+/* ---------------------------------------------------------
+   THE CEILING RUNS TO THE TOP OF THE SCREEN (Home)
+   The top bar sits on the room's ceiling, which runs up
+   behind it to the top of the screen, and the strip beside
+   the menu is the dark edge of the room. So the wallpaper is
+   only ever on the wall, between the ceiling and the floor:
+   never above the ceiling or down the side of the room.
+--------------------------------------------------------- */
+
+body.app[data-page="home"] {
+    background: #140b07;
+}
+
+body[data-page="home"] .scene-header {
+    /* Darkened as the room's own ceiling is at the top
+       (.room-vignette), so the two meet without a line. */
+    background:
+        linear-gradient(rgb(24 10 18 / 0.62), rgb(24 10 18 / 0.55)),
+        var(--ceiling-beams-near) 0 0 / var(--ceiling-tile) 100% repeat-x,
+        linear-gradient(180deg, #24150d, #3a2418);
+}
+
+/* How wide the strip beside the menu is. */
+body[data-page="home"] .app-stage {
+    --room-gutter: var(--sidebar-space);
+}
+
+body[data-page="home"].sidebar-collapsed .app-stage {
+    --room-gutter: var(--sidebar-collapsed-space);
+}
+
+/* The menu is a drawer here, so there is no strip. */
+@media (max-width: 820px), (orientation: landscape) and (max-height: 540px) and (max-width: 1180px) {
+
+    body[data-page="home"] .app-stage {
+        --room-gutter: 0px;
+    }
+
+}
+
+/* The strip: the ceiling across its top, lined up with the
+   room's beams, and shadow below. (Decorating and the room
+   view put the menu away, so they don't need it.) */
+html:not(.is-arranging-room):not(.room-view) body[data-page="home"] .app-stage::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    z-index: -1;
+
+    width: var(--room-gutter);
+
+    background:
+        linear-gradient(90deg, rgb(14 6 8 / 0.5), rgb(14 6 8 / 0)),
+        linear-gradient(rgb(24 10 18 / 0.62), rgb(24 10 18 / 0.55)) 0 0 / 100% var(--header-h, var(--header-height)) no-repeat,
+        var(--ceiling-beams-near) var(--room-gutter) 0 / var(--ceiling-tile) var(--header-h, var(--header-height)) repeat-x,
+        linear-gradient(180deg, #24150d, #3a2418) 0 0 / 100% var(--header-h, var(--header-height)) no-repeat,
+        linear-gradient(rgb(24 10 18 / 0.4), rgb(24 10 18 / 0.4)) 0 var(--header-h, var(--header-height)) / 100% var(--ceiling-h) no-repeat,
+        var(--ceiling-beams) var(--room-gutter) var(--header-h, var(--header-height)) / auto var(--ceiling-h) repeat-x,
+        linear-gradient(180deg, #3a2418, #2a190f 70%, #1e120b) 0 var(--header-h, var(--header-height)) / 100% var(--ceiling-h) no-repeat,
+        linear-gradient(180deg, #1e120b, #140b07);
+
+    pointer-events: none;
+
+    /* Keeps pace with the menu opening and closing. */
+    transition: width 0.35s ease;
 }
 
 /* On a computer the bookcase is a piece of furniture against
