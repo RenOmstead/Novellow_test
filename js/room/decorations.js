@@ -23,7 +23,7 @@ import { html, raw, render, clamp, debounce } from "../core/helpers.js?v=__VERSI
 import { art, toast, toastError } from "../core/ui.js?v=__VERSION__";
 import { takeRoomPicture } from "./capture.js?v=__VERSION__";
 import { paintedFx } from "./painted-fx.js?v=__VERSION__";
-import { setFixtureRows, roomSectionMarkup, onRoomPanelClick, dragWindow, dragRug, builtInAt, builtInElements, toggleBuiltIn } from "./fixtures.js?v=__VERSION__";
+import { setFixtureRows, roomSectionMarkup, roomSummary, onRoomPanelClick, dragWindow, dragRug, builtInAt, builtInElements, toggleBuiltIn } from "./fixtures.js?v=__VERSION__";
 
 
 /*
@@ -60,24 +60,109 @@ export const DECOR_GROUPS = [
     { id: "holiday-yule", name: "Yule" }
 ];
 
-// The panel's tabs: one for each part of the room. Each opens
-// straight onto everything for that part: the room's own
-// choices (wallpaper, window, curtains…) first, then the pieces
-// that belong there. "icon" is the painted piece on the tab
-// (from assets/decor/painted/, or a path under assets/decor/).
-export const DECOR_TABS = [
-    { id: "walls", name: "Walls", icon: "ghost_moon_portrait", room: ["wallpaper"], groups: ["pictures", "garlands"], hint: "Wallpaper, pictures and garlands. Each room keeps its own choices." },
-    { id: "window", name: "Window", icon: "ivy_arch", room: ["window", "outside"], groups: ["vines", "plants"], hint: "The window, its curtains, the view outside, and ivy and plants." },
-    { id: "floor", name: "Floor", icon: "rug_night_sky", room: ["floor", "rug"], groups: ["rugs"], hint: "The floor and its rugs." },
-    { id: "lights", name: "Lights", icon: "fringed_lamp", room: ["light"], groups: ["lighting"], hint: "How bright the room is, and lamps and candles." },
-    { id: "furniture", name: "Furniture", icon: "armchair_plum", room: ["bookcase", "built-in"], groups: ["seating", "tables", "storage"], hint: "The bookcase's wood, then chairs, sofas, tables, cabinets and fireplaces." },
-    { id: "tabletop", name: "Tabletop", icon: "pink_teacup", room: [], groups: ["tabletop", "bookish", "treats"], hint: "Cups, teapots, books and treats to set on tables and shelves." },
-    { id: "cozy", name: "Cozy", icon: "pumpkin_lantern", room: [], groups: ["cozy", "autumn"], hint: "Cozy touches and autumn things." },
-    { id: "spooky", name: "Spooky", icon: "ghost_candle", room: [], groups: ["witchy", "spooky", "haunted"], hint: "Witchy, spooky and haunted things." },
-    { id: "holidays", name: "Holidays", icon: "holiday/snowflake", room: [], groups: ["holiday-christmas", "holiday-hanukkah", "holiday-harvest", "holiday-krampus", "holiday-kwanzaa", "holiday-new-year", "holiday-winter", "holiday-yule"], hint: "Pieces for the holidays, from harvest time to the new year. The holiday wallpapers are in Walls." }
+
+/*
+    THE CATALOGUE
+    Every piece has a kind (what it is) and a style (the mood
+    it's for), so the panel can find it either way: all the
+    lamps, or everything for Christmas, or just the spooky
+    lamps. "icon" is a piece drawn on the kind's button.
+*/
+
+export const PIECE_KINDS = [
+    { id: "furniture", name: "Furniture", icon: "art-armchair-plum" },
+    { id: "lights", name: "Lights", icon: "art-fringed-lamp" },
+    { id: "wall", name: "Wall", icon: "art-ghost-moon-portrait" },
+    { id: "tabletop", name: "Tabletop", icon: "art-pink-teacup" },
+    { id: "plants", name: "Plants", icon: "art-potted-mushrooms" },
+    { id: "rugs", name: "Rugs", icon: "art-rug-night-sky" },
+    { id: "friends", name: "Friends", icon: "art-black-cat" }
 ];
 
-const tabFor = (id) => DECOR_TABS.find((tab) => tab.id === id);
+export const PIECE_STYLES = [
+    { id: "everyday", name: "Everyday" },
+    { id: "autumn", name: "Autumn" },
+    { id: "spooky", name: "Spooky" },
+    { id: "holiday", name: "Holidays" }
+];
+
+// The holidays (alphabetical, so none comes first).
+export const PIECE_HOLIDAYS =
+    DECOR_GROUPS.filter((group) => group.id.startsWith("holiday-"));
+
+// Groups that are all one kind of thing.
+const KIND_OF_GROUP = {
+    seating: "furniture", tables: "furniture", storage: "furniture",
+    lighting: "lights",
+    pictures: "wall", garlands: "wall", vines: "wall",
+    tabletop: "tabletop", treats: "tabletop", bookish: "tabletop",
+    plants: "plants",
+    rugs: "rugs"
+};
+
+// The rest (the cozy, autumn, spooky and holiday groups mix all
+// sorts) go by what each piece is, the first match winning.
+const KIND_WORDS = [
+    ["tabletop", /candle box|mkeka|gift/],
+    ["friends", /^ghost (with|cat|and|knitting|reading)|^bat in|^sleepy bat/],
+    ["rugs", /\brug\b/],
+    ["wall", /wreath|garland|bunting|portrait|painting|frame|plaque|\bsign\b|mirror|cobweb|stocking|hanging star|snowflake|mobile|sconce|cloak/],
+    ["lights", /lamp|lantern|candle|candelabra|chandelier|fairy lights|hanukkiah|kinara|fireflies/],
+    ["tabletop", /mug|cup|\btea\b|teapot|cocoa|latte|plate|cookie|cake|\bpie\b|book|glass|bottle|jar\b|bowl|dish|pitcher|basket|figurine|globe|dreidel|gelt|\bhat\b|watch|clock|camera|socks|slippers|boots|cardigan|headphones|watercolours|embroidery|\bbow\b|potion|crystal|skull|mask|brew|poison|newt|charm|incense|cloche|planchette|pestle|razor|camcorder|padlock|doll|herb|corn|fruit|oranges|pinecones|throw|cushion|mittens|\bbell\b|\bboot\b|sufganiyot|latkes|turkey|acorn|umbrella$/],
+    ["friends", /\bcat\b|\bdog\b|ghost|\bbats?\b|raven|crow|mouse|spider|snake|\bmoth\b|goat|snowman|gargoyle/],
+    ["plants", /\btree\b|\bpine\b|plant|fern|\bivy\b|flower|roses|mushroom|toadstool|olive branch|evergreen|wheat|vine/],
+    ["furniture", /chair|sofa|table|cabinet|bookcase|fireplace|television|\btv\b|gramophone|stand\b|trunk|sled|birdcage|cauldron|broom|stump/]
+];
+
+const SPOOKY_WORDS =
+    /ghost|\bbats?\b|batty|skull|cobweb|spider|witch|haunted|vampire|raven|crow|coffin|potion|spell|gothic|gargoyle|planchette|tarot|cauldron|all-seeing|\beye\b|thorn|moth\b|anatomical|poison|tattered|torn\b|cracked|rusty|masked|void|black cat|spooky/;
+
+const AUTUMN_WORDS =
+    /pumpkin|autumn|maple|\bleaf\b|leaves|acorn|october|jack-o|cider|spice|apple|sunflower/;
+
+// The winter rugs came with the holiday pieces.
+const HOLIDAY_OF_PIECE = {
+    "hol-rug-burgundy-stars": "holiday-christmas",
+    "hol-rug-winter-plaid": "holiday-winter",
+    "hol-rug-frosted-snowflake": "holiday-winter",
+    "hol-rug-solstice-orange": "holiday-yule"
+};
+
+const catalogue =
+    new Map();
+
+// A piece's kind, style and (for the holidays) which holiday.
+export function catalogueEntry(asset) {
+
+    if (catalogue.has(asset.id)) {
+        return catalogue.get(asset.id);
+    }
+
+    const name =
+        asset.name.toLowerCase();
+
+    const kind =
+        KIND_OF_GROUP[asset.group] || KIND_WORDS.find(([, words]) => words.test(name))?.[0] || "tabletop";
+
+    const holiday =
+        asset.group.startsWith("holiday-") ? asset.group : HOLIDAY_OF_PIECE[asset.id] || null;
+
+    const style =
+        holiday ? "holiday"
+            : ["witchy", "spooky", "haunted"].includes(asset.group) ? "spooky"
+                : asset.group === "autumn" ? "autumn"
+                    : SPOOKY_WORDS.test(name) ? "spooky"
+                        : AUTUMN_WORDS.test(name) ? "autumn"
+                            : "everyday";
+
+    const entry =
+        { kind, style, holiday };
+
+    catalogue.set(asset.id, entry);
+
+    return entry;
+
+}
 
 export const DECOR_ASSETS = [
     // Hand-painted pieces (pictures, not drawings): each shows first in its tab.
@@ -604,7 +689,7 @@ export const DECOR_ASSETS = [
     { id: "hol-rug-frosted-snowflake", src: "assets/decor/holiday/rug_frosted_snowflake.webp", size: [480, 277], width: 240, name: "Frosted snowflake rug", group: "rugs", floor: true },
     { id: "hol-rug-solstice-orange", src: "assets/decor/holiday/rug_solstice_orange.webp", size: [480, 232], width: 270, name: "Solstice orange rug", group: "rugs", floor: true },
 
-    // Holiday pieces (assets/decor/holiday/), in the Holidays tab.
+    // Holiday pieces (assets/decor/holiday/): the Holidays style in the panel.
     { id: "hol-christmas-tree", src: "assets/decor/holiday/christmas_tree.webp", size: [304, 460], width: 170, name: "Christmas tree", group: "holiday-christmas" },
     { id: "hol-christmas-wreath", src: "assets/decor/holiday/christmas_wreath.webp", size: [424, 460], width: 120, name: "Christmas wreath", group: "holiday-christmas" },
     { id: "hol-christmas-stocking", src: "assets/decor/holiday/christmas_stocking.webp", size: [241, 460], width: 70, name: "Christmas stocking", group: "holiday-christmas" },
@@ -696,10 +781,42 @@ export const FABRICS = [
 ];
 
 
+/*
+    A piece's look is saved on it as decoration_type: its kind
+    ("ornament" or "frame", or "tint:<fabric>" for a recovered
+    piece), then " flip" when it's turned to face the other way.
+*/
+
+function typeParts(piece) {
+    return String(piece.decoration_type || "ornament").split(" ").filter(Boolean);
+}
+
+function isFlipped(piece) {
+    return typeParts(piece).includes("flip");
+}
+
+function withLook(piece, { tint, flip } = {}) {
+
+    const parts =
+        typeParts(piece);
+
+    const base =
+        parts.find((part) => !part.startsWith("tint:") && part !== "flip") || "ornament";
+
+    const fabric =
+        tint === undefined ? parts.find((part) => part.startsWith("tint:")) : tint ? `tint:${tint}` : null;
+
+    const flipped =
+        flip === undefined ? parts.includes("flip") : flip;
+
+    return [fabric || base, flipped ? "flip" : null].filter(Boolean).join(" ");
+
+}
+
 function fabricFor(piece) {
 
     const id =
-        String(piece.decoration_type || "").startsWith("tint:") ? piece.decoration_type.slice(5) : null;
+        typeParts(piece).find((part) => part.startsWith("tint:"))?.slice(5) || null;
 
     return FABRICS.find((fabric) => fabric.id === id) || null;
 
@@ -834,7 +951,51 @@ let selectedId = null;
 let selectedBuiltIn = null;
 let bar = null;
 let loadToken = 0;
-let paletteGroup = "walls";
+
+/*
+    What the panel shows: the room's own choices (wallpaper,
+    floor, window…) or the pieces to place, which kind and
+    style of piece, and which room section is open. Kept on
+    this device, so the panel opens where it was left.
+*/
+const PANEL_KEY = "novellow-decorate-panel";
+
+let panelMode = "pieces";
+let pieceKind = "furniture";
+let pieceStyle = "";
+let pieceHoliday = "";
+let roomOpen = "wallpaper";
+
+try {
+    const kept = JSON.parse(localStorage.getItem(PANEL_KEY) || "{}") || {};
+    if (["room", "pieces"].includes(kept.mode)) panelMode = kept.mode;
+    if (PIECE_KINDS.some((kind) => kind.id === kept.kind)) pieceKind = kept.kind;
+    if (PIECE_STYLES.some((style) => style.id === kept.style)) pieceStyle = kept.style;
+    if (PIECE_HOLIDAYS.some((holiday) => holiday.id === kept.holiday)) pieceHoliday = kept.holiday;
+}
+catch {
+    // Private browsing: the panel opens on its defaults.
+}
+
+function keepPanel() {
+    try {
+        localStorage.setItem(PANEL_KEY, JSON.stringify({ mode: panelMode, kind: pieceKind, style: pieceStyle, holiday: pieceHoliday }));
+    }
+    catch {
+        // Not remembered this time.
+    }
+}
+
+// The room's own choices, in the order of the panel's sections.
+const ROOM_SECTIONS = [
+    { id: "wallpaper", name: "Wallpaper", parts: ["wallpaper"] },
+    { id: "floor", name: "Floor and rug", parts: ["floor", "rug"] },
+    { id: "window", name: "Window and curtains", parts: ["window"] },
+    { id: "outside", name: "View and weather", parts: ["outside"] },
+    { id: "light", name: "Light", parts: ["light"] },
+    { id: "bookcase", name: "Bookcase", parts: ["bookcase"] },
+    { id: "built-in", name: "Built into the room", parts: ["built-in"] }
+];
 
 // The tray: which side it sits on (computers) and whether it
 // is folded down (phones).
@@ -918,11 +1079,6 @@ function artMarkup(asset, { live = false } = {}) {
 }
 
 
-// The groups of pieces in one of the panel's tabs.
-function tabGroups(tabId) {
-    const tab = DECOR_TABS.find((item) => item.id === tabId);
-    return tab ? tab.groups.map((id) => DECOR_GROUPS.find((group) => group.id === id)).filter(Boolean) : [];
-}
 
 
 function layerFor(area) {
@@ -1172,7 +1328,7 @@ function pieceMarkup(piece) {
         <div
             class="placed-decor ${piece.id === selectedId ? "is-selected" : ""} ${asset.plain ? "placed-decor--plain" : ""} ${asset.floor ? "placed-decor--floor" : ""}"
             data-decor-id="${piece.id}"
-            style="left: ${piece.position_x}%; top: ${topFor(piece)}; width: ${asset.width}px; z-index: ${piece.z_index}; --scale: ${piece.scale}; --rotation: ${piece.rotation}deg${fabricStyle(piece)}"
+            style="left: ${piece.position_x}%; top: ${topFor(piece)}; width: ${asset.width}px; z-index: ${piece.z_index}; --scale: ${piece.scale}; --rotation: ${piece.rotation}deg${isFlipped(piece) ? "; --flip: -1" : ""}${fabricStyle(piece)}"
             ${arranging ? html`tabindex="0" role="button" aria-label="${asset.name}. Drag to move, or use the arrow keys."` : html`aria-hidden="true"`}
         >
             ${raw(artMarkup(asset, { live: true }))}
@@ -1279,19 +1435,22 @@ function drawBarNow() {
 
     bar.dataset.side = traySide();
     bar.dataset.folded = String(trayFolded);
+    bar.dataset.mode = panelMode;
 
-    const selected =
-        pieces.find((piece) => piece.id === selectedId);
+    const sideLabel =
+        bar.dataset.side === "left" ? "Move this panel to the right" : "Move this panel to the left";
 
     render(bar, html`
 
         <div class="arrange-bar__head">
-            <p class="arrange-bar__title">Decorate</p>
-            <button class="icon-button arrange-bar__side" type="button" data-arrange="side" aria-label="${bar.dataset.side === "left" ? "Move this panel to the right" : "Move this panel to the left"}" title="${bar.dataset.side === "left" ? "Move this panel to the right" : "Move this panel to the left"}">
-                ${art(bar.dataset.side === "left" ? "ui-chevron-right" : "ui-chevron-left")}
-            </button>
+            <button class="icon-button arrange-bar__undo" type="button" data-history="undo" aria-label="Undo" title="Undo (Ctrl+Z)" ${history.done.length ? "" : html`disabled`}><span aria-hidden="true">↶</span></button>
+            <button class="icon-button arrange-bar__redo" type="button" data-history="redo" aria-label="Redo" title="Redo (Ctrl+Shift+Z)" ${history.undone.length ? "" : html`disabled`}><span aria-hidden="true">↷</span></button>
+            <span class="arrange-bar__spacer"></span>
             <button class="icon-button arrange-bar__picture" type="button" data-arrange="picture" aria-label="Take a picture of your room" title="Take a picture of your room">
                 ${art("ui-camera")}
+            </button>
+            <button class="icon-button arrange-bar__side" type="button" data-arrange="side" aria-label="${sideLabel}" title="${sideLabel}">
+                <span aria-hidden="true">⇆</span>
             </button>
             <button class="icon-button arrange-bar__fold" type="button" data-arrange="fold" aria-expanded="${String(!trayFolded)}" aria-label="${trayFolded ? "Show the panel" : "Hide the panel"}" title="${trayFolded ? "Show the panel" : "Hide the panel"}">
                 ${art("ui-chevron-down")}
@@ -1299,26 +1458,116 @@ function drawBarNow() {
             <button class="button button--primary button--small" type="button" data-arrange="done">Done</button>
         </div>
 
-        <div class="arrange-bar__tabs" role="tablist" aria-label="Parts of the room">
-            ${DECOR_TABS.map((tab) => html`
-                <button class="arrange-bar__tab ${tab.id === paletteGroup ? "is-current" : ""}" type="button" role="tab" aria-selected="${String(tab.id === paletteGroup)}" data-decor-group="${tab.id}">
-                    <img src="assets/decor/${tab.icon.includes("/") ? tab.icon : `painted/${tab.icon}`}.webp?v=__VERSION__" alt="" draggable="false">
-                    <span>${tab.name}</span>
-                </button>
-            `)}
+        <div class="arrange-bar__modes" role="tablist" aria-label="Decorate">
+            <button class="arrange-bar__mode ${panelMode === "room" ? "is-current" : ""}" type="button" role="tab" aria-selected="${String(panelMode === "room")}" data-panel-mode="room">The room</button>
+            <button class="arrange-bar__mode ${panelMode === "pieces" ? "is-current" : ""}" type="button" role="tab" aria-selected="${String(panelMode === "pieces")}" data-panel-mode="pieces">Pieces</button>
         </div>
 
-        <label class="arrange-bar__search">
-            <span class="visually-hidden">Find a piece</span>
-            <input type="search" placeholder="Find a piece…" value="${paletteQuery}" data-palette-search autocomplete="off" enterkeyhint="search">
-        </label>
-
-        <div class="arrange-bar__palette-holder">${paletteMarkup()}</div>
+        <div class="arrange-bar__palette-holder">${panelMode === "room" ? roomMarkup() : piecesMarkup()}</div>
 
     `);
 
 }
 
+
+/*
+    The room's own choices: one section open at a time, each
+    heading saying what's chosen now.
+*/
+
+function roomMarkup() {
+
+    return html`<div class="room-sections">
+        ${ROOM_SECTIONS.map((section) => {
+
+            const now =
+                roomSummary(section.id);
+
+            // Rooms with nothing built in skip that section.
+            if (section.id === "built-in" && !now) {
+                return "";
+            }
+
+            const open =
+                roomOpen === section.id;
+
+            return html`
+                <section class="room-section ${open ? "is-open" : ""}">
+                    <button class="room-section__head" type="button" data-room-section="${section.id}" aria-expanded="${String(open)}">
+                        <span class="room-section__name">${section.name}</span>
+                        <span class="room-section__now">${now}</span>
+                        ${art("ui-chevron-down")}
+                    </button>
+                    ${open ? html`
+                        <div class="room-section__body">
+                            ${section.parts.map((part) => html`<div class="arrange-bar__room">${roomSectionMarkup(part)}</div>`)}
+                        </div>
+                    ` : ""}
+                </section>
+            `;
+
+        })}
+        <p class="arrange-bar__hint">Drag the window or the rug in the room to move them.</p>
+    </div>`;
+
+}
+
+
+/*
+    The pieces: what kind of thing, in what style, and a search
+    across them all.
+*/
+
+function piecesMarkup() {
+
+    const searching =
+        Boolean(paletteQuery.trim());
+
+    return html`
+        <label class="arrange-bar__search">
+            <span class="visually-hidden">Find a piece</span>
+            <input type="search" placeholder="Find a piece…" value="${paletteQuery}" data-palette-search autocomplete="off" enterkeyhint="search">
+        </label>
+
+        <div class="piece-filters ${searching ? "is-searching" : ""}">
+
+            <div class="piece-kinds" role="tablist" aria-label="Kinds of pieces">
+                ${PIECE_KINDS.map((kind) => html`
+                    <button class="piece-kind ${kind.id === pieceKind ? "is-current" : ""}" type="button" role="tab" aria-selected="${String(kind.id === pieceKind)}" data-piece-kind="${kind.id}">
+                        ${raw(artMarkup(assetFor(kind.icon)))}
+                        <span>${kind.name}</span>
+                    </button>
+                `)}
+            </div>
+
+            <div class="piece-styles" role="group" aria-label="Style">
+                <button class="piece-style ${pieceStyle ? "" : "is-current"}" type="button" aria-pressed="${String(!pieceStyle)}" data-piece-style="">All styles</button>
+                ${PIECE_STYLES.map((style) => html`
+                    <button class="piece-style ${style.id === pieceStyle ? "is-current" : ""}" type="button" aria-pressed="${String(style.id === pieceStyle)}" data-piece-style="${style.id}">${style.name}</button>
+                `)}
+            </div>
+
+            ${pieceStyle === "holiday" ? html`
+                <div class="piece-styles piece-styles--holidays" role="group" aria-label="Holiday">
+                    <button class="piece-style ${pieceHoliday ? "" : "is-current"}" type="button" aria-pressed="${String(!pieceHoliday)}" data-piece-holiday="">Every holiday</button>
+                    ${PIECE_HOLIDAYS.map((holiday) => html`
+                        <button class="piece-style ${holiday.id === pieceHoliday ? "is-current" : ""}" type="button" aria-pressed="${String(holiday.id === pieceHoliday)}" data-piece-holiday="${holiday.id}">${holiday.name}</button>
+                    `)}
+                </div>
+            ` : ""}
+
+        </div>
+
+        <div class="arrange-bar__palette-list">${listMarkup()}</div>
+    `;
+
+}
+
+
+// Heading for a group of pieces in the list.
+function groupHeading(group) {
+    return { rugs: "Rugs to place", cozy: "Cozy", autumn: "Autumn" }[group.id] || group.name;
+}
 
 // What's typed in the panel's search box.
 let paletteQuery = "";
@@ -1337,22 +1586,28 @@ function assetButton(asset) {
 // Words that find a piece besides its name: its group and tab.
 function searchText(asset) {
     const group = DECOR_GROUPS.find((item) => item.id === asset.group);
-    const tab = DECOR_TABS.find((item) => item.groups.includes(asset.group));
-    return `${asset.name} ${group?.name || ""} ${tab?.name || ""}`.toLowerCase();
+    const entry = catalogueEntry(asset);
+    const kind = PIECE_KINDS.find((item) => item.id === entry.kind);
+    const style = PIECE_STYLES.find((item) => item.id === entry.style);
+    return `${asset.name} ${group?.name || ""} ${kind?.name || ""} ${style?.name || ""}`.toLowerCase();
 }
 
-function paletteMarkup() {
+function listMarkup() {
 
     const query =
         paletteQuery.trim().toLowerCase();
 
+    const shown =
+        (asset) => asset.group !== "retired";
+
+    // Searching looks through every piece, whatever's chosen.
     if (query) {
 
         const words =
             query.split(/\s+/);
 
         const found =
-            DECOR_ASSETS.filter((asset) => asset.group !== "retired" && words.every((word) => searchText(asset).includes(word)));
+            DECOR_ASSETS.filter((asset) => shown(asset) && words.every((word) => searchText(asset).includes(word)));
 
         return html`<div class="arrange-bar__palette" aria-label="Pieces found">
             <p class="arrange-bar__group">${found.length ? `${found.length} found` : "Nothing found"}</p>
@@ -1361,27 +1616,39 @@ function paletteMarkup() {
 
     }
 
-    const tab =
-        tabFor(paletteGroup) || DECOR_TABS[0];
+    const fits = (asset) => {
+        const entry = catalogueEntry(asset);
+        return entry.kind === pieceKind
+            && (!pieceStyle || entry.style === pieceStyle)
+            && (!pieceHoliday || entry.holiday === pieceHoliday);
+    };
+
+    const list =
+        DECOR_ASSETS.filter((asset) => shown(asset) && fits(asset));
+
+    const kind =
+        PIECE_KINDS.find((item) => item.id === pieceKind);
+
+    if (!list.length) {
+        return html`<p class="arrange-bar__empty">No ${pieceStyle === "holiday" ? (PIECE_HOLIDAYS.find((item) => item.id === pieceHoliday)?.name || "holiday") : (PIECE_STYLES.find((item) => item.id === pieceStyle)?.name || "").toLowerCase()} ${kind.name.toLowerCase()} yet. Try another style.</p>`;
+    }
 
     const recent =
-        recentlyUsed().map(assetFor).filter((asset) => asset && asset.group !== "retired" && tab.groups.includes(asset.group));
+        recentlyUsed().map(assetFor).filter((asset) => asset && shown(asset) && fits(asset));
 
-    const groups =
-        tabGroups(tab.id);
-
-    return html`<div class="arrange-bar__palette" aria-label="${tab.name}">
-        <p class="arrange-bar__heading">${tab.name}</p>
-        <p class="arrange-bar__hint">${tab.hint} Tap a piece to add it, or drag it into the room.</p>
-        ${tab.room.map((section) => html`<div class="arrange-bar__room">${roomSectionMarkup(section)}</div>`)}
+    return html`<div class="arrange-bar__palette" aria-label="${kind.name}">
+        <p class="arrange-bar__hint">Tap a piece to add it, or drag it into the room.</p>
         ${recent.length > 1 ? html`
             <p class="arrange-bar__group">Recently used</p>
             <ul class="arrange-bar__assets">${recent.map(assetButton)}</ul>
         ` : ""}
-        ${groups.map((group) => html`
-            <p class="arrange-bar__group">${group.id === "rugs" ? "Rugs to place" : group.name}</p>
-            <ul class="arrange-bar__assets">${DECOR_ASSETS.filter((asset) => asset.group === group.id).map(assetButton)}</ul>
-        `)}
+        ${DECOR_GROUPS.map((group) => {
+            const inGroup = list.filter((asset) => asset.group === group.id);
+            return inGroup.length ? html`
+                <p class="arrange-bar__group">${groupHeading(group)}</p>
+                <ul class="arrange-bar__assets">${inGroup.map(assetButton)}</ul>
+            ` : "";
+        })}
     </div>`;
 
 }
@@ -1397,12 +1664,14 @@ function onPaletteSearch(event) {
 
     paletteQuery = input.value;
 
-    const holder =
-        bar.querySelector(".arrange-bar__palette-holder");
+    const list =
+        bar.querySelector(".arrange-bar__palette-list");
 
-    if (holder) {
-        render(holder, paletteMarkup());
+    if (list) {
+        render(list, listMarkup());
     }
+
+    bar.querySelector(".piece-filters")?.classList.toggle("is-searching", Boolean(paletteQuery.trim()));
 
 }
 
@@ -1509,6 +1778,206 @@ async function duplicate(piece) {
 let editor = null;
 let editorFrame = 0;
 
+// The chosen piece's hand controls (size, turn, nudge), folded
+// away under More unless they were wanted.
+let toolsMore = false;
+
+// The handles drawn on the chosen piece: one to resize, one to turn.
+let handles = null;
+
+function drawHandles(piece) {
+
+    if (!piece || !arranging) {
+        handles?.remove();
+        handles = null;
+        return;
+    }
+
+    if (!handles) {
+        document.body.insertAdjacentHTML("beforeend", `
+            <div class="piece-handles" aria-hidden="true">
+                <span class="piece-handles__stem"></span>
+                <button class="piece-handle piece-handle--turn" type="button" tabindex="-1" data-handle="turn" title="Drag to turn"></button>
+                <button class="piece-handle piece-handle--size" type="button" tabindex="-1" data-handle="size" title="Drag to resize"></button>
+            </div>
+        `);
+        handles = document.body.lastElementChild;
+        handles.addEventListener("pointerdown", onHandleDown);
+    }
+
+}
+
+
+// Puts the handles on the chosen piece's corner and crown,
+// turned with it.
+function placeHandles(target) {
+
+    if (!handles) {
+        return;
+    }
+
+    const piece =
+        pieces.find((item) => item.id === selectedId);
+
+    if (!target || !piece) {
+        handles.hidden = true;
+        return;
+    }
+
+    const box =
+        target.getBoundingClientRect();
+
+    const centre = {
+        x: box.left + box.width / 2,
+        y: box.top + box.height / 2
+    };
+
+    const halfWidth =
+        target.offsetWidth * piece.scale / 2 + 6;
+
+    const halfHeight =
+        target.offsetHeight * piece.scale / 2 + 6;
+
+    const turn =
+        piece.rotation * Math.PI / 180;
+
+    // Kept on the screen, even for a piece up by the ceiling.
+    const at = (x, y) => ({
+        x: clamp(centre.x + x * Math.cos(turn) - y * Math.sin(turn), 16, window.innerWidth - 16),
+        y: clamp(centre.y + x * Math.sin(turn) + y * Math.cos(turn), 16, window.innerHeight - 16)
+    });
+
+    const corner =
+        at(halfWidth, halfHeight);
+
+    const crown =
+        at(0, -halfHeight - 26);
+
+    const top =
+        at(0, -halfHeight);
+
+    handles.hidden = false;
+
+    handles.style.setProperty("--size-x", `${corner.x}px`);
+    handles.style.setProperty("--size-y", `${corner.y}px`);
+    handles.style.setProperty("--turn-x", `${crown.x}px`);
+    handles.style.setProperty("--turn-y", `${crown.y}px`);
+    handles.style.setProperty("--stem-x", `${top.x}px`);
+    handles.style.setProperty("--stem-y", `${top.y}px`);
+    handles.style.setProperty("--stem-turn", `${piece.rotation}deg`);
+
+}
+
+
+// Dragging a handle: resize from the middle, or turn about it.
+function onHandleDown(event) {
+
+    const handle =
+        event.target.closest("[data-handle]");
+
+    const piece =
+        pieces.find((item) => item.id === selectedId);
+
+    const element =
+        piece && room.querySelector(`[data-decor-id="${piece.id}"]`);
+
+    if (!handle || !piece || !element || event.button > 0) {
+        return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    const kind =
+        handle.dataset.handle;
+
+    const box =
+        element.getBoundingClientRect();
+
+    const centre = {
+        x: box.left + box.width / 2,
+        y: box.top + box.height / 2
+    };
+
+    const before =
+        snapshot(piece);
+
+    const start = {
+        scale: piece.scale,
+        rotation: piece.rotation,
+        reach: Math.max(12, Math.hypot(event.clientX - centre.x, event.clientY - centre.y)),
+        angle: Math.atan2(event.clientY - centre.y, event.clientX - centre.x) * 180 / Math.PI
+    };
+
+    try {
+        handle.setPointerCapture(event.pointerId);
+    }
+    catch {
+        // The pointer already lifted.
+    }
+
+    draggingPiece = true;
+    document.documentElement.classList.add("is-dragging-piece", "is-adjusting-piece");
+    element.classList.add("is-adjusting");
+
+    const move = (moveEvent) => {
+
+        if (moveEvent.pointerId !== event.pointerId) {
+            return;
+        }
+
+        if (kind === "size") {
+            const reach = Math.hypot(moveEvent.clientX - centre.x, moveEvent.clientY - centre.y);
+            adjust(piece, { scale: start.scale * reach / start.reach });
+            return;
+        }
+
+        let rotation =
+            start.rotation + Math.atan2(moveEvent.clientY - centre.y, moveEvent.clientX - centre.x) * 180 / Math.PI - start.angle;
+
+        rotation = ((rotation + 540) % 360) - 180;
+
+        // Close to straight, it settles straight; with Shift, in steps.
+        if (moveEvent.shiftKey) {
+            rotation = Math.round(rotation / 15) * 15;
+        }
+        else if (Math.abs(rotation) < 4) {
+            rotation = 0;
+        }
+
+        adjust(piece, { rotation });
+
+    };
+
+    const stop = (upEvent) => {
+
+        if (upEvent.pointerId !== event.pointerId) {
+            return;
+        }
+
+        window.removeEventListener("pointermove", move);
+        window.removeEventListener("pointerup", stop);
+        window.removeEventListener("pointercancel", stop);
+
+        draggingPiece = false;
+        document.documentElement.classList.remove("is-dragging-piece", "is-adjusting-piece");
+        element.classList.remove("is-adjusting");
+
+        const after =
+            snapshot(piece);
+
+        if (!same(before, after)) {
+            remember({ kind: "change", id: piece.id, before, after });
+        }
+
+    };
+
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", stop);
+    window.addEventListener("pointercancel", stop);
+
+}
+
 function drawEditor() {
 
     const selected =
@@ -1517,6 +1986,7 @@ function drawEditor() {
     if (!arranging || (!selected && !selectedBuiltIn)) {
         editor?.remove();
         editor = null;
+        drawHandles(null);
         cancelAnimationFrame(editorFrame);
         return;
     }
@@ -1527,40 +1997,47 @@ function drawEditor() {
         editor.addEventListener("click", onBarClick);
     }
 
+    const asset =
+        selected ? assetFor(selected.asset_id) : null;
+
     render(editor, html`
-        <button class="icon-button piece-editor__close" type="button" data-arrange="deselect" aria-label="Close">${art("ui-close")}</button>
         ${selectedBuiltIn ? html`
             <div class="arrange-bar__tools arrange-bar__tools--built-in">
+                <button class="icon-button piece-editor__close" type="button" data-arrange="deselect" aria-label="Close">${art("ui-close")}</button>
                 <span class="arrange-bar__selected">${selectedBuiltIn.name}</span>
-                <p class="arrange-bar__built-in-note">This came with the room. Take it out to make space for your own pieces; you can put it back from the Furniture tab.</p>
+                <p class="arrange-bar__built-in-note">This came with the room. Take it out to make space for your own pieces; you can put it back from The room → Built into the room.</p>
                 <button class="button button--small arrange-bar__remove-built-in" type="button" data-arrange="remove-built-in">${art("ui-trash")} Take it out of the room</button>
             </div>
         ` : ""}
 
-        ${selected ? html`<div class="arrange-bar__tools">
-            <span class="arrange-bar__selected">${selected ? assetFor(selected.asset_id)?.name : ""}</span>
-            <div class="piece-editor__grid">
-                <div class="piece-editor__row" role="group" aria-label="Size and turn">
-                    <button class="piece-editor__button" type="button" data-arrange="smaller" aria-label="Smaller" title="Smaller"><b>−</b><small>Smaller</small></button>
-                    <button class="piece-editor__button" type="button" data-arrange="bigger" aria-label="Bigger" title="Bigger"><b>+</b><small>Bigger</small></button>
-                    <button class="piece-editor__button" type="button" data-arrange="tilt-left" aria-label="Turn left" title="Turn left"><b>↺</b><small>Turn</small></button>
-                    <button class="piece-editor__button" type="button" data-arrange="tilt-right" aria-label="Turn right" title="Turn right"><b>↻</b><small>Turn</small></button>
-                </div>
-                <div class="piece-editor__row" role="group" aria-label="Layer, copy and remove">
-                    <button class="piece-editor__button" type="button" data-arrange="back" aria-label="Send behind" title="Send behind"><b>⤓</b><small>Behind</small></button>
-                    <button class="piece-editor__button" type="button" data-arrange="forward" aria-label="Bring to front" title="Bring to front"><b>⤒</b><small>Front</small></button>
-                    <button class="piece-editor__button" type="button" data-arrange="duplicate" aria-label="Make a copy" title="Make a copy"><b>⧉</b><small>Copy</small></button>
-                    <button class="piece-editor__button piece-editor__button--remove" type="button" data-arrange="remove" aria-label="Remove" title="Remove">${art("ui-trash")}<small>Remove</small></button>
-                </div>
-                <div class="piece-editor__nudge" role="group" aria-label="Move a little">
-                    <button class="piece-editor__arrow" type="button" data-arrange="nudge-up" aria-label="Move up a little">▲</button>
-                    <button class="piece-editor__arrow" type="button" data-arrange="nudge-left" aria-label="Move left a little">◀</button>
-                    <button class="piece-editor__arrow" type="button" data-arrange="nudge-right" aria-label="Move right a little">▶</button>
-                    <button class="piece-editor__arrow" type="button" data-arrange="nudge-down" aria-label="Move down a little">▼</button>
-                </div>
+        ${selected ? html`<div class="piece-tools">
+            <p class="piece-tools__name">${asset?.name || ""}</p>
+            <div class="piece-tools__row" role="group" aria-label="This piece">
+                <button class="piece-tool" type="button" data-arrange="flip" aria-pressed="${String(isFlipped(selected))}" title="Flip it to face the other way"><b aria-hidden="true">⇋</b><small>Flip</small></button>
+                <button class="piece-tool" type="button" data-arrange="duplicate" title="Make a copy"><b aria-hidden="true">⧉</b><small>Copy</small></button>
+                <button class="piece-tool" type="button" data-arrange="forward" title="Bring it in front of other pieces"><b aria-hidden="true">⤒</b><small>Front</small></button>
+                <button class="piece-tool" type="button" data-arrange="back" title="Send it behind other pieces"><b aria-hidden="true">⤓</b><small>Back</small></button>
+                <button class="piece-tool piece-tool--remove" type="button" data-arrange="remove" title="Remove it from the room">${art("ui-trash")}<small>Remove</small></button>
+                <button class="piece-tool piece-tool--more" type="button" data-arrange="more" aria-expanded="${String(toolsMore)}" title="Size, turn and nudge by hand"><b aria-hidden="true">⋯</b><small>More</small></button>
             </div>
-            <p class="piece-editor__tip">Drag it to move it. With two fingers, pinch to resize or twist to turn.</p>
-            ${selected && assetFor(selected.asset_id)?.tint ? html`
+            ${toolsMore ? html`
+                <div class="piece-tools__more">
+                    <div class="piece-tools__row" role="group" aria-label="Size and turn">
+                        <button class="piece-tool" type="button" data-arrange="smaller" aria-label="Smaller" title="Smaller"><b aria-hidden="true">−</b><small>Smaller</small></button>
+                        <button class="piece-tool" type="button" data-arrange="bigger" aria-label="Bigger" title="Bigger"><b aria-hidden="true">+</b><small>Bigger</small></button>
+                        <button class="piece-tool" type="button" data-arrange="tilt-left" aria-label="Turn left" title="Turn left"><b aria-hidden="true">↺</b><small>Turn</small></button>
+                        <button class="piece-tool" type="button" data-arrange="tilt-right" aria-label="Turn right" title="Turn right"><b aria-hidden="true">↻</b><small>Turn</small></button>
+                        <button class="piece-tool" type="button" data-arrange="straighten" aria-label="Straighten" title="Straighten"><b aria-hidden="true">⊥</b><small>Straight</small></button>
+                    </div>
+                    <div class="piece-tools__row piece-tools__row--nudge" role="group" aria-label="Move a little">
+                        <button class="piece-tool" type="button" data-arrange="nudge-left" aria-label="Move left a little"><b aria-hidden="true">◀</b></button>
+                        <button class="piece-tool" type="button" data-arrange="nudge-up" aria-label="Move up a little"><b aria-hidden="true">▲</b></button>
+                        <button class="piece-tool" type="button" data-arrange="nudge-down" aria-label="Move down a little"><b aria-hidden="true">▼</b></button>
+                        <button class="piece-tool" type="button" data-arrange="nudge-right" aria-label="Move right a little"><b aria-hidden="true">▶</b></button>
+                    </div>
+                </div>
+            ` : ""}
+            ${asset?.tint ? html`
                 <div class="arrange-bar__fabrics" role="group" aria-label="Fabric colour">
                     <button class="arrange-bar__fabric arrange-bar__fabric--own ${fabricFor(selected) ? "" : "is-current"}" type="button" data-fabric="" title="Its own colours" aria-label="Its own colours"></button>
                     ${FABRICS.map((fabric) => html`
@@ -1568,9 +2045,12 @@ function drawEditor() {
                     `)}
                 </div>
             ` : ""}
+            <p class="piece-tools__tip">Drag it to move it. Pull the corner handle to resize, the top one to turn.</p>
         </div>` : ""}
 
     `);
+
+    drawHandles(selected);
 
     placeEditor();
 
@@ -1620,6 +2100,7 @@ function placeEditor() {
         const high =
             box.top + box.height / 2 < window.innerHeight * 0.45;
 
+        editor.style.maxWidth = `${Math.round(to - from)}px`;
         editor.style.left = `${Math.round(from + (to - from - width) / 2)}px`;
         editor.style.top = high ? `${Math.round(window.innerHeight - editor.offsetHeight - 8)}px` : "8px";
 
@@ -1642,11 +2123,13 @@ function placeEditor() {
         let left =
             box.left + box.width / 2 - width / 2;
 
+        // Below the piece, clear of its corner handle; above it
+        // (clear of the turning handle) when there's no room below.
         let top =
-            box.top - height - margin;
+            box.bottom + margin + 14;
 
-        if (top < 64) {
-            top = box.bottom + margin;
+        if (top + height > window.innerHeight - 8) {
+            top = box.top - height - margin - 40;
         }
 
         left = clamp(left, 8, window.innerWidth - width - 8);
@@ -1656,6 +2139,8 @@ function placeEditor() {
         editor.style.top = `${Math.round(top)}px`;
 
     }
+
+    placeHandles(selectedId ? target : null);
 
     editorFrame = requestAnimationFrame(placeEditor);
 
@@ -2239,37 +2724,15 @@ function forgetHistory() {
 
 
 // The Undo and Redo buttons, floating over the room while arranging.
-let historyBar = null;
-
+// Undo and redo sit in the panel's header.
 function drawHistory() {
 
-    if (!arranging) {
-        historyBar?.remove();
-        historyBar = null;
+    if (!bar) {
         return;
     }
 
-    if (!historyBar) {
-
-        document.body.insertAdjacentHTML("beforeend", `
-            <div class="arrange-history" role="group" aria-label="Undo and redo">
-                <button class="icon-button" type="button" data-history="undo" aria-label="Undo" title="Undo (Ctrl+Z)">↶</button>
-                <button class="icon-button" type="button" data-history="redo" aria-label="Redo" title="Redo (Ctrl+Shift+Z)">↷</button>
-            </div>
-        `);
-
-        historyBar = document.body.lastElementChild;
-
-        historyBar.addEventListener("click", (event) => {
-            const which = event.target.closest("[data-history]")?.dataset.history;
-            if (which === "undo") undo();
-            if (which === "redo") redo();
-        });
-
-    }
-
-    historyBar.querySelector("[data-history=undo]").disabled = !history.done.length;
-    historyBar.querySelector("[data-history=redo]").disabled = !history.undone.length;
+    bar.querySelector("[data-history=undo]")?.toggleAttribute("disabled", !history.done.length);
+    bar.querySelector("[data-history=redo]")?.toggleAttribute("disabled", !history.undone.length);
 
 }
 
@@ -2440,15 +2903,81 @@ function onBarClick(event) {
         return;
     }
 
-    const tab =
-        event.target.closest("[data-decor-group]");
+    const step =
+        event.target.closest("[data-history]")?.dataset.history;
 
-    if (tab) {
-        paletteGroup = tab.dataset.decorGroup;
-        paletteQuery = "";
-        drawBar();
-        bar.querySelector(`[data-decor-group="${paletteGroup}"]`)?.focus();
+    if (step) {
+        step === "undo" ? undo() : redo();
         return;
+    }
+
+    const mode =
+        event.target.closest("[data-panel-mode]")?.dataset.panelMode;
+
+    if (mode) {
+        panelMode = mode;
+        keepPanel();
+        drawBar();
+        bar.querySelector(`[data-panel-mode="${mode}"]`)?.focus();
+        return;
+    }
+
+    const section =
+        event.target.closest("[data-room-section]")?.dataset.roomSection;
+
+    if (section) {
+        roomOpen = roomOpen === section ? "" : section;
+        drawBar();
+        const head = bar.querySelector(`[data-room-section="${section}"]`);
+        head?.focus();
+        head?.scrollIntoView({ block: "nearest" });
+        return;
+    }
+
+    const filter =
+        event.target.closest("[data-piece-kind], [data-piece-style], [data-piece-holiday]");
+
+    if (filter) {
+
+        if (filter.dataset.pieceKind) {
+            pieceKind = filter.dataset.pieceKind;
+        }
+
+        else if (filter.dataset.pieceStyle !== undefined) {
+            pieceStyle = filter.dataset.pieceStyle;
+            pieceHoliday = "";
+        }
+
+        else {
+            pieceHoliday = filter.dataset.pieceHoliday;
+        }
+
+        paletteQuery = "";
+        keepPanel();
+
+        const scrolled =
+            bar.querySelector(".arrange-bar__palette-holder")?.scrollTop || 0;
+
+        drawBar();
+
+        const holder =
+            bar.querySelector(".arrange-bar__palette-holder");
+
+        const filters =
+            holder?.querySelector(".piece-filters");
+
+        // Keep the filters where they were; the list starts again.
+        if (holder) {
+            holder.scrollTop = Math.min(scrolled, filters ? filters.offsetTop + filters.offsetHeight - holder.clientHeight / 3 : 0);
+        }
+
+        const again =
+            filter.dataset.pieceKind ? `[data-piece-kind="${pieceKind}"]` : filter.dataset.pieceStyle !== undefined ? `[data-piece-style="${pieceStyle}"]` : `[data-piece-holiday="${pieceHoliday}"]`;
+
+        bar.querySelector(again)?.focus({ preventScroll: true });
+
+        return;
+
     }
 
     if (onRoomPanelClick(event)) {
@@ -2497,7 +3026,7 @@ function onBarClick(event) {
 
     if (action === "remove-built-in" && selectedBuiltIn) {
         toggleBuiltIn(selectedBuiltIn.id);
-        toast(`${selectedBuiltIn.name} taken out. Put it back any time from the Room tab.`);
+        toast(`${selectedBuiltIn.name} taken out. Put it back any time from The room → Built into the room.`);
         selectBuiltIn(null);
         return;
     }
@@ -2540,7 +3069,7 @@ function onBarClick(event) {
 
             const before = snapshot(tinted);
 
-            tinted.decoration_type = fabricButton.dataset.fabric ? `tint:${fabricButton.dataset.fabric}` : "ornament";
+            tinted.decoration_type = withLook(tinted, { tint: fabricButton.dataset.fabric || null });
 
             remember({ kind: "change", id: tinted.id, before, after: snapshot(tinted) });
 
@@ -2561,7 +3090,22 @@ function onBarClick(event) {
         return;
     }
 
+    if (action === "more") {
+        toolsMore = !toolsMore;
+        drawEditor();
+        editor?.querySelector("[data-arrange=more]")?.focus();
+        return;
+    }
+
+    if (action === "flip") {
+        changePiece(piece, { decoration_type: withLook(piece, { flip: !isFlipped(piece) }) }, null);
+        draw();
+        editor?.querySelector("[data-arrange=flip]")?.focus();
+        return;
+    }
+
     const changes = {
+        straighten: { rotation: 0 },
         smaller: { scale: piece.scale - 0.15 },
         bigger: { scale: piece.scale + 0.15 },
         "tilt-left": { rotation: piece.rotation - 8 },
@@ -2759,11 +3303,10 @@ function onPointerDown(event) {
 
     event.preventDefault();
 
-    // A piece moves only once it's been picked: the first touch
-    // just selects it, so nothing else gets bumped by accident.
+    // Picked up and moved in one go. It only moves once the
+    // finger really travels (below), so a tap just chooses it.
     if (selectedId !== piece.id) {
         select(piece.id);
-        return;
     }
 
     element.classList.remove("is-new");
@@ -3187,8 +3730,15 @@ function onKeyDown(event) {
         return;
     }
 
+    // Escape lets go of the chosen piece; again, finishes.
     if (event.key === "Escape") {
-        setArranging(false);
+        if (selectedId || selectedBuiltIn) {
+            selectBuiltIn(null);
+            select(null);
+        }
+        else {
+            setArranging(false);
+        }
         return;
     }
 
@@ -3279,9 +3829,9 @@ export function setArranging(on) {
 
     drawHistory();
 
-    // Start at the open tab, at the top of its choices.
+    // Start at the panel's choice of room or pieces.
     if (on) {
-        bar?.querySelector(".arrange-bar__tab.is-current")?.focus({ preventScroll: true });
+        bar?.querySelector(".arrange-bar__mode.is-current")?.focus({ preventScroll: true });
     }
 
 }

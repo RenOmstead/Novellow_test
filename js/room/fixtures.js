@@ -1295,6 +1295,57 @@ export function roomSectionMarkup(section) {
 
 
 /*
+    What's chosen for one part of the room, in a few words, for
+    the heading of its section in the decorating panel.
+*/
+
+export function roomSummary(section) {
+
+    const fixtures =
+        getFixtures();
+
+    const name = (kind, id) =>
+        CHOICES[kind].find((choice) => choice.id === id)?.name || "";
+
+    const theme =
+        document.documentElement.dataset.theme;
+
+    switch (section) {
+
+        case "wallpaper":
+            return name("wallpaper", fixtures.wallpaper);
+
+        case "floor":
+            return [name("floor", fixtures.floor), fixtures.rug === "none" ? "" : name("rug", fixtures.rug)].filter(Boolean).join(", ");
+
+        case "window":
+            return fixtures.window === "none" ? name("window", "none") : [name("window", fixtures.window), fixtures.curtains === "none" ? "" : name("curtains", fixtures.curtains)].filter(Boolean).join(", ");
+
+        case "outside":
+            return [name("time", fixtures.time), fixtures.weather === "room" ? "" : name("weather", fixtures.weather)].filter(Boolean).join(", ");
+
+        case "light":
+            return name("light", fixtures.light);
+
+        case "bookcase":
+            return name("case", fixtures.case);
+
+        case "built-in": {
+            const hidden = new Set(String(fixtures.hidden || "").split(",").filter(Boolean));
+            const parts = BUILT_IN.filter((part) => part.rooms.includes(theme));
+            const kept = parts.filter((part) => !hidden.has(part.id)).length;
+            return parts.length ? `${kept} of ${parts.length} in the room` : "";
+        }
+
+        default:
+            return "";
+
+    }
+
+}
+
+
+/*
     A click on one of the room's own choices in the panel.
     Returns true when it was one of ours, so the panel can
     redraw.

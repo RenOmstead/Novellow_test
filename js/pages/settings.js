@@ -257,7 +257,7 @@ function renderPage() {
                                 <option value="on" ${rain === "on" ? html`selected` : ""}>Always raining</option>
                                 <option value="off" ${rain === "off" ? html`selected` : ""}>Never raining</option>
                             </select>
-                            <span class="field__hint">For snow, or different weather in each room, choose <strong>Weather</strong> in the decorating panel's Window tab.</span>
+                            <span class="field__hint">For snow, or different weather in each room, choose it in the decorating panel: <strong>The room → View and weather</strong>.</span>
                         </label>
 
                         <label class="field">
