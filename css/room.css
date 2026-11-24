@@ -2361,27 +2361,32 @@ html.room-compact .room-floor {
 
 /* =========================================================
    A PHONE HELD SIDEWAYS
-   The same room as on a computer, just smaller: laid out at a
-   computer's room height (js/room/fit-room.js → --room-scale)
-   and scaled down to fit, so everything stands exactly where it
-   was arranged.
+   The same room as on a laptop, shrunk whole to fit like a
+   picture (js/room/fit-room.js → --room-scale): every piece,
+   the window and the bookcase in the same proportions. A wider
+   screen shows a little more wall and floor at its sides.
 ========================================================= */
 
 html.room-scaled .library-room {
     zoom: var(--room-scale, 1);
 
-    height: calc((100dvh - var(--header-h, var(--header-height))) / var(--room-scale, 1));
+    height: 760px;
     min-height: 0;
+
+    /* The laptop's room in the middle (its contents: the bookcase,
+       the window and every piece); the wall, floor and ceiling
+       reach the screen's edges. */
+    padding-left: var(--room-pad, 0px);
+    padding-right: var(--room-pad, 0px);
 }
 
-/* Its measures as on a computer (they'd otherwise follow the
-   phone's short screen). */
+/* The bookcase's place is measured across the laptop's room. */
 html.room-scaled .library-room > .bookcase-zone {
-    padding-top: calc(var(--ceiling-h) + max(14px, 62px * (2.2 - 1.2 * var(--case-size, 1))));
-    padding-bottom: 43px;
+    left: calc(var(--room-pad, 0px) + var(--case-x, 24.51%) * var(--room-inner, 1) - var(--case-width) * var(--case-zoom, 1) / 2);
 }
 
-/* The wallpaper (behind the room, css/themes.css) shrinks with it. */
+/* The wallpaper (behind the room, css/themes.css) shrinks with it
+   (js/room/fit-room.js works out its size). */
 html.room-scaled .app-stage::before {
-    zoom: var(--room-scale, 1);
+    background-size: var(--wall-pattern-size-scaled, var(--wall-pattern-size, auto));
 }

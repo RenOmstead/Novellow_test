@@ -81,9 +81,10 @@ function wholeHeight(bookcase) {
 
 }
 
-// The room height a phone held sideways lays the room out at
-// (about a laptop's), before it is scaled down to fit.
-const SCALED_ROOM_HEIGHT = 780;
+// The room a phone held sideways shows: a laptop's (a 13-inch
+// screen with the menu open), shrunk whole to fit, like a picture.
+const SCALED_ROOM_WIDTH = 1184;
+const SCALED_ROOM_HEIGHT = 760;
 
 export const SIDEWAYS_QUERY =
     "(orientation: landscape) and (max-height: 540px) and (max-width: 1180px)";
@@ -98,6 +99,43 @@ const UPRIGHT =
 
 const SIDEWAYS =
     window.matchMedia(SIDEWAYS_QUERY);
+
+
+/*
+    The wallpaper behind a scaled-down room (a phone held sideways)
+    shrinks with it: its pattern's size, times the room's scale.
+    Worked out again whenever the wallpaper changes.
+*/
+let wallpaperWatch = null;
+
+function scaleWallpaper() {
+
+    const root =
+        document.documentElement;
+
+    const scale =
+        Number.parseFloat(root.style.getPropertyValue("--room-scale")) || 1;
+
+    const size =
+        getComputedStyle(root).getPropertyValue("--wall-pattern-size").trim();
+
+    const scaled =
+        size.replace(/(-?[\d.]+)px/g, (_, n) => `${(Number(n) * scale).toFixed(1)}px`);
+
+    if (root.style.getPropertyValue("--wall-pattern-size-scaled") !== scaled) {
+        root.style.setProperty("--wall-pattern-size-scaled", scaled);
+    }
+
+    if (!wallpaperWatch) {
+        wallpaperWatch = new MutationObserver(() => {
+            if (root.classList.contains("room-scaled")) {
+                scaleWallpaper();
+            }
+        });
+        wallpaperWatch.observe(root, { attributes: true, attributeFilter: ["style", "data-theme"] });
+    }
+
+}
 
 
 export function startRoomFit(room) {
@@ -135,13 +173,26 @@ export function startRoomFit(room) {
         if (scaled) {
             const header =
                 document.querySelector(".scene-header, .app-header")?.getBoundingClientRect().height || 0;
-            const available =
+            const tall =
                 Math.max(200, window.innerHeight - header);
-            root.style.setProperty("--room-scale", (available / SCALED_ROOM_HEIGHT).toFixed(4));
+            const wide =
+                Math.max(200, room.parentElement?.clientWidth || window.innerWidth);
+            const scale =
+                Math.min(tall / SCALED_ROOM_HEIGHT, wide / SCALED_ROOM_WIDTH);
+            // The room's width at that scale, and the margin either side
+            // of the laptop's room within it.
+            const across =
+                wide / scale;
+            root.style.setProperty("--room-scale", scale.toFixed(4));
+            root.style.setProperty("--room-pad", `${Math.max(0, (across - SCALED_ROOM_WIDTH) / 2).toFixed(1)}px`);
+            root.style.setProperty("--room-inner", (SCALED_ROOM_WIDTH / Math.max(across, SCALED_ROOM_WIDTH)).toFixed(4));
+            scaleWallpaper();
         }
 
         else {
             root.style.removeProperty("--room-scale");
+            root.style.removeProperty("--room-pad");
+            root.style.removeProperty("--room-inner");
         }
 
         root.classList.toggle("room-compact", compact);
