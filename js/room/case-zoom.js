@@ -164,7 +164,7 @@ export function startCaseZoom(container) {
             || root.classList.contains("is-arranging-room")
             || event.detail === 0
             || !event.target.closest(".bookcase")
-            || event.target.closest(".case-zoom, .shelf-edit, .shelf-add, a, input, .shelf-welcome button")) {
+            || event.target.closest(".case-zoom, .shelf-edit, .shelf-add, a, input, .shelf-welcome button, .placed-decor:has(.fx-globe)")) {
             return;
         }
 

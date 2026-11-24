@@ -419,6 +419,31 @@ html.room-compact .journal-zone > .decor-layer[data-area="wall"] {
     font-size: 13.5px;
 }
 
+/* Decorate → The room → Bookcase → Size. */
+.room-size {
+    display: grid;
+    grid-template-columns: auto auto minmax(80px, 1fr) auto;
+    align-items: center;
+
+    gap: 8px;
+}
+
+.room-size__label {
+    font-weight: 600;
+}
+
+.room-size__end {
+    color: var(--color-ink-soft);
+
+    font-size: 12.5px;
+}
+
+.room-size input {
+    width: 100%;
+
+    accent-color: var(--color-accent, currentColor);
+}
+
 .room-choices__swatches {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));

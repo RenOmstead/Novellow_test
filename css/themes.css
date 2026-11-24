@@ -880,9 +880,3 @@ html[data-time="morning"] .window-view__scene { filter: brightness(1.05) saturat
 .reduce-motion .window-view__scene {
     animation: none;
 }
-
-@media (prefers-reduced-motion: reduce) {
-    .window-view__scene {
-        animation: none;
-    }
-}

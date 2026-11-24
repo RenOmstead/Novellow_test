@@ -15,7 +15,6 @@
 
 import { getTheme } from "../shell/themes.js?v=__VERSION__";
 import { getPreferences } from "../shell/preferences.js?v=__VERSION__";
-import { prefersReducedMotion } from "../core/helpers.js?v=__VERSION__";
 
 
 const COUNTS = {
@@ -365,7 +364,7 @@ function scheduleOddity() {
 
             const allowed =
                 root().classList.contains("ambient-oddities")
-                && !prefersReducedMotion()
+                && !document.documentElement.classList.contains("reduce-motion")
                 && !document.hidden;
 
             if (allowed) {
@@ -404,7 +403,7 @@ export function startAmbience(container) {
     // Thunder in the soundscape lights up the window first.
     document.addEventListener("novellow:lightning", () => {
 
-        if (!prefersReducedMotion()) {
+        if (!document.documentElement.classList.contains("reduce-motion")) {
             HAPPENINGS.lightning();
         }
 

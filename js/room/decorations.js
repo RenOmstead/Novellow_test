@@ -23,7 +23,7 @@ import { html, raw, render, clamp, debounce } from "../core/helpers.js?v=__VERSI
 import { art, toast, toastError } from "../core/ui.js?v=__VERSION__";
 import { takeRoomPicture } from "./capture.js?v=__VERSION__";
 import { paintedFx, isSnowGlobe } from "./painted-fx.js?v=__VERSION__";
-import { setFixtureRows, roomSectionMarkup, roomSummary, onRoomPanelClick, dragWindow, dragRug, dragCase, roomBox, builtInAt, builtInElements, toggleBuiltIn } from "./fixtures.js?v=__VERSION__";
+import { setFixtureRows, roomSectionMarkup, roomSummary, onRoomPanelClick, dragWindow, dragRug, dragCase, sizeCase, roomBox, builtInAt, builtInElements, toggleBuiltIn } from "./fixtures.js?v=__VERSION__";
 
 
 /*
@@ -1495,6 +1495,8 @@ function drawBarNow() {
 
         bar.addEventListener("click", onBarClick);
         bar.addEventListener("pointerdown", onPalettePointerDown);
+        bar.addEventListener("input", onCaseSize);
+        bar.addEventListener("change", onCaseSize);
         bar.addEventListener("input", onPaletteSearch);
 
         // Leave room under the page for the tray on a phone.
@@ -1743,6 +1745,20 @@ function listMarkup() {
     </div>`;
 
 }
+
+// Decorate → The room → Bookcase → Size: it grows as the slider
+// moves and is saved when let go.
+function onCaseSize(event) {
+
+    const slider =
+        event.target.closest?.("[data-case-size]");
+
+    if (slider) {
+        sizeCase(slider.value, { persist: event.type === "change" });
+    }
+
+}
+
 
 function onPaletteSearch(event) {
 
@@ -4061,8 +4077,9 @@ function isGlobePiece(element) {
 }
 
 function stillness() {
-    return document.documentElement.classList.contains("reduce-motion")
-        || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // Settings → Keep things still (the room's own life doesn't
+    // follow the device's setting).
+    return document.documentElement.classList.contains("reduce-motion");
 }
 
 export function shakeGlobe(element) {

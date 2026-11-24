@@ -1166,11 +1166,14 @@ select.field__input {
    Settings → Appearance switch (html.reduce-motion).
 ========================================================= */
 
+/* A device set to reduce motion calms the pages; the reading
+   room's own small life (flames, steam, snow, twinkles) follows
+   Settings → Keep things still instead. */
 @media (prefers-reduced-motion: reduce) {
 
-    *,
-    *::before,
-    *::after {
+    *:not(.library-room *, .ambience, .ambience *),
+    *:not(.library-room *, .ambience, .ambience *)::before,
+    *:not(.library-room *, .ambience, .ambience *)::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;

@@ -592,20 +592,3 @@ html[data-weather="rain"]:is([data-window="snowy-walnut"], [data-window="solstic
     filter: drop-shadow(0 -4px 12px rgba(255, 190, 110, 0.55));
 }
 
-@media (prefers-reduced-motion: reduce) {
-
-    .floating-ghost {
-        animation: none;
-
-        opacity: 0.5;
-
-        translate: calc(var(--still-x, 0) * 1vw) 0;
-    }
-
-    .ambience > :not(.fog-bank):not(.floating-ghost),
-    .window-weather__rain,
-    .window-weather__drop {
-        display: none !important;
-    }
-
-}

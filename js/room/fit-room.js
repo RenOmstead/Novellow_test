@@ -164,14 +164,22 @@ export function startRoomFit(room) {
 
             // Whole, with three shelves, about two thirds of the
             // room's height (never taller than the room allows).
+            // Made bigger or smaller while decorating (its size,
+            // js/room/fixtures.js): still whole, so never taller
+            // than the room has space for.
+            const size =
+                Number.parseFloat(getComputedStyle(room).getPropertyValue("--case-size")) || 1;
+
             const allowed =
-                Math.min(space, Math.max(300, height * CASE_HEIGHT_SHARE));
+                Math.min(space, Math.max(300, height * CASE_HEIGHT_SHARE) * size);
 
             const whole =
                 wholeHeight(bookcaseZone.querySelector(".bookcase"));
 
             const scale =
-                whole ? Math.min(CASE_MOST, Math.max(CASE_LEAST, allowed / whole)) : 0.66;
+                whole
+                    ? Math.min(CASE_MOST * size, space / whole, Math.max(CASE_LEAST * size, allowed / whole))
+                    : 0.66 * size;
 
             root.style.setProperty("--case-zoom", scale.toFixed(4));
 
@@ -313,6 +321,7 @@ export function startRoomFit(room) {
     UPRIGHT.addEventListener("change", fit);
     SIDEWAYS.addEventListener("change", fit);
     window.addEventListener("resize", fitSoon);
+    document.addEventListener("novellow:case-sized", fitSoon);
 
     if ("ResizeObserver" in window) {
         const watchSize =

@@ -2290,7 +2290,9 @@ html:not(.room-compact) .library-room > .bookcase-zone {
     align-items: stretch;
 
     /* It stands against the wall, a little back on the floor. */
-    padding: calc(var(--ceiling-h) + clamp(28px, 8dvh, 90px)) 0 clamp(30px, 5.5dvh, 56px);
+    /* Headroom under the ceiling for pieces on top; a bigger
+       bookcase (its size, js/room/fixtures.js) takes most of it. */
+    padding: calc(var(--ceiling-h) + max(14px, clamp(28px, 8dvh, 90px) * (2.2 - 1.2 * var(--case-size, 1)))) 0 clamp(30px, 5.5dvh, 56px);
 
     overflow: visible;
 

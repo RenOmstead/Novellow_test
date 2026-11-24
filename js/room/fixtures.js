@@ -534,10 +534,10 @@ function defaultsFor(theme) {
         getPreferences();
 
     if (theme === "sandbox") {
-        return { wallpaper: "plaster", floor: "oak", window: "none", wood: prefs.wood, curtains: "none", curtainColour: "room", rug: "none", rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", weather: "room", ceiling: "room", case: "walnut", hidden: "", windowX: null, windowY: null, windowRoom: false, rugX: null, rugY: null, rugRoom: false, caseX: null };
+        return { wallpaper: "plaster", floor: "oak", window: "none", wood: prefs.wood, curtains: "none", curtainColour: "room", rug: "none", rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", weather: "room", ceiling: "room", case: "walnut", hidden: "", windowX: null, windowY: null, windowRoom: false, rugX: null, rugY: null, rugRoom: false, caseX: null, caseSize: 1 };
     }
 
-    return { wallpaper: "room", floor: "room", window: prefs.window, wood: prefs.wood, curtains: prefs.curtains, curtainColour: "room", rug: prefs.rug, rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", weather: "room", ceiling: "room", case: "room", hidden: "", windowX: null, windowY: null, windowRoom: false, rugX: null, rugY: null, rugRoom: false, caseX: null };
+    return { wallpaper: "room", floor: "room", window: prefs.window, wood: prefs.wood, curtains: prefs.curtains, curtainColour: "room", rug: prefs.rug, rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", weather: "room", ceiling: "room", case: "room", hidden: "", windowX: null, windowY: null, windowRoom: false, rugX: null, rugY: null, rugRoom: false, caseX: null, caseSize: 1 };
 
 }
 
@@ -742,12 +742,57 @@ function placeCase(fixtures) {
         return;
     }
 
+    // How big it stands (Decorate → The room → Bookcase → Size);
+    // js/room/fit-room.js scales it by this.
+    const size =
+        Number(fixtures.caseSize) || 1;
+
+    if (size === 1) {
+        room.style.removeProperty("--case-size");
+    }
+
+    else {
+        room.style.setProperty("--case-size", String(size));
+    }
+
+    document.dispatchEvent(new CustomEvent("novellow:case-sized"));
+
     if (fixtures.caseX === null || fixtures.caseX === undefined) {
         room.style.removeProperty("--case-x");
         return;
     }
 
     room.style.setProperty("--case-x", `${fixtures.caseX}%`);
+
+}
+
+
+/*
+    Making the bookcase bigger or smaller: from a little smaller
+    than usual to about half again as big. Saved on its row's
+    scale, so it keeps its place and finish.
+*/
+
+export const CASE_SIZE_LEAST = 0.8;
+export const CASE_SIZE_MOST = 1.6;
+
+export function sizeCase(size, { persist = true } = {}) {
+
+    const theme =
+        themeId || document.documentElement.dataset.theme;
+
+    const fixtures = {
+        ...getFixtures(theme),
+        caseSize: Number(Math.min(CASE_SIZE_MOST, Math.max(CASE_SIZE_LEAST, Number(size) || 1)).toFixed(2))
+    };
+
+    writeCache(theme, fixtures);
+
+    placeCase(fixtures);
+
+    if (persist) {
+        save("case", fixtures.case, { scale: fixtures.caseSize });
+    }
 
 }
 
@@ -1090,6 +1135,10 @@ export function setFixtureRows(theme, fixtureRows) {
 
         if (kind === "case" && row.rotation === 2) {
             values.caseX = Number(row.position_x);
+        }
+
+        if (kind === "case" && Number(row.scale) >= 0.8 && Number(row.scale) <= 1.6) {
+            values.caseSize = Number(row.scale);
         }
 
     });
@@ -1597,6 +1646,12 @@ export function roomSectionMarkup(section) {
             return html`
                 ${swatches("case", "The bookcase", fixtures.case, (choice) => !choice.collection)}
                 ${swatches("case", "Collection bookcases", fixtures.case, (choice) => choice.collection)}
+                <label class="room-size">
+                    <span class="room-size__label">Size</span>
+                    <span class="room-size__end" aria-hidden="true">Smaller</span>
+                    <input type="range" data-case-size min="0.8" max="1.6" step="0.05" value="${Number(fixtures.caseSize) || 1}" aria-label="How big the bookcase stands">
+                    <span class="room-size__end" aria-hidden="true">Bigger</span>
+                </label>
                 <p class="room-choices__note room-choices__note--wide">On a computer or tablet, drag the bookcase along the floor to move it (the pieces on its shelves come with it), and tap it when you're not decorating to look closer.</p>
                 ${fixtures.caseX === null || fixtures.caseX === undefined ? "" : html`
                     <button class="text-button room-choices__reset" type="button" data-fixture-action="reset-case">Put the bookcase back in its usual place</button>

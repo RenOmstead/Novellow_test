@@ -147,8 +147,8 @@ export function applyAppearance(settings) {
     root.classList.toggle("reduce-motion", Boolean(settings.reduced_motion));
 
     pauseDrawnAnimations(
+        // Only Settings → Keep things still stops the room.
         Boolean(settings.reduced_motion)
-        || window.matchMedia("(prefers-reduced-motion: reduce)").matches
     );
 
     // A harmless UI cache so the right room shows before the

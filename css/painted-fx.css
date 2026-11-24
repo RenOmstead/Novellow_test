@@ -688,26 +688,11 @@ html:not(.is-arranging-room) .placed-decor:has(.fx-globe) {
     cursor: pointer;
 }
 
-/* While decorating the others hold still; a shaken globe moves. */
-.is-arranging .is-shaken .decor-art,
-.is-arranging .is-shaken .decor-art * {
-    animation-play-state: running;
-}
 
-
-/* While arranging, pieces hold still so they're easy to place. */
-.is-arranging .decor-art,
-.is-arranging .decor-art * {
-    animation-play-state: paused;
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-    .decor-art,
-    .decor-art * {
-        animation: none !important;
-    }
-
+/* Settings → Keep things still. */
+.reduce-motion .decor-art,
+.reduce-motion .decor-art * {
+    animation: none !important;
 }
 
 
@@ -716,14 +701,4 @@ html:not(.is-arranging-room) .placed-decor:has(.fx-globe) {
     opacity: 0.9;
 
     transform: translate(0, calc(var(--h) * 1cqh + 8cqh));
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-    .fx-globe b {
-        opacity: 0.9;
-
-        transform: translate(0, calc(var(--h) * 1cqh + 8cqh));
-    }
-
 }
