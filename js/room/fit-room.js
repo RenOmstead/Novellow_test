@@ -183,20 +183,12 @@ export function startRoomFit(room) {
 
             root.style.setProperty("--case-zoom", scale.toFixed(4));
 
-            room.style.removeProperty("--room-span");
-
             // Three whole shelves; any more slide inside.
             root.style.setProperty("--case-max-h", whole ? `${Math.ceil(Math.min(whole, space / scale))}px` : `${Math.floor(allowed / scale)}px`);
 
             return;
 
         }
-
-        // On a phone the whole room is the whole screen, shelves
-        // and all: pieces placed across it (js/room/fixtures.js →
-        // roomSpan) keep their places beside the shelves.
-        const journal =
-            room.querySelector(".journal-zone");
 
         // The room's side of the screen, and the scale that fits
         // the room into it. The room grows taller (more wall) or
@@ -253,14 +245,6 @@ export function startRoomFit(room) {
         root.style.setProperty("--case-zoom", Math.max(0.3, caseZoom).toFixed(4));
 
         root.style.setProperty("--case-max-h", whole ? `${Math.ceil(Math.min(whole, shelfHeight / Math.max(0.3, caseZoom)))}px` : `${Math.floor(shelfHeight / Math.max(0.3, caseZoom))}px`);
-
-        if (journal) {
-            const roomRect = room.getBoundingClientRect();
-            const journalRect = journal.getBoundingClientRect();
-            if (journalRect.width > 0) {
-                room.style.setProperty("--room-span", ((journalRect.right - roomRect.left) / journalRect.width).toFixed(4));
-            }
-        }
 
     };
 
