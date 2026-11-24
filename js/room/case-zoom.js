@@ -74,8 +74,14 @@ function place() {
     const y =
         clamp(area.height / 2 - middleY * scale, area.height - area.height * scale, 0);
 
+    // Measured on the screen; a room drawn scaled down (a phone
+    // held sideways, css/room.css → .room-scaled) moves in its own
+    // smaller pixels.
+    const zoom =
+        Number.parseFloat(getComputedStyle(room).zoom) || 1;
+
     room.style.transformOrigin = "0 0";
-    room.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+    room.style.transform = `translate(${x / zoom}px, ${y / zoom}px) scale(${scale})`;
     room.parentElement.style.overflow = "clip";
 
     root.classList.add("case-close");

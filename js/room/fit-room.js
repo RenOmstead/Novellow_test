@@ -81,6 +81,10 @@ function wholeHeight(bookcase) {
 
 }
 
+// The room height a phone held sideways lays the room out at
+// (about a laptop's), before it is scaled down to fit.
+const SCALED_ROOM_HEIGHT = 780;
+
 export const SIDEWAYS_QUERY =
     "(orientation: landscape) and (max-height: 540px) and (max-width: 1180px)";
 
@@ -116,8 +120,29 @@ export function startRoomFit(room) {
         const sideways =
             SIDEWAYS.matches;
 
+        // A phone held sideways shows the very room a computer does,
+        // laid out at a computer's room height and scaled down to
+        // fit (css/room.css → .room-scaled), so every piece, the
+        // window and the bookcase stand exactly where they were put.
+        const scaled =
+            sideways;
+
         const compact =
-            sideways || UPRIGHT.matches;
+            !scaled && UPRIGHT.matches;
+
+        root.classList.toggle("room-scaled", scaled);
+
+        if (scaled) {
+            const header =
+                document.querySelector(".scene-header, .app-header")?.getBoundingClientRect().height || 0;
+            const available =
+                Math.max(200, window.innerHeight - header);
+            root.style.setProperty("--room-scale", (available / SCALED_ROOM_HEIGHT).toFixed(4));
+        }
+
+        else {
+            root.style.removeProperty("--room-scale");
+        }
 
         root.classList.toggle("room-compact", compact);
         root.classList.toggle("room-sideways", sideways);

@@ -2357,3 +2357,31 @@ html.room-compact .wall-art {
 html.room-compact .room-floor {
     --rug-least: 12%;
 }
+
+
+/* =========================================================
+   A PHONE HELD SIDEWAYS
+   The same room as on a computer, just smaller: laid out at a
+   computer's room height (js/room/fit-room.js → --room-scale)
+   and scaled down to fit, so everything stands exactly where it
+   was arranged.
+========================================================= */
+
+html.room-scaled .library-room {
+    zoom: var(--room-scale, 1);
+
+    height: calc((100dvh - var(--header-h, var(--header-height))) / var(--room-scale, 1));
+    min-height: 0;
+}
+
+/* Its measures as on a computer (they'd otherwise follow the
+   phone's short screen). */
+html.room-scaled .library-room > .bookcase-zone {
+    padding-top: calc(var(--ceiling-h) + max(14px, 62px * (2.2 - 1.2 * var(--case-size, 1))));
+    padding-bottom: 43px;
+}
+
+/* The wallpaper (behind the room, css/themes.css) shrinks with it. */
+html.room-scaled .app-stage::before {
+    zoom: var(--room-scale, 1);
+}
