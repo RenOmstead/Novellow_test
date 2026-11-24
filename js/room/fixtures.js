@@ -534,10 +534,10 @@ function defaultsFor(theme) {
         getPreferences();
 
     if (theme === "sandbox") {
-        return { wallpaper: "plaster", floor: "oak", window: "none", wood: prefs.wood, curtains: "none", curtainColour: "room", rug: "none", rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", weather: "room", ceiling: "room", case: "walnut", hidden: "", windowX: null, windowY: null, windowRoom: false, rugX: null, rugY: null, rugRoom: false, caseX: null, caseSize: 1 };
+        return { wallpaper: "plaster", floor: "oak", window: "none", wood: prefs.wood, curtains: "none", curtainColour: "room", rug: "none", rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", weather: "room", ceiling: "room", case: "walnut", hidden: "", windowX: null, windowY: null, windowRoom: false, rugX: null, rugY: null, rugRoom: false, caseX: null, caseSize: 1, windowSize: 1, frame: "" };
     }
 
-    return { wallpaper: "room", floor: "room", window: prefs.window, wood: prefs.wood, curtains: prefs.curtains, curtainColour: "room", rug: prefs.rug, rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", weather: "room", ceiling: "room", case: "room", hidden: "", windowX: null, windowY: null, windowRoom: false, rugX: null, rugY: null, rugRoom: false, caseX: null, caseSize: 1 };
+    return { wallpaper: "room", floor: "room", window: prefs.window, wood: prefs.wood, curtains: prefs.curtains, curtainColour: "room", rug: prefs.rug, rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", weather: "room", ceiling: "room", case: "room", hidden: "", windowX: null, windowY: null, windowRoom: false, rugX: null, rugY: null, rugRoom: false, caseX: null, caseSize: 1, windowSize: 1, frame: "" };
 
 }
 
@@ -682,6 +682,8 @@ export function applyFixtures(theme = document.documentElement.dataset.theme) {
 
     placeCase(fixtures);
 
+    placeFrame(fixtures);
+
 }
 
 
@@ -772,6 +774,110 @@ function placeCase(fixtures) {
     than usual to about half again as big. Saved on its row's
     scale, so it keeps its place and finish.
 */
+
+// Whether the reader's own rows have arrived (so their room's
+// frame is known before a new one is saved).
+let rowsLoaded = false;
+
+
+/*
+    The window's size (Decorate → The room → Window → Size), saved
+    on its row's scale, and the room's frame (above) applied: set
+    on the page for css/room.css and js/room/fit-room.js.
+*/
+
+export const WINDOW_SIZE_LEAST = 0.6;
+export const WINDOW_SIZE_MOST = 1.8;
+
+function placeFrame(fixtures) {
+
+    const root =
+        document.documentElement;
+
+    const size =
+        Number(fixtures.windowSize) || 1;
+
+    if (size === 1) {
+        root.style.removeProperty("--window-size");
+    }
+
+    else {
+        root.style.setProperty("--window-size", String(size));
+    }
+
+    const [w, h, ww, vh] =
+        String(fixtures.frame || "").split("x").map(Number);
+
+    if (w > 600 && h > 300) {
+        root.style.setProperty("--frame-w", `${w}px`);
+        root.style.setProperty("--frame-h", `${h}px`);
+        root.style.setProperty("--frame-window", `${ww || 360}px`);
+        root.style.setProperty("--frame-vh", `${(vh || 900) / 100}px`);
+    }
+
+    else {
+        ["--frame-w", "--frame-h", "--frame-window", "--frame-vh"].forEach((name) => root.style.removeProperty(name));
+    }
+
+    document.dispatchEvent(new CustomEvent("novellow:frame"));
+
+}
+
+
+export function sizeWindow(size, { persist = true } = {}) {
+
+    const theme =
+        themeId || document.documentElement.dataset.theme;
+
+    const fixtures = {
+        ...getFixtures(theme),
+        windowSize: Number(Math.min(WINDOW_SIZE_MOST, Math.max(WINDOW_SIZE_LEAST, Number(size) || 1)).toFixed(2))
+    };
+
+    writeCache(theme, fixtures);
+
+    placeFrame(fixtures);
+
+    if (persist && fixtures.window !== "none") {
+        save("window", fixtures.window, { scale: fixtures.windowSize });
+    }
+
+}
+
+
+// On a computer, the room's frame is kept up to date (only in the
+// reader's own room, once their rows are in, and only when it has
+// really changed).
+export function recordFrame({ w, h, ww, vh }) {
+
+    if (!rowsLoaded || isVisiting() || document.body?.dataset.page !== "home") {
+        return;
+    }
+
+    const theme =
+        themeId || document.documentElement.dataset.theme;
+
+    const fixtures =
+        getFixtures(theme);
+
+    const value =
+        [w, h, ww, vh].map((n) => Math.round(n)).join("x");
+
+    const [ow, oh, oww, ovh] =
+        String(fixtures.frame || "").split("x").map(Number);
+
+    const near = (a, b) => b && Math.abs(a - b) / b < 0.015;
+
+    if (near(w, ow) && near(h, oh) && near(ww, oww) && near(vh, ovh)) {
+        return;
+    }
+
+    writeCache(theme, { ...fixtures, frame: value });
+
+    save("frame", value, { position_x: 50, position_y: 50 });
+
+}
+
 
 export const CASE_SIZE_LEAST = 0.8;
 export const CASE_SIZE_MOST = 1.6;
@@ -1111,6 +1217,15 @@ export function setFixtureRows(theme, fixtureRows) {
             return;
         }
 
+        // The reader's room as their computer shows it (its size,
+        // the window's, the screen's height), which a phone held
+        // sideways shrinks whole.
+        if (kind === "frame") {
+            rows.set(kind, row);
+            values.frame = choice || "";
+            return;
+        }
+
         if (!KINDS.includes(kind)) {
             return;
         }
@@ -1141,9 +1256,15 @@ export function setFixtureRows(theme, fixtureRows) {
             values.caseSize = Number(row.scale);
         }
 
+        if (kind === "window" && Number(row.scale) >= 0.6 && Number(row.scale) <= 1.8) {
+            values.windowSize = Number(row.scale);
+        }
+
     });
 
     writeCache(theme, values);
+
+    rowsLoaded = true;
 
     if (theme === document.documentElement.dataset.theme) {
         applyFixtures(theme);
@@ -1604,6 +1725,12 @@ export function roomSectionMarkup(section) {
                     ${fixtures.windowX === null || fixtures.windowX === undefined ? "" : html`
                         <button class="text-button room-choices__reset" type="button" data-fixture-action="reset-window">Put the window back in its usual place</button>
                     `}
+                    <label class="room-size">
+                        <span class="room-size__label">Size</span>
+                        <span class="room-size__end" aria-hidden="true">Smaller</span>
+                        <input type="range" data-window-size min="0.6" max="1.8" step="0.05" value="${Number(fixtures.windowSize) || 1}" aria-label="How big the window is">
+                        <span class="room-size__end" aria-hidden="true">Bigger</span>
+                    </label>
                     ${chips("wood", "Window frame", fixtures.wood)}
                     ${pictureTiles("curtains", "Curtains", fixtures.curtains, "assets/decor/curtains/", PAINTED_CURTAINS)}
                     ${fixtures.curtains === "none" || fixtures.curtains === "lace" ? "" : swatches("curtainColour", "Curtain colours", fixtures.curtainColour)}

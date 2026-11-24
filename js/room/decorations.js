@@ -23,7 +23,7 @@ import { html, raw, render, clamp, debounce } from "../core/helpers.js?v=__VERSI
 import { art, toast, toastError } from "../core/ui.js?v=__VERSION__";
 import { takeRoomPicture } from "./capture.js?v=__VERSION__";
 import { paintedFx, isSnowGlobe } from "./painted-fx.js?v=__VERSION__";
-import { setFixtureRows, roomSectionMarkup, roomSummary, onRoomPanelClick, dragWindow, dragRug, dragCase, sizeCase, roomBox, builtInAt, builtInElements, toggleBuiltIn } from "./fixtures.js?v=__VERSION__";
+import { setFixtureRows, roomSectionMarkup, roomSummary, onRoomPanelClick, dragWindow, dragRug, dragCase, sizeCase, sizeWindow, roomBox, builtInAt, builtInElements, toggleBuiltIn } from "./fixtures.js?v=__VERSION__";
 
 
 /*
@@ -1812,6 +1812,13 @@ function onCaseSize(event) {
 
     if (slider) {
         sizeCase(slider.value, { persist: event.type === "change" });
+    }
+
+    const windowSlider =
+        event.target.closest?.("[data-window-size]");
+
+    if (windowSlider) {
+        sizeWindow(windowSlider.value, { persist: event.type === "change" });
     }
 
 }

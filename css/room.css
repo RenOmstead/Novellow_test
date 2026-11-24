@@ -115,7 +115,7 @@
     --window-left: 22px;
     /* Wide enough for the wall, short enough that the curtains
        clear the ceiling on a short screen. */
-    --window-width: min(360px, 54cqw, max(200px, calc((100dvh - var(--header-h, 72px) - 260px) * 1.19)));
+    --window-width: calc(min(360px, 54cqw, max(200px, calc((100dvh - var(--header-h, 72px) - 260px) * 1.19))) * var(--window-size, 1));
     --window-bottom: 210px;
     --gap: min(30px, 4cqw);
     --picture-width: min(130px, 20cqw);
@@ -2370,7 +2370,9 @@ html.room-compact .room-floor {
 html.room-scaled .library-room {
     zoom: var(--room-scale, 1);
 
-    height: 760px;
+    /* The reader's own room, as their computer shows it
+       (js/room/fixtures.js → --frame-h), or a 13-inch laptop's. */
+    height: var(--frame-h, 760px);
     min-height: 0;
 
     /* The laptop's room in the middle (its contents: the bookcase,
@@ -2383,6 +2385,20 @@ html.room-scaled .library-room {
 /* The bookcase's place is measured across the laptop's room. */
 html.room-scaled .library-room > .bookcase-zone {
     left: calc(var(--room-pad, 0px) + var(--case-x, 24.51%) * var(--room-inner, 1) - var(--case-width) * var(--case-zoom, 1) / 2);
+
+    /* Its headroom as the computer's screen gives it. */
+    padding-top: calc(var(--ceiling-h) + max(14px, clamp(28px, 8 * var(--frame-vh, 9px), 90px) * (2.2 - 1.2 * var(--case-size, 1))));
+    padding-bottom: clamp(30px, 5.5 * var(--frame-vh, 9px), 56px);
+}
+
+/* The window as big as the computer draws it (its size there
+   follows that screen's height, not the phone's). */
+html.room-scaled .library-room > .journal-zone {
+    --window-width: calc(var(--frame-window, 360px) * var(--window-size, 1));
+}
+
+html.room-scaled:is(.room-view, .is-arranging-room) .library-room {
+    --floor-lift: clamp(0px, calc(28 * var(--frame-vh, 9px) - 112px), 190px);
 }
 
 /* The wallpaper (behind the room, css/themes.css) shrinks with it

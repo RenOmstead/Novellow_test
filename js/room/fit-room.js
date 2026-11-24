@@ -10,6 +10,8 @@
    window, the chair and every decoration keep their places.
 ========================================================= */
 
+import { recordFrame } from "./fixtures.js?v=__VERSION__";
+
 // The room is drawn 600 wide and at least 620 tall, then
 // scaled down to fit its side of the screen. Upright, the
 // chair tucks in front of the window so the room can be
@@ -102,6 +104,42 @@ const SIDEWAYS =
 
 
 /*
+    On a computer, the room's frame (its size, the window's size,
+    the screen's height) is saved a little after it settles, so a
+    phone held sideways can show this very room shrunk whole.
+*/
+let frameTimer = 0;
+
+function noteFrame(room) {
+
+    clearTimeout(frameTimer);
+
+    frameTimer = setTimeout(() => {
+
+        const root =
+            document.documentElement;
+
+        if (["room-compact", "room-scaled", "is-arranging-room", "room-view", "case-close"].some((name) => root.classList.contains(name))) {
+            return;
+        }
+
+        const windowEl =
+            room.querySelector(".moon-window");
+
+        const size =
+            Number.parseFloat(getComputedStyle(root).getPropertyValue("--window-size")) || 1;
+
+        const ww =
+            windowEl ? windowEl.getBoundingClientRect().width / size : 360;
+
+        recordFrame({ w: room.clientWidth, h: room.clientHeight, ww, vh: window.innerHeight });
+
+    }, 2500);
+
+}
+
+
+/*
     The wallpaper behind a scaled-down room (a phone held sideways)
     shrinks with it: its pattern's size, times the room's scale.
     Worked out again whenever the wallpaper changes.
@@ -177,15 +215,20 @@ export function startRoomFit(room) {
                 Math.max(200, window.innerHeight - header);
             const wide =
                 Math.max(200, room.parentElement?.clientWidth || window.innerWidth);
+            // The reader's own computer room if it's known.
+            const frameW =
+                Number.parseFloat(getComputedStyle(root).getPropertyValue("--frame-w")) || SCALED_ROOM_WIDTH;
+            const frameH =
+                Number.parseFloat(getComputedStyle(root).getPropertyValue("--frame-h")) || SCALED_ROOM_HEIGHT;
             const scale =
-                Math.min(tall / SCALED_ROOM_HEIGHT, wide / SCALED_ROOM_WIDTH);
+                Math.min(tall / frameH, wide / frameW);
             // The room's width at that scale, and the margin either side
             // of the laptop's room within it.
             const across =
                 wide / scale;
             root.style.setProperty("--room-scale", scale.toFixed(4));
-            root.style.setProperty("--room-pad", `${Math.max(0, (across - SCALED_ROOM_WIDTH) / 2).toFixed(1)}px`);
-            root.style.setProperty("--room-inner", (SCALED_ROOM_WIDTH / Math.max(across, SCALED_ROOM_WIDTH)).toFixed(4));
+            root.style.setProperty("--room-pad", `${Math.max(0, (across - frameW) / 2).toFixed(1)}px`);
+            root.style.setProperty("--room-inner", (frameW / Math.max(across, frameW)).toFixed(4));
             scaleWallpaper();
         }
 
@@ -258,6 +301,8 @@ export function startRoomFit(room) {
                     : 0.66 * size;
 
             root.style.setProperty("--case-zoom", scale.toFixed(4));
+
+            noteFrame(room);
 
             // Three whole shelves; any more slide inside.
             root.style.setProperty("--case-max-h", whole ? `${Math.ceil(Math.min(whole, space / scale))}px` : `${Math.floor(allowed / scale)}px`);
@@ -398,6 +443,7 @@ export function startRoomFit(room) {
     SIDEWAYS.addEventListener("change", fit);
     window.addEventListener("resize", fitSoon);
     document.addEventListener("novellow:case-sized", fitSoon);
+    document.addEventListener("novellow:frame", fitSoon);
 
     if ("ResizeObserver" in window) {
         const watchSize =
