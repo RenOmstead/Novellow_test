@@ -23,7 +23,7 @@ import { html, raw, render, clamp, debounce } from "../core/helpers.js?v=__VERSI
 import { art, toast, toastError } from "../core/ui.js?v=__VERSION__";
 import { takeRoomPicture } from "./capture.js?v=__VERSION__";
 import { paintedFx, isSnowGlobe } from "./painted-fx.js?v=__VERSION__";
-import { setFixtureRows, roomSectionMarkup, roomSummary, onRoomPanelClick, dragWindow, dragRug, builtInAt, builtInElements, toggleBuiltIn } from "./fixtures.js?v=__VERSION__";
+import { setFixtureRows, roomSectionMarkup, roomSummary, onRoomPanelClick, dragWindow, dragRug, dragCase, roomBox, builtInAt, builtInElements, toggleBuiltIn } from "./fixtures.js?v=__VERSION__";
 
 
 /*
@@ -988,11 +988,27 @@ function topFor(piece) {
 }
 
 // room_area in the database → the part of the room it hangs on.
+// "floor" is the whole room: the wall from one side to the other
+// and the floor in front of it (css/decorations.css), where pieces
+// go now the bookcase stands free. "wall" is the wall side only,
+// where pieces placed before were measured; they stay where they
+// are until they're moved, and then join the whole room.
 const AREAS = {
     bookcase_top: ".bookcase",
+    shelf: ".bookcase",
     wall: ".journal-zone",
-    shelf: ".bookcase"
+    floor: ".journal-zone"
 };
+
+// Where a dragged or new piece can land, nearest first.
+const LANDINGS = ["bookcase_top", "shelf", "floor"];
+
+// Pieces measured from the floor up (the wall side or whole room).
+const onWall = (area) => area === "wall" || area === "floor";
+
+// The bookcase stands free in the room on a computer (not on a
+// phone, where it stands beside the room at full size).
+const freeCase = () => !document.documentElement.classList.contains("room-compact");
 
 let room = null;
 let theme = "original";
@@ -2343,14 +2359,14 @@ function spotInView() {
 
     const area =
         tries.map(([x, y]) => areaAt(x, y)).find((name) => name && name !== "bookcase_top")
-        || ["wall", "shelf"].find((name) => layerShown(name));
+        || ["floor", "shelf"].find((name) => layerShown(name));
 
     if (!area) {
         return null;
     }
 
     const box =
-        room.querySelector(AREAS[area]).getBoundingClientRect();
+        area === "floor" ? areaBox("floor") : room.querySelector(AREAS[area]).getBoundingClientRect();
 
     const left = Math.max(box.left, view.left);
     const right = Math.min(box.right, view.right);
@@ -2395,7 +2411,7 @@ function onFloor(spot) {
     const lowest =
         Math.min(window.innerHeight - 12, floor.bottom - 10);
 
-    return { ...spot, area: "wall", y: clamp(spot.y, floor.top + Math.min(40, floor.height / 2), lowest) };
+    return { ...spot, area: "floor", y: clamp(spot.y, floor.top + Math.min(40, floor.height / 2), lowest) };
 
 }
 
@@ -2412,14 +2428,21 @@ function areaBox(area) {
         room.querySelector(AREAS[area]).getBoundingClientRect();
 
     if (area === "bookcase_top") {
-        // Up to the ceiling (at least TOP_SPAN).
+        // Standing free, just above it (higher is the wall above
+        // it); beside the room, up to the ceiling (at least TOP_SPAN).
         const ceiling = room.getBoundingClientRect().top;
-        const reach = Math.max(TOP_SPAN * caseZoom(), wholeWall ? zone.top - ceiling : 0);
+        const reach = freeCase() ? 130 * caseZoom() : Math.max(TOP_SPAN * caseZoom(), wholeWall ? zone.top - ceiling : 0);
         return { left: zone.left, right: zone.right, top: zone.top - reach, bottom: zone.top + 6 * caseZoom() };
     }
 
     if (area === "wall") {
         return { left: zone.left, right: room.getBoundingClientRect().right, top: zone.top, bottom: zone.bottom + floorLift() };
+    }
+
+    if (area === "floor") {
+        const whole = roomBox();
+        const edge = room.getBoundingClientRect();
+        return { left: Math.max(edge.left, whole.left), right: edge.right, top: zone.top, bottom: zone.bottom + floorLift() };
     }
 
     return { left: zone.left, right: zone.right, top: zone.top, bottom: zone.bottom };
@@ -2473,7 +2496,7 @@ function positionIn(area, pointX, pointY) {
 
     // Below the wall, out on a deep floor.
     const lift =
-        area === "wall" ? floorLift() : 0;
+        onWall(area) ? floorLift() : 0;
 
     if (lift > 0 && y > box.bottom) {
         return {
@@ -3314,6 +3337,23 @@ function onPointerDown(event) {
 
     }
 
+    // While arranging, the bookcase (standing free) can be moved
+    // along the floor: a drag anywhere on it that isn't a piece or
+    // one of its buttons.
+    if (arranging && freeCase() && event.button <= 0
+        && event.target.closest(".library-room > .bookcase-zone .bookcase")
+        && !event.target.closest(".placed-decor, button, a, input, .book-spine")) {
+
+        if (selectedId) {
+            select(null);
+        }
+
+        dragCase(event);
+
+        return;
+
+    }
+
     // While arranging, the window can be dragged along the wall.
     if (arranging && event.button <= 0 && event.target.closest(".moon-window") && !event.target.closest(".placed-decor")) {
 
@@ -3803,7 +3843,7 @@ function layerShown(area) {
 
 function areaAt(x, y) {
 
-    return Object.keys(AREAS).find((area) => {
+    return LANDINGS.find((area) => {
 
         if (!layerShown(area)) {
             return false;
@@ -3966,6 +4006,7 @@ async function load(themeId) {
             scale: Number(row.scale),
             rotation: Number(row.rotation),
             room_area: AREAS[row.room_area] ? row.room_area : "wall"
+            // ("floor" is in AREAS: the whole room.)
         }));
 
     }

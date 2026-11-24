@@ -241,6 +241,38 @@ export function packRows(books, width) {
 }
 
 
+/*
+    A bookcase always has at least three shelves, so it stands
+    whole, like a real one: rows a library doesn't fill yet are
+    empty shelves (the first offers a new shelf). They hold no
+    books or pieces. More than three, and the shelves slide.
+*/
+
+const LEAST_ROWS = 3;
+
+function spareRows(count, { offer = true } = {}) {
+
+    return Array.from({ length: Math.max(0, count) }, (_, index) => html`
+        <section class="shelf-unit shelf-unit--spare" aria-label="An empty shelf">
+            <div class="shelf-row">
+                <div class="shelf-interior">
+                    <div class="shelf-spare">
+                        ${offer && index === 0 ? html`
+                            <button class="add-shelf-button add-shelf-button--spare" type="button" data-action="add-shelf">
+                                ${art("ui-add")}
+                                Add another shelf
+                            </button>
+                        ` : ""}
+                    </div>
+                </div>
+                <div class="shelf-board"></div>
+            </div>
+        </section>
+    `);
+
+}
+
+
 function bookcaseMarkup(width) {
 
     const shelves =
@@ -273,19 +305,33 @@ function bookcaseMarkup(width) {
                     <div class="shelf-board"></div>
                 </div>
             </section>
+            ${spareRows(LEAST_ROWS - 1, { offer: false })}
         `;
 
     }
 
-    return html`
-        ${shelves.map((shelf) => shelfMarkup(shelf, booksOnShelf(shelf.id, sort), width))}
+    const units =
+        shelves.map((shelf) => ({ shelf, books: booksOnShelf(shelf.id, sort) }));
 
-        <div class="bookcase-actions">
-            <button class="add-shelf-button" type="button" data-action="add-shelf">
-                ${art("ui-add")}
-                Add another shelf
-            </button>
-        </div>
+    const rows =
+        units.reduce((sum, unit) => sum + packRows(unit.books, width).length, 0);
+
+    const spare =
+        LEAST_ROWS - rows;
+
+    return html`
+        ${units.map((unit) => shelfMarkup(unit.shelf, unit.books, width))}
+
+        ${spareRows(spare)}
+
+        ${spare > 0 ? "" : html`
+            <div class="bookcase-actions">
+                <button class="add-shelf-button" type="button" data-action="add-shelf">
+                    ${art("ui-add")}
+                    Add another shelf
+                </button>
+            </div>
+        `}
     `;
 
 }

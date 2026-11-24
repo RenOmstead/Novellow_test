@@ -180,8 +180,10 @@ html:not(.candle-glow) {
     position: absolute;
 
     /* Over the window's glass (z-index 1, css/room.css), under
-       the curtains (2). */
+       the curtains (2). Never in the way of a tap or a drag. */
     z-index: 1;
+
+    pointer-events: none;
 
     /* Exactly over the window (css/room.css). */
     left: var(--window-left);

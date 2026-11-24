@@ -534,10 +534,10 @@ function defaultsFor(theme) {
         getPreferences();
 
     if (theme === "sandbox") {
-        return { wallpaper: "plaster", floor: "oak", window: "none", wood: prefs.wood, curtains: "none", curtainColour: "room", rug: "none", rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", weather: "room", ceiling: "room", case: "walnut", hidden: "", windowX: null, windowY: null, rugX: null, rugY: null };
+        return { wallpaper: "plaster", floor: "oak", window: "none", wood: prefs.wood, curtains: "none", curtainColour: "room", rug: "none", rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", weather: "room", ceiling: "room", case: "walnut", hidden: "", windowX: null, windowY: null, windowRoom: false, rugX: null, rugY: null, rugRoom: false, caseX: null };
     }
 
-    return { wallpaper: "room", floor: "room", window: prefs.window, wood: prefs.wood, curtains: prefs.curtains, curtainColour: "room", rug: prefs.rug, rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", weather: "room", ceiling: "room", case: "room", hidden: "", windowX: null, windowY: null, rugX: null, rugY: null };
+    return { wallpaper: "room", floor: "room", window: prefs.window, wood: prefs.wood, curtains: prefs.curtains, curtainColour: "room", rug: prefs.rug, rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", weather: "room", ceiling: "room", case: "room", hidden: "", windowX: null, windowY: null, windowRoom: false, rugX: null, rugY: null, rugRoom: false, caseX: null };
 
 }
 
@@ -680,6 +680,8 @@ export function applyFixtures(theme = document.documentElement.dataset.theme) {
 
     placeRug(fixtures);
 
+    placeCase(fixtures);
+
 }
 
 
@@ -688,6 +690,191 @@ export function applyFixtures(theme = document.documentElement.dataset.theme) {
     (the same measure as the wall's decorations), or its usual
     place beside the bookcase.
 */
+
+/*
+    THE WHOLE ROOM
+    On a computer the room is one wall, floor to ceiling, with the
+    bookcase standing free in it. Things measured across the whole
+    room (the bookcase, a moved window or rug, pieces in the room
+    layer) use a share of its width; the wall side (.journal-zone,
+    where the window, chair and older pieces are measured) is its
+    right-hand 1.04 of 2.04. On a phone the same measures fall
+    across the room beside the shelves.
+*/
+
+export const ROOM_SPAN = 2.04 / 1.04;
+export const ROOM_START = -100 / 1.04;
+
+// A share of the whole room's width, as a share of the wall side.
+export function wallSide(x) {
+    return x * ROOM_SPAN + ROOM_START;
+}
+
+// The whole room's box on the screen.
+export function roomBox() {
+
+    const zone =
+        document.querySelector(".library-room .journal-zone")?.getBoundingClientRect();
+
+    if (!zone) {
+        return null;
+    }
+
+    const width =
+        zone.width * ROOM_SPAN;
+
+    return { left: zone.right - width, right: zone.right, width, top: zone.top, bottom: zone.bottom, height: zone.height };
+
+}
+
+
+/*
+    Where the bookcase stands: its middle as a share of the whole
+    room, or its usual place (the middle of the left side).
+*/
+
+function placeCase(fixtures) {
+
+    const room =
+        document.querySelector(".library-room");
+
+    if (!room) {
+        return;
+    }
+
+    if (fixtures.caseX === null || fixtures.caseX === undefined) {
+        room.style.removeProperty("--case-x");
+        return;
+    }
+
+    room.style.setProperty("--case-x", `${fixtures.caseX}%`);
+
+}
+
+
+export function moveCase(x, { persist = true } = {}) {
+
+    const theme =
+        themeId || document.documentElement.dataset.theme;
+
+    const fixtures = {
+        ...getFixtures(theme),
+        caseX: Number(Math.min(96, Math.max(4, x)).toFixed(2))
+    };
+
+    writeCache(theme, fixtures);
+
+    placeCase(fixtures);
+
+    if (persist) {
+        save("case", fixtures.case, { position_x: fixtures.caseX, rotation: 2 });
+    }
+
+}
+
+
+export function resetCase() {
+
+    const theme =
+        themeId || document.documentElement.dataset.theme;
+
+    const fixtures =
+        { ...getFixtures(theme), caseX: null };
+
+    writeCache(theme, fixtures);
+
+    placeCase(fixtures);
+
+    save("case", fixtures.case, { rotation: 0 });
+
+}
+
+
+/*
+    Dragging the bookcase along the floor while arranging. It
+    stays standing on the floor and inside the room.
+*/
+
+export function dragCase(event) {
+
+    const zone =
+        document.querySelector(".library-room > .bookcase-zone");
+
+    const bookcase =
+        zone?.querySelector(".bookcase");
+
+    const box =
+        roomBox();
+
+    if (!zone || !bookcase || !box) {
+        return false;
+    }
+
+    event.preventDefault();
+
+    zone.setPointerCapture?.(event.pointerId);
+
+    const start =
+        bookcase.getBoundingClientRect();
+
+    const startX =
+        ((start.left + start.width / 2 - box.left) / box.width) * 100;
+
+    // Half the bookcase, as a share of the room: it keeps inside.
+    const half =
+        (start.width / 2 / box.width) * 100;
+
+    let last = null;
+    let moved = false;
+
+    const move = (moveEvent) => {
+
+        if (moveEvent.pointerId !== event.pointerId) {
+            return;
+        }
+
+        if (!moved && Math.abs(moveEvent.clientX - event.clientX) < 5) {
+            return;
+        }
+
+        if (!moved) {
+            moved = true;
+            zone.classList.add("is-dragging");
+        }
+
+        last = Math.min(100 - half, Math.max(half, startX + ((moveEvent.clientX - event.clientX) / box.width) * 100));
+
+        moveCase(last, { persist: false });
+
+    };
+
+    const finish = (upEvent) => {
+
+        if (upEvent.pointerId !== event.pointerId) {
+            return;
+        }
+
+        window.removeEventListener("pointermove", move);
+        window.removeEventListener("pointerup", finish);
+        window.removeEventListener("pointercancel", finish);
+
+        zone.classList.remove("is-dragging");
+
+        if (last !== null) {
+            moveCase(last);
+            document.dispatchEvent(new CustomEvent("novellow:case-moved"));
+        }
+
+    };
+
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", finish);
+    window.addEventListener("pointercancel", finish);
+
+    return true;
+
+}
+
 
 function placeWindow(fixtures) {
 
@@ -704,7 +891,12 @@ function placeWindow(fixtures) {
         return;
     }
 
-    wall.style.setProperty("--window-left", `calc(${fixtures.windowX}% - var(--window-width) / 2)`);
+    // Measured across the whole room (moved since the room became
+    // one wall) or across the wall side (moved before).
+    const x =
+        fixtures.windowRoom ? wallSide(fixtures.windowX) : fixtures.windowX;
+
+    wall.style.setProperty("--window-left", `calc(max(var(--window-least, -200%), ${x.toFixed(2)}%) - var(--window-width) / 2)`);
     wall.style.setProperty("--window-bottom", `calc(${100 - fixtures.windowY}% - var(--window-width) * 0.375)`);
 
 }
@@ -734,7 +926,11 @@ function placeRug(fixtures) {
     }
 
     floor.classList.add("has-moved-rug");
-    floor.style.setProperty("--rug-left", `${fixtures.rugX}%`);
+
+    const x =
+        fixtures.rugRoom ? wallSide(fixtures.rugX) : fixtures.rugX;
+
+    floor.style.setProperty("--rug-left", `max(var(--rug-least, -200%), ${x.toFixed(2)}%)`);
     floor.style.setProperty("--rug-bottom", `${-10 - fixtures.rugY * 0.7}px`);
 
 }
@@ -745,10 +941,12 @@ export function moveRug(x, y, { persist = true } = {}) {
     const theme =
         themeId || document.documentElement.dataset.theme;
 
+    // Across the whole room's floor.
     const fixtures = {
         ...getFixtures(theme),
         rugX: Number(Math.min(100, Math.max(0, x)).toFixed(2)),
-        rugY: Number(Math.min(100, Math.max(0, y)).toFixed(2))
+        rugY: Number(Math.min(100, Math.max(0, y)).toFixed(2)),
+        rugRoom: true
     };
 
     writeCache(theme, fixtures);
@@ -756,7 +954,7 @@ export function moveRug(x, y, { persist = true } = {}) {
     placeRug(fixtures);
 
     if (persist) {
-        save("rug", fixtures.rug, { position_x: fixtures.rugX, position_y: fixtures.rugY, rotation: 1 });
+        save("rug", fixtures.rug, { position_x: fixtures.rugX, position_y: fixtures.rugY, rotation: 2 });
     }
 
 }
@@ -783,8 +981,9 @@ export function dragRug(event) {
     rug.setPointerCapture?.(event.pointerId);
     rug.classList.add("is-dragging");
 
+    // Measured across the whole room's floor.
     const box =
-        floor.getBoundingClientRect();
+        roomBox() || floor.getBoundingClientRect();
 
     const start =
         rug.getBoundingClientRect();
@@ -793,7 +992,7 @@ export function dragRug(event) {
         getFixtures();
 
     // Start from where the rug is now, moved or not.
-    const startX = current.rugX ?? ((start.left + start.width / 2 - box.left) / box.width) * 100;
+    const startX = ((start.left + start.width / 2 - box.left) / box.width) * 100;
     const startY = current.rugY ?? 48;
 
     let last = null;
@@ -875,14 +1074,22 @@ export function setFixtureRows(theme, fixtureRows) {
 
         values[kind] = choice;
 
-        if (kind === "window" && row.rotation === 1) {
+        // rotation 1: moved, measured across the wall side;
+        // 2: moved, measured across the whole room.
+        if (kind === "window" && (row.rotation === 1 || row.rotation === 2)) {
             values.windowX = Number(row.position_x);
             values.windowY = Number(row.position_y);
+            values.windowRoom = row.rotation === 2;
         }
 
-        if (kind === "rug" && row.rotation === 1) {
+        if (kind === "rug" && (row.rotation === 1 || row.rotation === 2)) {
             values.rugX = Number(row.position_x);
             values.rugY = Number(row.position_y);
+            values.rugRoom = row.rotation === 2;
+        }
+
+        if (kind === "case" && row.rotation === 2) {
+            values.caseX = Number(row.position_x);
         }
 
     });
@@ -1022,10 +1229,12 @@ export function moveWindow(x, y, { persist = true } = {}) {
     const theme =
         themeId || document.documentElement.dataset.theme;
 
+    // x across the whole room, y down the wall.
     const fixtures = {
         ...getFixtures(theme),
-        windowX: Number(Math.min(92, Math.max(8, x)).toFixed(2)),
-        windowY: Number(Math.min(78, Math.max(18, y)).toFixed(2))
+        windowX: Number(Math.min(96, Math.max(4, x)).toFixed(2)),
+        windowY: Number(Math.min(78, Math.max(18, y)).toFixed(2)),
+        windowRoom: true
     };
 
     writeCache(theme, fixtures);
@@ -1033,7 +1242,7 @@ export function moveWindow(x, y, { persist = true } = {}) {
     placeWindow(fixtures);
 
     if (persist) {
-        save("window", fixtures.window, { position_x: fixtures.windowX, position_y: fixtures.windowY, rotation: 1 });
+        save("window", fixtures.window, { position_x: fixtures.windowX, position_y: fixtures.windowY, rotation: 2 });
     }
 
 }
@@ -1089,8 +1298,12 @@ export function dragWindow(event) {
 
     let last = null;
 
+    // Across the whole room; down the wall side.
+    const across =
+        roomBox() || box;
+
     const at = (moveEvent) => ({
-        x: ((moveEvent.clientX - grabX - box.left) / box.width) * 100,
+        x: ((moveEvent.clientX - grabX - across.left) / across.width) * 100,
         y: ((moveEvent.clientY - grabY - box.top) / box.height) * 100
     });
 
@@ -1384,6 +1597,10 @@ export function roomSectionMarkup(section) {
             return html`
                 ${swatches("case", "The bookcase", fixtures.case, (choice) => !choice.collection)}
                 ${swatches("case", "Collection bookcases", fixtures.case, (choice) => choice.collection)}
+                <p class="room-choices__note room-choices__note--wide">On a computer or tablet, drag the bookcase along the floor to move it (the pieces on its shelves come with it), and tap it when you're not decorating to look closer.</p>
+                ${fixtures.caseX === null || fixtures.caseX === undefined ? "" : html`
+                    <button class="text-button room-choices__reset" type="button" data-fixture-action="reset-case">Put the bookcase back in its usual place</button>
+                `}
                 <p class="room-choices__note">Its wood or paint. A shelf with a style of its own (in its shelf settings) keeps it.</p>
             `;
 
@@ -1499,6 +1716,11 @@ export function onRoomPanelClick(event) {
 
     if (event.target.closest("[data-fixture-action=reset-window]")) {
         resetWindow();
+        return true;
+    }
+
+    if (event.target.closest("[data-fixture-action=reset-case]")) {
+        resetCase();
         return true;
     }
 

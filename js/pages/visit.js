@@ -34,6 +34,7 @@ import { renderCrown } from "../room/crown.js?v=__VERSION__";
 import { startAmbience } from "../room/ambience.js?v=__VERSION__";
 import { startDecorations } from "../room/decorations.js?v=__VERSION__";
 import { startRoomFit } from "../room/fit-room.js?v=__VERSION__";
+import { startCaseZoom } from "../room/case-zoom.js?v=__VERSION__";
 import { createBookcase } from "../books/bookcase.js?v=__VERSION__";
 import { coverMarkup } from "../books/cover.js?v=__VERSION__";
 
@@ -367,6 +368,9 @@ async function start() {
     render(body, loader("Dusting the shelves…"));
 
     startRoomFit(room);
+    // Their bookcase stands in the room like a piece of furniture;
+    // a tap looks closer.
+    startCaseZoom(room);
     renderCrown(document.querySelector("[data-crown-decor]"), page.room.theme);
     growIvy(document.getElementById("main"));
     startAmbience(document.getElementById("ambience"));

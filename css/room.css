@@ -2228,3 +2228,122 @@ html[data-ceiling]:not(.is-arranging-room):not(.room-view) body[data-page="home"
         var(--ceiling-art) var(--room-gutter) 0 / auto var(--ceiling-band) repeat-x,
         linear-gradient(180deg, #1e120b, #140b07);
 }
+
+
+
+/* =========================================================
+   THE BOOKCASE STANDS FREE (computers and tablets)
+   The room is one wall from side to side, and the bookcase is a
+   piece of furniture standing on its floor: drawn at its own
+   size and scaled to the room (js/room/fit-room.js sets
+   --case-zoom and --case-max-h), wherever the reader puts it
+   (--case-x, its middle as a share of the room; js/room/
+   fixtures.js), with wall all around it. Tap it to look closer
+   (js/room/case-zoom.js). On a phone it stands beside the room
+   at full size, so its spines stay easy to read.
+========================================================= */
+
+:root {
+    /* The bookcase's own width, before it is scaled. */
+    --case-width: 560px;
+}
+
+/* One room on a tablet too (it used to stack the bookcase above
+   the wall). */
+html:not(.room-compact) .library-room {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.04fr);
+
+    height: calc(100dvh - var(--header-h, var(--header-height)));
+    min-height: 560px;
+}
+
+/* The wall side keeps its place on the right (the window, the
+   chair and older pieces are measured across it), and nothing is
+   cut off at its edge now. */
+html:not(.room-compact) .library-room > .journal-zone {
+    grid-column: 2;
+    grid-row: 1;
+
+    overflow: visible;
+}
+
+html:not(.room-compact) .library-room > .bookcase-zone {
+    position: absolute;
+
+    top: 0;
+    bottom: var(--floor-lift, 0px);
+    left: calc(var(--case-x, 24.51%) - var(--case-width) * var(--case-zoom, 1) / 2);
+
+    z-index: 4;
+
+    /* The room's full height (it stands at the foot of it). */
+    align-self: stretch;
+    justify-self: auto;
+
+    width: calc(var(--case-width) * var(--case-zoom, 1));
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: stretch;
+
+    /* It stands against the wall, a little back on the floor. */
+    padding: calc(var(--ceiling-h) + clamp(28px, 8dvh, 90px)) 0 clamp(30px, 5.5dvh, 56px);
+
+    overflow: visible;
+
+    -webkit-mask-image: none;
+    mask-image: none;
+
+    /* Only the bookcase itself takes a tap, not the space above it. */
+    pointer-events: none;
+}
+
+html:not(.room-compact) .library-room > .bookcase-zone > * {
+    pointer-events: auto;
+}
+
+html:not(.room-compact) .library-room > .bookcase-zone > .bookcase {
+    flex: 0 1 auto;
+
+    width: var(--case-width);
+    max-width: none;
+    max-height: var(--case-max-h, none);
+
+    margin: 0;
+
+    zoom: var(--case-zoom, 1);
+}
+
+/* Drawn small, a tap looks closer. */
+html:not(.room-compact):not(.is-arranging-room):not(.case-close) .library-room > .bookcase-zone .bookcase {
+    cursor: zoom-in;
+}
+
+/* While decorating, it can be moved along the floor. */
+html.is-arranging-room:not(.room-compact) .library-room > .bookcase-zone .bookcase {
+    cursor: grab;
+}
+
+html.is-arranging-room:not(.room-compact) .library-room > .bookcase-zone.is-dragging .bookcase {
+    cursor: grabbing;
+
+    filter: drop-shadow(0 26px 26px rgba(20, 8, 4, 0.5));
+}
+
+html.is-arranging-room:not(.room-compact) .library-room > .bookcase-zone .bookcase:hover {
+    outline: 2px dashed rgba(240, 207, 138, 0.55);
+    outline-offset: 6px;
+}
+
+/* On a phone, a window or rug moved across the whole room stays
+   on the room's side of the screen (the shelves fill the other). */
+html.room-compact .wall-art {
+    --window-least: 8%;
+}
+
+html.room-compact .room-floor {
+    --rug-least: 12%;
+}

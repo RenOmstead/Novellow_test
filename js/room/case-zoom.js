@@ -13,7 +13,7 @@ import { art } from "../core/ui.js?v=__VERSION__";
 
 
 // How close it can come.
-const MOST = 2.2;
+const MOST = 2.6;
 
 let room = null;
 let button = null;
@@ -53,10 +53,11 @@ function place() {
     void room.offsetWidth;
     room.style.transition = "";
 
-    // The bookcase as wide as most of the room, its shelves in
-    // the middle of the view.
+    // The bookcase as big as the room allows (as wide as most of
+    // it, its shelves as tall as the view), its shelves in the
+    // middle of the view.
     const scale =
-        Math.max(1.2, Math.min(MOST, (area.width * 0.92) / bookcase.width));
+        Math.max(1.2, Math.min(MOST, (area.width * 0.92) / bookcase.width, (area.height * 0.96) / shelves.height));
 
     const middleX =
         bookcase.left + bookcase.width / 2 - area.left;
@@ -149,6 +150,37 @@ export function startCaseZoom(container) {
             setCaseClose(false);
         }
     });
+
+    // Drawn small (standing free on a computer, or on a phone with
+    // three whole shelves showing), a tap on the bookcase looks
+    // closer first; then its books open as usual. (Not a key press
+    // on a book, which opens it straight away.)
+    room.addEventListener("click", (event) => {
+
+        const root =
+            document.documentElement;
+
+        if (close
+            || root.classList.contains("is-arranging-room")
+            || event.detail === 0
+            || !event.target.closest(".bookcase")
+            || event.target.closest(".case-zoom, .shelf-edit, .shelf-add, a, input, .shelf-welcome button")) {
+            return;
+        }
+
+        const scale =
+            Number.parseFloat(getComputedStyle(root).getPropertyValue("--case-zoom")) || 1;
+
+        if (scale >= (root.classList.contains("room-compact") ? 0.62 : 0.9)) {
+            return;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        setCaseClose(true);
+
+    }, { capture: true });
 
     // A tap on the room away from the bookcase steps back.
     room.addEventListener("click", (event) => {

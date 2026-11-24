@@ -36,12 +36,28 @@
     height: 820px;
 }
 
+/* The whole room: the wall from one side to the other, the
+   bookcase's side as well as the window's (js/room/decorations.js,
+   "floor"). The wall side is the right-hand 1.04 of 2.04. */
+.journal-zone > .decor-layer[data-area="floor"] {
+    left: -96.1538%;
+    right: 0;
+}
+
+/* On a phone the bookcase stands at full size over the left of
+   the room, so pieces there go behind it (where it doesn't cover
+   them, above it on the wall, they still show). On a computer
+   they stand in front of it, like a plant in front of a bookcase. */
+html.room-compact .journal-zone > .decor-layer[data-area="floor"] {
+    z-index: 3;
+}
+
 /* On a phone the room grows wider or narrower to fill the
    screen (a browser's toolbars make it wider). The window
    keeps its place on the left, so the wall's pieces are
    measured across a fixed width from the left too, and stay
    by the window in the browser and the installed app. */
-html.room-compact .journal-zone > .decor-layer {
+html.room-compact .journal-zone > .decor-layer[data-area="wall"] {
     right: auto;
 
     /* Wide enough to reach the right edge on every phone, under
