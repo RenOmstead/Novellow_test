@@ -74,6 +74,77 @@ function linesNeeded(words, perLine) {
 }
 
 
+/*
+    A painted spine on a book of any size. The picture keeps its
+    own shape (giving at most a fifth either way) and covers the
+    spine, its sides or its middle trimmed rather than stretched.
+    Its painted top and bottom bands stay whole (drawn again over
+    the ends, css/books.css → .spine-paint-ends), so a short, wide
+    book shows less of the middle, not a squashed picture. The
+    title goes in the blank panel between the bands, or (a bare
+    picture) where its label belongs.
+*/
+function paintedLayout(painted, width, height) {
+
+    const [artW, artH] =
+        painted.size || [70, 320];
+
+    const art =
+        artH / artW;
+
+    // The shape it's drawn at: the book's own, within a fifth of
+    // the picture's.
+    const shape =
+        Math.min(art * 1.2, Math.max(art / 1.2, height / width));
+
+    const w =
+        Math.max(width, height / shape);
+
+    const h =
+        w * shape;
+
+    const trimmed =
+        h > height + 1;
+
+    // (A picture with no title panel keeps a fifth at each end.)
+    const [panelTop, panelBottom] =
+        painted.panel || [20, 20];
+
+    // The bands: the picture above and below its title panel,
+    // each kept to under a third of the book.
+    const banded =
+        trimmed && !painted.bare;
+
+    const capTop =
+        banded ? Math.round(Math.min(h * panelTop / 100, height * 0.32)) : 0;
+
+    const capBottom =
+        banded ? Math.round(Math.min(h * panelBottom / 100, height * 0.32)) : 0;
+
+    const layout =
+        { w: Math.round(w), h: Math.round(h), capTop, capBottom };
+
+    if (painted.panel || banded) {
+
+        if (banded) {
+            layout.top = capTop;
+            layout.bottom = capBottom;
+        }
+
+        else {
+            // Where the panel falls once the picture is centred.
+            const off = (h - height) / 2;
+            layout.top = Math.round(Math.max(4, h * panelTop / 100 - off));
+            layout.bottom = Math.round(Math.max(4, h * panelBottom / 100 - off));
+        }
+
+    }
+
+    return layout;
+
+}
+
+
 function fitTitle(title, spine, baseSize, height, width) {
 
     const words =
@@ -158,9 +229,13 @@ export function spineMarkup(book, { tag = "button", extra = "" } = {}) {
     const painted =
         SPINE_PAINTED[spine.style];
 
+    // How the picture sits on this size of book.
+    const paint =
+        painted ? paintedLayout(painted, width, height) : null;
+
     // A blank spine's title has only its panel's length.
     const titleHeight =
-        painted?.panel ? Math.round(height * (100 - painted.panel[0] - painted.panel[1]) / 100) + 26 : height;
+        paint?.top !== undefined ? Math.max(36, height - paint.top - paint.bottom) + 26 : height;
 
     const fit =
         fitTitle(title, spine, baseSize, titleHeight, width);
@@ -171,8 +246,9 @@ export function spineMarkup(book, { tag = "button", extra = "" } = {}) {
         `--book-text: ${painted ? painted.text : spine.text}`,
         // Read by css/books.css, so the path starts from css/.
         painted ? `--spine-paint: url("../${painted.src}?v=__VERSION__")` : "",
+        paint ? `--paint-w: ${paint.w}px; --paint-h: ${paint.h}px; --cap-top: ${paint.capTop}px; --cap-bottom: ${paint.capBottom}px` : "",
         // A blank spine's own title panel.
-        painted?.panel ? `--paint-top: ${painted.panel[0]}%; --paint-bottom: ${painted.panel[1]}%` : "",
+        paint?.top !== undefined ? `--paint-top: ${paint.top}px; --paint-bottom: ${paint.bottom}px` : "",
         `--w: ${width}px`,
         `--h: ${height}px`,
         `--spine-font: ${spineFont(spine)}`,
@@ -202,7 +278,7 @@ export function spineMarkup(book, { tag = "button", extra = "" } = {}) {
     const inner = html`
         <span class="spine-band spine-band--top" aria-hidden="true"></span>
 
-        ${painted ? "" : SPINE_ART[spine.style]
+        ${painted ? html`<span class="spine-paint-ends" aria-hidden="true"></span>` : SPINE_ART[spine.style]
             ? motif(SPINE_ART[spine.style], `spine-vine spine-art--${spine.style}`)
             : fit.ornament ? motif(spine.ornament, "spine-ornament spine-ornament--top") : ""}
 

@@ -739,7 +739,9 @@ button.book-spine {
 /* Hand-painted spines (js/books/spine-options.js → SPINE_PAINTED):
    the picture is the whole spine; the title sits in its panel. */
 .book-spine.spine--painted {
-    background: var(--spine-paint) center / 100% 100% no-repeat;
+    /* Its own shape, covering the spine (js/books/spine.js →
+       paintedLayout): trimmed, never stretched. */
+    background: var(--spine-paint) center / var(--paint-w, 100%) var(--paint-h, 100%) no-repeat;
 
     box-shadow: 1px 0 2px rgba(0, 0, 0, 0.35);
 }
@@ -748,6 +750,46 @@ button.book-spine {
 .spine--painted .spine-band,
 .spine--painted .spine-ornament {
     display: none;
+}
+
+/* The painted bands at the top and bottom, whole, over the ends
+   of the trimmed picture (they soften into the middle). */
+.spine-paint-ends {
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+}
+
+.spine-paint-ends::before,
+.spine-paint-ends::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    background-image: var(--spine-paint);
+    background-repeat: no-repeat;
+    background-size: var(--paint-w, 100%) var(--paint-h, 100%);
+}
+
+.spine-paint-ends::before {
+    top: 0;
+
+    height: var(--cap-top, 0px);
+
+    background-position: center top;
+}
+
+.spine-paint-ends::after {
+    bottom: 0;
+
+    height: var(--cap-bottom, 0px);
+
+    background-position: center bottom;
 }
 
 .spine--painted .spine-title-wrap {
