@@ -877,6 +877,10 @@ html.room-compact .bookcase-zone > .bookcase {
         var(--art-post-right) right top / 18px auto repeat-y,
         var(--art-back) center top / calc(100% - 36px) auto repeat-y,
         var(--shelf-back-bottom);
+
+    /* The posts are painted with soft, see-through outer edges:
+       the shelves' brown stays inside them. */
+    background-clip: border-box, border-box, content-box, content-box;
 }
 
 [data-case-art] .shelf-unit:not(.shelf-style--painted, .shelf-style--floating) .shelf-interior {

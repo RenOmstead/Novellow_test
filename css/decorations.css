@@ -40,7 +40,7 @@
    bookcase's side as well as the window's (js/room/decorations.js,
    "floor"). The wall side is the right-hand 1.04 of 2.04. */
 .journal-zone > .decor-layer[data-area="floor"] {
-    left: -96.1538%;
+    left: calc((var(--room-span, 1.961538) - 1) * -100%);
     right: 0;
 }
 

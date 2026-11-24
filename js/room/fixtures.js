@@ -705,9 +705,27 @@ export function applyFixtures(theme = document.documentElement.dataset.theme) {
 export const ROOM_SPAN = 2.04 / 1.04;
 export const ROOM_START = -100 / 1.04;
 
+// The whole room's width over the wall side's. On a phone it is
+// measured (js/room/fit-room.js sets --room-span): the whole
+// screen's width, shelves and all, so a piece stands in the same
+// place across the room as it does on a computer, not behind the
+// shelves.
+export function roomSpan() {
+
+    const room =
+        document.querySelector(".library-room");
+
+    const measured =
+        room ? Number.parseFloat(getComputedStyle(room).getPropertyValue("--room-span")) : 0;
+
+    return measured > 1 ? measured : ROOM_SPAN;
+
+}
+
 // A share of the whole room's width, as a share of the wall side.
 export function wallSide(x) {
-    return x * ROOM_SPAN + ROOM_START;
+    const span = roomSpan();
+    return x * span - (span - 1) * 100;
 }
 
 // The whole room's box on the screen.
@@ -721,7 +739,7 @@ export function roomBox() {
     }
 
     const width =
-        zone.width * ROOM_SPAN;
+        zone.width * roomSpan();
 
     return { left: zone.right - width, right: zone.right, width, top: zone.top, bottom: zone.bottom, height: zone.height };
 
