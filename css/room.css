@@ -2190,3 +2190,41 @@ html:is(.is-arranging-room, .is-capturing) .case-zoom {
 html.case-close .case-zoom-back {
     display: inline-flex;
 }
+
+
+/* ---------------------------------------------------------
+   A PAINTED CEILING (The room → Ceiling)
+   A collection's ceiling instead of the beams: one band from
+   the top of the screen down to the foot of the room's
+   ceiling (the top bar on Home sits on it), repeating along
+   the room, with a little shade where it meets the wall.
+--------------------------------------------------------- */
+
+:root {
+    /* How tall the whole painted band is. */
+    --ceiling-band: calc(var(--header-h, var(--header-height)) + var(--ceiling-h));
+}
+
+html[data-ceiling] .room-ceiling {
+    background:
+        linear-gradient(180deg, rgb(24 10 18 / 0) 55%, rgb(24 10 18 / 0.35)),
+        var(--ceiling-art) 0 calc(var(--ceiling-h) - var(--ceiling-band)) / auto var(--ceiling-band) repeat-x;
+}
+
+/* On Home the top bar shows the upper part of the same band. */
+html[data-ceiling] body[data-page="home"] .scene-header {
+    /* As dark at its foot as the room's own top (.room-vignette). */
+    background:
+        linear-gradient(rgb(24 10 18 / 0.2), rgb(24 10 18 / 0.32)),
+        var(--ceiling-art) 0 0 / auto var(--ceiling-band) repeat-x;
+}
+
+/* The strip beside the menu: the ceiling across its top, lined up
+   with the room's. */
+html[data-ceiling]:not(.is-arranging-room):not(.room-view) body[data-page="home"] .app-stage::after {
+    background:
+        linear-gradient(90deg, rgb(14 6 8 / 0.5), rgb(14 6 8 / 0)),
+        linear-gradient(180deg, rgb(24 10 18 / 0.2), rgb(24 10 18 / 0.32) var(--header-h, var(--header-height)), rgb(24 10 18 / 0.5)) 0 0 / 100% var(--ceiling-band) no-repeat,
+        var(--ceiling-art) var(--room-gutter) 0 / auto var(--ceiling-band) repeat-x,
+        linear-gradient(180deg, #1e120b, #140b07);
+}

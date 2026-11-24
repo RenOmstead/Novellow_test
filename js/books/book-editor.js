@@ -354,14 +354,17 @@ function sampleTitle(title) {
 }
 
 const PAINTED_GROUP =
-    { label: "Painted", test: (id) => Boolean(SPINE_PAINTED[id]) && !id.startsWith("holiday-") };
+    { label: "Painted", test: (id) => Boolean(SPINE_PAINTED[id]) && !id.startsWith("holiday-") && !id.startsWith("set-") };
 
 const HOLIDAY_GROUP =
     { label: "Holiday", test: (id) => id.startsWith("holiday-") };
 
+const COLLECTION_GROUP =
+    { label: "Collections", test: (id) => id.startsWith("set-") };
+
 // The holiday spines come first from November to January.
 const STYLE_GROUPS = [
-    ...([10, 11, 0].includes(new Date().getMonth()) ? [HOLIDAY_GROUP, PAINTED_GROUP] : [PAINTED_GROUP, HOLIDAY_GROUP]),
+    ...([10, 11, 0].includes(new Date().getMonth()) ? [HOLIDAY_GROUP, COLLECTION_GROUP, PAINTED_GROUP] : [PAINTED_GROUP, COLLECTION_GROUP, HOLIDAY_GROUP]),
     { label: "Drawn", test: (id) => Boolean(SPINE_ART[id]) },
     { label: "Simple", test: (id) => !SPINE_PAINTED[id] && !SPINE_ART[id] }
 ];
@@ -376,7 +379,7 @@ function styleOptionsMarkup(bookTitle, spine) {
         <p class="style-picker__group">${group.label}</p>
         <div class="style-picker__grid">
             ${SPINE_STYLES.filter((item) => group.test(item.id)).map((item) => html`
-                <label class="style-picker__option" title="${item.label.replace(/^(Painted|Holiday): /, "")}">
+                <label class="style-picker__option" title="${item.label.replace(/^[^:]+: /, "")}">
                     <input class="visually-hidden" type="radio" name="spine_style" value="${item.id}" ${item.id === spine.style ? html`checked` : ""}>
                     <span class="style-picker__spine">${spineMarkup({ title, spine: { ...spine, style: item.id, height: "tall", thickness: "medium", ornament: spine.ornament === "none" ? "star" : spine.ornament } }, { tag: "div" })}</span>
                     <small>${item.label.replace(/^(Painted|Holiday): /, "")}</small>

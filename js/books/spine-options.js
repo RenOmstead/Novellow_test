@@ -201,7 +201,34 @@ export const SPINE_STYLES = [
     { id: "holiday-frosted-berries", label: "Holiday: Frosted berries" },
     { id: "holiday-candlelight", label: "Holiday: Candlelight" },
     { id: "holiday-solstice", label: "Holiday: Solstice sun" },
-    { id: "holiday-orange-pine", label: "Holiday: Orange and pine" }
+    { id: "holiday-orange-pine", label: "Holiday: Orange and pine" },
+
+    // The collections' spines (assets/spines/sets/): a group of
+    // their own, and not chosen by "Surprise me".
+    { id: "set-bookish-whimsy-1", label: "Bookish whimsy: Rose storybook" },
+    { id: "set-bookish-whimsy-2", label: "Bookish whimsy: Sage bunny" },
+    { id: "set-bookish-whimsy-3", label: "Bookish whimsy: Cream rose" },
+    { id: "set-cozy-sage-1", label: "Cozy sage: Sage tree" },
+    { id: "set-cozy-sage-2", label: "Cozy sage: Cream berries" },
+    { id: "set-cozy-sage-3", label: "Cozy sage: Red diamond" },
+    { id: "set-fireside-library-1", label: "Fireside library: Crimson holly" },
+    { id: "set-fireside-library-2", label: "Fireside library: Brown leather" },
+    { id: "set-fireside-library-3", label: "Fireside library: Green candle" },
+    { id: "set-ink-folklore-1", label: "Ink folklore: Blue snowflake" },
+    { id: "set-ink-folklore-2", label: "Ink folklore: Coral snowflake" },
+    { id: "set-ink-folklore-3", label: "Ink folklore: Green berries" },
+    { id: "set-snowy-fairytale-1", label: "Snowy fairytale: Lilac star" },
+    { id: "set-snowy-fairytale-2", label: "Snowy fairytale: Periwinkle pines" },
+    { id: "set-snowy-fairytale-3", label: "Snowy fairytale: Pink snowflake" },
+    { id: "set-sugarplum-pastel-1", label: "Sugarplum pastel: Pink ribbon" },
+    { id: "set-sugarplum-pastel-2", label: "Sugarplum pastel: Wine star" },
+    { id: "set-sugarplum-pastel-3", label: "Sugarplum pastel: Mint bow" },
+    { id: "set-vintage-woodland-1", label: "Vintage woodland: Rose bow" },
+    { id: "set-vintage-woodland-2", label: "Vintage woodland: Olive acorn" },
+    { id: "set-vintage-woodland-3", label: "Vintage woodland: Navy moon" },
+    { id: "set-warm-gouache-1", label: "Warm gouache: Red snowflake" },
+    { id: "set-warm-gouache-2", label: "Warm gouache: Cream holly" },
+    { id: "set-warm-gouache-3", label: "Warm gouache: Gold star" }
 ];
 
 
@@ -348,7 +375,33 @@ export const SPINE_PAINTED = {
     "holiday-frosted-berries": { src: "assets/spines/holiday/frosted-berries.webp", text: "#3b2a2a", panel: [20, 23] },
     "holiday-candlelight": { src: "assets/spines/holiday/candlelight.webp", text: "#3b2a2a", panel: [26, 25] },
     "holiday-solstice": { src: "assets/spines/holiday/solstice.webp", text: "#3b2a2a", panel: [25, 21] },
-    "holiday-orange-pine": { src: "assets/spines/holiday/orange-pine.webp", text: "#3b2a2a", panel: [24, 22] }
+    "holiday-orange-pine": { src: "assets/spines/holiday/orange-pine.webp", text: "#3b2a2a", panel: [24, 22] },
+
+    // The collections' spines.
+    "set-bookish-whimsy-1": { src: "assets/spines/sets/bookish-whimsy-1.webp", text: "#3b2a2a", panel: [25, 14] },
+    "set-bookish-whimsy-2": { src: "assets/spines/sets/bookish-whimsy-2.webp", text: "#3b2a2a", panel: [21, 14] },
+    "set-bookish-whimsy-3": { src: "assets/spines/sets/bookish-whimsy-3.webp", text: "#3b2a2a", panel: [21, 15] },
+    "set-cozy-sage-1": { src: "assets/spines/sets/cozy-sage-1.webp", text: "#3b2a2a", panel: [26, 17] },
+    "set-cozy-sage-2": { src: "assets/spines/sets/cozy-sage-2.webp", text: "#3b2a2a", panel: [25, 17] },
+    "set-cozy-sage-3": { src: "assets/spines/sets/cozy-sage-3.webp", text: "#fff1dc", panel: [19, 17] },
+    "set-fireside-library-1": { src: "assets/spines/sets/fireside-library-1.webp", text: "#fff1dc", panel: [16, 14] },
+    "set-fireside-library-2": { src: "assets/spines/sets/fireside-library-2.webp", text: "#fff1dc", panel: [27, 16] },
+    "set-fireside-library-3": { src: "assets/spines/sets/fireside-library-3.webp", text: "#fff1dc", panel: [23, 16] },
+    "set-ink-folklore-1": { src: "assets/spines/sets/ink-folklore-1.webp", text: "#fff1dc", panel: [20, 16] },
+    "set-ink-folklore-2": { src: "assets/spines/sets/ink-folklore-2.webp", text: "#3b2a2a", panel: [28, 14] },
+    "set-ink-folklore-3": { src: "assets/spines/sets/ink-folklore-3.webp", text: "#fff1dc", panel: [21, 14] },
+    "set-snowy-fairytale-1": { src: "assets/spines/sets/snowy-fairytale-1.webp", text: "#3b2a2a", panel: [28, 17] },
+    "set-snowy-fairytale-2": { src: "assets/spines/sets/snowy-fairytale-2.webp", text: "#3b2a2a", panel: [21, 14] },
+    "set-snowy-fairytale-3": { src: "assets/spines/sets/snowy-fairytale-3.webp", text: "#3b2a2a", panel: [29, 19] },
+    "set-sugarplum-pastel-1": { src: "assets/spines/sets/sugarplum-pastel-1.webp", text: "#3b2a2a", panel: [18, 14] },
+    "set-sugarplum-pastel-2": { src: "assets/spines/sets/sugarplum-pastel-2.webp", text: "#fff1dc", panel: [17, 14] },
+    "set-sugarplum-pastel-3": { src: "assets/spines/sets/sugarplum-pastel-3.webp", text: "#3b2a2a", panel: [22, 17] },
+    "set-vintage-woodland-1": { src: "assets/spines/sets/vintage-woodland-1.webp", text: "#fff1dc", panel: [16, 14] },
+    "set-vintage-woodland-2": { src: "assets/spines/sets/vintage-woodland-2.webp", text: "#fff1dc", panel: [26, 14] },
+    "set-vintage-woodland-3": { src: "assets/spines/sets/vintage-woodland-3.webp", text: "#fff1dc", panel: [20, 14] },
+    "set-warm-gouache-1": { src: "assets/spines/sets/warm-gouache-1.webp", text: "#fff1dc", panel: [20, 14] },
+    "set-warm-gouache-2": { src: "assets/spines/sets/warm-gouache-2.webp", text: "#3b2a2a", panel: [23, 15] },
+    "set-warm-gouache-3": { src: "assets/spines/sets/warm-gouache-3.webp", text: "#3b2a2a", panel: [22, 14] },
 };
 
 

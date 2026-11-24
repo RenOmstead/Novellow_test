@@ -1496,6 +1496,32 @@
         <g style="display: var(--window-gothic-moon, none)">
             <image href="assets/decor/windows/gothic-moon.webp?v=__VERSION__" width="440" height="330"/>
         </g>
+        <!-- The collections' windows: just the frames (their views are
+             a layer behind them, .window-view in css/themes.css). -->
+        <g style="display: var(--window-set-bookish-whimsy, none)">
+            <image href="assets/decor/windows/set-bookish-whimsy.webp?v=__VERSION__" width="440" height="330"/>
+        </g>
+        <g style="display: var(--window-set-cozy-sage, none)">
+            <image href="assets/decor/windows/set-cozy-sage.webp?v=__VERSION__" width="440" height="330"/>
+        </g>
+        <g style="display: var(--window-set-fireside-library, none)">
+            <image href="assets/decor/windows/set-fireside-library.webp?v=__VERSION__" width="440" height="330"/>
+        </g>
+        <g style="display: var(--window-set-ink-folklore, none)">
+            <image href="assets/decor/windows/set-ink-folklore.webp?v=__VERSION__" width="440" height="330"/>
+        </g>
+        <g style="display: var(--window-set-snowy-fairytale, none)">
+            <image href="assets/decor/windows/set-snowy-fairytale.webp?v=__VERSION__" width="440" height="330"/>
+        </g>
+        <g style="display: var(--window-set-sugarplum-pastel, none)">
+            <image href="assets/decor/windows/set-sugarplum-pastel.webp?v=__VERSION__" width="440" height="330"/>
+        </g>
+        <g style="display: var(--window-set-vintage-woodland, none)">
+            <image href="assets/decor/windows/set-vintage-woodland.webp?v=__VERSION__" width="440" height="330"/>
+        </g>
+        <g style="display: var(--window-set-warm-gouache, none)">
+            <image href="assets/decor/windows/set-warm-gouache.webp?v=__VERSION__" width="440" height="330"/>
+        </g>
     </symbol>
 
         <symbol id="lamp-chandelier" viewBox="0 0 210 250">

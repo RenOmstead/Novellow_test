@@ -1041,10 +1041,12 @@ function keepPanel() {
 
 // The room's own choices, in the order of the panel's sections.
 const ROOM_SECTIONS = [
+    { id: "collection", name: "Whole collection", parts: ["collection"] },
     { id: "wallpaper", name: "Wallpaper", parts: ["wallpaper"] },
     { id: "floor", name: "Floor and rug", parts: ["floor", "rug"] },
     { id: "window", name: "Window and curtains", parts: ["window"] },
     { id: "outside", name: "View and weather", parts: ["outside"] },
+    { id: "ceiling", name: "Ceiling", parts: ["ceiling"] },
     { id: "light", name: "Light", parts: ["light"] },
     { id: "bookcase", name: "Bookcase", parts: ["bookcase"] },
     { id: "built-in", name: "Built into the room", parts: ["built-in"] }

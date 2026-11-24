@@ -637,6 +637,17 @@
 [data-window="frosted-cream"] { --window-arched: none; --window-frosted-cream: inline; --glazing: none; --win-x: 0.007; --win-w: 0.985; --win-top: 0.0; --win-pad: 0.02; --own-sill: none; }
 [data-window="gothic-moon"] { --window-arched: none; --window-gothic-moon: inline; --glazing: none; --win-x: 0.122; --win-w: 0.756; --win-top: 0.0; --win-pad: 0.06; --own-sill: none; }
 
+/* The collections' windows (sprite.svg has their frames). */
+[data-window="set-bookish-whimsy"] { --window-arched: none; --window-set-bookish-whimsy: inline; --glazing: none; --win-x: 0.176; --win-w: 0.648; --win-top: 0.0; --win-pad: 0.04; --own-sill: none; --window-view-art: url("../assets/decor/windows/set-bookish-whimsy-view.webp?v=__VERSION__"); --window-glass: url("../assets/decor/windows/set-bookish-whimsy-glass.webp?v=__VERSION__"); }
+[data-window="set-cozy-sage"] { --window-arched: none; --window-set-cozy-sage: inline; --glazing: none; --win-x: 0.078; --win-w: 0.843; --win-top: 0.0; --win-pad: 0.04; --own-sill: none; --window-view-art: url("../assets/decor/windows/set-cozy-sage-view.webp?v=__VERSION__"); --window-glass: url("../assets/decor/windows/set-cozy-sage-glass.webp?v=__VERSION__"); }
+[data-window="set-fireside-library"] { --window-arched: none; --window-set-fireside-library: inline; --glazing: none; --win-x: 0.243; --win-w: 0.512; --win-top: 0.0; --win-pad: 0.04; --own-sill: none; --window-view-art: url("../assets/decor/windows/set-fireside-library-view.webp?v=__VERSION__"); --window-glass: url("../assets/decor/windows/set-fireside-library-glass.webp?v=__VERSION__"); }
+[data-window="set-ink-folklore"] { --window-arched: none; --window-set-ink-folklore: inline; --glazing: none; --win-x: 0.061; --win-w: 0.877; --win-top: 0.0; --win-pad: 0.04; --own-sill: none; --window-view-art: url("../assets/decor/windows/set-ink-folklore-view.webp?v=__VERSION__"); --window-glass: url("../assets/decor/windows/set-ink-folklore-glass.webp?v=__VERSION__"); }
+[data-window="set-snowy-fairytale"] { --window-arched: none; --window-set-snowy-fairytale: inline; --glazing: none; --win-x: 0.113; --win-w: 0.775; --win-top: 0.0; --win-pad: 0.04; --own-sill: none; --window-view-art: url("../assets/decor/windows/set-snowy-fairytale-view.webp?v=__VERSION__"); --window-glass: url("../assets/decor/windows/set-snowy-fairytale-glass.webp?v=__VERSION__"); }
+[data-window="set-sugarplum-pastel"] { --window-arched: none; --window-set-sugarplum-pastel: inline; --glazing: none; --win-x: 0.163; --win-w: 0.674; --win-top: 0.0; --win-pad: 0.04; --own-sill: none; --window-view-art: url("../assets/decor/windows/set-sugarplum-pastel-view.webp?v=__VERSION__"); --window-glass: url("../assets/decor/windows/set-sugarplum-pastel-glass.webp?v=__VERSION__"); }
+[data-window="set-vintage-woodland"] { --window-arched: none; --window-set-vintage-woodland: inline; --glazing: none; --win-x: 0.216; --win-w: 0.568; --win-top: 0.0; --win-pad: 0.04; --own-sill: none; --window-view-art: url("../assets/decor/windows/set-vintage-woodland-view.webp?v=__VERSION__"); --window-glass: url("../assets/decor/windows/set-vintage-woodland-glass.webp?v=__VERSION__"); }
+[data-window="set-warm-gouache"] { --window-arched: none; --window-set-warm-gouache: inline; --glazing: none; --win-x: 0.01; --win-w: 0.98; --win-top: 0.0; --win-pad: 0.04; --own-sill: none; --window-view-art: url("../assets/decor/windows/set-warm-gouache-view.webp?v=__VERSION__"); --window-glass: url("../assets/decor/windows/set-warm-gouache-glass.webp?v=__VERSION__"); }
+
+:is([data-window="set-bookish-whimsy"], [data-window="set-cozy-sage"], [data-window="set-fireside-library"], [data-window="set-ink-folklore"]) .wall-art > .window-curtains,
 :is([data-window="snowy-walnut"], [data-window="solstice-round"], [data-window="gothic-moon"]) .wall-art > .window-curtains {
     display: none;
 }
@@ -807,4 +818,71 @@ html[data-wall-tone="light"]:not([data-art="room"]) .app-stage::before {
 
 html[data-wall-tone="light"] .sidebar-brand {
     filter: drop-shadow(0 1px 1px rgba(30, 16, 18, 0.9)) drop-shadow(0 0 8px rgba(30, 16, 18, 0.7));
+}
+
+
+/* =========================================================
+   THE VIEW OUTSIDE THE COLLECTIONS' WINDOWS
+   A painted scene seen only through the window's panes (its
+   glass mask), behind the frame, drifting slowly as if the
+   reader's eye wanders; its weather falls in front of it
+   (css/ambience.css), on the glass.
+========================================================= */
+
+.window-view {
+    display: none;
+
+    position: absolute;
+
+    /* Exactly over the window, under its frame (z-index 1). */
+    z-index: 0;
+
+    left: var(--window-left);
+    bottom: var(--window-bottom);
+
+    width: var(--window-width);
+
+    aspect-ratio: 440 / 330;
+
+    overflow: hidden;
+
+    -webkit-mask: var(--window-glass) 0 0 / 100% 100% no-repeat;
+    mask: var(--window-glass) 0 0 / 100% 100% no-repeat;
+
+    pointer-events: none;
+}
+
+html[data-art="room"]:is([data-window="set-bookish-whimsy"], [data-window="set-cozy-sage"], [data-window="set-fireside-library"], [data-window="set-ink-folklore"], [data-window="set-snowy-fairytale"], [data-window="set-sugarplum-pastel"], [data-window="set-vintage-woodland"], [data-window="set-warm-gouache"]) .window-view {
+    display: block;
+}
+
+.window-view__scene {
+    position: absolute;
+
+    inset: -8% -10%;
+
+    background: var(--window-view-art) center / cover no-repeat;
+
+    animation: windowViewDrift 46s ease-in-out infinite alternate;
+}
+
+@keyframes windowViewDrift {
+    0% { transform: translate(-3.5%, 0.8%) scale(1); }
+    50% { transform: translate(0.5%, -0.8%) scale(1.03); }
+    100% { transform: translate(3.5%, 0.6%) scale(1.01); }
+}
+
+/* The time of day outside tints the painted view a little. */
+html[data-time="dusk"] .window-view__scene { filter: sepia(0.18) saturate(1.1) brightness(0.92); }
+html[data-time="night"] .window-view__scene { filter: brightness(0.62) saturate(0.85) hue-rotate(-12deg); }
+html[data-time="morning"] .window-view__scene { filter: brightness(1.05) saturate(0.95); }
+
+.reduce-motion .window-view__scene {
+    animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .window-view__scene {
+        animation: none;
+    }
 }

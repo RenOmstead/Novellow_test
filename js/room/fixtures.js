@@ -135,7 +135,16 @@ export const WALLPAPERS = [
     { id: "holiday-winter-1", name: "Winter snowflakes", wall: ["#865861", "#9d6771", "#a66d77"], src: "assets/wallpapers/holiday_winter_1.webp", pattern: `url("../assets/wallpapers/holiday_winter_1.webp?v=__VERSION__")`, size: "150px 139px", holiday: true },
     { id: "holiday-winter-2", name: "Winter snowy pines", wall: ["#d8ccb6", "#fdefd5", "#fffde1"], src: "assets/wallpapers/holiday_winter_2.webp", pattern: `url("../assets/wallpapers/holiday_winter_2.webp?v=__VERSION__")`, size: "150px 150px", holiday: true, light: true },
     { id: "holiday-yule-1", name: "Yule oranges and evergreen", wall: ["#d7cbb7", "#fceed6", "#fffce2"], src: "assets/wallpapers/holiday_yule_1.webp", pattern: `url("../assets/wallpapers/holiday_yule_1.webp?v=__VERSION__")`, size: "113px 150px", holiday: true, light: true },
-    { id: "holiday-yule-2", name: "Yule suns and pinecones", wall: ["#5c323d", "#6c3a47", "#723d4b"], src: "assets/wallpapers/holiday_yule_2.webp", pattern: `url("../assets/wallpapers/holiday_yule_2.webp?v=__VERSION__")`, size: "150px 150px", holiday: true }
+    { id: "holiday-yule-2", name: "Yule suns and pinecones", wall: ["#5c323d", "#6c3a47", "#723d4b"], src: "assets/wallpapers/holiday_yule_2.webp", pattern: `url("../assets/wallpapers/holiday_yule_2.webp?v=__VERSION__")`, size: "150px 150px", holiday: true },
+    // The collections' wallpapers, in a row of their own.,
+    { id: "set-bookish-whimsy", name: "Bookish whimsy roses and holly", wall: ["#d7aba8",  "#fbc8c4",  "#ffd4cf"], src: "assets/wallpapers/set_bookish_whimsy.webp", pattern: `url("../assets/wallpapers/set_bookish_whimsy.webp?v=__VERSION__")`, size: "409px 365px", collection: true, light: true },
+    { id: "set-cozy-sage", name: "Cozy sage holly and mistletoe", wall: ["#a4b094",  "#c0cdad",  "#cbd9b6"], src: "assets/wallpapers/set_cozy_sage.webp", pattern: `url("../assets/wallpapers/set_cozy_sage.webp?v=__VERSION__")`, size: "419px 356px", collection: true, light: true },
+    { id: "set-fireside-library", name: "Fireside pinecones and berries", wall: ["#dac1ad",  "#fee2ca",  "#ffefd6"], src: "assets/wallpapers/set_fireside_library.webp", pattern: `url("../assets/wallpapers/set_fireside_library.webp?v=__VERSION__")`, size: "332px 449px", collection: true, light: true },
+    { id: "set-ink-folklore", name: "Ink folklore berries and stars", wall: ["#d8c9bb",  "#fdecda",  "#fff9e7"], src: "assets/wallpapers/set_ink_folklore.webp", pattern: `url("../assets/wallpapers/set_ink_folklore.webp?v=__VERSION__")`, size: "367px 408px", collection: true, light: true },
+    { id: "set-snowy-fairytale", name: "Snowy fairytale sprigs", wall: ["#d5cbc4",  "#faeee6",  "#fffbf3"], src: "assets/wallpapers/set_snowy_fairytale.webp", pattern: `url("../assets/wallpapers/set_snowy_fairytale.webp?v=__VERSION__")`, size: "387px 387px", collection: true, light: true },
+    { id: "set-sugarplum-pastel", name: "Sugarplum berries on pink", wall: ["#dabfc2",  "#ffe0e3",  "#ffedef"], src: "assets/wallpapers/set_sugarplum_pastel.webp", pattern: `url("../assets/wallpapers/set_sugarplum_pastel.webp?v=__VERSION__")`, size: "488px 304px", collection: true, light: true },
+    { id: "set-vintage-woodland", name: "Vintage woodland rosehips", wall: ["#d9be9e",  "#fedeb9",  "#ffeac3"], src: "assets/wallpapers/set_vintage_woodland.webp", pattern: `url("../assets/wallpapers/set_vintage_woodland.webp?v=__VERSION__")`, size: "343px 435px", collection: true, light: true },
+    { id: "set-warm-gouache", name: "Warm gouache berries and pine", wall: ["#dac3b0",  "#ffe4ce",  "#fff1da"], src: "assets/wallpapers/set_warm_gouache.webp", pattern: `url("../assets/wallpapers/set_warm_gouache.webp?v=__VERSION__")`, size: "321px 463px", collection: true, light: true }
 ];
 
 
@@ -335,6 +344,51 @@ export const WEATHERS = [
 ];
 
 
+// The ceiling: the room's beams, or a collection's painted
+// ceiling ("ratio" is its picture's width to height, for tiling).
+export const CEILINGS = [
+    { id: "room", name: "The room's own beams" },
+    { id: "bookish-whimsy", name: "Bookish whimsy", ratio: 3.0000 },
+    { id: "cozy-sage", name: "Cozy sage", ratio: 1.0691 },
+    { id: "fireside-library", name: "Fireside library", ratio: 0.9807 },
+    { id: "ink-folklore", name: "Ink folklore", ratio: 3.0000 },
+    { id: "snowy-fairytale", name: "Snowy fairytale", ratio: 0.9807 },
+    { id: "sugarplum-pastel", name: "Sugarplum pastel", ratio: 3.0000 },
+    { id: "vintage-woodland", name: "Vintage woodland", ratio: 3.0000 },
+    { id: "warm-gouache", name: "Warm gouache", ratio: 1.0552 }
+];
+
+
+// The collections: a wallpaper, ceiling, window and bookcase
+// painted to go together, chosen in one tap.
+export const COLLECTIONS =
+    CEILINGS.filter((item) => item.ratio).map((item) => ({
+        id: item.id,
+        name: item.name,
+        wallpaper: `set-${item.id}`,
+        ceiling: item.id,
+        window: `set-${item.id}`,
+        case: `art-${item.id}`
+    }));
+
+const COLLECTION_KINDS = ["wallpaper", "ceiling", "window", "case"];
+
+function collectionNow(fixtures) {
+    return COLLECTIONS.find((set) => COLLECTION_KINDS.every((kind) => fixtures[kind] === set[kind])) || null;
+}
+
+export function chooseCollection(id) {
+
+    const set =
+        COLLECTIONS.find((item) => item.id === id);
+
+    if (set) {
+        COLLECTION_KINDS.forEach((kind) => chooseFixture(kind, set[kind]));
+    }
+
+}
+
+
 export const LIGHTS = [
     { id: "bright", name: "Bright", dim: 0 },
     { id: "cozy", name: "Cozy", dim: 0.14 },
@@ -368,7 +422,16 @@ export const CASE_FINISHES = [
     { id: "art-walnut-evergreen", name: "Evergreen walnut", art: "walnut-evergreen", side: ["#3a2216", "#8f5335", "#824c31"], crown: ["#5f3525", "#573122", "#45271b"], frieze: ["#49291c", "#3c2217"], back: ["#351f14", "#43271a"], board: ["#905537", "#834e32", "#623a25"] },
     { id: "art-plum-star", name: "Plum with a star", art: "plum-star", side: ["#31191d", "#7a3e47", "#6f3941"], crown: ["#492326", "#432023", "#35191c"], frieze: ["#381b1d", "#2e1618"], back: ["#392015", "#48291b"], board: ["#7b3d46", "#703840", "#542a30"] },
     { id: "art-frosted-cream", name: "Frosted cream", art: "frosted-cream", side: ["#6a5c4c", "#ffe2bb", "#ecceaa"], crown: ["#cfa77d", "#bd9872", "#97795b"], frieze: ["#a08160", "#846a4f"], back: ["#3f2316", "#4f2c1c"], board: ["#f8d4ac", "#e2c19d", "#a99075"] },
-    { id: "art-solstice-green", name: "Solstice green", art: "solstice-green", side: ["#2d2d1c", "#6f7046", "#656640"], crown: ["#525332", "#4b4c2e", "#3c3c24"], frieze: ["#3f4027", "#343520"], back: ["#442818", "#55321e"], board: ["#5c603b", "#545836", "#3f4228"] }
+    { id: "art-solstice-green", name: "Solstice green", art: "solstice-green", side: ["#2d2d1c", "#6f7046", "#656640"], crown: ["#525332", "#4b4c2e", "#3c3c24"], frieze: ["#3f4027", "#343520"], back: ["#442818", "#55321e"], board: ["#5c603b", "#545836", "#3f4228"] },
+    // The collections' painted bookcases.
+    { id: "art-bookish-whimsy", name: "Bookish whimsy", art: "bookish-whimsy", collection: true, side: ["#3a3e2e", "#8f9871", "#828b67"], crown: ["#d79580", "#c48875", "#9c6c5d"], frieze: ["#a67363", "#895f51"], back: ["#b49c7e", "#e1c39e"], board: ["#94ac82", "#879d77", "#657559"] },
+    { id: "art-cozy-sage", name: "Cozy sage", art: "cozy-sage", collection: true, side: ["#3c3e2a", "#939867", "#868b5e"], crown: ["#939565", "#86885c", "#6b6c49"], frieze: ["#71734e", "#5d5f40"], back: ["#56341c", "#6c4224"], board: ["#8d9263", "#81855a", "#606343"] },
+    { id: "art-fireside-library", name: "Fireside library", art: "fireside-library", collection: true, side: ["#3d1d12", "#95482e", "#88422a"], crown: ["#7b3422", "#70301f", "#592618"], frieze: ["#5f281a", "#4e2115"], back: ["#502416", "#642e1c"], board: ["#b44e2a", "#a44727", "#7b351d"] },
+    { id: "art-ink-folklore", name: "Ink folklore", art: "ink-folklore", collection: true, side: ["#33363b", "#7d8692", "#727a85"], crown: ["#97664e", "#8a5d47", "#6e4a38"], frieze: ["#754f3c", "#604131"], back: ["#394234", "#485341"], board: ["#95634a", "#885a44", "#664333"] },
+    { id: "art-snowy-fairytale", name: "Snowy fairytale", art: "snowy-fairytale", collection: true, side: ["#545a5e", "#cedee8", "#bccad3"], crown: ["#bdcdd9", "#acbbc6", "#89959e"], frieze: ["#929ea8", "#78828a"], back: ["#c19674", "#f2bc91"], board: ["#c9d9e4", "#b7c6d0", "#89949c"] },
+    { id: "art-sugarplum-pastel", name: "Sugarplum pastel", art: "sugarplum-pastel", collection: true, side: ["#705a5a", "#ffdedd", "#f9cac9"], crown: ["#ffcdcc", "#f2bbba", "#c19594"], frieze: ["#cd9e9e", "#a98282"], back: ["#bea795", "#eed1bb"], board: ["#ffb8b6", "#eca8a6", "#b17e7c"] },
+    { id: "art-vintage-woodland", name: "Vintage woodland", art: "vintage-woodland", collection: true, side: ["#543224", "#ce7b58", "#bc7050"], crown: ["#b6855b", "#a67953", "#846042"], frieze: ["#8d6646", "#74543a"], back: ["#6e3f32", "#8a4f3f"], board: ["#ca7a52", "#b86f4b", "#8a5338"] },
+    { id: "art-warm-gouache", name: "Warm gouache", art: "warm-gouache", collection: true, side: ["#643b16", "#f59138", "#df8433"], crown: ["#f99142", "#e3843c", "#b56930"], frieze: ["#c07033", "#9e5c2a"], back: ["#5d2c17", "#75381d"], board: ["#e78231", "#d2772d", "#9d5921"] }
 ];
 
 const CASE_VARS = [
@@ -385,7 +448,7 @@ export const WINDOW_CHOICES = [
 ];
 
 const KINDS =
-    ["wallpaper", "floor", "window", "wood", "curtains", "curtainColour", "rug", "rugColour", "time", "light", "tree", "season", "weather", "case"];
+    ["wallpaper", "floor", "window", "wood", "curtains", "curtainColour", "rug", "rugColour", "time", "light", "tree", "season", "weather", "ceiling", "case"];
 
 const CHOICES = {
     wallpaper: WALLPAPERS,
@@ -401,6 +464,7 @@ const CHOICES = {
     tree: TREES,
     season: SEASONS,
     weather: WEATHERS,
+    ceiling: CEILINGS,
     case: CASE_FINISHES
 };
 
@@ -470,10 +534,10 @@ function defaultsFor(theme) {
         getPreferences();
 
     if (theme === "sandbox") {
-        return { wallpaper: "plaster", floor: "oak", window: "none", wood: prefs.wood, curtains: "none", curtainColour: "room", rug: "none", rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", weather: "room", case: "walnut", hidden: "", windowX: null, windowY: null, rugX: null, rugY: null };
+        return { wallpaper: "plaster", floor: "oak", window: "none", wood: prefs.wood, curtains: "none", curtainColour: "room", rug: "none", rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", weather: "room", ceiling: "room", case: "walnut", hidden: "", windowX: null, windowY: null, rugX: null, rugY: null };
     }
 
-    return { wallpaper: "room", floor: "room", window: prefs.window, wood: prefs.wood, curtains: prefs.curtains, curtainColour: "room", rug: prefs.rug, rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", weather: "room", case: "room", hidden: "", windowX: null, windowY: null, rugX: null, rugY: null };
+    return { wallpaper: "room", floor: "room", window: prefs.window, wood: prefs.wood, curtains: prefs.curtains, curtainColour: "room", rug: prefs.rug, rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", weather: "room", ceiling: "room", case: "room", hidden: "", windowX: null, windowY: null, rugX: null, rugY: null };
 
 }
 
@@ -520,6 +584,21 @@ export function applyFixtures(theme = document.documentElement.dataset.theme) {
     // Snowing, with the season left to the calendar: winter outside.
     root.dataset.season = fixtures.season !== "auto" ? fixtures.season : fixtures.weather === "snow" ? "winter" : seasonNow();
     root.dataset.weather = fixtures.weather;
+
+    // A painted ceiling, over the room's beams (css/room.css).
+    const ceiling =
+        CEILINGS.find((item) => item.id === fixtures.ceiling);
+
+    if (ceiling?.ratio) {
+        root.dataset.ceiling = ceiling.id;
+        root.style.setProperty("--ceiling-art", `url("../assets/ceilings/${ceiling.id}.webp?v=__VERSION__")`);
+        root.style.setProperty("--ceiling-art-ratio", String(ceiling.ratio));
+    }
+    else {
+        delete root.dataset.ceiling;
+        root.style.removeProperty("--ceiling-art");
+        root.style.removeProperty("--ceiling-art-ratio");
+    }
     root.style.setProperty("--room-dim", String(LIGHTS.find((item) => item.id === fixtures.light)?.dim || 0));
     root.dataset.hidden = String(fixtures.hidden || "").split(",").filter(Boolean).join(" ");
 
@@ -1063,7 +1142,7 @@ function swatchStyle(kind, choice) {
     if (kind === "wallpaper") {
         // A painted wallpaper: its own picture, a little smaller.
         if (choice.src) {
-            return `background: url("${choice.src}?v=__VERSION__") center / ${choice.holiday ? Math.round(parseFloat(choice.size) * 0.5) : 90}px auto`;
+            return `background: url("${choice.src}?v=__VERSION__") center / ${choice.holiday || choice.collection ? Math.round(parseFloat(choice.size) * 0.5) : 90}px auto`;
         }
 
         return choice.wall
@@ -1079,6 +1158,12 @@ function swatchStyle(kind, choice) {
         return choice.top
             ? `background: ${choice.pattern ? `${choice.pattern}, ` : ""}repeating-linear-gradient(90deg, ${choice.planks || "rgba(0, 0, 0, 0.2)"} 0 2px, transparent 2px 22px), linear-gradient(${choice.top}, ${choice.bottom})`
             : "";
+    }
+
+    if (kind === "ceiling") {
+        return choice.ratio
+            ? `background: url("assets/ceilings/${choice.id}.webp?v=__VERSION__") left center / auto 100% repeat-x`
+            : `background: repeating-linear-gradient(90deg, #2a190f 0 10px, #6a432c 10px 22px, #2a190f 22px 32px)`;
     }
 
     if (kind === "case" && choice.art) {
@@ -1169,6 +1254,12 @@ function windowNote(id) {
         return "";
     }
 
+    if (shape.layered) {
+        return shape.curtains
+            ? " Its own view drifts past its panes, with your weather in front of it. It has its own curtains, so the room's curtains and frame wood don't change it."
+            : " Its own view drifts past its panes, with your weather in front of it. The frame wood doesn't change it, but you can add curtains.";
+    }
+
     return shape.curtains
         ? " This one has its own snowy view and curtains, so the view outside, the curtains and the frame wood don't change it."
         : " This one has its own snowy view, so the view outside and the frame wood don't change it.";
@@ -1226,7 +1317,8 @@ export function roomSectionMarkup(section) {
 
         case "wallpaper":
             return html`
-                ${swatches("wallpaper", "Wallpaper", fixtures.wallpaper, (choice) => !choice.holiday)}
+                ${swatches("wallpaper", "Wallpaper", fixtures.wallpaper, (choice) => !choice.holiday && !choice.collection)}
+                ${swatches("wallpaper", "Collection wallpaper", fixtures.wallpaper, (choice) => choice.collection)}
                 ${swatches("wallpaper", "Holiday wallpaper", fixtures.wallpaper, (choice) => choice.holiday)}
             `;
 
@@ -1267,9 +1359,31 @@ export function roomSectionMarkup(section) {
         case "light":
             return chips("light", "Light in the room", fixtures.light);
 
+        case "ceiling":
+            return swatches("ceiling", "Ceiling", fixtures.ceiling);
+
+        case "collection": {
+            const now = collectionNow(fixtures);
+            return html`
+                <fieldset class="room-choices">
+                    <legend class="room-choices__label">A whole collection</legend>
+                    <p class="room-choices__note">Its wallpaper, ceiling, window and bookcase in one tap. Change any of them after, as you like.</p>
+                    <div class="room-choices__tiles">
+                        ${COLLECTIONS.map((set) => html`
+                            <button class="room-tile ${now?.id === set.id ? "is-current" : ""}" type="button" data-collection="${set.id}" aria-pressed="${String(now?.id === set.id)}" title="${set.name}">
+                                <img src="assets/bookcases/${set.id}/thumb.webp?v=__VERSION__" alt="" loading="lazy" draggable="false">
+                                <span>${set.name}</span>
+                            </button>
+                        `)}
+                    </div>
+                </fieldset>
+            `;
+        }
+
         case "bookcase":
             return html`
-                ${swatches("case", "The bookcase", fixtures.case)}
+                ${swatches("case", "The bookcase", fixtures.case, (choice) => !choice.collection)}
+                ${swatches("case", "Collection bookcases", fixtures.case, (choice) => choice.collection)}
                 <p class="room-choices__note">Its wood or paint. A shelf with a style of its own (in its shelf settings) keeps it.</p>
             `;
 
@@ -1327,6 +1441,12 @@ export function roomSummary(section) {
         case "light":
             return name("light", fixtures.light);
 
+        case "ceiling":
+            return name("ceiling", fixtures.ceiling);
+
+        case "collection":
+            return collectionNow(fixtures)?.name || "Mix and match";
+
         case "bookcase":
             return name("case", fixtures.case);
 
@@ -1358,6 +1478,14 @@ export function onRoomPanelClick(event) {
 
     if (pick) {
         chooseFixture(pick.dataset.fixture, pick.dataset.choice);
+        return true;
+    }
+
+    const set =
+        event.target.closest("[data-collection]");
+
+    if (set) {
+        chooseCollection(set.dataset.collection);
         return true;
     }
 

@@ -125,12 +125,23 @@ export const WINDOW_SHAPES = [
     { id: "snowy-walnut", name: "Snowy twin arch", view: true, curtains: true },
     { id: "solstice-round", name: "Solstice round", view: true, curtains: true },
     { id: "frosted-cream", name: "Frosted sash", view: true },
-    { id: "gothic-moon", name: "Gothic moon", view: true, curtains: true }
+    { id: "gothic-moon", name: "Gothic moon", view: true, curtains: true },
+    // The collections' windows: a painted frame, with the view
+    // outside its panes as a layer of its own, which drifts and
+    // has the weather in front of it (css/themes.css).
+    { id: "set-bookish-whimsy", name: "Bookish whimsy", view: true, layered: true, curtains: true },
+    { id: "set-cozy-sage", name: "Cozy sage", view: true, layered: true, curtains: true },
+    { id: "set-fireside-library", name: "Fireside library", view: true, layered: true, curtains: true },
+    { id: "set-ink-folklore", name: "Ink folklore", view: true, layered: true, curtains: true },
+    { id: "set-snowy-fairytale", name: "Snowy fairytale", view: true, layered: true },
+    { id: "set-sugarplum-pastel", name: "Sugarplum pastel", view: true, layered: true },
+    { id: "set-vintage-woodland", name: "Vintage woodland", view: true, layered: true },
+    { id: "set-warm-gouache", name: "Warm gouache", view: true, layered: true }
 ];
 
 // The painted windows and curtains (pictures, not drawings).
 export const PAINTED_WINDOWS =
-    ["six-pane", "tracery", "lancet", "double-arch", "moon-arch", "round", "porthole", "timber", "casement", "shutters", "boarded", "boarded-arch", "snowy-walnut", "solstice-round", "frosted-cream", "gothic-moon"];
+    ["six-pane", "tracery", "lancet", "double-arch", "moon-arch", "round", "porthole", "timber", "casement", "shutters", "boarded", "boarded-arch", "snowy-walnut", "solstice-round", "frosted-cream", "gothic-moon", "set-bookish-whimsy", "set-cozy-sage", "set-fireside-library", "set-ink-folklore", "set-snowy-fairytale", "set-sugarplum-pastel", "set-vintage-woodland", "set-warm-gouache"];
 
 export const PAINTED_CURTAINS =
     ["tasselled", "ivy", "pumpkin", "tattered", "lined", "theatre", "roses"];

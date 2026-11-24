@@ -695,6 +695,119 @@ html.room-compact .bookcase-zone > .bookcase {
     --art-crown-top: 55%;
 }
 
+/* The collections' bookcases. */
+[data-case-art="bookish-whimsy"] {
+    --art-plaque-y: 84%;
+    --art-crown: url("../assets/bookcases/bookish-whimsy/crown.webp?v=__VERSION__");
+    --art-post-left: url("../assets/bookcases/bookish-whimsy/post-left.webp?v=__VERSION__");
+    --art-post-right: url("../assets/bookcases/bookish-whimsy/post-right.webp?v=__VERSION__");
+    --art-back: url("../assets/bookcases/bookish-whimsy/back.webp?v=__VERSION__");
+    --art-rail: url("../assets/bookcases/bookish-whimsy/rail.webp?v=__VERSION__");
+    --art-base: url("../assets/bookcases/bookish-whimsy/base.webp?v=__VERSION__");
+    --art-overhang: 5.83%;
+    --art-crown-ratio: 737 / 322;
+    --art-base-ratio: 737 / 218;
+    --art-crown-top: 44%;
+}
+
+[data-case-art="cozy-sage"] {
+    --art-plaque-y: 84%;
+    --art-crown: url("../assets/bookcases/cozy-sage/crown.webp?v=__VERSION__");
+    --art-post-left: url("../assets/bookcases/cozy-sage/post-left.webp?v=__VERSION__");
+    --art-post-right: url("../assets/bookcases/cozy-sage/post-right.webp?v=__VERSION__");
+    --art-back: url("../assets/bookcases/cozy-sage/back.webp?v=__VERSION__");
+    --art-rail: url("../assets/bookcases/cozy-sage/rail.webp?v=__VERSION__");
+    --art-base: url("../assets/bookcases/cozy-sage/base.webp?v=__VERSION__");
+    --art-overhang: 1.59%;
+    --art-crown-ratio: 877 / 245;
+    --art-base-ratio: 877 / 213;
+    --art-crown-top: 46%;
+}
+
+[data-case-art="fireside-library"] {
+    --art-plaque-y: 40%;
+    --art-crown: url("../assets/bookcases/fireside-library/crown.webp?v=__VERSION__");
+    --art-post-left: url("../assets/bookcases/fireside-library/post-left.webp?v=__VERSION__");
+    --art-post-right: url("../assets/bookcases/fireside-library/post-right.webp?v=__VERSION__");
+    --art-back: url("../assets/bookcases/fireside-library/back.webp?v=__VERSION__");
+    --art-rail: url("../assets/bookcases/fireside-library/rail.webp?v=__VERSION__");
+    --art-base: url("../assets/bookcases/fireside-library/base.webp?v=__VERSION__");
+    --art-overhang: 6.18%;
+    --art-crown-ratio: 918 / 451;
+    --art-base-ratio: 918 / 181;
+    --art-crown-top: 97%;
+}
+
+[data-case-art="ink-folklore"] {
+    --art-plaque-y: 62%;
+    --art-crown: url("../assets/bookcases/ink-folklore/crown.webp?v=__VERSION__");
+    --art-post-left: url("../assets/bookcases/ink-folklore/post-left.webp?v=__VERSION__");
+    --art-post-right: url("../assets/bookcases/ink-folklore/post-right.webp?v=__VERSION__");
+    --art-back: url("../assets/bookcases/ink-folklore/back.webp?v=__VERSION__");
+    --art-rail: url("../assets/bookcases/ink-folklore/rail.webp?v=__VERSION__");
+    --art-base: url("../assets/bookcases/ink-folklore/base.webp?v=__VERSION__");
+    --art-overhang: 2.06%;
+    --art-crown-ratio: 984 / 203;
+    --art-base-ratio: 984 / 175;
+    --art-crown-top: 93%;
+}
+
+[data-case-art="snowy-fairytale"] {
+    --art-plaque-y: 84%;
+    --art-crown: url("../assets/bookcases/snowy-fairytale/crown.webp?v=__VERSION__");
+    --art-post-left: url("../assets/bookcases/snowy-fairytale/post-left.webp?v=__VERSION__");
+    --art-post-right: url("../assets/bookcases/snowy-fairytale/post-right.webp?v=__VERSION__");
+    --art-back: url("../assets/bookcases/snowy-fairytale/back.webp?v=__VERSION__");
+    --art-rail: url("../assets/bookcases/snowy-fairytale/rail.webp?v=__VERSION__");
+    --art-base: url("../assets/bookcases/snowy-fairytale/base.webp?v=__VERSION__");
+    --art-overhang: 2.36%;
+    --art-crown-ratio: 911 / 307;
+    --art-base-ratio: 911 / 193;
+    --art-crown-top: 40%;
+}
+
+[data-case-art="sugarplum-pastel"] {
+    --art-plaque-y: 84%;
+    --art-crown: url("../assets/bookcases/sugarplum-pastel/crown.webp?v=__VERSION__");
+    --art-post-left: url("../assets/bookcases/sugarplum-pastel/post-left.webp?v=__VERSION__");
+    --art-post-right: url("../assets/bookcases/sugarplum-pastel/post-right.webp?v=__VERSION__");
+    --art-back: url("../assets/bookcases/sugarplum-pastel/back.webp?v=__VERSION__");
+    --art-rail: url("../assets/bookcases/sugarplum-pastel/rail.webp?v=__VERSION__");
+    --art-base: url("../assets/bookcases/sugarplum-pastel/base.webp?v=__VERSION__");
+    --art-overhang: 1.84%;
+    --art-crown-ratio: 903 / 288;
+    --art-base-ratio: 903 / 176;
+    --art-crown-top: 41%;
+}
+
+[data-case-art="vintage-woodland"] {
+    --art-plaque-y: 84%;
+    --art-crown: url("../assets/bookcases/vintage-woodland/crown.webp?v=__VERSION__");
+    --art-post-left: url("../assets/bookcases/vintage-woodland/post-left.webp?v=__VERSION__");
+    --art-post-right: url("../assets/bookcases/vintage-woodland/post-right.webp?v=__VERSION__");
+    --art-back: url("../assets/bookcases/vintage-woodland/back.webp?v=__VERSION__");
+    --art-rail: url("../assets/bookcases/vintage-woodland/rail.webp?v=__VERSION__");
+    --art-base: url("../assets/bookcases/vintage-woodland/base.webp?v=__VERSION__");
+    --art-overhang: 1.04%;
+    --art-crown-ratio: 1028 / 221;
+    --art-base-ratio: 1028 / 194;
+    --art-crown-top: 45%;
+}
+
+[data-case-art="warm-gouache"] {
+    --art-plaque-y: 84%;
+    --art-crown: url("../assets/bookcases/warm-gouache/crown.webp?v=__VERSION__");
+    --art-post-left: url("../assets/bookcases/warm-gouache/post-left.webp?v=__VERSION__");
+    --art-post-right: url("../assets/bookcases/warm-gouache/post-right.webp?v=__VERSION__");
+    --art-back: url("../assets/bookcases/warm-gouache/back.webp?v=__VERSION__");
+    --art-rail: url("../assets/bookcases/warm-gouache/rail.webp?v=__VERSION__");
+    --art-base: url("../assets/bookcases/warm-gouache/base.webp?v=__VERSION__");
+    --art-overhang: 2.92%;
+    --art-crown-ratio: 1087 / 220;
+    --art-base-ratio: 1087 / 188;
+    --art-crown-top: 45%;
+}
+
 [data-case-art] .bookcase-top {
     margin: 0 calc(var(--art-overhang) * -1);
 
