@@ -183,6 +183,8 @@ function buildWindow() {
             <span class="window-weather__drop" style="left: 22%; animation-delay: -1s"></span>
             <span class="window-weather__drop" style="left: 47%; animation-delay: -4s"></span>
             <span class="window-weather__drop" style="left: 71%; animation-delay: -2.5s"></span>
+            <span class="window-weather__snow"></span>
+            <span class="window-weather__snow window-weather__snow--near"></span>
         </div>
     `);
 
@@ -323,7 +325,12 @@ const HAPPENINGS = {
 
     },
 
-    lightning: () => briefly(windowWeather, "is-lightning", 900),
+    // Only in a storm: never under clear skies or in the snow.
+    lightning: () => {
+        if (!["clear", "snow"].includes(root().dataset.weather)) {
+            briefly(windowWeather, "is-lightning", 900);
+        }
+    },
 
     leaf: () => {
 

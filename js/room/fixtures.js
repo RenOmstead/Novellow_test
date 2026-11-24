@@ -325,6 +325,16 @@ function seasonNow() {
 }
 
 
+// The weather outside the window. "As the room likes" follows
+// the room (and Rain on the window in Settings).
+export const WEATHERS = [
+    { id: "room", name: "As the room likes" },
+    { id: "clear", name: "Clear" },
+    { id: "rain", name: "Rain" },
+    { id: "snow", name: "Snow" }
+];
+
+
 export const LIGHTS = [
     { id: "bright", name: "Bright", dim: 0 },
     { id: "cozy", name: "Cozy", dim: 0.14 },
@@ -375,7 +385,7 @@ export const WINDOW_CHOICES = [
 ];
 
 const KINDS =
-    ["wallpaper", "floor", "window", "wood", "curtains", "curtainColour", "rug", "rugColour", "time", "light", "tree", "season", "case"];
+    ["wallpaper", "floor", "window", "wood", "curtains", "curtainColour", "rug", "rugColour", "time", "light", "tree", "season", "weather", "case"];
 
 const CHOICES = {
     wallpaper: WALLPAPERS,
@@ -390,6 +400,7 @@ const CHOICES = {
     light: LIGHTS,
     tree: TREES,
     season: SEASONS,
+    weather: WEATHERS,
     case: CASE_FINISHES
 };
 
@@ -459,10 +470,10 @@ function defaultsFor(theme) {
         getPreferences();
 
     if (theme === "sandbox") {
-        return { wallpaper: "plaster", floor: "oak", window: "none", wood: prefs.wood, curtains: "none", curtainColour: "room", rug: "none", rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", case: "walnut", hidden: "", windowX: null, windowY: null, rugX: null, rugY: null };
+        return { wallpaper: "plaster", floor: "oak", window: "none", wood: prefs.wood, curtains: "none", curtainColour: "room", rug: "none", rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", weather: "room", case: "walnut", hidden: "", windowX: null, windowY: null, rugX: null, rugY: null };
     }
 
-    return { wallpaper: "room", floor: "room", window: prefs.window, wood: prefs.wood, curtains: prefs.curtains, curtainColour: "room", rug: prefs.rug, rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", case: "room", hidden: "", windowX: null, windowY: null, rugX: null, rugY: null };
+    return { wallpaper: "room", floor: "room", window: prefs.window, wood: prefs.wood, curtains: prefs.curtains, curtainColour: "room", rug: prefs.rug, rugColour: "room", time: "night", light: "bright", tree: "oak", season: "auto", weather: "room", case: "room", hidden: "", windowX: null, windowY: null, rugX: null, rugY: null };
 
 }
 
@@ -506,7 +517,9 @@ export function applyFixtures(theme = document.documentElement.dataset.theme) {
     root.dataset.rug = fixtures.rug;
     root.dataset.time = fixtures.time;
     root.dataset.tree = fixtures.tree;
-    root.dataset.season = fixtures.season === "auto" ? seasonNow() : fixtures.season;
+    // Snowing, with the season left to the calendar: winter outside.
+    root.dataset.season = fixtures.season !== "auto" ? fixtures.season : fixtures.weather === "snow" ? "winter" : seasonNow();
+    root.dataset.weather = fixtures.weather;
     root.style.setProperty("--room-dim", String(LIGHTS.find((item) => item.id === fixtures.light)?.dim || 0));
     root.dataset.hidden = String(fixtures.hidden || "").split(",").filter(Boolean).join(" ");
 
@@ -1248,6 +1261,7 @@ export function roomSectionMarkup(section) {
                 ${chips("time", "Outside the window", fixtures.time)}
                 ${chips("tree", "Tree outside", fixtures.tree)}
                 ${chips("season", "Season", fixtures.season)}
+                ${chips("weather", "Weather", fixtures.weather)}
             `;
 
         case "light":

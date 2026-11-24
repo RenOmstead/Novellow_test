@@ -179,6 +179,10 @@ html:not(.candle-glow) {
 .window-weather {
     position: absolute;
 
+    /* Over the window's glass (z-index 1, css/room.css), under
+       the curtains (2). */
+    z-index: 1;
+
     /* Exactly over the window (css/room.css). */
     left: var(--window-left);
     bottom: var(--window-bottom);
@@ -203,6 +207,21 @@ html:not(.candle-glow) {
     --window-rain: inline;
 }
 
+/* The weather chosen for this room's window (Decorate → Window)
+   wins over the room's own: clear skies, rain, or snow. */
+html[data-weather="clear"],
+html[data-weather="snow"] {
+    --window-rain: none;
+}
+
+html[data-weather="rain"] {
+    --window-rain: inline;
+}
+
+html[data-weather="snow"] {
+    --window-snow: inline;
+}
+
 .window-weather .shooting-star {
     display: block;
 }
@@ -224,6 +243,14 @@ html:not(.candle-glow) {
 [data-window="shutters"] .window-weather { --pane: url("../assets/decor/windows/shutters-glass.webp?v=__VERSION__"); }
 [data-window="boarded"] .window-weather { --pane: url("../assets/decor/windows/boarded-glass.webp?v=__VERSION__"); }
 [data-window="boarded-arch"] .window-weather { --pane: url("../assets/decor/windows/boarded-arch-glass.webp?v=__VERSION__"); }
+
+/* The winter windows are one painting each, view and all: their
+   glass is masked out so weather falls behind the frame and the
+   curtains, and in front of the view. */
+[data-window="snowy-walnut"] .window-weather { --pane: url("../assets/decor/windows/snowy-walnut-glass.webp?v=__VERSION__"); clip-path: none; }
+[data-window="solstice-round"] .window-weather { --pane: url("../assets/decor/windows/solstice-round-glass.webp?v=__VERSION__"); clip-path: none; }
+[data-window="frosted-cream"] .window-weather { --pane: url("../assets/decor/windows/frosted-cream-glass.webp?v=__VERSION__"); clip-path: none; }
+[data-window="gothic-moon"] .window-weather { --pane: url("../assets/decor/windows/gothic-moon-glass.webp?v=__VERSION__"); clip-path: none; }
 
 .window-weather {
     -webkit-mask: var(--pane, none) 0 0 / 100% 100% no-repeat;
@@ -247,6 +274,46 @@ html:not(.candle-glow) {
     opacity: 0.7;
 
     animation-duration: 0.4s;
+}
+
+/* Snow over the painted winter windows (the drawn windows have
+   it in their view, behind their glazing bars). */
+.window-weather__snow {
+    position: absolute;
+
+    inset: -80px -40px 0;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cg fill='%23f6f8ff' fill-opacity='0.8'%3E%3Ccircle cx='8' cy='6' r='1.8'/%3E%3Ccircle cx='34' cy='22' r='1.5'/%3E%3Ccircle cx='62' cy='10' r='2'/%3E%3Ccircle cx='20' cy='44' r='1.8'/%3E%3Ccircle cx='50' cy='56' r='1.6'/%3E%3Ccircle cx='74' cy='38' r='1.5'/%3E%3Ccircle cx='12' cy='70' r='1.6'/%3E%3Ccircle cx='40' cy='76' r='2'/%3E%3Ccircle cx='66' cy='66' r='1.8'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 80px 80px;
+
+    animation: snowFall 7s linear infinite;
+}
+
+.window-weather__snow--near {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cg fill='%23ffffff' stroke='%238ea0bd' stroke-opacity='0.35' stroke-width='0.6'%3E%3Ccircle cx='18' cy='14' r='3.6'/%3E%3Ccircle cx='92' cy='34' r='3'/%3E%3Ccircle cx='56' cy='78' r='4'/%3E%3Ccircle cx='122' cy='96' r='3.2'/%3E%3Ccircle cx='30' cy='112' r='2.8'/%3E%3Ccircle cx='104' cy='128' r='3.6'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 140px 140px;
+
+    animation: snowFall 6s linear infinite, snowSway 5s ease-in-out infinite alternate;
+}
+
+html[data-weather="snow"]:is([data-window="snowy-walnut"], [data-window="solstice-round"], [data-window="frosted-cream"], [data-window="gothic-moon"]) .window-weather__snow {
+    display: block;
+}
+
+/* Rain over them too, whenever this room's window has rain. */
+html.ambient-rain:not([data-weather="clear"], [data-weather="snow"]):is([data-window="snowy-walnut"], [data-window="solstice-round"], [data-window="frosted-cream"], [data-window="gothic-moon"]) .window-weather__rain,
+html[data-weather="rain"]:is([data-window="snowy-walnut"], [data-window="solstice-round"], [data-window="frosted-cream"], [data-window="gothic-moon"]) .window-weather__rain {
+    display: block;
+}
+
+@keyframes snowFall {
+    from { background-position: 0 0; }
+    to { background-position: 10px 140px; }
+}
+
+@keyframes snowSway {
+    from { translate: -6px 0; }
+    to { translate: 6px 0; }
 }
 
 @keyframes rainFall {
