@@ -1522,6 +1522,31 @@
         <g style="display: var(--window-set-warm-gouache, none)">
             <image href="assets/decor/windows/set-warm-gouache.webp?v=__VERSION__" width="440" height="330"/>
         </g>
+        <!-- The same frames bare, for any curtains. -->
+        <g style="display: var(--window-set-bookish-whimsy-bare, none)">
+            <image href="assets/decor/windows/set-bookish-whimsy-bare.webp?v=__VERSION__" width="440" height="330"/>
+        </g>
+        <g style="display: var(--window-set-cozy-sage-bare, none)">
+            <image href="assets/decor/windows/set-cozy-sage-bare.webp?v=__VERSION__" width="440" height="330"/>
+        </g>
+        <g style="display: var(--window-set-fireside-library-bare, none)">
+            <image href="assets/decor/windows/set-fireside-library-bare.webp?v=__VERSION__" width="440" height="330"/>
+        </g>
+        <g style="display: var(--window-set-ink-folklore-bare, none)">
+            <image href="assets/decor/windows/set-ink-folklore-bare.webp?v=__VERSION__" width="440" height="330"/>
+        </g>
+        <g style="display: var(--window-set-snowy-fairytale-bare, none)">
+            <image href="assets/decor/windows/set-snowy-fairytale-bare.webp?v=__VERSION__" width="440" height="330"/>
+        </g>
+        <g style="display: var(--window-set-sugarplum-pastel-bare, none)">
+            <image href="assets/decor/windows/set-sugarplum-pastel-bare.webp?v=__VERSION__" width="440" height="330"/>
+        </g>
+        <g style="display: var(--window-set-vintage-woodland-bare, none)">
+            <image href="assets/decor/windows/set-vintage-woodland-bare.webp?v=__VERSION__" width="440" height="330"/>
+        </g>
+        <g style="display: var(--window-set-warm-gouache-bare, none)">
+            <image href="assets/decor/windows/set-warm-gouache-bare.webp?v=__VERSION__" width="440" height="330"/>
+        </g>
     </symbol>
 
         <symbol id="lamp-chandelier" viewBox="0 0 210 250">

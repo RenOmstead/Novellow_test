@@ -107,7 +107,7 @@ const FX = {
     hanging_ivy: "sway-soft",
     potted_mushrooms: "sparkle 50 30 70 40 3",
     ghost: "float; aura",
-    black_cat: "tilt",
+    black_cat: "breathe; part ear 4 0 27 25 70 100; part ear 54 0 28 25 30 100; part tail 68 37 32 27 15 95; glint 39 50",
     bat: "flap",
     bat_garland: "sway-soft",
     ghost_garland: "sway-soft; aura",
@@ -211,6 +211,56 @@ const FX = {
     ghost_moon_portrait: "aura; sheen",
     // The collections (assets/decor/sets/).
     cottage_snowglobe: "globe 50 37 46; glow 52 52 1.4 window; sheen",
+    sleeping_mouse: "breathe-slow; part ear 25 19 15 20 60 100; part nose 29 58 9 11 50 50",
+    // The collections' cozy additions.
+    bookish_whimsy_cat: "breathe; part ear 5 0 24 22 70 100; part ear 55 0 24 22 30 100; part tail 70 55 30 32 5 85",
+    cozy_sage_cat: "breathe-slow; part ear 5 12 16 24 70 100; part ear 45 12 16 24 30 100; part nose 28 44 9 10 50 50",
+    fireside_library_cat: "breathe; part ear 2 0 19 26 70 100; part ear 32 0 19 26 30 100; part nose 22 42 8 8 50 50; glint 18 34; glint 37 34",
+    ink_folklore_cat: "breathe-slow; part ear 1 7 15 25 70 100; part ear 24 7 15 24 30 100; part nose 25 47 9 9 50 50",
+    snowy_fairytale_cat: "breathe-slow; part ear 2 29 13 22 60 100; part ear 30 13 16 26 30 100; part nose 31 56 8 8 50 50",
+    sugarplum_pastel_cat: "breathe; part ear 7 0 24 21 60 100; part ear 61 0 25 21 40 100; part nose 43 19 12 8 50 50",
+    vintage_woodland_cat: "breathe-slow; part ear 1 21 18 22 60 100; part ear 33 2 16 25 30 100; part nose 34 52 8 8 50 50",
+    warm_gouache_cat: "breathe; part ear 13 1 20 20 60 100; part ear 57 1 20 20 40 100; part tail 74 58 26 36 15 90; part nose 42 19 11 8 50 50",
+    bookish_whimsy_dog: "breathe-slow; part flop 1 30 24 46 70 8; part nose 21 61 9 11 50 50",
+    cozy_sage_dog: "breathe; part flop 0 10 18 55 70 8; part flop 31 10 19 55 30 8; part tail 74 10 26 46 20 95; part nose 23 28 10 13 50 50",
+    fireside_library_dog: "breathe-slow; part ear 5 7 13 26 50 100; part ear 25 0 12 26 50 100; part nose 38 60 8 10 50 50; part tail-soft 55 60 45 40 0 50",
+    ink_folklore_dog: "breathe-slow; part flop 1 25 24 64 70 8; part flop 39 25 24 60 30 8; part nose 30 61 10 10 50 50",
+    snowy_fairytale_dog: "breathe; part ear 9 1 20 20 60 100; part ear 49 1 21 20 40 100; part tail 68 54 32 32 10 70; part nose 35 21 13 10 50 50",
+    sugarplum_pastel_dog: "breathe; part flop 0 14 23 42 70 8; part flop 76 14 24 42 30 8; part tail 79 63 18 20 0 60; part nose 46 31 11 8 50 50",
+    vintage_woodland_dog: "breathe; part ear 1 0 22 19 80 80; part ear 61 0 35 23 15 40; part tail 78 60 22 33 30 95; part nose 38 26 13 9 50 50",
+    warm_gouache_dog: "breathe-slow; part flop 41 9 18 37 70 8; part flop 84 9 16 37 30 8; part nose 64 14 13 10 50 50",
+    bookish_whimsy_fireplace: "fire 50 62 22; flame 46 60 1.3; flame 53 58 1.6; embers 50 56 16; glow 50 62 4",
+    cozy_sage_fireplace: "fire 50 68 22; flame 46 66 1.3; flame 53 64 1.6; embers 50 62 16; glow 50 68 4; flame 28.5 2 0.8; flame 70.5 2 0.8; glint 49 33",
+    fireside_library_fireplace: "fire 50 62 22; flame 46 60 1.3; flame 53 58 1.6; embers 50 56 16; glow 50 62 4",
+    ink_folklore_fireplace: "fire 50 68 24; flame 46 66 1.3; flame 53 64 1.6; embers 50 62 18; glow 50 68 4; flame 76.5 3 0.8; glow 76.5 6 1.6",
+    snowy_fairytale_fireplace: "fire 50 64 24; flame 46 62 1.3; flame 53 60 1.6; embers 50 58 18; glow 50 64 4",
+    sugarplum_pastel_fireplace: "fire 50 64 18; flame 46 62 1.3; flame 53 60 1.6; embers 50 58 12; glow 50 64 4",
+    vintage_woodland_fireplace: "fire 50 76 20; flame 46 74 1.3; flame 53 72 1.6; embers 50 70 14; glow 50 76 4",
+    warm_gouache_fireplace: "fire 50 70 22; flame 46 68 1.3; flame 53 66 1.6; embers 50 64 16; glow 50 70 4",
+    bookish_whimsy_yule_log: "flame 38 17 0.6; flame 50.5 4 0.7; flame 64.5 17 0.6; glow 51 18 2.4",
+    cozy_sage_yule_log: "flame 44.5 4 0.9; flame 61 18 0.8; glow 52 16 2.6",
+    fireside_library_yule_log: "flame 29 20 0.7; flame 51 5 0.8; flame 70 20 0.7; glow 50 20 2.6",
+    ink_folklore_yule_log: "flame 40 5 0.8; flame 62 17 0.7; glow 50 16 2.4",
+    snowy_fairytale_yule_log: "flame 31 19 0.6; flame 52 4 0.7; flame 73.5 19 0.6; glow 52 18 2.4",
+    sugarplum_pastel_yule_log: "flame 32 17 0.6; flame 51 4 0.7; flame 70 17 0.6; glow 51 18 2.4",
+    vintage_woodland_yule_log: "flame 51 4 0.8; glow 51 12 2.2",
+    warm_gouache_yule_log: "flame 31 17 0.6; flame 50 4 0.7; flame 71 17 0.6; glow 50 18 2.4",
+    bookish_whimsy_garland: "sway-soft; twinkle 12 45; twinkle 29 72; twinkle 50 86; twinkle 70 72; twinkle 87 45",
+    cozy_sage_garland: "sway-soft; glint 10 45; glint 50 86; glint 90 45; twinkle 22 46; twinkle 35 66; twinkle 65 66; twinkle 78 46",
+    fireside_library_garland: "sway-soft; glint 17 55; glint 28 76; glint 50 90; glint 70 76; glint 83 55; twinkle 40 70; twinkle 60 70",
+    ink_folklore_garland: "sway-soft; twinkle 12 55; twinkle 29 75; twinkle 50 86; twinkle 70 75; twinkle 88 55",
+    snowy_fairytale_garland: "sway-soft; glint 12 55; glint 35 82; glint 63 82; glint 87 55; twinkle 25 72; twinkle 50 82; twinkle 75 72",
+    sugarplum_pastel_garland: "sway-soft; twinkle 13 55; twinkle 30 66; twinkle 50 90; twinkle 70 66; twinkle 87 55",
+    vintage_woodland_garland: "sway-soft; twinkle 20 50; twinkle 50 78; twinkle 80 50",
+    warm_gouache_garland: "sway-soft; glint 20 55; glint 50 82; glint 80 55; twinkle 35 66; twinkle 65 66",
+    bookish_whimsy_wall_art: "twinkle 50 19; twinkle 40 26; twinkle 60 26; twinkle 16 80; twinkle 84 80; sheen",
+    cozy_sage_wall_art: "twinkle 50 45; twinkle 22 38; twinkle 78 38; sheen",
+    fireside_library_wall_art: "flame 33 23 0.6; glow 33 32 1.6; sheen",
+    ink_folklore_wall_art: "part ear 53 13 10 22 50 100; part nose 59 38 6 6 50 50; sheen",
+    snowy_fairytale_wall_art: "glow 60 35 1.4 moon; glow 46 72 0.8 window; sparkle 50 62 60 30 4; sheen",
+    sugarplum_pastel_wall_art: "glow 36 63 0.7 window; glow 64 63 0.7 window; sparkle 50 55 60 40 4; sheen",
+    vintage_woodland_wall_art: "part ear 26 37 10 12 60 100; sheen",
+    warm_gouache_wall_art: "part bob 55 27 26 20 30 100; part bob 22 49 26 20 70 100; sheen",
     snowflake_cocoa_mug: "steam 40 4",
     holly_cocoa_mug: "steam 40 4",
     tree_cocoa_mug: "steam 40 4",
@@ -227,7 +277,7 @@ const FX = {
 
 
 // Pieces whose whole picture moves, and how.
-const MOTIONS = ["shade", "float", "sway", "sway-soft", "rock", "flap", "breeze", "tilt", "hop", "ring", "rattle", "tick", "flicker"];
+const MOTIONS = ["breathe", "breathe-slow", "shade", "float", "sway", "sway-soft", "rock", "flap", "breeze", "tilt", "hop", "ring", "rattle", "tick", "flicker"];
 
 
 function parse(line) {
@@ -304,6 +354,19 @@ function layer(effect, index) {
                 `<b style="--x:${(i * 37 + 7) % 88 + 6}%;--s:${(i % 3) + 2}px;--d:${((i * 0.83) % 7).toFixed(2)}s;--t:${(6 + (i % 4) * 1.4).toFixed(1)}s;--w:${(i % 2 ? 1 : -1) * (3 + (i % 5) * 2)}px;--h:${(i * 29) % 60 + 6}"></b>`
             ).join("");
             return `<i class="fx fx-globe" style="left:${percent(a, 50)};top:${percent(b, 40)};width:${(Number(c) || 40) * 2}%">${flakes}</i>`;
+        }
+
+        // A living part of an animal (or a painted one): an ear
+        // that twitches, a nose that sniffs, a tail that swings,
+        // a bird's head that bobs. A soft-edged piece of the same
+        // picture over itself, turning about its pivot: "part
+        // ear 55 0 24 22 40 100" is the box (left, top, width,
+        // height) and the pivot inside it.
+        case "part": {
+            const [x, y, w, h, ox, oy] = effect.args.slice(1).map(Number);
+            const kind = ["ear", "nose", "tail", "tail-soft", "bob", "flop"].includes(a) ? a : "ear";
+            const dir = (ox ?? 50) > 50 ? 1 : -1;
+            return `<i class="fx fx-part fx-part--${kind}" style="left:${x}%;top:${y}%;width:${w}%;height:${h}%;transform-origin:${ox ?? 50}% ${oy ?? 100}%;--dir:${dir};--d:${((index * 1.7) % 5).toFixed(2)}s;--bx:${(-x / w * 100).toFixed(2)}%;--by:${(-y / h * 100).toFixed(2)}%;--bw:${(10000 / w).toFixed(2)}%;--bh:${(10000 / h).toFixed(2)}%"><b></b></i>`;
         }
 
         // The shade (the top of the picture) swings gently on

@@ -261,7 +261,15 @@
 [data-curtains="tattered"] .window-curtains--tattered,
 [data-curtains="lined"] .window-curtains--lined,
 [data-curtains="theatre"] .window-curtains--theatre,
-[data-curtains="roses"] .window-curtains--roses {
+[data-curtains="roses"] .window-curtains--roses,
+[data-curtains="set-bookish-whimsy"] .window-curtains--set-bookish-whimsy,
+[data-curtains="set-cozy-sage"] .window-curtains--set-cozy-sage,
+[data-curtains="set-fireside-library"] .window-curtains--set-fireside-library,
+[data-curtains="set-ink-folklore"] .window-curtains--set-ink-folklore,
+[data-curtains="set-snowy-fairytale"] .window-curtains--set-snowy-fairytale,
+[data-curtains="set-sugarplum-pastel"] .window-curtains--set-sugarplum-pastel,
+[data-curtains="set-vintage-woodland"] .window-curtains--set-vintage-woodland,
+[data-curtains="set-warm-gouache"] .window-curtains--set-warm-gouache {
     display: block;
 }
 

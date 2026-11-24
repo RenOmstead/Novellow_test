@@ -75,6 +75,14 @@ export const CURTAINS = [
     { id: "lined", name: "Lined with cream" },
     { id: "theatre", name: "Theatre swags" },
     { id: "roses", name: "Pink with roses" },
+    { id: "set-bookish-whimsy", name: "Bookish whimsy curtains", collection: true },
+    { id: "set-cozy-sage", name: "Cozy sage curtains", collection: true },
+    { id: "set-fireside-library", name: "Fireside library curtains", collection: true },
+    { id: "set-ink-folklore", name: "Ink folklore curtains", collection: true },
+    { id: "set-snowy-fairytale", name: "Snowy fairytale curtains", collection: true },
+    { id: "set-sugarplum-pastel", name: "Sugarplum pastel curtains", collection: true },
+    { id: "set-vintage-woodland", name: "Vintage woodland curtains", collection: true },
+    { id: "set-warm-gouache", name: "Warm gouache curtains", collection: true },
     { id: "none", name: "No curtains" }
 ];
 
@@ -136,15 +144,24 @@ export const WINDOW_SHAPES = [
     { id: "set-snowy-fairytale", name: "Snowy fairytale", view: true, layered: true },
     { id: "set-sugarplum-pastel", name: "Sugarplum pastel", view: true, layered: true },
     { id: "set-vintage-woodland", name: "Vintage woodland", view: true, layered: true },
-    { id: "set-warm-gouache", name: "Warm gouache", view: true, layered: true }
+    { id: "set-warm-gouache", name: "Warm gouache", view: true, layered: true },
+    // The same frames bare, for curtains of the reader's choosing.
+    { id: "set-bookish-whimsy-bare", name: "Bookish whimsy, bare", view: true, layered: true },
+    { id: "set-cozy-sage-bare", name: "Cozy sage, bare", view: true, layered: true },
+    { id: "set-fireside-library-bare", name: "Fireside library, bare", view: true, layered: true },
+    { id: "set-ink-folklore-bare", name: "Ink folklore, bare", view: true, layered: true },
+    { id: "set-snowy-fairytale-bare", name: "Snowy fairytale, bare", view: true, layered: true },
+    { id: "set-sugarplum-pastel-bare", name: "Sugarplum pastel, bare", view: true, layered: true },
+    { id: "set-vintage-woodland-bare", name: "Vintage woodland, bare", view: true, layered: true },
+    { id: "set-warm-gouache-bare", name: "Warm gouache, bare", view: true, layered: true }
 ];
 
 // The painted windows and curtains (pictures, not drawings).
 export const PAINTED_WINDOWS =
-    ["six-pane", "tracery", "lancet", "double-arch", "moon-arch", "round", "porthole", "timber", "casement", "shutters", "boarded", "boarded-arch", "snowy-walnut", "solstice-round", "frosted-cream", "gothic-moon", "set-bookish-whimsy", "set-cozy-sage", "set-fireside-library", "set-ink-folklore", "set-snowy-fairytale", "set-sugarplum-pastel", "set-vintage-woodland", "set-warm-gouache"];
+    ["six-pane", "tracery", "lancet", "double-arch", "moon-arch", "round", "porthole", "timber", "casement", "shutters", "boarded", "boarded-arch", "snowy-walnut", "solstice-round", "frosted-cream", "gothic-moon", "set-bookish-whimsy", "set-cozy-sage", "set-fireside-library", "set-ink-folklore", "set-snowy-fairytale", "set-sugarplum-pastel", "set-vintage-woodland", "set-warm-gouache", "set-bookish-whimsy-bare", "set-cozy-sage-bare", "set-fireside-library-bare", "set-ink-folklore-bare", "set-snowy-fairytale-bare", "set-sugarplum-pastel-bare", "set-vintage-woodland-bare", "set-warm-gouache-bare"];
 
 export const PAINTED_CURTAINS =
-    ["tasselled", "ivy", "pumpkin", "tattered", "lined", "theatre", "roses"];
+    ["tasselled", "ivy", "pumpkin", "tattered", "lined", "theatre", "roses", "set-bookish-whimsy", "set-cozy-sage", "set-fireside-library", "set-ink-folklore", "set-snowy-fairytale", "set-sugarplum-pastel", "set-vintage-woodland", "set-warm-gouache"];
 
 export const WOODS = [
     { id: "walnut", name: "Walnut" },

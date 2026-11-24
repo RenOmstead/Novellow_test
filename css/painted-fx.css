@@ -484,6 +484,16 @@
    MOVEMENT (the whole picture)
 --------------------------------------------------------- */
 
+/* An animal breathing: a slow, soft rise and fall (slower in
+   sleep). */
+.fx-move--breathe { transform-origin: 50% 100%; animation: fxBreathe 3.4s ease-in-out infinite; }
+.fx-move--breathe-slow { transform-origin: 50% 100%; animation: fxBreathe 5.2s ease-in-out infinite; }
+
+@keyframes fxBreathe {
+    0%, 100% { transform: scale(1, 1); }
+    45% { transform: scale(1.012, 1.032); }
+}
+
 .fx-move--float { animation: fxFloat 4.6s ease-in-out infinite; }
 .fx-move--flap { animation: fxFlap 1.8s ease-in-out infinite; }
 .fx-move--sway { transform-origin: 50% 0; animation: fxSway 5s ease-in-out infinite; }
@@ -701,4 +711,79 @@ html:not(.is-arranging-room) .placed-decor:has(.fx-globe) {
     opacity: 0.9;
 
     transform: translate(0, calc(var(--h) * 1cqh + 8cqh));
+}
+
+
+/* ---------------------------------------------------------
+   LIVING PARTS
+   A soft-edged piece of the picture over itself (an ear, a
+   nose, a tail), turning about its pivot now and then.
+--------------------------------------------------------- */
+
+.fx-part {
+    -webkit-mask: radial-gradient(closest-side, #000 62%, transparent 100%);
+    mask: radial-gradient(closest-side, #000 62%, transparent 100%);
+
+    animation-delay: calc(var(--d, 0s) * -1);
+}
+
+.fx-part b {
+    left: var(--bx);
+    top: var(--by);
+
+    width: var(--bw);
+    height: var(--bh);
+
+    background: var(--art) 0 0 / 100% 100% no-repeat;
+}
+
+/* An ear: still, then a quick flick or two. */
+.fx-part--ear { animation: fxEar 6.5s ease-in-out infinite; }
+
+@keyframes fxEar {
+    0%, 86%, 100% { transform: rotate(0deg); }
+    88% { transform: rotate(calc(-10deg * var(--dir))); }
+    90% { transform: rotate(calc(3deg * var(--dir))); }
+    92% { transform: rotate(calc(-7deg * var(--dir))); }
+    95% { transform: rotate(0deg); }
+}
+
+/* A long, soft ear that lifts and drops. */
+.fx-part--flop { animation: fxFlop 7s ease-in-out infinite; }
+
+@keyframes fxFlop {
+    0%, 82%, 100% { transform: rotate(0deg); }
+    86% { transform: rotate(calc(-5deg * var(--dir))); }
+    90% { transform: rotate(calc(2deg * var(--dir))); }
+    94% { transform: rotate(0deg); }
+}
+
+/* A nose that sniffs. */
+.fx-part--nose { animation: fxSniff 4.8s ease-in-out infinite; }
+
+@keyframes fxSniff {
+    0%, 70%, 100% { transform: scale(1); }
+    73% { transform: scale(1.1, 0.94); }
+    76% { transform: scale(1); }
+    79% { transform: scale(1.1, 0.94); }
+    82% { transform: scale(1); }
+}
+
+/* A tail that swings (awake) or stirs (dozing). */
+.fx-part--tail { animation: fxTail 2.6s ease-in-out infinite; }
+.fx-part--tail-soft { animation: fxTail 5.5s ease-in-out infinite; --swing: 0.45; }
+
+@keyframes fxTail {
+    0%, 100% { transform: rotate(calc(-6deg * var(--swing, 1))); }
+    50% { transform: rotate(calc(6deg * var(--swing, 1))); }
+}
+
+/* A little bird's head that bobs and looks about. */
+.fx-part--bob { animation: fxBob 5s ease-in-out infinite; }
+
+@keyframes fxBob {
+    0%, 60%, 100% { transform: rotate(0deg) translateY(0); }
+    66% { transform: rotate(-7deg) translateY(1px); }
+    74% { transform: rotate(4deg) translateY(-1px); }
+    80% { transform: rotate(0deg) translateY(0); }
 }

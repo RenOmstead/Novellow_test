@@ -261,6 +261,14 @@ html[data-weather="snow"] {
 [data-window="set-sugarplum-pastel"] .window-weather { --pane: url("../assets/decor/windows/set-sugarplum-pastel-glass.webp?v=__VERSION__"); clip-path: none; }
 [data-window="set-vintage-woodland"] .window-weather { --pane: url("../assets/decor/windows/set-vintage-woodland-glass.webp?v=__VERSION__"); clip-path: none; }
 [data-window="set-warm-gouache"] .window-weather { --pane: url("../assets/decor/windows/set-warm-gouache-glass.webp?v=__VERSION__"); clip-path: none; }
+[data-window="set-bookish-whimsy-bare"] .window-weather { --pane: url("../assets/decor/windows/set-bookish-whimsy-bare-glass.webp?v=__VERSION__"); clip-path: none; }
+[data-window="set-cozy-sage-bare"] .window-weather { --pane: url("../assets/decor/windows/set-cozy-sage-bare-glass.webp?v=__VERSION__"); clip-path: none; }
+[data-window="set-fireside-library-bare"] .window-weather { --pane: url("../assets/decor/windows/set-fireside-library-bare-glass.webp?v=__VERSION__"); clip-path: none; }
+[data-window="set-ink-folklore-bare"] .window-weather { --pane: url("../assets/decor/windows/set-ink-folklore-bare-glass.webp?v=__VERSION__"); clip-path: none; }
+[data-window="set-snowy-fairytale-bare"] .window-weather { --pane: url("../assets/decor/windows/set-snowy-fairytale-bare-glass.webp?v=__VERSION__"); clip-path: none; }
+[data-window="set-sugarplum-pastel-bare"] .window-weather { --pane: url("../assets/decor/windows/set-sugarplum-pastel-bare-glass.webp?v=__VERSION__"); clip-path: none; }
+[data-window="set-vintage-woodland-bare"] .window-weather { --pane: url("../assets/decor/windows/set-vintage-woodland-bare-glass.webp?v=__VERSION__"); clip-path: none; }
+[data-window="set-warm-gouache-bare"] .window-weather { --pane: url("../assets/decor/windows/set-warm-gouache-bare-glass.webp?v=__VERSION__"); clip-path: none; }
 
 .window-weather {
     -webkit-mask: var(--pane, none) 0 0 / 100% 100% no-repeat;
@@ -306,13 +314,13 @@ html[data-weather="snow"] {
     animation: snowFall 6s linear infinite, snowSway 5s ease-in-out infinite alternate;
 }
 
-html[data-weather="snow"]:is([data-window="snowy-walnut"], [data-window="solstice-round"], [data-window="frosted-cream"], [data-window="gothic-moon"], [data-window="set-bookish-whimsy"], [data-window="set-cozy-sage"], [data-window="set-fireside-library"], [data-window="set-ink-folklore"], [data-window="set-snowy-fairytale"], [data-window="set-sugarplum-pastel"], [data-window="set-vintage-woodland"], [data-window="set-warm-gouache"]) .window-weather__snow {
+html[data-weather="snow"]:is([data-window="snowy-walnut"], [data-window="solstice-round"], [data-window="frosted-cream"], [data-window="gothic-moon"], [data-window="set-bookish-whimsy"], [data-window="set-cozy-sage"], [data-window="set-fireside-library"], [data-window="set-ink-folklore"], [data-window="set-snowy-fairytale"], [data-window="set-sugarplum-pastel"], [data-window="set-vintage-woodland"], [data-window="set-warm-gouache"], [data-window="set-bookish-whimsy-bare"], [data-window="set-cozy-sage-bare"], [data-window="set-fireside-library-bare"], [data-window="set-ink-folklore-bare"], [data-window="set-snowy-fairytale-bare"], [data-window="set-sugarplum-pastel-bare"], [data-window="set-vintage-woodland-bare"], [data-window="set-warm-gouache-bare"]) .window-weather__snow {
     display: block;
 }
 
 /* Rain over them too, whenever this room's window has rain. */
-html.ambient-rain:not([data-weather="clear"], [data-weather="snow"]):is([data-window="snowy-walnut"], [data-window="solstice-round"], [data-window="frosted-cream"], [data-window="gothic-moon"], [data-window="set-bookish-whimsy"], [data-window="set-cozy-sage"], [data-window="set-fireside-library"], [data-window="set-ink-folklore"], [data-window="set-snowy-fairytale"], [data-window="set-sugarplum-pastel"], [data-window="set-vintage-woodland"], [data-window="set-warm-gouache"]) .window-weather__rain,
-html[data-weather="rain"]:is([data-window="snowy-walnut"], [data-window="solstice-round"], [data-window="frosted-cream"], [data-window="gothic-moon"], [data-window="set-bookish-whimsy"], [data-window="set-cozy-sage"], [data-window="set-fireside-library"], [data-window="set-ink-folklore"], [data-window="set-snowy-fairytale"], [data-window="set-sugarplum-pastel"], [data-window="set-vintage-woodland"], [data-window="set-warm-gouache"]) .window-weather__rain {
+html.ambient-rain:not([data-weather="clear"], [data-weather="snow"]):is([data-window="snowy-walnut"], [data-window="solstice-round"], [data-window="frosted-cream"], [data-window="gothic-moon"], [data-window="set-bookish-whimsy"], [data-window="set-cozy-sage"], [data-window="set-fireside-library"], [data-window="set-ink-folklore"], [data-window="set-snowy-fairytale"], [data-window="set-sugarplum-pastel"], [data-window="set-vintage-woodland"], [data-window="set-warm-gouache"], [data-window="set-bookish-whimsy-bare"], [data-window="set-cozy-sage-bare"], [data-window="set-fireside-library-bare"], [data-window="set-ink-folklore-bare"], [data-window="set-snowy-fairytale-bare"], [data-window="set-sugarplum-pastel-bare"], [data-window="set-vintage-woodland-bare"], [data-window="set-warm-gouache-bare"]) .window-weather__rain,
+html[data-weather="rain"]:is([data-window="snowy-walnut"], [data-window="solstice-round"], [data-window="frosted-cream"], [data-window="gothic-moon"], [data-window="set-bookish-whimsy"], [data-window="set-cozy-sage"], [data-window="set-fireside-library"], [data-window="set-ink-folklore"], [data-window="set-snowy-fairytale"], [data-window="set-sugarplum-pastel"], [data-window="set-vintage-woodland"], [data-window="set-warm-gouache"], [data-window="set-bookish-whimsy-bare"], [data-window="set-cozy-sage-bare"], [data-window="set-fireside-library-bare"], [data-window="set-ink-folklore-bare"], [data-window="set-snowy-fairytale-bare"], [data-window="set-sugarplum-pastel-bare"], [data-window="set-vintage-woodland-bare"], [data-window="set-warm-gouache-bare"]) .window-weather__rain {
     display: block;
 }
 
