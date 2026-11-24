@@ -80,6 +80,8 @@ export const DECOR_GROUPS = [
 */
 
 export const PIECE_KINDS = [
+    // Every piece of the painted collections, set by set.
+    { id: "collections", name: "Collections", icon: "set-cottage-snowglobe" },
     { id: "furniture", name: "Furniture", icon: "art-armchair-plum" },
     { id: "lights", name: "Lights", icon: "art-fringed-lamp" },
     { id: "wall", name: "Wall", icon: "art-ghost-moon-portrait" },
@@ -1033,7 +1035,7 @@ let panelMode = "pieces";
 let pieceKind = "furniture";
 let pieceStyle = "";
 let pieceHoliday = "";
-let roomOpen = "wallpaper";
+let roomOpen = "collection";
 
 try {
     const kept = JSON.parse(localStorage.getItem(PANEL_KEY) || "{}") || {};
@@ -1611,6 +1613,15 @@ function piecesMarkup() {
                 `)}
             </div>
 
+            ${pieceKind === "collections" ? html`
+                <div class="piece-styles piece-styles--holidays" role="group" aria-label="Collection">
+                    <button class="piece-style ${pieceHoliday ? "" : "is-current"}" type="button" aria-pressed="${String(!pieceHoliday)}" data-piece-holiday="">Every collection</button>
+                    ${PIECE_COLLECTIONS.map((group) => html`
+                        <button class="piece-style ${group.id === pieceHoliday ? "is-current" : ""}" type="button" aria-pressed="${String(group.id === pieceHoliday)}" data-piece-holiday="${group.id}">${group.name}</button>
+                    `)}
+                </div>
+                <p class="arrange-bar__hint">Each collection's wallpaper, ceiling, window and bookcase are in The room → Whole collection.</p>
+            ` : html`
             <div class="piece-styles" role="group" aria-label="Style">
                 <button class="piece-style ${pieceStyle ? "" : "is-current"}" type="button" aria-pressed="${String(!pieceStyle)}" data-piece-style="">All styles</button>
                 ${PIECE_STYLES.map((style) => html`
@@ -1626,6 +1637,7 @@ function piecesMarkup() {
                     `)}
                 </div>
             ` : ""}
+            `}
 
         </div>
 
@@ -1689,6 +1701,10 @@ function listMarkup() {
 
     const fits = (asset) => {
         const entry = catalogueEntry(asset);
+        if (pieceKind === "collections") {
+            return Boolean(entry.collection) && (!pieceHoliday || entry.collection === pieceHoliday);
+        }
+
         return entry.kind === pieceKind
             && (!pieceStyle || entry.style === pieceStyle)
             && (!pieceHoliday || entry.sub === pieceHoliday);
@@ -3023,6 +3039,12 @@ function onBarClick(event) {
     if (filter) {
 
         if (filter.dataset.pieceKind) {
+            // Collections have their own choices; other kinds start
+            // from every style.
+            if ((filter.dataset.pieceKind === "collections") !== (pieceKind === "collections")) {
+                pieceStyle = "";
+                pieceHoliday = "";
+            }
             pieceKind = filter.dataset.pieceKind;
         }
 

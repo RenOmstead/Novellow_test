@@ -2046,3 +2046,9 @@ html.is-capturing .piece-handles {
 .room-section__body > .arrange-bar__room:first-child > .room-choices:first-child > .room-choices__label {
     display: none;
 }
+
+/* The longest kind's name fits its tile. */
+.piece-kind[data-piece-kind="collections"] span {
+    font-size: 9.5px;
+    letter-spacing: -0.03em;
+}
