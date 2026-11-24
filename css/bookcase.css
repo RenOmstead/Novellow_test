@@ -730,6 +730,8 @@ html.room-compact .bookcase-zone > .bookcase {
 }
 
 [data-case-art="cozy-sage"] {
+    --art-inset-left: 9.4%;
+    --art-inset-right: 6.6%;
     --art-plaque-y: 84%;
     --art-crown: url("../assets/bookcases/cozy-sage/crown.webp?v=__VERSION__");
     --art-post-left: url("../assets/bookcases/cozy-sage/post-left.webp?v=__VERSION__");
@@ -744,6 +746,8 @@ html.room-compact .bookcase-zone > .bookcase {
 }
 
 [data-case-art="fireside-library"] {
+    --art-inset-left: 6.6%;
+    --art-inset-right: 5.0%;
     --art-plaque-y: 40%;
     --art-crown: url("../assets/bookcases/fireside-library/crown.webp?v=__VERSION__");
     --art-post-left: url("../assets/bookcases/fireside-library/post-left.webp?v=__VERSION__");
@@ -758,6 +762,8 @@ html.room-compact .bookcase-zone > .bookcase {
 }
 
 [data-case-art="ink-folklore"] {
+    --art-inset-left: 4.9%;
+    --art-inset-right: 5.4%;
     --art-plaque-y: 62%;
     --art-crown: url("../assets/bookcases/ink-folklore/crown.webp?v=__VERSION__");
     --art-post-left: url("../assets/bookcases/ink-folklore/post-left.webp?v=__VERSION__");
@@ -772,6 +778,8 @@ html.room-compact .bookcase-zone > .bookcase {
 }
 
 [data-case-art="snowy-fairytale"] {
+    --art-inset-left: 4.7%;
+    --art-inset-right: 4.5%;
     --art-plaque-y: 84%;
     --art-crown: url("../assets/bookcases/snowy-fairytale/crown.webp?v=__VERSION__");
     --art-post-left: url("../assets/bookcases/snowy-fairytale/post-left.webp?v=__VERSION__");
@@ -786,6 +794,8 @@ html.room-compact .bookcase-zone > .bookcase {
 }
 
 [data-case-art="sugarplum-pastel"] {
+    --art-inset-left: 4.9%;
+    --art-inset-right: 5.3%;
     --art-plaque-y: 84%;
     --art-crown: url("../assets/bookcases/sugarplum-pastel/crown.webp?v=__VERSION__");
     --art-post-left: url("../assets/bookcases/sugarplum-pastel/post-left.webp?v=__VERSION__");
@@ -800,6 +810,8 @@ html.room-compact .bookcase-zone > .bookcase {
 }
 
 [data-case-art="vintage-woodland"] {
+    --art-inset-left: 7.2%;
+    --art-inset-right: 6.2%;
     --art-plaque-y: 84%;
     --art-crown: url("../assets/bookcases/vintage-woodland/crown.webp?v=__VERSION__");
     --art-post-left: url("../assets/bookcases/vintage-woodland/post-left.webp?v=__VERSION__");
@@ -814,6 +826,8 @@ html.room-compact .bookcase-zone > .bookcase {
 }
 
 [data-case-art="warm-gouache"] {
+    --art-inset-left: 3.3%;
+    --art-inset-right: 3.1%;
     --art-plaque-y: 84%;
     --art-crown: url("../assets/bookcases/warm-gouache/crown.webp?v=__VERSION__");
     --art-post-left: url("../assets/bookcases/warm-gouache/post-left.webp?v=__VERSION__");
@@ -872,6 +886,14 @@ html.room-compact .bookcase-zone > .bookcase {
         inset 0 14px 12px -10px rgba(0, 0, 0, 0.45),
         inset 8px 0 10px -8px rgba(0, 0, 0, 0.35),
         inset -8px 0 10px -8px rgba(0, 0, 0, 0.35);
+}
+
+/* Some paintings carry their side posts inside the back panel
+   (--art-inset-left/right, a share of its width): the books
+   start past them, standing on the board, not on the post. */
+[data-case-art] .shelf-unit:not(.shelf-style--painted, .shelf-style--floating) .shelf-interior:not(.shelf-interior--welcome) {
+    padding-left: calc(12px + var(--art-inset-left, 0%));
+    padding-right: calc(12px + var(--art-inset-right, 0%));
 }
 
 [data-case-art] .shelf-unit:not(.shelf-style--painted, .shelf-style--floating) .shelf-board {
