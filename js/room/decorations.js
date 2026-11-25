@@ -958,11 +958,24 @@ const SHELF_SPAN = 1600;
 
 
 // How much the bookcase is scaled down on this screen.
+// The bookcase's scale on the screen: its own, times the whole
+// room's when a phone held sideways shrinks the room to fit
+// (css/room.css → .room-scaled). Every use turns screen pixels
+// into the bookcase's own.
 function caseZoom() {
 
-    return Number.parseFloat(
-        getComputedStyle(document.documentElement).getPropertyValue("--case-zoom")
-    ) || 1;
+    const style =
+        getComputedStyle(document.documentElement);
+
+    const own =
+        Number.parseFloat(style.getPropertyValue("--case-zoom")) || 1;
+
+    const roomScale =
+        document.documentElement.classList.contains("room-scaled")
+            ? Number.parseFloat(style.getPropertyValue("--room-scale")) || 1
+            : 1;
+
+    return own * roomScale;
 
 }
 
@@ -3375,12 +3388,18 @@ function autoScroll(pointer, follow, ready = () => true) {
 
         }
 
-        if (pointer.y < view.top + EDGE) {
-            distance = -(view.top + EDGE - pointer.y);
+        // Over shelves drawn small (a phone held sideways), only a
+        // thin band at their very top and bottom slides them, so a
+        // piece can be set down on any shelf.
+        const edge =
+            scroller ? Math.min(EDGE, Math.max(10, (view.bottom - view.top) * 0.1)) : EDGE;
+
+        if (pointer.y < view.top + edge) {
+            distance = -(view.top + edge - pointer.y);
         }
 
-        else if (pointer.y > view.bottom - EDGE) {
-            distance = pointer.y - (view.bottom - EDGE);
+        else if (pointer.y > view.bottom - edge) {
+            distance = pointer.y - (view.bottom - edge);
         }
 
         if (distance && (scroller || !shelves)) {
